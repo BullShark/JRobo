@@ -81,6 +81,22 @@ public class JRobo {
 //    connection.sendln("PASS " + botP);
     connection.msgUser("NickServ", "identify " + botP);
     connection.sendln("USER Tux 0 * :Microsoft Exterminator!");
+    /*
+     * Wait for server message:
+     * 001 JRobo :Welcome to the IRC Network
+     * Before attempting to join a channel
+     */
+    while(( received = connection.recieveln()) != null ) {
+      this.divideTwo();
+
+      if(first.equals("PING")) { //@TODO Implement with regex
+        connection.sendln("PONG " + last);
+      }
+      
+      if(first.contains("001")) {
+        break;
+      }
+    }
     connection.sendln("JOIN " + botC);
 
   /*
