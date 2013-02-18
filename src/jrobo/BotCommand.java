@@ -230,6 +230,9 @@ public class BotCommand {
         //@TODO man page style usage for help blah
         connection.msgChannel(botC, "You implement it!");
         break;
+      case "pirate":
+           connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult());
+        break;
       default:
         connection.msgChannel(botC, "Unknown command received: " + cmd);
     } // EOF switch
