@@ -308,13 +308,13 @@ public class BotCommand {
     } while(!received.matches("^:[a-z\\.]++ 353.*") || tries <= 0);
     if(received.matches("^:[a-z\\.]++ 353.*")) {
       try {
-        users += received.split(" :")[1].replaceAll("@|\\+", "");
+        users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
       } catch(ArrayIndexOutOfBoundsException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-        connection.msgUser(this.fReader.getMaster(), "Could not get list of users!!!");
+        connection.msgUser(fReader.getMaster(), "Could not get list of users!!!");
       }
     } else {
-      connection.msgUser(this.fReader.getMaster(), "Could not get list of users!!!");
+      connection.msgUser(fReader.getMaster(), "Could not get list of users!!!");
       return null;
     }
     return users;
@@ -331,13 +331,13 @@ public class BotCommand {
     } while(!received.matches("^:[a-z\\.]++ 366.*") || tries <= 0);
     if(received.matches("^:[a-z\\.]++ 353.*")) {
       try {
-        users += received.split(" :")[1].replaceAll("@|\\+", "");
+        users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
       } catch(ArrayIndexOutOfBoundsException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-        connection.msgUser("BullShark", "Could not get list of users!!!");
+        connection.msgUser(fReader.getMaster(), "Could not get list of users!!!");
       }
     } else {
-      connection.msgUser("BullShark", "Could not get list of users!!!");
+      connection.msgUser(fReader.getMaster(), "Could not get list of users!!!");
       return null;
     }
     return users;
