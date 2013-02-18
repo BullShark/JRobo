@@ -197,14 +197,11 @@ public class JRobo {
    * For use from other classes
    *
    * Returns a random boolean
+   * 
+   * TODO: Use this somewhere
    */
   public boolean getRandomBoolean() {
-    //@TODO Make this a 1-liner or 2
-    if((int) (Math.random() * 10 % 2) == 1) {
-      return true;
-    } else {
-      return false;
-    }
+    return ((((int)(Math.random() * 10)) % 2) == 1);
   }
 
   /**
