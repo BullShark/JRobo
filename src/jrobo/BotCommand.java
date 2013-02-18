@@ -122,18 +122,9 @@ public class BotCommand {
       case "next":
         connection.msgChannel(botC, "Another satisfied customer, NEXT!!!");
         break;
-      case "translate":
-      case "t":
-        connection.msgChannel(botC, "Nein!!!");
-        break;
       case "wolframalpha":
       case "wa":
         connection.msgChannel(botC, "Do I look African to you?!");
-        break;
-      case "calculate":
-      case "c":
-        //@TODO Use google's calcuate to get results
-        connection.msgChannel(botC, "Do your own homework bitch!");
         break;
       case "nicks":
       case "names":
@@ -227,10 +218,10 @@ public class BotCommand {
       case "list":
       case "l":
         String str = "Available commands: google|g|goog|lmgtfy|stfw <search query>, " +
-          "wakeroom|wr, re <regex> <search string>, weather|w <location, zip, etc.>, " +
-          "urbandict|ud <search query, translate|t <text>, list|l, help|h [cmd], " +
+          "wakeroom|wr, weather|w <location, zip, etc.>, " +
+          "urbandict|ud <search query, list|l, help|h [cmd], " +
           "next|n, mum|m [user], invite-channel|ic <channel>, invite-nick {nick} [# of times], " +
-          "tinyurl|tu <url>, quit|q"; //@TODO update list for ALL commands
+          "quit|q"; //@TODO update list for ALL commands
         connection.msgChannel(botC, str);
         break;
       case "help":
