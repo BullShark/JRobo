@@ -78,8 +78,7 @@ public class JRobo {
     /* Identify to server */
     
     connection.sendln("NICK " + botN);
-//    connection.sendln("PASS " + botP);
-    connection.msgUser("NickServ", "identify " + botP);
+    connection.sendln("PASS " + botP);
     connection.sendln("USER Tux 0 * :Microsoft Exterminator!");
     /*
      * Wait for server message:
