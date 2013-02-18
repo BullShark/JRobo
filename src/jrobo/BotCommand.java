@@ -54,12 +54,7 @@ public class BotCommand {
     String cmd = getCmd(fullCmd);
     String cmdArgs = getCmdArgs(fullCmd);
 
-    boolean hasArgs = true;
-    if(cmdArgs.isEmpty()) {
-      hasArgs = false;
-    } else {
-      hasArgs = true;
-    }
+    boolean hasArgs = cmdArgs.isEmpty() ? false : true;
 
     /*
      * Java 7 Switch With Strings!!!!!
