@@ -43,7 +43,7 @@ public class PirateBay {
     private static final String QUERY_URL = "http://teslasolution.com/applications/thepiratebay.php?name=";
     private String def;
     private String json;
-    private String s_name;
+    private String s_name="blackhats";
     private String s_switch="s";
 
     /* For the Gson/Json */
@@ -70,12 +70,13 @@ public class PirateBay {
                     argument=splitArray[0];
                     s_switch = "n";
                 default:
-                    s_switch = "n";
+                    s_switch = "s";
                     break;
             }
             command=command.replace(argument, "");
         }
-        s_name=command;
+        if(command.length()>0){
+        s_name=command;}
         /* For the HTTP Connection */
         url = null;
         conn = null;
@@ -91,7 +92,7 @@ public class PirateBay {
             /* Create a URL obj from strings */
             fullUrl = (QUERY_URL.concat(s_name)).replace(" ", "%20").concat("&orderby=" + s_switch);
             url = new URL(fullUrl);
-           // System.out.println(fullUrl);
+           System.out.println(fullUrl);
 
             conn = url.openConnection();
             // Get the response
