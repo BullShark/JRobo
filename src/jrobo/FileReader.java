@@ -19,9 +19,11 @@
 
 package jrobo;
 
+import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import static java.lang.System.err;
 import static java.lang.System.out;
@@ -34,11 +36,12 @@ import java.util.Collections;
  */
 public class FileReader {
   /* Standard Java API Classes */
-  private File config = null;
+  private String config_file = null;
   private ArrayList<String> pickUpJokes = null, mommaJokes = null;
   
   /* User-defined Classes */
   private Networking connection;
+  private Config config;
   
   public FileReader(Networking connection) {
     /*
@@ -58,8 +61,10 @@ public class FileReader {
     pickUpJokes = new ArrayList<>(50);
 
 
-    config = new File("Config.xml");
+    config_file = "Config.json";
 
+    getConfig();
+    
     fileToArrayList("MomJokes.txt", mommaJokes);
 
     fileToArrayList("FunnyJokes.txt", pickUpJokes);
@@ -71,11 +76,11 @@ public class FileReader {
   }
   
   public String getNick() {
-    return "JRobo";
+    return config.getName();
   }
   
   public String getPass() {
-    return "";
+    return config.getPass();
   }
   
   /**
@@ -87,20 +92,24 @@ public class FileReader {
 //      return new Scanner(new File(pathToFile + "config.xml")).nextLine();
 //    } catch (FileNotFoundException ex) {
 //      Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
-      err.println("FAILED TO READ CONFIG FOR JOIN CHAN!!!"
-              + "\nIMPLEMENT JRobo TO READ AND PARSE XML CONFIG INSTEAD"); //TODO Delete when working
-      return "#blackhats";
+      //err.println("FAILED TO READ CONFIG FOR JOIN CHAN!!!"
+      //        + "\nIMPLEMENT JRobo TO READ AND PARSE XML CONFIG INSTEAD"); //TODO Delete when working
+      //return "#blackhats";
       //return "##blackhats-bots";
       //return "#theblackmatrix-bots";
 //    }
+      return config.getChannel();
   }
   
-  public String getMaster() {
-    return "BullShark";
+  public String getMaster() {  
+    //return "BullShark";
+    //temp workaround for master
+    String[] masters = config.getMasters();
+    return masters[0];
   }
   
   public char getCmdSymb() {
-    return '^';
+    return config.getCmdSymb();
   }
   
   private boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
@@ -175,4 +184,82 @@ public class FileReader {
       return mommaJokes.remove(0).replaceFirst("Yo", user + "'s");
     }
   } // EOF method
+  
+  /**
+   * gets the data from the configuration file
+   * 
+   * @since 2013-02-18
+   */
+  private void getConfig () {
+      
+      out.println("[+++]\tReading Configuration file (Config.json)");
+      
+      InputStream fileStream = FileReader.class.getResourceAsStream(config_file);
+      
+      if (fileStream == null) {
+          err.println("[+++]\tError: " + config_file + " was not found");
+          System.exit(1);
+      }
+      
+      InputStreamReader fileStreamReader = new InputStreamReader(fileStream);
+      
+      BufferedReader br = new BufferedReader(fileStreamReader);
+      
+      String line, json;
+      
+      json = "";
+      try {
+          while ((line= br.readLine()) != null){
+          json = json.concat(line);
+      
+          }
+          
+          br.close();
+          
+      } catch (IOException ex) {
+          err.println("[+++]\tError:" + ex.getMessage());
+          ex.printStackTrace();
+          System.exit(1);
+      } 
+      
+      Gson gson = new Gson();
+      config = gson.fromJson(json, Config.class);
+      
+      // Verifiying important settings for connection
+      
+      if (config.getName()==null){
+          err.println("[+++]\tError: Unable to find bot's nickname");
+          System.exit(1);
+      }
+      
+      if (config.getPass()==null){
+          err.println("[+++]\tError: Unable to find bot's password");
+          System.exit(1);
+      }
+      
+      if (config.getMasters()==null){
+          err.println("[+++]\tError: Unable to find bot's Masters");
+          System.exit(1);
+      }
+      
+      if (config.getHostmasks()==null){
+          err.println("[+++]\tError: Unable to find bot's Hostmasks");
+          System.exit(1);
+      }
+      
+      if (config.getCmdSymb()=='\u0000'){
+          err.println("[+++]\tError: Unable to find bot's Command Symbol");
+          System.exit(1);
+      }
+      
+      if (config.getNetwork()==null){
+          err.println("[+++]\tError: Unable to find bot's Network");
+          System.exit(1);
+      }
+      
+      if (config.getChannel()==null){
+          err.println("[+++]\tError: Unable to find bot's Channel");
+          System.exit(1);
+      }
+  }
 } // EOF class
