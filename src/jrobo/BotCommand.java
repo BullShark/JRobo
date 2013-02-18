@@ -165,7 +165,8 @@ public class BotCommand {
         break;
       case "invite-channel":
       case "ic":
-        if( jRobo.getFirst().startsWith( ":BullShark!~RTFM@gateway/tor-sasl/nanomachine" ) && hasArgs ) {
+        //TODO Implement and use FileReader.getNickAndHost() instead
+        if(jRobo.getFirst().startsWith(":BullShark!~lulz@windfyre.net" ) && hasArgs ) {
           String chan = cmdArgs.split(" ")[0], users;
           connection.sendln("PART " + botC + " :BSOD");
           connection.sendln("JOIN :" + chan);
