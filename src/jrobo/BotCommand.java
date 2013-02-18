@@ -98,20 +98,20 @@ public class BotCommand {
 //          connection.msgChannel(botC, new Weather().getSummary(cmdArgs));
 //          connection.msgChannel(botC, "^g weather " + cmdArgs);
 //        }
-        //TODO Parse and return the formatted XML instead
+        //TODO Parse and return the formatted JSON or XML instead
         connection.msgChannel(botC, new Weather().getXml(cmdArgs));
         break;
       case "mum":
       case "m":
         try {
         if(!hasArgs) {
-          connection.msgChannel( botC, fReader.getMommaJoke( getRandChanUser() ) );
+          connection.msgChannel(botC , fReader.getMommaJoke( getRandChanUser() ) );
         } else {
           int temp = cmdArgs.indexOf(' ');
           if(temp != -1) {
-            connection.msgChannel( botC, fReader.getMommaJoke( cmdArgs.substring(0, temp) ) );
+            connection.msgChannel(botC , fReader.getMommaJoke( cmdArgs.substring(0, temp) ) );
           } else {
-            connection.msgChannel( botC, fReader.getMommaJoke(cmdArgs) );
+            connection.msgChannel(botC , fReader.getMommaJoke(cmdArgs) );
           }
         }
         } catch(NullPointerException ex) {
