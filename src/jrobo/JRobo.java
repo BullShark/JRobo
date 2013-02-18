@@ -59,7 +59,7 @@ public class JRobo {
     botC = fReader.getChan();
     isRunning = false;
     SYMB = fReader.getCmdSymb();
-    //TODO Set identd to jrobo
+    //TODO Set identd to jrob //test
   }
 
   private void initiate() {
