@@ -56,7 +56,7 @@ public class IRCTester {
 //    botP = "haX0rzMe";
     botN = "ProtoAnazlyer";
     botP = "";
-    botC = "##blackhats";
+    botC = "#blackhats";
 
   }
 
@@ -88,7 +88,7 @@ public class IRCTester {
 
 
       /* We have received a message from the owner */
-      if( first.startsWith( ":BullShark!debian-tor@gateway/tor-sasl/nanomachine" ) &&
+      if( first.startsWith( ":BullShark!lulz@windfyre.net" ) &&
           ( last.charAt(0) == SYMB ) ) {
 
         connection.sendln("PRIVMSG " + botC + " :Yes Sir Chief!");
@@ -104,8 +104,6 @@ public class IRCTester {
     if(first.equals("PING")) {
       connection.sendln("PONG :" + last);
     }
-
-//    getSmartAss();
 
   }
 
