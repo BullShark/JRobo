@@ -186,6 +186,24 @@ public class FileReader {
   } // EOF method
   
   /**
+   * 
+   * @return Network address from the configuration
+   * @since 2013-02-19
+   */
+  public String getNetwork () {
+      return config.getNetwork();
+  }
+  
+  /**
+   * 
+   * @return the weather underground key
+   * @since 2013-02-19
+   */
+  public String getWundergroundKey (){
+      return config.getWundergroundKey();
+  }
+  
+  /**
    * gets the data from the configuration file
    * 
    * @since 2013-02-18
