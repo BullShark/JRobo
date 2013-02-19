@@ -68,14 +68,30 @@ public class IRCTester {
     connection.sendln("NICK " + botN);
     connection.sendln("USER RTFM 0 * :Microsoft Exterminator!");
 
+//    /*
+//     * Give the server 4 seconds to identify JRobo
+//     * Before attempting to join a channel
+//     */
+//    try {
+//      Thread.sleep(10000);
+//    } catch (InterruptedException ex) {
+//      Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
+//    }
     /*
-     * Give the server 4 seconds to identify JRobo
+     * Wait for server message:
+     * 001 JRobo :Welcome to the IRC Network
      * Before attempting to join a channel
      */
-    try {
-      Thread.sleep(10000);
-    } catch (InterruptedException ex) {
-      Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
+    while(( received = connection.recieveln()) != null ) {
+      this.divideTwo();
+
+      if(first.equals("PING")) { //@TODO Implement with regex
+        connection.sendln("PONG " + last);
+      }
+      
+      if(first.contains("001")) {
+        break;
+      }
     }
 
     connection.sendln("JOIN " + botC);
