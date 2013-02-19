@@ -130,7 +130,7 @@ public class JRobo {
             /*
              * Match JRobo in any case typed by another user
              */
-            if(last.matches("(?i).*JRobo.*")) {
+            if(last.matches("(?i).*JR[0o]b[0o].*")) {
               try {
                 user = first.substring(1, first.indexOf('!'));
                 connection.msgChannel(botC, fReader.getPhoneNumber(user));
