@@ -151,7 +151,10 @@ public class PirateBay {
         public String leechers;
 
         public String toString() {
-            return name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + "); ";
+            String mystring= name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
+           // System.out.println(mystring);
+           // String newString = new String(mystring.getBytes("UTF-8"));
+            return mystring;
         }
     }
 }
