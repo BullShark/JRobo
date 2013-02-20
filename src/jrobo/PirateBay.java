@@ -156,9 +156,14 @@ public class PirateBay {
         public String leechers;
 
         public String getColorString() {
-            String mystring= name + " <" + tinyurl + "> (" + Size + 
-                    MircColors.GREEN + " S:" + seeders + 
-                    MircColors.CYAN + " L:" + leechers + MircColors.NORMAL + MircColors.NORMAL + ") \n";
+            String mystring=
+              MircColors.BOLD + name + " " +
+              MircColors.GREEN + "<" + tinyurl + ">" +
+              MircColors.NORMAL + MircColors.BOLD + " (" + Size + 
+              MircColors.GREEN + " S:" + seeders +
+              MircColors.CYAN + " L:" + leechers + 
+              MircColors.NORMAL + MircColors.BOLD + ")\n";
+             
             return mystring;
         }
         public String toString() {
