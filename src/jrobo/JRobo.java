@@ -88,7 +88,7 @@ public class JRobo {
     while(( received = connection.recieveln()) != null ) {
       this.divideTwo();
 
-      if(first.equals("PING")) { //@TODO Implement with regex
+      if(first.equals("PING")) {
         connection.sendln("PONG " + last);
       }
       
@@ -121,7 +121,7 @@ public class JRobo {
        * A message was sent either to the channel
        * Or to the bot; Could be a command
        */
-      else if(first.contains("PRIVMSG")) { //TODO Implement with regex
+      else if(first.contains("PRIVMSG")) {
         try {
           if(last.charAt(0) == SYMB) {
             bCmd.bCommander(last);
