@@ -1,5 +1,4 @@
-Special Thanks to Programmers and Contributors to JRobo
-
+## Project Members
 
 BinaryStroke
 Developer
