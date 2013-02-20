@@ -30,6 +30,7 @@ public class UrbanJsonItem {
 
   public String getColorString() {
     definition = definition.replaceAll("\\r|\\n", " ");
+    definition = definition.replaceAll("\\s++", " ");
     String mystring=
       MircColors.BOLD + MircColors.GREEN + "Thumbs:" +
       MircColors.NORMAL + MircColors.WHITE + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") " +
@@ -40,6 +41,7 @@ public class UrbanJsonItem {
 
   public String toString() {
     definition = definition.replaceAll("\\r|\\n", " ");
+    definition = definition.replaceAll("\\s++", " ");
     return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
     
   }
