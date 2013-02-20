@@ -104,10 +104,10 @@ public class IRCTester {
 
 
       /* We have received a message from the owner */
-      if( first.startsWith( ":BullShark!lulz@windfyre.net" ) &&
+      if( first.startsWith( ":BullShark" ) &&
           ( last.charAt(0) == SYMB ) ) {
-
         connection.sendln("PRIVMSG " + botC + " :Yes Sir Chief!");
+        connection.sendln("PRIVMSG " + botC + " :blabla \\u035,12to be colored text and background\\u03 blabla");
         connection.sendln(last.substring(1));
       }
 /* Handle lines like these
