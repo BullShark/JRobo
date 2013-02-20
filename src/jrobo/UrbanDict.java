@@ -101,14 +101,21 @@ public class UrbanDict {
     return json;
   }
 
-  public String getFormattedUrbanDef() {
+  public String getFormattedUrbanDef(boolean hasColors) {
     
     gson = new GsonBuilder().setPrettyPrinting().create();
     UrbanJson uj = gson.fromJson(this.getJson(), UrbanJson.class);
 
     String output = "";
-    for(UrbanJsonItem uji : uj.list) {
-      output += uji.toString();
+    
+    if(hasColors) {
+      for(UrbanJsonItem uji : uj.list) {
+        output += uji.getColorString();
+      }
+    } else {
+      for(UrbanJsonItem uji : uj.list) {
+        output += uji.toString();
+      }
     }
     
     return output;
@@ -122,7 +129,7 @@ public class UrbanDict {
       System.err.println("Usage: java UrbanDict <word>");
       System.exit(-1);
     }
-    System.out.println(new UrbanDict(args[0]).getFormattedUrbanDef());
+    System.out.println(new UrbanDict(args[0]).getFormattedUrbanDef(false));
 
   } // EOF main
 
