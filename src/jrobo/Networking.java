@@ -41,7 +41,7 @@ public class Networking {
   private BufferedReader breader = null;
   private String received = null;
   /* Max chars per single irc message */
-  private final int MAXCHARS = 401;
+  private final int MAXCHARS = 400;
 
   public Networking() {
     super(); // Gets rid of java.lang.VerifyError
@@ -103,22 +103,51 @@ public class Networking {
     }
   }
 
-  //TODO Add JavaDoc here using NB
-  public boolean msgChannel(String chan, String msg) {
+  /*
+   * TODO Add JavaDoc here using NB
+   * 
+   * codes is used to color lines that are split
+   */
+  public boolean msgChannel(String chan, String msg, boolean colorLines, String codes) {
     boolean success = true;
     msg = addNewLines(msg);
     String[] msgArr = msg.split("\n");
-    for(int j=0;j<msgArr.length;j++) {
-      /*
-       * Meaning if one call to sendln returns false
-       * This entire function will return false
-       */
-      if( !sendln("PRIVMSG " + chan + " :" + msgArr[j]) ) {
-        success = false; 
+    char ch;
+
+    if(colorLines) {
+      for(int j=0;j<msgArr.length;j++) {
+        /*
+         * Meaning if one call to sendln returns false
+         * This entire function will return false
+         */
+        ch = msgArr[j].charAt(0);
+        if(j > 0 && !(ch == '\u0003' || ch == '\u000f' || ch == '\u0002' || ch == '\u001f' || ch == '\u0016')) {
+          if( !sendln("PRIVMSG " + chan + " :" + codes + msgArr[j]) ) {
+            success = false; 
+          } 
+        } else {
+          if( !sendln("PRIVMSG " + chan + " :" + msgArr[j]) ) {
+              success = false; 
+          }
+        }
+      }
+    } else {
+      for(int j=0;j<msgArr.length;j++) {
+        /*
+         * Meaning if one call to sendln returns false
+         * This entire function will return false
+         */
+        if( !sendln("PRIVMSG " + chan + " :" + msgArr[j]) ) {
+          success = false; 
+        }
       }
     }
     return success;
   }
+  public boolean msgChannel(String chan, String msg) {
+    return msgChannel(chan, msg, false, null);
+  }
+//  public boolean msgChannel(String chan, String msg) {
 
   public boolean msgUser(String user, String msg) {
     boolean success = true;
