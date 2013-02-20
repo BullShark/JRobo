@@ -64,13 +64,8 @@ public class BotCommand {
       case "wr":
         wakeRoomHelper();
         break;
-      case "re":
-        connection.msgChannel(botC, "Almost implemented!");
-//        connection.msgChannel(botC, RegexTestHarness.re(cmd, cmd));
-        break;
       case "google":
       case "g":
-      case "goog":
       case "lmgtfy":
       case "stfw": /* Show The Fucking World */
         /*
@@ -122,21 +117,6 @@ public class BotCommand {
       case "next":
         connection.msgChannel(botC, "Another satisfied customer, NEXT!!!");
         break;
-      case "wolframalpha":
-      case "wa":
-        connection.msgChannel(botC, "Do I look African to you?!");
-        break;
-      case "nicks":
-      case "names":
-      case "n":
-        //@TODO This will cause the bot to leave the channel
-        //execute NAMES #CHANNEL
-        //PART THAT CHANNEL
-        //AND COME BACK, UNLESS JOINING THE CHANNEL IS NOT REQUIRED
-        //TO GET A LIST OF NICKS/NAMES
-        //USE the getUsers() already implemented to help with this
-        connection.msgChannel(botC, "You implement it!");
-        break;
       case "invite-nick":
       case "in":
         if(!hasArgs || !(cmdArgs.split("\\s++").length > 0) ) { // Min 1 Arg
@@ -180,13 +160,6 @@ public class BotCommand {
         connection.msgChannel(botC, "Still being implemented!");
         //@TODO arg nick, number of times to invite
         break;
-
-      case "tinyurl":
-      case "tiny":
-      case "tu":
-        connection.msgChannel(botC, "Still being implemented!");
-        //@TODO arg nick, number of times to invite
-        break;
       case "raw":
       case "r":
       /* We have received a message from the owner */
@@ -218,10 +191,11 @@ public class BotCommand {
         break;
       case "list":
       case "l":
-        String str = "Available commands: google|g|goog|lmgtfy|stfw <search query>, " +
+        String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
           "wakeroom|wr, weather|w <location, zip, etc.>, " +
           "urbandict|ud <search query, list|l, help|h [cmd], " +
-          "next|n, mum|m [user], invite-channel|ic <channel>, invite-nick {nick} [# of times], " +
+          "next|n, mum|m [user], invite-channel|ic <channel>, " +
+          "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
           "quit|q"; //@TODO update list for ALL commands
         connection.msgChannel(botC, str);
         break;
