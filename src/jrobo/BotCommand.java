@@ -179,7 +179,7 @@ public class BotCommand {
         break;
       case "urbandict":
       case "ud":
-        connection.msgChannel(botC, new UrbanDict(cmdArgs).getFormattedUrbanDef(true));
+        connection.msgChannel(botC, new UrbanDict(cmdArgs).getFormattedUrbanDef(true, 3));
         break;
       case "quit":
       case "q":
