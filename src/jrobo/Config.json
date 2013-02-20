@@ -9,7 +9,7 @@
     "masters":["BullShark"],
     "hostmasks":[""],
     "command_symbol":"^",
-    "network":"localhost",
+    "network":"frequency.windfyre.net",
     "channel":"#blackhats",
     "wunderground_key":"abcd"
 }
