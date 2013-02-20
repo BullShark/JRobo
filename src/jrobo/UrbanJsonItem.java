@@ -30,10 +30,10 @@ public class UrbanJsonItem {
 
   public String getColorString() {
     String mystring=
-      MircColors.BOLD + "Thumbs:" +
-      MircColors.NORMAL + " (+" + thumbs_up + " -" + thumbs_down + ") " +
-      MircColors.BOLD + "Definition:" +
-      MircColors.NORMAL + " " + definition + "\n";
+      MircColors.BOLD + MircColors.GREEN + "Thumbs:" +
+      MircColors.NORMAL + MircColors.WHITE + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") " +
+      MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:" +
+      MircColors.NORMAL + MircColors.WHITE + MircColors.BOLD + " " + definition + "\n"; 
     return mystring;
   }
 
