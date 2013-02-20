@@ -27,44 +27,7 @@
 
 // See color chart at
 // http://www.weechat.org/files/doc/stable/weechat_user.en.html#command_line
-public class MircColors {
-  public String colorWhite(String msg) {
-    return msg;
-  }
-  public String colorWhite(String msg) {
-    return msg;
-  }
-  public String colorDarkBlue(String msg) {
-    return msg;
-  }
-  public String colorDarkGreen(String msg) {
-    return msg;
-  }
-  public String colorLightRed(String msg) {
-    return msg;
-  }
-  public String colorMagenta(String msg) {
-    return msg;
-  }
-  public String colorOrange(String msg) {
-    return msg;
-  }
-  public String colorYellow(String msg) {
-    return msg;
-  }
-  public String colorLightGreen(String msg) {
-    return msg;
-  }
-  public String colorLightBlue(String msg) {
-    return msg;
-  }
-  public String colorLightMagenta(String msg) {
-    return msg;
-  }
-  public String colorGray(String msg) {
-    return msg;
-  }
-  public String colorLightGray(String msg) {
-    return msg;
+public enum MircColors {
+    
   }
 }
