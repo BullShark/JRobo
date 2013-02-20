@@ -193,7 +193,7 @@ public class BotCommand {
       case "l":
         String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
           "wakeroom|wr, weather|w <location, zip, etc.>, " +
-          "urbandict|ud <search query, list|l, help|h [cmd], " +
+          "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
           "next|n, mum|m [user], invite-channel|ic <channel>, " +
           "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
           "quit|q"; //@TODO update list for ALL commands
