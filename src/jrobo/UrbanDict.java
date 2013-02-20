@@ -110,20 +110,21 @@ public class UrbanDict {
     
     if(hasColors) {
       for(UrbanJsonItem uji : uj.list) {
-        if(limit <= 0) {
+        if(limit > 0) {
+          output += uji.getColorString();
+          limit--;
+        } else {
           break;
         }
-        output += uji.getColorString();
-        limit--;
       }
     } else {
       for(UrbanJsonItem uji : uj.list) {
-        if(limit <= 0) {
+        if(limit > 0) {
+          output += uji.toString();
+          limit--;
+        } else {
           break;
         }
-        output += uji.getColorString();
-        limit--;
-        output += uji.toString();
       }
     }
     
