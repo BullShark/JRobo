@@ -110,7 +110,7 @@ public class PirateBay {
         return json;
     }
 
-    public String getFormattedResult() {
+    public String getFormattedResult(boolean hasColors) {
 
         gson = new GsonBuilder().setPrettyPrinting().create();
         PirateBayJsonItem[] results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
@@ -118,8 +118,14 @@ public class PirateBay {
         String output = "";
 //        System.out.println(results.length);
 //        System.out.println(results.toString());
-        for (PirateBayJsonItem result : results) {
+        if(hasColors) {
+          for (PirateBayJsonItem result : results) {
+            output += result.getColorString();
+          }
+        } else {
+          for (PirateBayJsonItem result : results) {
             output += result.toString();
+          }
         }
         return output;
     }
@@ -133,7 +139,7 @@ public class PirateBay {
 //      System.exit(-1);
 //    }
        // System.out.println(new PirateBay("-s matrix reloaded"));
-       System.out.println(new PirateBay("-s matrix reloaded").getFormattedResult());
+       System.out.println(new PirateBay("-s matrix reloaded").getFormattedResult(false));
 
     } // EOF main
 
@@ -149,10 +155,14 @@ public class PirateBay {
         public String seeders;
         public String leechers;
 
+        public String getColorString() {
+            String mystring= name + " <" + tinyurl + "> (" + Size + 
+                    MircColors.GREEN + " S:" + seeders + 
+                    MircColors.CYAN + " L:" + leechers + MircColors.NORMAL + MircColors.NORMAL + ") \n";
+            return mystring;
+        }
         public String toString() {
             String mystring= name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
-           // System.out.println(mystring);
-           // String newString = new String(mystring.getBytes("UTF-8"));
             return mystring;
         }
     }

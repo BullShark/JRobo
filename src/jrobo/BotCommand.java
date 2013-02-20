@@ -231,7 +231,7 @@ public class BotCommand {
         connection.msgChannel(botC, "You implement it!");
         break;
       case "pirate":
-           connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult());
+        connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult(true));
         break;
       default:
         connection.msgChannel(botC, "Unknown command received: " + cmd);
