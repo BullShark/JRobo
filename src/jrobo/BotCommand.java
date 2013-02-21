@@ -122,6 +122,9 @@ public class BotCommand {
       case "pirate":
         pirateHelper();
         break;
+      case "version":
+        versionHelper();
+        break;
       default:
         unknownCmdHelper();
     //@TODO Accept raw irc commands from bot owner to be sent by the bot
@@ -373,7 +376,7 @@ public class BotCommand {
       "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
       "next|n, mum|m [user], invite-channel|ic <channel>, " +
       "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-      "quit|q"; //@TODO update list for ALL commands
+      "version, quit|q"; //@TODO update list for ALL commands
     connection.msgChannel(botC, str);
   }
 
@@ -392,5 +395,12 @@ public class BotCommand {
   private void helpHelper() {
     //@TODO man page style usage for help blah
     connection.msgChannel(botC, "You implement it!");
+  }
+
+  private void versionHelper() {
+    connection.msgChannel(botC,
+      MircColors.BOLD + MircColors.BLUE + "JRobo" +
+      MircColors.NORMAL + MircColors.BOLD + MircColors.WHITE " - " +
+      MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "https://github.com/BullShark/JRobo");
   }
 } // EOF class
