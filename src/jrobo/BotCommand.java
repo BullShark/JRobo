@@ -33,6 +33,9 @@ public class BotCommand {
   private UrbanDict urban;
   private JRobo jRobo;
   private final char SYMB;
+  private String cmd;
+  private String cmdArgs;
+  private boolean hasArgs;
 
   public BotCommand(Networking connection, FileReader fReader, JRobo jRobo) {
     /* Objects */
@@ -43,6 +46,11 @@ public class BotCommand {
     /* Data-types */
     this.SYMB = fReader.getCmdSymb();
     this.botC = fReader.getChan();
+
+    /* Cmds */
+    cmd = "";
+    cmdArgs = "";
+    hasArgs = false;
   }
 
   /*
@@ -51,10 +59,9 @@ public class BotCommand {
    * fullCmd includes the SYMB, command, and args
    */
   public void bCommander(String fullCmd) {
-    String cmd = getCmd(fullCmd);
-    String cmdArgs = getCmdArgs(fullCmd);
-
-    boolean hasArgs = cmdArgs.isEmpty() ? false : true;
+    cmd = getCmd(fullCmd);
+    cmdArgs = getCmdArgs(fullCmd);
+    hasArgs = cmdArgs.isEmpty() ? false : true;
 
     /*
      * Java 7 Switch With Strings!!!!!
@@ -68,136 +75,45 @@ public class BotCommand {
       case "g":
       case "lmgtfy":
       case "stfw": /* Show The Fucking World */
-        /*
-         * Puts together a String in the form
-         * http://lmgtfy.com/?q=test+a+b+c
-         */
-        if(!hasArgs) {
-          helpMsg(cmd);
-        } else {
-          String googleUrl = "http://lmgtfy.com/?q=".concat(getFormattedQuery(cmdArgs));
-          connection.msgChannel(botC, googleUrl);
-        }
+        googleHelper();
         break;
       case "weather":
       case "w":
-        /*
-         * Put together a String in the form
-         * http://www.google.com/ig/api?weather=Mountain+View
-         */
-
-//        connection.msgUser("BullShark", weatherUrl);
-//        if(!hasArgs) {
-//          helpMsg(cmd);
-//        } else {
-//          connection.msgChannel(botC, new Weather().getSummary(cmdArgs));
-//          connection.msgChannel(botC, "^g weather " + cmdArgs);
-//        }
-        //TODO Parse and return the formatted JSON or XML instead
-        connection.msgChannel(botC, new Weather().getXml(cmdArgs));
+        weatherHelper();
         break;
       case "mum":
       case "m":
-        try {
-        if(!hasArgs) {
-          connection.msgChannel(botC , fReader.getMommaJoke( getRandChanUser() ) );
-        } else {
-          int temp = cmdArgs.indexOf(' ');
-          if(temp != -1) {
-            connection.msgChannel(botC , fReader.getMommaJoke( cmdArgs.substring(0, temp) ) );
-          } else {
-            connection.msgChannel(botC , fReader.getMommaJoke(cmdArgs) );
-          }
-        }
-        } catch(NullPointerException ex) {
-            Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-            connection.msgUser(this.fReader.getMaster(), "FIX ^mum; FileReader.java not reading input!!!");
-        }
+        mumHelper();
         break;
       case "next":
-        connection.msgChannel(botC, "Another satisfied customer, NEXT!!!");
+        nextHelper();
         break;
       case "invite-nick":
       case "in":
-        if(!hasArgs || !(cmdArgs.split("\\s++").length > 0) ) { // Min 1 Arg
-          //@TODO Replace code with getHelp(cmd); //Overloaded method
-          connection.msgChannel(botC, "Usage: " + SYMB + "invite-nick {nick} [# of times]" );
-        } else {
-          connection.msgChannel(this.botC, "Roger that.");
-          String cmdArgsArr[] = cmdArgs.split("\\s++");
-          int numInvites = 50; // Default value
-          if(cmdArgsArr.length < 1) {
-            try{
-              Thread.sleep(1500);
-              numInvites = Integer.getInteger(cmdArgsArr[1]);
-              //TODO Make the below string a variable that is mutable to be set by the XML configuration file
-              if(connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
-//               this.jRobo. 
-              }
-            } catch(Exception ex) { //Find out exactly what exceptions are thrown
-              Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-            }
-          }
-          for(int x = 0; x < numInvites; x++) {
-            connection.sendln("INVITE " + botC + " " + cmdArgsArr[0]);
-          }
-        }
+        inviteNickHelper();
         break;
       case "invite-channel":
       case "ic":
-        //TODO Implement and use FileReader.getNickAndHost() instead
-        if(jRobo.getFirst().startsWith(":BullShark!~lulz@windfyre.net" ) && hasArgs ) {
-          String chan = cmdArgs.split(" ")[0], users;
-          connection.sendln("PART " + botC + " :BSOD");
-          connection.sendln("JOIN :" + chan);
-          users = getUsers(chan);
-          connection.sendln("PART " + chan + " :BSOD");
-          connection.sendln("JOIN :" + botC);
-          connection.msgChannel(botC, users);
-        } else {
-        ; // printHelp(ic);
-        }
-        connection.msgChannel(botC, "Still being implemented!");
-        //@TODO arg nick, number of times to invite
+        inviteChannelHelper();
         break;
       case "raw":
       case "r":
-      /* We have received a message from the owner */
-        //TODO Make the below string a variable that is mutable to be set by the XML configuration file
-        if( jRobo.getFirst().startsWith( ":BullShark!debian-tor@gateway/tor-sasl/nanomachine" ) ) {
-          connection.sendln("PRIVMSG " + botC + " :Yes Sir Chief!");
-          String rawStr = jRobo.getLast();
-          rawStr = rawStr.substring(rawStr.indexOf(' '));
-          connection.sendln(rawStr);
-          try {
-           Thread.sleep(500);
-            connection.msgChannel(botC, connection.recieveln());
-          } catch (InterruptedException | NullPointerException ex) {
-            Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-          }
-        }
+        rawHelper();
         break;
       case "urbandict":
       case "ud":
-        connection.msgChannel(botC, new UrbanDict(cmdArgs).getFormattedUrbanDef(true, 3), true, MircColors.BOLD);
+        urbanDictionaryHelper();
         break;
       case "quit":
       case "q":
-        connection.msgChannel(botC, "Detenation devices to nuclear reactors! (Zer0 is pressing the "
-        + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
+        quitHelper();
         break;
       case "^":
-        connection.msgChannel(botC, "Hello iAmerikan");
+        doNothingHelper();
         break;
       case "list":
       case "l":
-        String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
-          "wakeroom|wr, weather|w <location, zip, etc.>, " +
-          "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
-          "next|n, mum|m [user], invite-channel|ic <channel>, " +
-          "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-          "quit|q"; //@TODO update list for ALL commands
-        connection.msgChannel(botC, str);
+        listHelper();
         break;
       case "help":
       case "h":
@@ -205,10 +121,10 @@ public class BotCommand {
         connection.msgChannel(botC, "You implement it!");
         break;
       case "pirate":
-        connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult(true));
+        pirateHelper();
         break;
       default:
-        connection.msgChannel(botC, "Unknown command received: " + cmd);
+        unknownCmdHelper();
     } // EOF switch
 
     //@TODO Java Regex TestHarness results!!!!!!!!!!!
@@ -306,6 +222,9 @@ public class BotCommand {
     }
     return users;
   }
+  /*****************************************************************************
+   * Helper methods
+   */
 
   private void wakeRoomHelper() {
     String users = getUsers();
@@ -316,9 +235,156 @@ public class BotCommand {
     }
   }
 
-  private void helpMsg(String cmd) {
-    connection.msgChannel(botC, "Invalid usage of command: " + cmd);
+  /*
+   * Puts together a String in the form
+   * http://lmgtfy.com/?q=test+a+b+c
+   */
+  private void googleHelper() {
+    if(!hasArgs) {
+      helpMsg(cmd);
+    } else {
+      String googleUrl = "http://lmgtfy.com/?q=".concat(getFormattedQuery(cmdArgs));
+      connection.msgChannel(botC, googleUrl);
+    }
+  }
 
+
+  /*****************************************************************************
+   * Help command messages
+   */
+  private void helpMsg(String cmd) {
     //TODO help string for each command
+    connection.msgChannel(botC, "Invalid usage of command: " + cmd);
+  }
+
+  private void weatherHelper() {
+        /*
+         * Put together a String in the form
+         * http://www.google.com/ig/api?weather=Mountain+View
+         */
+
+//        connection.msgUser("BullShark", weatherUrl);
+//        if(!hasArgs) {
+//          helpMsg(cmd);
+//        } else {
+//          connection.msgChannel(botC, new Weather().getSummary(cmdArgs));
+//          connection.msgChannel(botC, "^g weather " + cmdArgs);
+//        }
+        //TODO Parse and return the formatted JSON or XML instead
+//        connection.msgChannel(botC, new Weather().getXml(cmdArgs));
+    //TODO Re-implement all the use wunderground.net
+  }
+
+  private void mumHelper() {
+        try {
+          if(!hasArgs) {
+            connection.msgChannel(botC, fReader.getMommaJoke(getRandChanUser()));
+          } else {
+            int temp = cmdArgs.indexOf(' ');
+            if(temp != -1) {
+              connection.msgChannel(botC, fReader.getMommaJoke(cmdArgs.substring(0, temp)));
+            } else {
+              connection.msgChannel(botC , fReader.getMommaJoke(cmdArgs) );
+            }
+          }
+        } catch(NullPointerException ex) {
+          Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+          connection.msgUser(fReader.getMaster(), "FIX ^mum; FileReader.java not reading input!!!");
+        }
+  }
+
+  private void nextHelper() {
+        connection.msgChannel(botC, "Another satisfied customer, NEXT!!!");
+  }
+
+  private void inviteNickHelper() {
+        if(!hasArgs || !(cmdArgs.split("\\s++").length > 0) ) { // Min 1 Arg
+          //@TODO Replace code with getHelp(cmd); //Overloaded method
+          connection.msgChannel(botC, "Usage: " + SYMB + "invite-nick {nick} [# of times]" );
+        } else {
+          connection.msgChannel(this.botC, "Roger that.");
+          String cmdArgsArr[] = cmdArgs.split("\\s++");
+          int numInvites = 50; // Default value
+          if(cmdArgsArr.length < 1) {
+            try{
+              Thread.sleep(1500);
+              numInvites = Integer.getInteger(cmdArgsArr[1]);
+              //TODO Make the below string a variable that is mutable to be set by the XML configuration file
+              if(connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
+//               this.jRobo. 
+              }
+            } catch(Exception ex) { //Find out exactly what exceptions are thrown
+              Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+          for(int x = 0; x < numInvites; x++) {
+            connection.sendln("INVITE " + botC + " " + cmdArgsArr[0]);
+          }
+        }
+  }
+
+  private void inviteChannelHelper() {
+        //TODO Implement and use FileReader.getNickAndHost() instead
+        if(jRobo.getFirst().startsWith(fReader.getMaster()) && hasArgs ) {
+          String chan = cmdArgs.split(" ")[0], users;
+          connection.sendln("PART " + botC + " :BSOD");
+          connection.sendln("JOIN :" + chan);
+          users = getUsers(chan);
+          connection.sendln("PART " + chan + " :BSOD");
+          connection.sendln("JOIN :" + botC);
+          connection.msgChannel(botC, users);
+        } else {
+        ; // printHelp(ic);
+        }
+        connection.msgChannel(botC, "Still being implemented!");
+        //@TODO arg nick, number of times to invite
+  }
+
+  private void rawHelper() {
+      /* We have received a message from the owner */
+        //TODO Make the below string a variable that is mutable to be set by the XML configuration file
+        if( jRobo.getFirst().startsWith( ":BullShark!debian-tor@gateway/tor-sasl/nanomachine" ) ) {
+          connection.sendln("PRIVMSG " + botC + " :Yes Sir Chief!");
+          String rawStr = jRobo.getLast();
+          rawStr = rawStr.substring(rawStr.indexOf(' '));
+          connection.sendln(rawStr);
+          try {
+           Thread.sleep(500);
+            connection.msgChannel(botC, connection.recieveln());
+          } catch (InterruptedException | NullPointerException ex) {
+            Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        }
+  }
+
+  private void urbanDictionaryHelper() {
+        connection.msgChannel(botC, new UrbanDict(cmdArgs).getFormattedUrbanDef(true, 3), true, MircColors.BOLD);
+  }
+
+  private void quitHelper() {
+        connection.msgChannel(botC, "Detenation devices to nuclear reactors! (Zer0 is pressing the "
+        + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
+  }
+
+  private void listHelper() {
+        String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
+          "wakeroom|wr, weather|w <location, zip, etc.>, " +
+          "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
+          "next|n, mum|m [user], invite-channel|ic <channel>, " +
+          "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
+          "quit|q"; //@TODO update list for ALL commands
+        connection.msgChannel(botC, str);
+  }
+
+  private void doNothingHelper() {
+        ;
+  }
+
+  private void pirateHelper() {
+        connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult(true));
+  }
+
+  private void unknownCmdHelper() {
+        connection.msgChannel(botC, "Unknown command received: " + cmd);
   }
 } // EOF class
