@@ -400,7 +400,7 @@ public class BotCommand {
   private void versionHelper() {
     connection.msgChannel(botC,
       MircColors.BOLD + MircColors.BLUE + "JRobo" +
-      MircColors.NORMAL + MircColors.BOLD + MircColors.WHITE " - " +
+      MircColors.NORMAL + MircColors.BOLD + MircColors.WHITE + " - " +
       MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "https://github.com/BullShark/JRobo");
   }
 } // EOF class
