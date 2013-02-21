@@ -5,8 +5,8 @@
 
 {
     "name": "JRobo",
-    "second_name": "^JRobo^"
-    "password":"",
+    "second_name": "^JRobo^",
+    "password": "",
     "masters":["BullShark"],
     "hostmasks":[""],
     "command_symbol":"^",
