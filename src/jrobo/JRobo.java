@@ -79,7 +79,7 @@ public class JRobo {
     
     connection.sendln("NICK " + botN);
     connection.sendln("PASS " + botP);
-    connection.sendln("USER Tux 0 * :Microsoft Exterminator!");
+    connection.sendln("USER JRobo 0 * :Microsoft Exterminator!");
     /*
      * Wait for server message:
      * 001 JRobo :Welcome to the IRC Network
