@@ -146,9 +146,28 @@ public class Networking {
     }
     return success;
   }
+
+  /*
+   * Wrapper method
+   */
   public boolean msgChannel(String chan, String msg) {
     return msgChannel(chan, msg, false, null);
   }
+  
+  /*
+   * Overwridden and wrapper method
+   */
+  public boolean msgChannel(String chan, String[] msgArr, boolean colorLines, String codes) {
+    boolean success = true;
+    for(String s : msgArr) {
+      if(!msgChannel(chan, s, colorLines, codes)) {
+        success = false;
+      }
+    }
+    
+    return success;
+  }
+
 //  public boolean msgChannel(String chan, String msg) {
 
   public boolean msgUser(String user, String msg) {
@@ -180,16 +199,16 @@ public class Networking {
   }
   
   public boolean noticeUser(String user, String msg) {
-      boolean ok = true;
+    boolean ok = true;
       
-      String[] msgSplit = msg.split("\n");
+    String[] msgSplit = msg.split("\n");
       
-      for(int i=0;i<msgSplit.length;i++){
+    for(int i=0;i<msgSplit.length;i++){
       if(!sendln("NOTICE " + user + " :" + msgSplit[i]) ) {
         ok = false;
-      }
+       }
      }
-      return ok;
+     return ok;
   }
 
   /*
@@ -198,68 +217,68 @@ public class Networking {
    * This is used to prevent a message being truncated by IRC because
    * It exceeds MAXCHARS
    */
-private String addNewLines(String command) {
-        String[] lines = wrapText(command, 400);
-        String tmp = "";
-        for (int i = 0; i < lines.length; i++) {
-            tmp += lines[i] + "\n";
-        }
-        return tmp;
+    private String addNewLines(String command) {
+      String[] lines = wrapText(command, 400);
+      String tmp = "";
+      for (int i = 0; i < lines.length; i++) {
+          tmp += lines[i] + "\n";
+      }
+      return tmp;
     }
 
     static String[] wrapText(String text, int len) {
-        // return empty array for null text
-        if (text == null) {
-            return new String[]{};
+      // return empty array for null text
+      if (text == null) {
+          return new String[]{};
+      }
+
+      // return text if len is zero or less
+      if (len <= 0) {
+        return new String[]{text};
+      }
+
+      // return text if less than length
+      if (text.length() <= len) {
+        return new String[]{text};
+      }
+
+      char[] chars = text.toCharArray();
+      Vector lines = new Vector();
+      StringBuffer line = new StringBuffer();
+      StringBuffer word = new StringBuffer();
+
+      for (int i = 0; i < chars.length; i++) {
+        word.append(chars[i]);
+
+        if (chars[i] == ' ') {
+          if ((line.length() + word.length()) > len) {
+            lines.add(line.toString());
+            line.delete(0, line.length());
+          }
+
+          line.append(word);
+          word.delete(0, word.length());
         }
+      }
 
-        // return text if len is zero or less
-        if (len <= 0) {
-            return new String[]{text};
+      // handle any extra chars in current word
+      if (word.length() > 0) {
+        if ((line.length() + word.length()) > len) {
+          lines.add(line.toString());
+          line.delete(0, line.length());
         }
-
-        // return text if less than length
-        if (text.length() <= len) {
-            return new String[]{text};
-        }
-
-        char[] chars = text.toCharArray();
-        Vector lines = new Vector();
-        StringBuffer line = new StringBuffer();
-        StringBuffer word = new StringBuffer();
-
-        for (int i = 0; i < chars.length; i++) {
-            word.append(chars[i]);
-
-            if (chars[i] == ' ') {
-                if ((line.length() + word.length()) > len) {
-                    lines.add(line.toString());
-                    line.delete(0, line.length());
-                }
-
-                line.append(word);
-                word.delete(0, word.length());
-            }
-        }
-
-        // handle any extra chars in current word
-        if (word.length() > 0) {
-            if ((line.length() + word.length()) > len) {
-                lines.add(line.toString());
-                line.delete(0, line.length());
-            }
-            line.append(word);
+          line.append(word);
         }
 
         // handle extra line
         if (line.length() > 0) {
-            lines.add(line.toString());
+          lines.add(line.toString());
         }
 
         String[] ret = new String[lines.size()];
         int c = 0; // counter
         for (Enumeration e = lines.elements(); e.hasMoreElements(); c++) {
-            ret[c] = (String) e.nextElement();
+          ret[c] = (String) e.nextElement();
         }
 
         return ret;
