@@ -117,8 +117,7 @@ public class BotCommand {
         break;
       case "help":
       case "h":
-        //@TODO man page style usage for help blah
-        connection.msgChannel(botC, "You implement it!");
+        helpHelper();
         break;
       case "pirate":
         pirateHelper();
@@ -220,14 +219,6 @@ public class BotCommand {
   }
 
   /*****************************************************************************
-   * Help command messages
-   */
-  private void helpMsg(String cmd) {
-    //TODO help string for each command
-    connection.msgChannel(botC, "Invalid usage of command: " + cmd);
-  }
-
-  /*****************************************************************************
    * Helper methods
    */
   private void wakeRoomHelper() {
@@ -245,7 +236,7 @@ public class BotCommand {
    */
   private void googleHelper() {
     if(!hasArgs) {
-      helpMsg(cmd);
+      helpWrapper(cmd);
     } else {
       String googleUrl = "http://lmgtfy.com/?q=".concat(getFormattedQuery(cmdArgs));
       connection.msgChannel(botC, googleUrl);
@@ -260,7 +251,7 @@ public class BotCommand {
 
 //        connection.msgUser("BullShark", weatherUrl);
 //        if(!hasArgs) {
-//          helpMsg(cmd);
+//          helpWrapper(cmd);
 //        } else {
 //          connection.msgChannel(botC, new Weather().getSummary(cmdArgs));
 //          connection.msgChannel(botC, "^g weather " + cmdArgs);
@@ -361,16 +352,6 @@ public class BotCommand {
     + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
   }
 
-  private void listHelper() {
-    //TODO Color me with MircColors
-    String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
-      "wakeroom|wr, weather|w <location, zip, etc.>, " +
-      "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
-      "next|n, mum|m [user], invite-channel|ic <channel>, " +
-      "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-      "quit|q"; //@TODO update list for ALL commands
-    connection.msgChannel(botC, str);
-  }
 
   /*
    * Does nothing
@@ -382,7 +363,34 @@ public class BotCommand {
     connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult(true));
   }
 
+  /*****************************************************************************
+   * Help messages
+   */
+  private void listHelper() {
+    //TODO Color me with MircColors
+    String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
+      "wakeroom|wr, weather|w <location, zip, etc.>, " +
+      "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
+      "next|n, mum|m [user], invite-channel|ic <channel>, " +
+      "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
+      "quit|q"; //@TODO update list for ALL commands
+    connection.msgChannel(botC, str);
+  }
+
   private void unknownCmdHelper() {
     connection.msgChannel(botC, "Unknown command received: " + cmd);
+  }
+
+  /*
+   * Wrapper Help command messages
+   */
+  private void helpWrapper(String cmd) {
+    //TODO help string for each command
+    connection.msgChannel(botC, "Invalid usage of command: " + cmd);
+  }
+
+  private void helpHelper() {
+    //@TODO man page style usage for help blah
+    connection.msgChannel(botC, "You implement it!");
   }
 } // EOF class
