@@ -125,13 +125,9 @@ public class BotCommand {
         break;
       default:
         unknownCmdHelper();
-    } // EOF switch
-
-    //@TODO Java Regex TestHarness results!!!!!!!!!!!
-    //@TODO Use blogger api to search my blog
     //@TODO Accept raw irc commands from bot owner to be sent by the bot
     //@TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
-
+    } // EOF switch
   } // EOF function
 
   /*
@@ -222,10 +218,18 @@ public class BotCommand {
     }
     return users;
   }
+
+  /*****************************************************************************
+   * Help command messages
+   */
+  private void helpMsg(String cmd) {
+    //TODO help string for each command
+    connection.msgChannel(botC, "Invalid usage of command: " + cmd);
+  }
+
   /*****************************************************************************
    * Helper methods
    */
-
   private void wakeRoomHelper() {
     String users = getUsers();
     if(users != null) {
@@ -248,15 +252,6 @@ public class BotCommand {
     }
   }
 
-
-  /*****************************************************************************
-   * Help command messages
-   */
-  private void helpMsg(String cmd) {
-    //TODO help string for each command
-    connection.msgChannel(botC, "Invalid usage of command: " + cmd);
-  }
-
   private void weatherHelper() {
   /*
    * Put together a String in the form
@@ -275,115 +270,119 @@ public class BotCommand {
 //TODO Re-implement all the use wunderground.net
 }
 
-private void mumHelper() {
-  try {
-    if(!hasArgs) {
-      connection.msgChannel(botC, fReader.getMommaJoke(getRandChanUser()));
-    } else {
-      int temp = cmdArgs.indexOf(' ');
-      if(temp != -1) {
-        connection.msgChannel(botC, fReader.getMommaJoke(cmdArgs.substring(0, temp)));
+  private void mumHelper() {
+    try {
+      if(!hasArgs) {
+        connection.msgChannel(botC, fReader.getMommaJoke(getRandChanUser()));
       } else {
-        connection.msgChannel(botC , fReader.getMommaJoke(cmdArgs) );
+        int temp = cmdArgs.indexOf(' ');
+        if(temp != -1) {
+          connection.msgChannel(botC, fReader.getMommaJoke(cmdArgs.substring(0, temp)));
+        } else {
+          connection.msgChannel(botC , fReader.getMommaJoke(cmdArgs) );
+        }
+      }
+    } catch(NullPointerException ex) {
+      Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+      connection.msgUser(fReader.getMaster(), "FIX ^mum; FileReader.java not reading input!!!");
+    }
+  }
+
+  private void nextHelper() {
+    connection.msgChannel(botC, "Another satisfied customer, NEXT!!!");
+  }
+
+  private void inviteNickHelper() {
+    if(!hasArgs || !(cmdArgs.split("\\s++").length > 0) ) { // Min 1 Arg
+      //@TODO Replace code with getHelp(cmd); //Overloaded method
+      connection.msgChannel(botC, "Usage: " + SYMB + "invite-nick {nick} [# of times]" );
+    } else {
+      connection.msgChannel(this.botC, "Roger that.");
+      String cmdArgsArr[] = cmdArgs.split("\\s++");
+      int numInvites = 50; // Default value
+      if(cmdArgsArr.length < 1) {
+        try{
+          Thread.sleep(1500);
+          numInvites = Integer.getInteger(cmdArgsArr[1]);
+          //TODO Make the below string a variable that is mutable to be set by the XML configuration file
+          if(connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
+  //               this.jRobo. 
+          }
+        } catch(Exception ex) { //Find out exactly what exceptions are thrown
+          Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+      for(int x = 0; x < numInvites; x++) {
+        connection.sendln("INVITE " + botC + " " + cmdArgsArr[0]);
       }
     }
-  } catch(NullPointerException ex) {
-    Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-    connection.msgUser(fReader.getMaster(), "FIX ^mum; FileReader.java not reading input!!!");
   }
-}
 
-private void nextHelper() {
-  connection.msgChannel(botC, "Another satisfied customer, NEXT!!!");
-}
+  private void inviteChannelHelper() {
+    //TODO Implement and use FileReader.getNickAndHost() instead
+    if(jRobo.getFirst().startsWith(fReader.getMaster()) && hasArgs ) {
+      String chan = cmdArgs.split(" ")[0], users;
+      connection.sendln("PART " + botC + " :BSOD");
+      connection.sendln("JOIN :" + chan);
+      users = getUsers(chan);
+      connection.sendln("PART " + chan + " :BSOD");
+      connection.sendln("JOIN :" + botC);
+      connection.msgChannel(botC, users);
+    } else {
+    ; // printHelp(ic);
+    }
+    connection.msgChannel(botC, "Still being implemented!");
+    //@TODO arg nick, number of times to invite
+  }
 
-private void inviteNickHelper() {
-  if(!hasArgs || !(cmdArgs.split("\\s++").length > 0) ) { // Min 1 Arg
-    //@TODO Replace code with getHelp(cmd); //Overloaded method
-    connection.msgChannel(botC, "Usage: " + SYMB + "invite-nick {nick} [# of times]" );
-  } else {
-    connection.msgChannel(this.botC, "Roger that.");
-    String cmdArgsArr[] = cmdArgs.split("\\s++");
-    int numInvites = 50; // Default value
-    if(cmdArgsArr.length < 1) {
-      try{
-        Thread.sleep(1500);
-        numInvites = Integer.getInteger(cmdArgsArr[1]);
-        //TODO Make the below string a variable that is mutable to be set by the XML configuration file
-        if(connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
-//               this.jRobo. 
-        }
-      } catch(Exception ex) { //Find out exactly what exceptions are thrown
+  private void rawHelper() {
+  /* We have received a message from the owner */
+    //TODO Make the below string a variable that is mutable to be set by the XML configuration file
+    if( jRobo.getFirst().startsWith( ":BullShark!debian-tor@gateway/tor-sasl/nanomachine" ) ) {
+      connection.sendln("PRIVMSG " + botC + " :Yes Sir Chief!");
+      String rawStr = jRobo.getLast();
+      rawStr = rawStr.substring(rawStr.indexOf(' '));
+      connection.sendln(rawStr);
+      try {
+       Thread.sleep(500);
+        connection.msgChannel(botC, connection.recieveln());
+      } catch (InterruptedException | NullPointerException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
-    for(int x = 0; x < numInvites; x++) {
-      connection.sendln("INVITE " + botC + " " + cmdArgsArr[0]);
-    }
   }
-}
 
-private void inviteChannelHelper() {
-  //TODO Implement and use FileReader.getNickAndHost() instead
-  if(jRobo.getFirst().startsWith(fReader.getMaster()) && hasArgs ) {
-    String chan = cmdArgs.split(" ")[0], users;
-    connection.sendln("PART " + botC + " :BSOD");
-    connection.sendln("JOIN :" + chan);
-    users = getUsers(chan);
-    connection.sendln("PART " + chan + " :BSOD");
-    connection.sendln("JOIN :" + botC);
-    connection.msgChannel(botC, users);
-  } else {
-  ; // printHelp(ic);
+  private void urbanDictionaryHelper() {
+    connection.msgChannel(botC, new UrbanDict(cmdArgs).getFormattedUrbanDef(true, 3), true, MircColors.BOLD);
   }
-  connection.msgChannel(botC, "Still being implemented!");
-  //@TODO arg nick, number of times to invite
-}
 
-private void rawHelper() {
-/* We have received a message from the owner */
-  //TODO Make the below string a variable that is mutable to be set by the XML configuration file
-  if( jRobo.getFirst().startsWith( ":BullShark!debian-tor@gateway/tor-sasl/nanomachine" ) ) {
-    connection.sendln("PRIVMSG " + botC + " :Yes Sir Chief!");
-    String rawStr = jRobo.getLast();
-    rawStr = rawStr.substring(rawStr.indexOf(' '));
-    connection.sendln(rawStr);
-    try {
-     Thread.sleep(500);
-      connection.msgChannel(botC, connection.recieveln());
-    } catch (InterruptedException | NullPointerException ex) {
-      Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-    }
+  private void quitHelper() {
+    connection.msgChannel(botC, "Detenation devices to nuclear reactors! (Zer0 is pressing the "
+    + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
   }
-}
 
-private void urbanDictionaryHelper() {
-  connection.msgChannel(botC, new UrbanDict(cmdArgs).getFormattedUrbanDef(true, 3), true, MircColors.BOLD);
-}
+  private void listHelper() {
+    //TODO Color me with MircColors
+    String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
+      "wakeroom|wr, weather|w <location, zip, etc.>, " +
+      "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
+      "next|n, mum|m [user], invite-channel|ic <channel>, " +
+      "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
+      "quit|q"; //@TODO update list for ALL commands
+    connection.msgChannel(botC, str);
+  }
 
-private void quitHelper() {
-  connection.msgChannel(botC, "Detenation devices to nuclear reactors! (Zer0 is pressing the "
-  + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
-}
+  /*
+   * Does nothing
+   */
+  private void doNothingHelper() {
+  }
 
-private void listHelper() {
-  String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
-    "wakeroom|wr, weather|w <location, zip, etc.>, " +
-    "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
-    "next|n, mum|m [user], invite-channel|ic <channel>, " +
-    "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-    "quit|q"; //@TODO update list for ALL commands
-  connection.msgChannel(botC, str);
-}
+  private void pirateHelper() {
+    connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult(true));
+  }
 
-private void doNothingHelper() {
-}
-
-private void pirateHelper() {
-  connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult(true));
-}
-
-private void unknownCmdHelper() {
-  connection.msgChannel(botC, "Unknown command received: " + cmd);
+  private void unknownCmdHelper() {
+    connection.msgChannel(botC, "Unknown command received: " + cmd);
   }
 } // EOF class
