@@ -5,6 +5,7 @@
 
 {
     "name": "JRobo",
+    "second_name": "^JRobo^"
     "password":"",
     "masters":["BullShark"],
     "hostmasks":[""],
