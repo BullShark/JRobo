@@ -191,6 +191,7 @@ public class JRobo {
   public String getLast() {
     return last;
   }
+
   /*
    * One of the few public methods
    * From this class that is public
