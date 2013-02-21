@@ -8,4 +8,4 @@ teslasolutions (Muhammad Sajid)
 Developer
 
 BullShark (Christopher Lemire)
-Founder and current lead developer
+Founder and lead developer
