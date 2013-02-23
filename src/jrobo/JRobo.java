@@ -51,7 +51,7 @@ public class JRobo {
 
   public JRobo() {
     connection = new Networking();
-    fReader = new FileReader(connection);
+    fReader = new FileReader();
     jokes = new Jokes (connection);
     bCmd = new BotCommand(connection, fReader, this);
 
