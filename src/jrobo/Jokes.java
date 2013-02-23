@@ -23,6 +23,7 @@ import java.util.ArrayList;
 /**
  * This class is the new home for the joke functions from FileReader
  * @author BinaryStroke <binarystroke@null.net>
+ * @since 2013-02-23
  */
 public class Jokes {
     
@@ -46,12 +47,14 @@ public class Jokes {
     
   }
   
-    /*
+  /**
    * On success, the bot will receive phone numbers
    * From other IRC members
    * Pass null in as String to not precede message
    * With "User: "
    * Be sure to check for null return when calling this
+   * @param user  direct the pickup joke at the user
+   * @return a pickup Joke or null
    */
   public String getPhoneNumber(String user) {
     if(pickUpJokes.isEmpty()) {
@@ -72,10 +75,12 @@ public class Jokes {
     }
   }
   
-   /*
+  /**
    * Replaces "Yo momma" with "User's momma"
    * Pass null in as String to not use replacement
    * Be sure to check for null return when calling this
+   * @param user  direct the momma joke at the user
+   * @return a momma Joke or null
    */
   public String getMommaJoke(String user) {
     if(mommaJokes.isEmpty()) {
