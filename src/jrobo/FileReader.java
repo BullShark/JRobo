@@ -44,6 +44,8 @@ public class FileReader {
   
   public FileReader () {
       
+    config_file = "Config.json";
+    getConfig();
   }
   
   public FileReader(Networking connection) {
