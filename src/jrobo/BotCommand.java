@@ -266,7 +266,6 @@ public class BotCommand {
 //TODO Re-implement all the use wunderground.net
 }
 
-/* Sends a your momma joke to a random user */
   private void mumHelper() {
       
       Jokes joke =new Jokes(this.connection);
