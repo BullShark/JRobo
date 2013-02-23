@@ -26,9 +26,9 @@ package jrobo;
  * @author DrChaos
  */
 public class TermColors {
-    StringBuilder sbuilder;
+    staticStringBuilder sbuilder;
    
-    public enum Color {
+    public static enum Color {
         BLACK(0), RED(1), GREEN(2),
         YELLOW(3), BLUE(4), MAGENTA(5),
         CYAN(6), WHITE(7);
@@ -44,7 +44,7 @@ public class TermColors {
         }
     } 
 
-    public enum Attribute {
+    public static enum Attribute {
         RESET(0), BRIGHT(1), DIM(2),
         UNDERLINE(3), BLINK(4),
         REVERSE(7), HIDDEN(8);
@@ -74,10 +74,19 @@ public class TermColors {
         sbuilder.append(';');
 
         sbuilder.append('m');
+        
+        sbuilder.append(str);
+
+        // Reset attributes and colors
+        sbuilder.append(0x1B);
+        sbuilder.append('[');
+        sbuilder.append(Attribute.RESET.getValue());
+        sbuilder.append('m');
 
         return sbuilder.toString();
     }
 
     public static void main(String[] args) {
-        System.out.println(this.getString("Testing testing 123", this.
+        System.out.println(getString("Testing testing 123", Color.RED, Color.YELLOW, Attribute.UNDERLINE));
+    }
 }
