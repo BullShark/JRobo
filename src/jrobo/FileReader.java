@@ -137,58 +137,7 @@ public class FileReader {
     return true;
   }
   
-  /*
-   * On success, the bot will receive phone numbers
-   * From other IRC members
-   * Pass null in as String to not precede message
-   * With "User: "
-   * Be sure to check for null return when calling this
-   */
-  public String getPhoneNumber(String user) {
-    if(pickUpJokes.isEmpty()) {
 
-      //Inform channel
-      connection.noticeChan(getChan(), "[***]RELOADING AMMUNITION");
-
-      //Reload the jokes
-      fileToArrayList("pickup.txt", pickUpJokes);
-    }
-    if(user == null) {
-  
-      /* Random at 0 because the List was already shuffled */
-      return pickUpJokes.remove(0);
-    } else {
-
-      return user + ", " + pickUpJokes.remove(0);
-    }
-  }
-  
-  /*
-   * Replaces "Yo momma" with "User's momma"
-   * Pass null in as String to not use replacement
-   * Be sure to check for null return when calling this
-   */
-  public String getMommaJoke(String user) {
-    if(mommaJokes.isEmpty()) {
-  
-      //Inform owner in PM
-      connection.msgUser(getMaster(), "OUT OF PHONE NUMBERS!!!");
-   
-      //Inform channel
-      connection.noticeChan(getChan(), "[***]RELOADING AMMUNITION");
-
-      //Reload the jokes
-      fileToArrayList("MomJokes.txt", mommaJokes);
-    }
-    if(user == null) {
-  
-      /* Random at 0 because the List was already shuffled */
-      return mommaJokes.remove(0);
-    } else {
-  
-      return mommaJokes.remove(0).replaceFirst("Yo", user + "'s");
-    }
-  } // EOF method
   
   /**
    * 
