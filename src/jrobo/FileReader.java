@@ -42,6 +42,10 @@ public class FileReader {
   private Networking connection;
   private Config config;
   
+  public FileReader () {
+      
+  }
+  
   public FileReader(Networking connection) {
     /*
      * @TODO ...
@@ -111,7 +115,7 @@ public class FileReader {
     return config.getCmdSymb();
   }
   
-  private boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
+  public boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
    out.println("[+++]\tReading: " + fileName);
 
    BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
