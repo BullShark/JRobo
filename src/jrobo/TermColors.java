@@ -26,19 +26,58 @@ package jrobo;
  * @author DrChaos
  */
 public class TermColors {
-    private enum BGColors {
-      BLACK = 40, RED, GREEN,
-      YELLOW, BLUE, MAGENTA,
-      CYAN, WHITE
-    };
-    private enum FGColors {
-      BLACK = 30, RED, GREEN,
-      YELLOW, BLUE, MAGENTA,
-      CYAN, WHITE
-    };
-    public enum Colors {
-      BLACK = 0, RED, GREEN,
-      YELLOW, BLUE, MAGENTA,
-      CYAN, WHITE
-    };
+    StringBuilder sbuilder;
+   
+    public enum Color {
+        BLACK(0), RED(1), GREEN(2),
+        YELLOW(3), BLUE(4), MAGENTA(5),
+        CYAN(6), WHITE(7);
+
+        private int value;    
+
+        private Color(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    } 
+
+    public enum Attribute {
+        RESET(0), BRIGHT(1), DIM(2),
+        UNDERLINE(3), BLINK(4),
+        REVERSE(7), HIDDEN(8);
+        private int value;    
+
+        private Attribute(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+    
+    public static String getString(String str, Color fg, Color bg, Attribute attrib) {
+        sbuilder = new StringBuilder();
+        sbuilder.append(0x1B);
+        sbuilder.append('[');
+
+        sbuilder.append(attrib.getValue());
+        sbuilder.append(';');
+
+        sbuilder.append(fg.getValue() + 30);
+        sbuilder.append(';');
+
+        sbuilder.append(bg.getValue() + 40);
+        sbuilder.append(';');
+
+        sbuilder.append('m');
+
+        return sbuilder.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(this.getString("Testing testing 123", this.
 }
