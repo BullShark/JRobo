@@ -153,7 +153,7 @@ public class BotCommand {
   private String getCmdArgs(String fullCmd) {
     //@TODO divded half of the work getFormattedQuery is doing to here
     try {
-      return fullCmd.split("\\^\\w++", 2)[1].trim();
+      return fullCmd.split("\\" + this.SYMB +"\\w++", 2)[1].trim();
     } catch(ArrayIndexOutOfBoundsException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
       return ""; /* Means no args!!! */
@@ -266,17 +266,19 @@ public class BotCommand {
 //TODO Re-implement all the use wunderground.net
 }
 
-/* Sends a your momma joke to a random user */
   private void mumHelper() {
+      
+      Jokes joke =new Jokes(this.connection);
+      
     try {
       if(!hasArgs) {
-        connection.msgChannel(botC, fReader.getMommaJoke(getRandChanUser()));
+        connection.msgChannel(botC, joke.getMommaJoke(getRandChanUser()));
       } else {
         int temp = cmdArgs.indexOf(' ');
         if(temp != -1) {
-          connection.msgChannel(botC, fReader.getMommaJoke(cmdArgs.substring(0, temp)));
+          connection.msgChannel(botC, joke.getMommaJoke(cmdArgs.substring(0, temp)));
         } else {
-          connection.msgChannel(botC , fReader.getMommaJoke(cmdArgs) );
+          connection.msgChannel(botC , joke.getMommaJoke(cmdArgs) );
         }
       }
     } catch(NullPointerException ex) {
