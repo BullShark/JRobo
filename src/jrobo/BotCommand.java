@@ -17,6 +17,8 @@
  *
  */
 
+//TODO javadoc all
+// http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
 package jrobo;
 
 import java.util.logging.Level;
