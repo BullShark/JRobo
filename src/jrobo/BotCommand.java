@@ -153,7 +153,7 @@ public class BotCommand {
   private String getCmdArgs(String fullCmd) {
     //@TODO divded half of the work getFormattedQuery is doing to here
     try {
-      return fullCmd.split("\\^\\w++", 2)[1].trim();
+      return fullCmd.split("\\" + this.SYMB +"\\w++", 2)[1].trim();
     } catch(ArrayIndexOutOfBoundsException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
       return ""; /* Means no args!!! */
