@@ -267,15 +267,18 @@ public class BotCommand {
 }
 
   private void mumHelper() {
+      
+      Jokes joke =new Jokes(this.connection);
+      
     try {
       if(!hasArgs) {
-        connection.msgChannel(botC, fReader.getMommaJoke(getRandChanUser()));
+        connection.msgChannel(botC, joke.getMommaJoke(getRandChanUser()));
       } else {
         int temp = cmdArgs.indexOf(' ');
         if(temp != -1) {
-          connection.msgChannel(botC, fReader.getMommaJoke(cmdArgs.substring(0, temp)));
+          connection.msgChannel(botC, joke.getMommaJoke(cmdArgs.substring(0, temp)));
         } else {
-          connection.msgChannel(botC , fReader.getMommaJoke(cmdArgs) );
+          connection.msgChannel(botC , joke.getMommaJoke(cmdArgs) );
         }
       }
     } catch(NullPointerException ex) {
