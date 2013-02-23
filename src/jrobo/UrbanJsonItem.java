@@ -33,9 +33,9 @@ public class UrbanJsonItem {
     definition = definition.replaceAll("\\s++", " ");
     String mystring=
       MircColors.BOLD + MircColors.GREEN + "Thumbs:" +
-      MircColors.NORMAL + MircColors.WHITE + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") " +
+      MircColors.NORMAL + MircColors + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") " +
       MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:" +
-      MircColors.NORMAL + MircColors.WHITE + MircColors.BOLD + " " + definition + "\n"; 
+      MircColors.NORMAL + MircColors + MircColors.BOLD + " " + definition + "\n"; 
     return mystring;
   }
 
