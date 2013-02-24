@@ -31,6 +31,7 @@ public class JRobo {
   /* Defined Objects */
   private final Networking connection;
   private final FileReader fReader;
+  private final Jokes jokes;
   private final BotCommand bCmd;
 
   /* Networking */
@@ -50,7 +51,8 @@ public class JRobo {
 
   public JRobo() {
     connection = new Networking();
-    fReader = new FileReader(connection);
+    fReader = new FileReader();
+    jokes = new Jokes (connection);
     bCmd = new BotCommand(connection, fReader, this);
 
     /* Set Attributes/State for this JRobo Object */
@@ -133,7 +135,7 @@ public class JRobo {
             if(last.matches("(?i).*JR[0o]b[0o].*")) {
               try {
                 user = first.substring(1, first.indexOf('!'));
-                connection.msgChannel(botC, fReader.getPhoneNumber(user));
+                connection.msgChannel(botC, jokes.getPhoneNumber(user));
               } catch(StringIndexOutOfBoundsException ex) {
                 Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
               }
