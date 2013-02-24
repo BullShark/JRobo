@@ -35,14 +35,14 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author chris
+ * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
 public class Networking {
   private Socket sock = null;
   private BufferedWriter bwriter = null;
   private BufferedReader breader = null;
   private String received = null;
-  /* Max chars per single irc message */
+  /* TODO javadoc Max chars per single irc message */
   private final int MAXCHARS = 400;
 
   public Networking() {
@@ -72,8 +72,14 @@ public class Networking {
     }
   }
 
-  /*
+  /**
    * For sending in raw IRC protocol
+   * @param command
+   * The raw irc line to send
+   * @return
+   * Successful sending
+   * @throws
+   * IOException Network related issues
    */
   public boolean sendln(String command) {
     try {
@@ -91,8 +97,10 @@ public class Networking {
     }
   }
 
-  /*
+  /**
    * For receiving in raw IRC protocol
+   * @return
+   * Successful sending
    */
   public String recieveln() {
     try {
@@ -105,10 +113,17 @@ public class Networking {
     }
   }
 
-  /*
-   * TODO Add JavaDoc here using NB
+  /**
+   * TODO write me
+   * @param chan
+   * Channel to send the message
+   * @param msg
+   * Message to send to the channel
+   * @param colorLines
+   * If true, use color and attribute codes
+   * @param codes
    * 
-   * codes is used to color lines that are split
+   * @return
    */
   public boolean msgChannel(String chan, String msg, boolean colorLines, String codes) {
     boolean success = true;
@@ -147,15 +162,23 @@ public class Networking {
     return success;
   }
 
-  /*
+  /**
    * Wrapper method
+   * @param chan
+   * @param msg
+   * @return
    */
   public boolean msgChannel(String chan, String msg) {
     return msgChannel(chan, msg, false, null);
   }
   
-  /*
+  /**
    * Overwridden and wrapper method
+   * @param chan
+   * @param msgArr
+   * @param colorLines
+   * @param codes
+   * @return
    */
   public boolean msgChannel(String chan, String[] msgArr, boolean colorLines, String codes) {
     boolean success = true;
@@ -170,6 +193,12 @@ public class Networking {
 
 //  public boolean msgChannel(String chan, String msg) {
 
+  /**
+   *
+   * @param user
+   * @param msg
+   * @return
+   */
   public boolean msgUser(String user, String msg) {
     boolean success = true;
     String[] msgArr = msg.split("\n");
@@ -185,6 +214,12 @@ public class Networking {
     return success;
   } // EOF method
   
+  /**
+   *
+   * @param chan
+   * @param msg
+   * @return
+   */
   public boolean noticeChan(String chan, String msg){
       boolean ok = true;
       
@@ -198,6 +233,12 @@ public class Networking {
       return ok;
   }
   
+  /**
+   *
+   * @param user
+   * @param msg
+   * @return
+   */
   public boolean noticeUser(String user, String msg) {
     boolean ok = true;
       
