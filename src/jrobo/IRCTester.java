@@ -30,6 +30,7 @@ public class IRCTester {
 
   /* Defined Objects */
   private Networking connection = null;
+  private Jokes jokes = null;
   private BotCommand bCmd = null;
 
   /* Networking */
@@ -48,7 +49,7 @@ public class IRCTester {
 
   public IRCTester() {
     connection = new Networking();
-
+    jokes = new Jokes(connection);
     fReader = new FileReader(connection);
 
     /* Set Attributes/State for this JRobo Object */
@@ -146,9 +147,9 @@ public class IRCTester {
     randomBoolean = (int) (Math.random() * 10 % 2);
 
     if(randomBoolean == 1) {
-      connection.sendln("PRIVMSG " + botC + " :" + fReader.getMommaJoke(null));
+      connection.sendln("PRIVMSG " + botC + " :" + jokes.getMommaJoke(null));
     } else {
-      connection.sendln("PRIVMSG " + botC + " :" + fReader.getPhoneNumber(null));
+      connection.sendln("PRIVMSG " + botC + " :" + jokes.getPhoneNumber(null));
     }
   }
 
