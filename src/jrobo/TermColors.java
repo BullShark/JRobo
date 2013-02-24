@@ -26,7 +26,7 @@ package jrobo;
  * @author DrChaos
  */
 public class TermColors {
-    staticStringBuilder sbuilder;
+    static StringBuilder sbuilder;
    
     public static enum Color {
         BLACK(0), RED(1), GREEN(2),
