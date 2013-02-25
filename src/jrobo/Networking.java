@@ -45,11 +45,15 @@ public class Networking {
   /* TODO javadoc Max chars per single irc message */
   private final int MAXCHARS = 400;
 
-  public Networking() {
+  public Networking(String network) {
     super(); // Gets rid of java.lang.VerifyError
+    
+    String[] server = network.split(":");
+    String hostname = server[0];
+    int port = Integer.parseInt(server[1]);
+    
     try {
-      //TODO Get server from config file instead
-      sock = new Socket("frequency.windfyre.net", 6667); //TODO SSL conn on port 6697
+      sock = new Socket(hostname, port); //TODO SSL conn on port 6697
     } catch (UnknownHostException ex) {
       Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
       err.println("Possible DNS resolution failed");
