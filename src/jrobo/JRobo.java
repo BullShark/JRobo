@@ -50,8 +50,8 @@ public class JRobo {
   private String user = null;
 
   public JRobo() {
-    connection = new Networking();
     fReader = new FileReader();
+    connection = new Networking(fReader.getNetwork());
     jokes = new Jokes (connection);
     bCmd = new BotCommand(connection, fReader, this);
 

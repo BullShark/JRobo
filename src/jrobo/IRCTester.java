@@ -48,9 +48,9 @@ public class IRCTester {
   private final FileReader fReader;
 
   public IRCTester() {
-    connection = new Networking();
     jokes = new Jokes(connection);
     fReader = new FileReader(connection);
+    connection = new Networking(fReader.getNetwork());
 
     /* Set Attributes/State for this JRobo Object */
 //    botN = "JavaBeans";
