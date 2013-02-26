@@ -10,7 +10,7 @@
     "masters":["BullShark"],
     "hostmasks":[""],
     "command_symbol":"^",
-    "network":"frequency.windfyre.net",
+    "network":"frequency.windfyre.net:6667",
     "channel":"#blackhats",
     "wunderground_key":"abcd"
 }
