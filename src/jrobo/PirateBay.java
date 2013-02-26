@@ -40,7 +40,8 @@ public class PirateBay {
 
     /* Miscelanous */
     //TODO Fix bug, if the url is not available, the bot will throw an exception and crash
-    private static final String QUERY_URL = "http://teslasolution.com/applications/thepiratebay.php?name=";
+//    private static final String QUERY_URL = "http://teslasolution.com/applications/thepiratebay.php?name=";
+    private static final String QUERY_URL = "http://expectusafterlun.ch/thepiratebay.php";
     private String def;
     private String json;
     private String s_name="blackhats";
