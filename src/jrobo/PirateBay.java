@@ -108,7 +108,6 @@ public class PirateBay {
             rd.close();
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -119,6 +118,11 @@ public class PirateBay {
 
         gson = new GsonBuilder().setPrettyPrinting().create();
         PirateBayJsonItem[] results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
+
+        /* Fixes NullPointerException Bug */
+        if(results == null) {
+          return "";
+        }
 
         String output = "";
 //        System.out.println(results.length);
