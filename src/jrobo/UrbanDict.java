@@ -45,7 +45,7 @@ public class UrbanDict {
   private String fullUrl;
 
   /* Miscelanous */
-  private static final String QUERY_URL = "http://www.urbandictionary.com/iphone/search/define?term=";
+  private static final String QUERY_URL = "http://www.uurbandictionary.com/iphone/search/define?term=";
   private String def;
   private String json;
   private String word;
@@ -106,30 +106,39 @@ public class UrbanDict {
     gson = new GsonBuilder().setPrettyPrinting().create();
     UrbanJson uj = gson.fromJson(this.getJson(), UrbanJson.class);
 
+
     String output = "";
     String[] outArr = new String[limit];
     int count = 0;
-    
-    if(hasColors) {
-      for(UrbanJsonItem uji : uj.list) {
-        if(limit > 0) {
-          //output += uji.getColorString();
-          outArr[count++] = uji.getColorString();
-          limit--;
-        } else {
-          break;
+   
+
+    /* Fixes NullPointerException Bug that occurs if the URL DNE */
+    try {
+      if(hasColors) {
+        for(UrbanJsonItem uji : uj.list) {
+          if(limit > 0) {
+            //output += uji.getColorString();
+            outArr[count++] = uji.getColorString();
+            limit--;
+          } else {
+            break;
+          }
+        }
+      } else {
+        for(UrbanJsonItem uji : uj.list) {
+          if(limit > 0) {
+            //output += uji.toString();
+            outArr[count++] = uji.toString();
+            limit--;
+          } else {
+            break;
+          }
         }
       }
-    } else {
-      for(UrbanJsonItem uji : uj.list) {
-        if(limit > 0) {
-          //output += uji.toString();
-          outArr[count++] = uji.toString();
-          limit--;
-        } else {
-          break;
-        }
-      }
+    } catch (NullPointerException ex) {
+      ex.printStackTrace();
+      String[] emptyArr = {""};
+      return emptyArr;
     }
     
 //    return output;
@@ -137,7 +146,7 @@ public class UrbanDict {
   }
 
   /*
-   *A main method for testing this class
+   * A main method for testing this class
    */
   public static void main(String[] args) {
     if(args.length == 0) {
