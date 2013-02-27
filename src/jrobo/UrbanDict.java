@@ -45,7 +45,7 @@ public class UrbanDict {
   private String fullUrl;
 
   /* Miscelanous */
-  private static final String QUERY_URL = "http://www.uurbandictionary.com/iphone/search/define?term=";
+  private static final String QUERY_URL = "http://www.urbandictionary.com/iphone/search/define?term=";
   private String def;
   private String json;
   private String word;
