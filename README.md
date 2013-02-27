@@ -1,6 +1,6 @@
 ## Project Members
 
-BinaryStroke
+BinaryStroke (StompinBroknGlas on irc)
 Developer
 
 teslasolutions (Muhammad Sajid)
@@ -25,12 +25,12 @@ Requirements
  * OpenJDK or Oracle/Sun JRE/JDK
 
 ### Debian/Linux Mint/Ubuntu
-    $ sudo apt-get install openjdk ant
+    $ sudo apt-get install openjdk-7-jre ant
     $ git clone https://github.com/BullShark/JRobo.git
     $ cd JRobo
     $ ant run
     $ # Or
-    $ 
+    $ java -classpath lib/gson-2.2.2.jar:. -jar dist/JRobo.jar
 
 
 
