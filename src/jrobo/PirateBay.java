@@ -119,7 +119,7 @@ public class PirateBay {
         gson = new GsonBuilder().setPrettyPrinting().create();
         PirateBayJsonItem[] results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
 
-        /* Fixes NullPointerException Bug */
+        /* Fixes NullPointerException Bug that occurs if the URL DNE */
         if(results == null) {
           return "";
         }
