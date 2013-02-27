@@ -50,4 +50,4 @@ This works best under Netbeans, but you can choose a different development envir
 
 OR:
 
-From Netbean, use the Git plugin to clone this Netbeans project.
+From Netbeans, use the Git plugin to clone this Netbeans project.
