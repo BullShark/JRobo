@@ -38,6 +38,7 @@ public class BotCommand {
   private String cmd;
   private String cmdArgs;
   private boolean hasArgs;
+  private ListColors lc;
 
   public BotCommand(Networking connection, FileReader fReader, JRobo jRobo) {
     /* Objects */
@@ -53,6 +54,9 @@ public class BotCommand {
     cmd = "";
     cmdArgs = "";
     hasArgs = false;
+
+    /* Misc */
+    lc = new ListColors();
   }
 
   /*
@@ -404,14 +408,64 @@ public class BotCommand {
    * Help messages
    */
   private void listHelper() {
-    //TODO Color me with MircColors like man pages (with most PAGER)
+    /*
     String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
       "wakeroom|wr, weather|w <location, zip, etc.>, " +
       "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
       "next|n, mum|m [user], invite-channel|ic <channel>, " +
       "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
       "isup <url>, version, quit|q"; //@TODO update list for ALL commands
-    connection.msgChannel(botC, str);
+    */
+
+    String noColorStr = "Available commands: google|g|lmgtfy|stfw <search query>, " +
+      "wakeroom|wr, weather|w <location, zip, etc.>, " +
+      "urbandict|ud <search query, list|l, raw|r <raw irc line>, help|h [cmd], " +
+      "next|n, mum|m [user], invite-channel|ic <channel>, " +
+      "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
+      "isup <url>, version, quit|q"; //@TODO update list for ALL commands
+
+    /*
+     * GREEN = dark color
+     * CYAN = light color
+     * 
+     * cmds|alias = dark
+     * flags = dark
+     * args = light
+     * special characters = no bold, no color
+     * such as [] <> ...
+     */
+    String colorStr;
+    colorStr =
+      lc.attributeBold("Available commands: ") +
+      lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN) +
+      lc.colorToken("<search query>, ", MircColors.CYAN) +
+      lc.colorToken("wakeroom|wr, ", MircColors.GREEN) +
+      lc.colorToken("weather|w ", MircColors.GREEN) +
+      lc.colorToken("<location, zip, etc.>, ", MircColors.CYAN) +
+      lc.colorToken("urbandict|ud ", MircColors.GREEN) +
+      lc.colorToken("<search query, ", MircColors.CYAN) +
+      lc.colorToken("list|l, ", MircColors.GREEN) +
+      lc.colorToken("raw|r ", MircColors.GREEN) +
+      lc.colorToken("<raw irc line>, ", MircColors.CYAN) +
+      lc.colorToken("help|h ", MircColors.GREEN) +
+      lc.colorToken("[cmd], ", MircColors.CYAN) +
+      lc.colorToken("next|n, ", MircColors.GREEN) +
+      lc.colorToken("mum|m ", MircColors.GREEN) +
+      lc.colorToken("[user], ", MircColors.CYAN) +
+      lc.colorToken("invite-channel|ic ", MircColors.GREEN) +
+      lc.colorToken("<channel>, ", MircColors.CYAN) +
+      lc.colorToken("invite-nick|in ", MircColors.GREEN) +
+      lc.colorToken("<nick> ", MircColors.CYAN) +
+      lc.colorToken("[# of times], ", MircColors.CYAN) +
+      lc.colorToken("pirate ", MircColors.GREEN) +
+      lc.colorToken("[-s|-l|-d] ", MircColors.CYAN) +
+      lc.colorToken("<search query>, ", MircColors.CYAN) +
+      lc.colorToken("isup ", MircColors.GREEN) +
+      lc.colorToken("<url>, ", MircColors.CYAN) +
+      lc.colorToken("version, ", MircColors.GREEN) +
+      lc.colorToken("quit|q", MircColors.GREEN)
+           ;
+    connection.msgChannel(botC, colorStr);
   }
 
   private void unknownCmdHelper() {

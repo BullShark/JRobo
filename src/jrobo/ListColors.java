@@ -118,4 +118,13 @@ public class ListColors extends MircColors {
       return colorCode + str + NORMAL;
     }
   }
+
+  /**
+   *
+   * @param str
+   * @return
+   */
+  public String colorToken(String str, String colorCode) {
+    return NORMAL + BOLD + colorCode + str;
+  }
 }
