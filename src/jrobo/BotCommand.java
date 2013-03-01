@@ -412,7 +412,7 @@ public class BotCommand {
       "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
       "next|n, mum|m [user], invite-channel|ic <channel>, " +
       "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-      "version, quit|q"; //@TODO update list for ALL commands
+      "isup <url>, version, quit|q"; //@TODO update list for ALL commands
     connection.msgChannel(botC, str);
   }
 
