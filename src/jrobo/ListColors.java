@@ -40,11 +40,15 @@ public class ListColors extends MircColors {
      * command|cmdalias 
      */
     String colorStr = "";
+    char ch;
     for(int x=0; x < line.length(); x++) {
-      if(line.charAt(x) == '|' || line.charAt(x) == '<' || line.charAt(x) == '>' ||
-         line.charAt(x) == '[' || line.charAt(x) == ']') {
+      ch = line.charAt(x);
+      if(ch == '|' || ch == '<' || ch == '>' ||
+         ch == '[' || ch == ']') {
         /* Debug */
-        colorStr += BOLD + line.substring(x, (x+1)) + NORMAL;
+//        if(line.charAt(x) >= '\u000300')
+//        lastColorCode
+        colorStr += super.MAGENTA + line.substring(x, (x+1)) + NORMAL;
       } else {
         colorStr += line.substring(x, (x+1));
       }
