@@ -34,38 +34,23 @@ public class ListColors extends MircColors {
    * A line in the form: command|cmdalias <required> 
    * @return
    */
-  public String colorSynopsisLine(String cmd, String opt, String arg) {
+  public String colorSynopsisLine(String line) {
     /* http://i.imagebanana.com/img/n8316h4e/manman_001.png
-     * Colors these lines and more:
-     * 
-     * Available commands: 
-     * google|g|lmgtfy|stfw <search query>, 
-     * wakeroom|wr, 
-     * weather|w <location, zip, etc.>, 
-     * urbandict|ud <search query>, 
-     * list|l, raw|r <raw irc line>, 
-     * help|h [cmd], 
-     * next|n, mum|m [user], invite-channel|ic <channel>, 
-     * invite-nick|in <nick> [# of times], 
-     * pirate [-s|-l|-d] <search query>, 
-     * isup <url>, 
-     * version, 
-     * quit|q
-     */
-    /*
      * Syntax:
      * command|cmdalias 
      */
     String colorStr = "";
-    if(cmd.contains("|")) {
-      String[] cmdArr = cmd.split("|");
-      for(int x=0; x<cmdArr.length; x++) {
-        colorStr += GREEN;
+    for(int x=0; x < line.length(); x++) {
+      if(line.charAt(x) == '|' || line.charAt(x) == '<' || line.charAt(x) == '>' ||
+         line.charAt(x) == '[' || line.charAt(x) == ']') {
+        /* Debug */
+        colorStr += BOLD + line.substring(x, (x+1)) + NORMAL;
+      } else {
+        colorStr += line.substring(x, (x+1));
       }
     }
-    
 
-    return "";
+    return colorStr;
   }
 
   /**
@@ -125,6 +110,25 @@ public class ListColors extends MircColors {
    * @return
    */
   public String colorToken(String str, String colorCode) {
+    // [-s|-l|-d]
+    // NORMAL BOLD CYAN "[-s" NORMAL "|" BOLD CYAN "-l" NORMAL "|" BOLD CYAN "-d]
+    // 
+    String colorStr = "";
+    if(str.contains("|")) {
+      String[] strArr = str.split("|");
+
+    // NORMAL BOLD GREEN  NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL BOLD GREEN  
+      for(int x=0; x<strArr.length; x++) {
+        if(x == 0 || x == strArr.length-1) {
+          colorStr += " NORMAL " + "BOLD" + " GREEN " + strArr[x];
+        } else {
+          colorStr += " NORMAL " + "|";
+        }
+      }
+
+    }
+    System.out.println(colorStr);
+  //  return colorStr;
     return NORMAL + BOLD + colorCode + str;
   }
 }
