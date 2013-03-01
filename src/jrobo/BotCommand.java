@@ -271,8 +271,8 @@ public class BotCommand {
     if(!hasArgs) {
       helpWrapper(cmd);
     } else {
-      String testUrl = "http://www.downforeveryoneorjustme.com/".concat(getFormattedQuery(cmdArgs));
-//      connection.msg
+      //TODO replace botC
+      connection.msgChannel(botC, new DownForEveryone().isUp(getFormattedQuery(cmdArgs)));
     }
   }
 
