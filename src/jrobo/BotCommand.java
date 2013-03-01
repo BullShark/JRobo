@@ -270,7 +270,7 @@ public class BotCommand {
       helpWrapper(cmd);
     } else {
       //TODO replace botC
-      connection.msgChannel(botC, new DownForEveryone().isUp(getFormattedQuery(cmdArgs)));
+      connection.msgChannel(botC, new DownForEveryone().isUp(getFormattedQuery(cmdArgs), true));
     }
   }
 
