@@ -56,12 +56,7 @@ public class DownForEveryone {
     isup = false;
   }
 
-  /**
-   * 
-   * @param location
-   * @return
-   */
-  public boolean isUp(String location) {
+  public String isUp(String url) {
     try {
       /* Create a URL obj from strings */
       url =  new URL((QUERY_URL.concat(location)).replace(" ", "%20"));
@@ -86,7 +81,14 @@ public class DownForEveryone {
       ex.printStackTrace();
     }
 
-    return isup;
+    String result = "";
+    //TODO Use ternary here?
+    //TODO Colors
+    if(isup) {
+      result = url + "IS UP!";
+    } else {
+      result = url + "IS DOWN!";
+    }
   }
 
   /*
