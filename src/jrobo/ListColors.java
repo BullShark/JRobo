@@ -23,5 +23,32 @@ package jrobo;
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
 public class ListColors extends MircColors {
+  /* Get all inherited members */
+  public ListColors() {
+    super();
+  }
+
+  /**
+   * Colors a String in the form: cmd 
+   * @param line
+   * @return
+   */
+  public String colorSynopsisLine(String line) {
+    /* Colors these lines and more:
+     * 
+     * Available commands: 
+     * google|g|lmgtfy|stfw <search query>, 
+     * wakeroom|wr, weather|w <location, zip, etc.>, 
+     * urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], 
+     * next|n, mum|m [user], invite-channel|ic <channel>, 
+     * invite-nick|in <nick> [# of times], 
+     * pirate [-s|-l|-d] <search query>, 
+     * isup <url>, 
+     * version, 
+     * quit|q
+     */
+
+    return "";
+  }
 
 }
