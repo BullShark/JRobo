@@ -60,7 +60,7 @@ public class ListColors extends MircColors {
     if(cmd.contains("|")) {
       String[] cmdArr = cmd.split("|");
       for(int x=0; x<cmdArr.length; x++) {
-        colorStr += super.GREEN;
+        colorStr += GREEN;
       }
     }
     
@@ -111,7 +111,7 @@ public class ListColors extends MircColors {
    * @param bold
    * @return
    */
-  public String color(String colorCode, boolean bold) {
+  public String color(String str, String colorCode, boolean bold) {
     if(bold) {
       return BOLD + colorCode + str + NORMAL;
     } else {
