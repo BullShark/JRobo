@@ -100,7 +100,7 @@ public class DownForEveryone {
     if(isup) {
       if(colors) {
         result = 
-          MircColors.BOLD + MircColors.GREEN + testUrl + 
+          MircColors.BOLD + MircColors.CYAN + testUrl + 
           MircColors.BLUE + " IS UP!";
       } else {
         result = testUrl + " IS UP!";
@@ -108,7 +108,7 @@ public class DownForEveryone {
     } else {
       if(colors) {
         result = 
-          MircColors.BOLD + MircColors.GREEN + testUrl + 
+          MircColors.BOLD + MircColors.CYAN + testUrl + 
           MircColors.BLUE + " IS DOWN!";
       } else {
         result = testUrl + " IS DOWN!";
