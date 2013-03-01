@@ -111,6 +111,8 @@ public class BotCommand {
         quitHelper();
         break;
       case "^":
+      case "^^":
+      case "^.^":
         doNothingHelper();
         break;
       case "list":
