@@ -54,7 +54,16 @@ public class DownForEveryone {
     isup = false;
   }
 
-  public String isUp(String testUrl) {
+  /**
+   * Checks if the url is up
+   * @param testUrl
+   * URL to check
+   * @param colors
+   * Whether to use irc colors for result returned
+   * @return
+   * Message for if URL is up or down
+   */
+  public String isUp(String testUrl, boolean colors) {
     try {
       /* Create a URL obj from strings */
       url =  new URL((QUERY_URL.concat(testUrl)).replace(" ", "%20"));
