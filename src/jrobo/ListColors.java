@@ -29,18 +29,22 @@ public class ListColors extends MircColors {
   }
 
   /**
-   * Colors a String in the form: cmd 
+   * Colors a SYNPOSIS line
    * @param line
+   * A line in the form: command|cmdalias <required> 
    * @return
    */
-  public String colorSynopsisLine(String line) {
+  public String colorSynopsisLine(String cmd, String opt, String arg) {
     /* http://i.imagebanana.com/img/n8316h4e/manman_001.png
      * Colors these lines and more:
      * 
      * Available commands: 
      * google|g|lmgtfy|stfw <search query>, 
-     * wakeroom|wr, weather|w <location, zip, etc.>, 
-     * urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], 
+     * wakeroom|wr, 
+     * weather|w <location, zip, etc.>, 
+     * urbandict|ud <search query>, 
+     * list|l, raw|r <raw irc line>, 
+     * help|h [cmd], 
      * next|n, mum|m [user], invite-channel|ic <channel>, 
      * invite-nick|in <nick> [# of times], 
      * pirate [-s|-l|-d] <search query>, 
@@ -48,8 +52,70 @@ public class ListColors extends MircColors {
      * version, 
      * quit|q
      */
+    /*
+     * Syntax:
+     * command|cmdalias 
+     */
+    String colorStr = "";
+    if(cmd.contains("|")) {
+      String[] cmdArr = cmd.split("|");
+      for(int x=0; x<cmdArr.length; x++) {
+        colorStr += super.GREEN;
+      }
+    }
+    
 
     return "";
   }
 
+  /**
+   *
+   * @param str
+   * @return
+   */
+  public String attributeBold(String str) {
+      return BOLD + str + NORMAL;
+  }
+
+  /**
+   *
+   * @param str
+   * @param bold
+   * @return
+   */
+  public String colorGreen(String str, boolean bold) {
+    if(bold) {
+      return BOLD + GREEN + str + NORMAL;
+    } else {
+      return GREEN + str + NORMAL;
+    }
+  }
+
+  /**
+   *
+   * @param str
+   * @param bold
+   * @return
+   */
+  public String colorCyan(String str, boolean bold) {
+    if(bold) {
+      return BOLD + CYAN + str + NORMAL;
+    } else {
+      return CYAN + str + NORMAL;
+    }
+  }
+
+  /**
+   *
+   * @param colorCode
+   * @param bold
+   * @return
+   */
+  public String color(String colorCode, boolean bold) {
+    if(bold) {
+      return BOLD + colorCode + str + NORMAL;
+    } else {
+      return colorCode + str + NORMAL;
+    }
+  }
 }
