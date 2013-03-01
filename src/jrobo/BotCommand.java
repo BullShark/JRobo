@@ -65,9 +65,6 @@ public class BotCommand {
     cmdArgs = getCmdArgs(fullCmd);
     hasArgs = cmdArgs.isEmpty() ? false : true;
 
-    /*
-     * Java 7 Switch With Strings!!!!!
-     */
     switch(cmd) {
       case "wakeroom": /* Requires no args */
       case "wr":
@@ -406,7 +403,7 @@ public class BotCommand {
    * Help messages
    */
   private void listHelper() {
-    //TODO Color me with MircColors
+    //TODO Color me with MircColors like man pages (with most PAGER)
     String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
       "wakeroom|wr, weather|w <location, zip, etc.>, " +
       "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
