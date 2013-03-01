@@ -19,10 +19,85 @@
 
 package jrobo;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 /**
  *
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
 public class DownForEveryone {
-  
+  /* For the HTTP Connection */
+  private URL url;
+  private URLConnection conn;
+  private OutputStreamWriter wr;
+  private BufferedReader rd;
+  private String fullUrl;
+
+  /* Miscelanous */
+  private static final String QUERY_URL = "http://www.google.com/ig/api?weather=";
+  private boolean isup;
+
+  public DownForEveryone() {
+    /* For the HTTP Connection */
+    url = null;
+    conn = null;
+    //TODO: Move BufferedReader declaration here
+//    wr = null;
+//    rd = null;
+    fullUrl = "";
+
+    /* Miscelanous */
+    isup = false;
+  }
+
+  /**
+   * 
+   * @param location
+   * @return
+   */
+  public boolean isUp(String location) {
+    try {
+      /* Create a URL obj from strings */
+      url =  new URL((QUERY_URL.concat(location)).replace(" ", "%20"));
+
+      System.out.println(fullUrl);
+
+      conn = url.openConnection();
+
+      // Get the response
+      rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+      String line = "";
+      while ((line = rd.readLine()) != null) {
+        xml = xml.concat(line);
+      }
+
+      rd.close();
+
+    } catch (MalformedURLException ex) {
+      ex.printStackTrace();
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+
+    return isup;
+  }
+
+  /*
+   * A main method for testing this class
+   */
+  public static void main(String[] args) {
+    if(args.length == 0) {
+      System.err.println("Usage: java DownForEveryone <url>");
+      System.exit(-1);
+    }
+    DownForEveryone w = new DownForEveryone();
+    System.out.println(new DownForEveryone().isUp(args[0]));
+  }
 }
