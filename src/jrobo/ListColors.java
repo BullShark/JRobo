@@ -34,7 +34,8 @@ public class ListColors extends MircColors {
    * @return
    */
   public String colorSynopsisLine(String line) {
-    /* Colors these lines and more:
+    /* http://i.imagebanana.com/img/n8316h4e/manman_001.png
+     * Colors these lines and more:
      * 
      * Available commands: 
      * google|g|lmgtfy|stfw <search query>, 
