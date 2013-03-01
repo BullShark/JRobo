@@ -40,27 +40,26 @@ public class DownForEveryone {
   private String fullUrl;
 
   /* Miscelanous */
-  private static final String QUERY_URL = "http://www.google.com/ig/api?weather=";
+  private static final String QUERY_URL = "http://www.downforeveryoneorjustme.com/";
   private boolean isup;
 
   public DownForEveryone() {
     /* For the HTTP Connection */
     url = null;
     conn = null;
-    //TODO: Move BufferedReader declaration here
-//    wr = null;
-//    rd = null;
+    rd = null;
     fullUrl = "";
 
     /* Miscelanous */
     isup = false;
   }
 
-  public String isUp(String url) {
+  public String isUp(String testUrl) {
     try {
       /* Create a URL obj from strings */
-      url =  new URL((QUERY_URL.concat(location)).replace(" ", "%20"));
+      url =  new URL((QUERY_URL.concat(testUrl)).replace(" ", "%20"));
 
+      /* Debug */
       System.out.println(fullUrl);
 
       conn = url.openConnection();
@@ -70,7 +69,13 @@ public class DownForEveryone {
 
       String line = "";
       while ((line = rd.readLine()) != null) {
-        xml = xml.concat(line);
+//        It's just you.  <a href="http://google.com" class="domain">http://google.com</a></span> is up.
+        if(line.matches("\\s++It\'s just you\\.[.]++ is up.")) {
+          isup = true;
+//      It's not just you!  <a href="http://ggggggasdfgle.com" class="domain">http://ggggggasdfgle.com</a> looks down from here.
+        } else if(line.matches("\\s++It\'s not just you![.]++ looks down from here\\.")) {
+          isup = false;
+        }
       }
 
       rd.close();
@@ -89,6 +94,7 @@ public class DownForEveryone {
     } else {
       result = url + "IS DOWN!";
     }
+    return result;
   }
 
   /*
