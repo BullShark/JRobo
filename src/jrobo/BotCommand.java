@@ -125,6 +125,7 @@ public class BotCommand {
         break;
       case "isup":
         isUpHelper();
+        break;
       case "version":
         versionHelper();
         break;
