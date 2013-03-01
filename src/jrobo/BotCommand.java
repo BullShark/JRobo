@@ -126,6 +126,8 @@ public class BotCommand {
       case "pirate":
         pirateHelper();
         break;
+      case "isup":
+        isUpHelper();
       case "version":
         versionHelper();
         break;
@@ -250,6 +252,14 @@ public class BotCommand {
     }
   }
 
+  private void isUpHelper() {
+    if(!hasArgs) {
+      helpWrapper(cmd);
+    } else {
+      String testUrl = "http://www.downforeveryoneorjustme.com/".concat(getFormattedQuery(cmdArgs));
+    }
+  }
+
   private void weatherHelper() {
   /*
    * Put together a String in the form
@@ -270,7 +280,7 @@ public class BotCommand {
 
   private void mumHelper() {
       
-      Jokes joke =new Jokes(this.connection);
+    Jokes joke =new Jokes(this.connection);
       
     try {
       if(!hasArgs) {
@@ -361,7 +371,6 @@ public class BotCommand {
     connection.msgChannel(botC, "Detenation devices to nuclear reactors! (Zer0 is pressing the "
     + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
   }
-
 
   /*
    * Does nothing
