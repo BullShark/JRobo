@@ -149,11 +149,16 @@ public class BotCommand {
    * Replacing all other whitespace
    * No matter the length of that whitespace
    * With one '+'
+   * 
+   * TODO JavaDocs
    */
   private String getFormattedQuery(String str) {
     return str.replaceAll("\\s++", "+");
   }
 
+  /*
+   * TODO Javadocs
+   */
   private String getCmdArgs(String fullCmd) {
     //@TODO divded half of the work getFormattedQuery is doing to here
     try {
@@ -164,10 +169,16 @@ public class BotCommand {
     } // EOF try-catch
   } // EOF function
 
+  /*
+   * TODO JavaDocs
+   */
   private String getCmd(String fullCmd) {
     return fullCmd.substring(1).replaceFirst("\\s.*+", "");
   }
 
+  /*
+   * TODO JavaDocs
+   */
   private String getRandChanUser() {
     /*
      * TODO: getUsers.split() and choose random index
@@ -180,6 +191,7 @@ public class BotCommand {
 
   /*
    * TODO: Return list of users so this code can be reused
+   * TODO JavaDocs
    */
   private String getUsers() {
     String received = "", users = "";
@@ -204,6 +216,9 @@ public class BotCommand {
     return users;
   }
 
+  /*
+   * TODO Comment me
+   */
   private String getUsers(String chan) {
     String received = "", users = "";
     int tries = 2;
@@ -257,6 +272,7 @@ public class BotCommand {
       helpWrapper(cmd);
     } else {
       String testUrl = "http://www.downforeveryoneorjustme.com/".concat(getFormattedQuery(cmdArgs));
+//      connection.msg
     }
   }
 
@@ -304,6 +320,8 @@ public class BotCommand {
   }
 
   private void inviteNickHelper() {
+    if(true) { return; } //TODO Fix this method
+
     if(!hasArgs || !(cmdArgs.split("\\s++").length > 0) ) { // Min 1 Arg
       //@TODO Replace code with getHelp(cmd); //Overloaded method
       connection.msgChannel(botC, "Usage: " + SYMB + "invite-nick {nick} [# of times]" );
@@ -330,6 +348,8 @@ public class BotCommand {
   }
 
   private void inviteChannelHelper() {
+    if(true) { return; } //TODO Fix this method
+
     //TODO Implement and use FileReader.getNickAndHost() instead
     if(jRobo.getFirst().startsWith(fReader.getMaster()) && hasArgs ) {
       String chan = cmdArgs.split(" ")[0], users;
