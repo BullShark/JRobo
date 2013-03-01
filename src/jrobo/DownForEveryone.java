@@ -96,12 +96,23 @@ public class DownForEveryone {
     }
 
     String result = "";
-    //TODO Use ternary here?
-    //TODO Colors
+
     if(isup) {
-      result = testUrl + " IS UP!";
+      if(colors) {
+        result = 
+          MircColors.BOLD + MircColors.GREEN + testUrl + 
+          MircColors.BLUE + " IS UP!";
+      } else {
+        result = testUrl + " IS UP!";
+      }
     } else {
-      result = testUrl + " IS DOWN!";
+      if(colors) {
+        result = 
+          MircColors.BOLD + MircColors.GREEN + testUrl + 
+          MircColors.BLUE + " IS DOWN!";
+      } else {
+        result = testUrl + " IS DOWN!";
+      }
     }
     return result;
   }
@@ -115,6 +126,6 @@ public class DownForEveryone {
       System.exit(-1);
     }
     DownForEveryone w = new DownForEveryone();
-    System.out.println(new DownForEveryone().isUp(args[0]));
+    System.out.println(new DownForEveryone().isUp(args[0], false));
   }
 }
