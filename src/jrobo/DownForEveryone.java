@@ -90,9 +90,9 @@ public class DownForEveryone {
     //TODO Use ternary here?
     //TODO Colors
     if(isup) {
-      result = url + "IS UP!";
+      result = testUrl + " IS UP!";
     } else {
-      result = url + "IS DOWN!";
+      result = testUrl + " IS DOWN!";
     }
     return result;
   }
