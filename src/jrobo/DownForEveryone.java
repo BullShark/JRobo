@@ -70,10 +70,10 @@ public class DownForEveryone {
       String line = "";
       while ((line = rd.readLine()) != null) {
 //        It's just you.  <a href="http://google.com" class="domain">http://google.com</a></span> is up.
-        if(line.matches("\\s++It\'s just you\\.[.]++ is up.")) {
+        if(line.contains("It's just you.  ") && line.contains(" is up.")) {
           isup = true;
 //      It's not just you!  <a href="http://ggggggasdfgle.com" class="domain">http://ggggggasdfgle.com</a> looks down from here.
-        } else if(line.matches("\\s++It\'s not just you![.]++ looks down from here\\.")) {
+        } else if(line.contains("It's not just you!  ") && line.contains(" looks down from here.")) {
           isup = false;
         }
       }
