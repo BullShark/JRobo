@@ -100,16 +100,16 @@ public class DownForEveryone {
     if(isup) {
       if(colors) {
         result = 
-          MircColors.BOLD + MircColors.CYAN + testUrl + 
-          MircColors.BLUE + " IS UP!";
+          MircColors.BOLD + MircColors.GREEN + testUrl + 
+          MircColors.CYAN + " IS UP!";
       } else {
         result = testUrl + " IS UP!";
       }
     } else {
       if(colors) {
         result = 
-          MircColors.BOLD + MircColors.CYAN + testUrl + 
-          MircColors.BLUE + " IS DOWN!";
+          MircColors.BOLD + MircColors.GREEN + testUrl + 
+          MircColors.CYAN + " IS DOWN!";
       } else {
         result = testUrl + " IS DOWN!";
       }
