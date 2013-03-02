@@ -34,6 +34,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Handles all the networking done by the IRC protocol
+ * Including many helpful methods to make coding JRobo easier
  *
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
@@ -42,8 +44,7 @@ public class Networking {
   private BufferedWriter bwriter = null;
   private BufferedReader breader = null;
   private String received = null;
-  /* TODO javadoc Max chars per single irc message */
-  private final int MAXCHARS = 400;
+  private final int MAXCHARS = 500; /* Some RFC says 510 max chars */
 
   public Networking(String network) {
     super(); // Gets rid of java.lang.VerifyError
@@ -78,12 +79,12 @@ public class Networking {
 
   /**
    * For sending in raw IRC protocol
-   * @param command
-   * The raw irc line to send
-   * @return
-   * Successful sending
-   * @throws
-   * IOException Network related issues
+   * 
+   * @param command The raw IRC line to send
+   * 
+   * @return Successful sending
+   * 
+   * @throws IOException Network related issues
    */
   public boolean sendln(String command) {
     try {
@@ -103,8 +104,9 @@ public class Networking {
 
   /**
    * For receiving in raw IRC protocol
-   * @return
-   * Successful sending
+   * 
+   * @return Successful sending
+   * 
    */
   public String recieveln() {
     try {
