@@ -182,13 +182,36 @@ public class BotCommand {
    * TODO JavaDocs
    */
   private String getRandChanUser() {
+
     /*
      * TODO: getUsers.split() and choose random index
      * rand fn returns number within 0 and len-1 of arr
      * 
      * TODO: Use with ^mum that's supplied no args
      */
-    return "ChanServ";
+    String[] usersList;
+    
+    usersList = getUsers().split(" ");
+    
+    if(usersList != null) {
+      return usersList[(int)(Math.random() * usersList.length + 1)];
+    }
+    else {
+      return "ChanServ";
+    }
+    // Methods you can use as examples to implement this one ,drchaos
+/*
+  public boolean getRandomBoolean() {
+    return ((((int)(Math.random() * 10)) % 2) == 1);
+  }
+
+    String users = getUsers();
+    if(users != null) {
+      connection.msgChannel(botC, users);
+    } else {
+      connection.msgChannel(botC, "Failed to get a list of users; Try again or notify the developer!");
+    }
+*/
   }
 
   /*
