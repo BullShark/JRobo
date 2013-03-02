@@ -20,6 +20,7 @@ package jrobo;
 
 /**
  * Helper class for coloring the output of the list command
+ * 
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
 public class ListColors extends MircColors {
@@ -29,48 +30,30 @@ public class ListColors extends MircColors {
   }
 
   /**
-   * Colors a SYNPOSIS line
-   * @param line
-   * A line in the form: command|cmdalias <required> 
+   * Removes colors and bold from special characters to have similar output
+   * as the man pages viewed with most pager.
+   * 
+   * @param line A line in the form: command|cmdalias [option] <required>, ...
+   * 
    * @return
    */
-  public String colorSynopsisLine(String line) {
+  public String attributesSynopsisLine(String line) {
 
-    /* Debug */
-    System.out.println("GREEN code length: " + super.GREEN.length());
-    System.out.println("CYAN  code length: " + super.CYAN.length());
-
-    System.out.println("GREEN code: " + super.GREEN.replaceAll(GREEN, "GREEN"));
-    System.out.println("GREEN code: " + super.CYAN.replaceAll(CYAN, "CYAN"));
-
-    /* http://i.imagebanana.com/img/n8316h4e/manman_001.png
-     * Syntax:
-     * command|cmdalias 
+    /* 
+     * Color and attributes similar to man pages:
+     * http://i.imagebanana.com/img/n8316h4e/manman_001.png
      */
     String colorStr = "", lastColorCode = null;
-    int codePoint = -1;
     char ch;
     for(int x=0; x < line.length(); x++) {
       ch = line.charAt(x);
 
       if(ch == '\u0003') {
         lastColorCode = line.substring(x, (x+3));
-        switch(lastColorCode) {
-          case GREEN:
-            System.out.println("code: GREEN");
-            break;
-          case CYAN:
-            System.out.println("code: CYAN");
-            break;
-          default:
-            System.out.println("Unknown code:" + lastColorCode);
-        }
       }
 
       if(ch == '|' || ch == '<' || ch == '>' ||
-         ch == '[' || ch == ']') {
-        /* Debug */
-//      colorStr += MAGENTA + line.substring(x, (x+1)) + NORMAL + BOLD;
+         ch == '[' || ch == ']' || ch == ',') {
         colorStr += NORMAL + line.substring(x, (x+1)) + BOLD;
         if(lastColorCode != null) {
           colorStr += lastColorCode;
@@ -89,76 +72,20 @@ public class ListColors extends MircColors {
    * @return
    */
   public String attributeBold(String str) {
-      return BOLD + str + NORMAL;
+      return BOLD + str;
   }
 
   /**
-   *
-   * @param str
-   * @param bold
-   * @return
-   */
-  public String colorGreen(String str, boolean bold) {
-    if(bold) {
-      return BOLD + GREEN + str + NORMAL;
-    } else {
-      return GREEN + str + NORMAL;
-    }
-  }
-
-  /**
-   *
-   * @param str
-   * @param bold
-   * @return
-   */
-  public String colorCyan(String str, boolean bold) {
-    if(bold) {
-      return BOLD + CYAN + str + NORMAL;
-    } else {
-      return CYAN + str + NORMAL;
-    }
-  }
-
-  /**
-   *
-   * @param colorCode
-   * @param bold
-   * @return
-   */
-  public String color(String str, String colorCode, boolean bold) {
-    if(bold) {
-      return BOLD + colorCode + str + NORMAL;
-    } else {
-      return colorCode + str + NORMAL;
-    }
-  }
-
-  /**
-   *
-   * @param str
-   * @return
+   * Colors a string for irc and adds bold to it
+   * 
+   * Other color coded Strings can be concatenated with this because 
+   * It does a reset on codes before adding new ones
+   * 
+   * @param str Takes one color code such as the constants in MircColors
+   * 
+   * @return A color coded line with the bold attribute
    */
   public String colorToken(String str, String colorCode) {
-    // [-s|-l|-d]
-    // NORMAL BOLD CYAN "[-s" NORMAL "|" BOLD CYAN "-l" NORMAL "|" BOLD CYAN "-d]
-    // 
-    String colorStr = "";
-    if(str.contains("|")) {
-      String[] strArr = str.split("|");
-
-    // NORMAL BOLD GREEN  NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL | NORMAL BOLD GREEN  
-      for(int x=0; x<strArr.length; x++) {
-        if(x == 0 || x == strArr.length-1) {
-          colorStr += " NORMAL " + "BOLD" + " GREEN " + strArr[x];
-        } else {
-          colorStr += " NORMAL " + "|";
-        }
-      }
-
-    }
-//    System.out.println(colorStr);
-  //  return colorStr;
     return NORMAL + BOLD + colorCode + str;
   }
 }
