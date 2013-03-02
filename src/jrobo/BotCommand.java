@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author chris
+ * @author bullshark
  */
 public class BotCommand {
   private final Networking connection;
@@ -432,9 +432,9 @@ public class BotCommand {
      * flags = dark
      * args = light
      * special characters = no bold, no color
-     * such as [] <> ...
+     * such as [] <> , ...
      */
-    String colorStr =
+    String colorStr = lc.colorSynopsisLine(
       lc.attributeBold("Available commands: ") +
       lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN) +
       lc.colorToken("<search query>, ", MircColors.CYAN) +
@@ -462,9 +462,9 @@ public class BotCommand {
       lc.colorToken("isup ", MircColors.GREEN) +
       lc.colorToken("<url>, ", MircColors.CYAN) +
       lc.colorToken("version, ", MircColors.GREEN) +
-      lc.colorToken("quit|q", MircColors.GREEN);
-
-    colorStr = lc.colorSynopsisLine(colorStr);
+      lc.colorToken("quit|q", MircColors.GREEN)
+          );
+    
     connection.msgChannel(botC, colorStr);
   }
 
