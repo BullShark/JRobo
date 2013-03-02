@@ -76,7 +76,7 @@ public class ListColors extends MircColors {
   }
 
   /**
-   * Colors a string for irc and adds bold to it
+   * Colors a string for IRC and adds bold to it
    * 
    * Other color coded Strings can be concatenated with this because 
    * It does a reset on codes before adding new ones
