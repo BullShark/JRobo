@@ -23,9 +23,6 @@ package jrobo;
  * This class will define constants and methods for sending colors to channels
  * That have /mode +c allowed in the channel
  *
- * This class could be defined simililar to
- * http://www.jibble.org/javadocs/pircbot/org/jibble/pircbot/Colors.html
- * 
  * Color codes
  * http://www.weechat.org/files/doc/stable/weechat_user.en.html#command_line_colors
  */
