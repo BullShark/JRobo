@@ -55,13 +55,14 @@ public class DownForEveryone {
   }
 
   /**
-   * Checks if the url is up
-   * @param testUrl
-   * URL to check
-   * @param colors
-   * Whether to use irc colors for result returned
-   * @return
-   * Message for if URL is up or down
+   * Checks if the URL is up
+   * 
+   * @param testUrl URL to check
+   *
+   * @param colors Whether to use IRC colors for result returned
+   *
+   * @return Message for if URL is up or down
+   * 
    */
   public String isUp(String testUrl, boolean colors) {
     try {
