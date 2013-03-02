@@ -20,7 +20,6 @@ package jrobo;
 
 /**
  * Helper class for coloring the output of the list command
- * 
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
 public class ListColors extends MircColors {
@@ -32,9 +31,7 @@ public class ListColors extends MircColors {
   /**
    * Removes colors and bold from special characters to have similar output
    * as the man pages viewed with most pager.
-   * 
    * @param line A line in the form: command|cmdalias [option] <required>, ...
-   * 
    * @return
    */
   public String attributesSynopsisLine(String line) {
@@ -54,7 +51,9 @@ public class ListColors extends MircColors {
 
       if(ch == '|' || ch == '<' || ch == '>' ||
          ch == '[' || ch == ']' || ch == ',') {
-        colorStr += NORMAL + line.substring(x, (x+1)) + BOLD;
+        /* Uncomment to get no bold for special chars, same as man pages */
+//        colorStr += NORMAL + line.substring(x, (x+1)) + BOLD;
+        colorStr += NORMAL + BOLD + line.substring(x, (x+1));
         if(lastColorCode != null) {
           colorStr += lastColorCode;
         }
@@ -82,7 +81,6 @@ public class ListColors extends MircColors {
    * It does a reset on codes before adding new ones
    * 
    * @param str Takes one color code such as the constants in MircColors
-   * 
    * @return A color coded line with the bold attribute
    */
   public String colorToken(String str, String colorCode) {

@@ -44,7 +44,7 @@ public class Networking {
   private BufferedWriter bwriter = null;
   private BufferedReader breader = null;
   private String received = null;
-  private final int MAXCHARS = 500; /* Some RFC says 510 max chars */
+  private final int MAXCHARS = 450; /* Some RFC says 510 max chars */
 
   public Networking(String network) {
     super(); // Gets rid of java.lang.VerifyError
@@ -79,11 +79,8 @@ public class Networking {
 
   /**
    * For sending in raw IRC protocol
-   * 
    * @param command The raw IRC line to send
-   * 
    * @return Successful sending
-   * 
    * @throws IOException Network related issues
    */
   public boolean sendln(String command) {
@@ -104,9 +101,7 @@ public class Networking {
 
   /**
    * For receiving in raw IRC protocol
-   * 
    * @return Successful sending
-   * 
    */
   public String recieveln() {
     try {
@@ -121,15 +116,10 @@ public class Networking {
 
   /**
    * TODO write me
-   * 
    * @param chan Channel to send the message
-   *
    * @param msg Message to send to the channel
-   *
    * @param colorLines If true, use color and attribute codes
-   *
    * @param codes
-   * 
    * @return
    */
   public boolean msgChannel(String chan, String msg, boolean colorLines, String codes) {
@@ -171,13 +161,9 @@ public class Networking {
 
   /**
    * Wrapper method
-   * 
    * @param chan
-   * 
    * @param msg
-   * 
    * @return
-   * 
    */
   public boolean msgChannel(String chan, String msg) {
     return msgChannel(chan, msg, false, null);
