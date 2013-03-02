@@ -35,20 +35,46 @@ public class ListColors extends MircColors {
    * @return
    */
   public String colorSynopsisLine(String line) {
+
+    /* Debug */
+    System.out.println("GREEN code length: " + super.GREEN.length());
+    System.out.println("CYAN  code length: " + super.CYAN.length());
+
+    System.out.println("GREEN code: " + super.GREEN.replaceAll(GREEN, "GREEN"));
+    System.out.println("GREEN code: " + super.CYAN.replaceAll(CYAN, "CYAN"));
+
     /* http://i.imagebanana.com/img/n8316h4e/manman_001.png
      * Syntax:
      * command|cmdalias 
      */
-    String colorStr = "";
+    String colorStr = "", lastColorCode = null;
+    int codePoint = -1;
     char ch;
     for(int x=0; x < line.length(); x++) {
       ch = line.charAt(x);
+
+      if(ch == '\u0003') {
+        lastColorCode = line.substring(x, (x+3));
+        switch(lastColorCode) {
+          case GREEN:
+            System.out.println("code: GREEN");
+            break;
+          case CYAN:
+            System.out.println("code: CYAN");
+            break;
+          default:
+            System.out.println("Unknown code:" + lastColorCode);
+        }
+      }
+
       if(ch == '|' || ch == '<' || ch == '>' ||
          ch == '[' || ch == ']') {
         /* Debug */
-//        if(line.charAt(x) >= '\u000300')
-//        lastColorCode
-        colorStr += super.MAGENTA + line.substring(x, (x+1)) + NORMAL;
+//      colorStr += MAGENTA + line.substring(x, (x+1)) + NORMAL + BOLD;
+        colorStr += NORMAL + line.substring(x, (x+1)) + BOLD;
+        if(lastColorCode != null) {
+          colorStr += lastColorCode;
+        }
       } else {
         colorStr += line.substring(x, (x+1));
       }
@@ -131,7 +157,7 @@ public class ListColors extends MircColors {
       }
 
     }
-    System.out.println(colorStr);
+//    System.out.println(colorStr);
   //  return colorStr;
     return NORMAL + BOLD + colorCode + str;
   }
