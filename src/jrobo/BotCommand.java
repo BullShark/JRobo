@@ -434,7 +434,7 @@ public class BotCommand {
      * special characters = no bold, no color
      * such as [] <> , ...
      */
-    String colorStr = lc.colorSynopsisLine(
+    String colorStr = lc.attributesSynopsisLine(
       lc.attributeBold("Available commands: ") +
       lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN) +
       lc.colorToken("<search query>, ", MircColors.CYAN) +
