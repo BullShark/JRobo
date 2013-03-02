@@ -121,12 +121,13 @@ public class Networking {
 
   /**
    * TODO write me
-   * @param chan
-   * Channel to send the message
-   * @param msg
-   * Message to send to the channel
-   * @param colorLines
-   * If true, use color and attribute codes
+   * 
+   * @param chan Channel to send the message
+   *
+   * @param msg Message to send to the channel
+   *
+   * @param colorLines If true, use color and attribute codes
+   *
    * @param codes
    * 
    * @return
@@ -170,21 +171,31 @@ public class Networking {
 
   /**
    * Wrapper method
+   * 
    * @param chan
+   * 
    * @param msg
+   * 
    * @return
+   * 
    */
   public boolean msgChannel(String chan, String msg) {
     return msgChannel(chan, msg, false, null);
   }
   
   /**
-   * Overwridden and wrapper method
+   * Overridden and wrapper method
+   * 
    * @param chan
+   * 
    * @param msgArr
+   * 
    * @param colorLines
+   * 
    * @param codes
+   * 
    * @return
+   * 
    */
   public boolean msgChannel(String chan, String[] msgArr, boolean colorLines, String codes) {
     boolean success = true;
@@ -227,16 +238,16 @@ public class Networking {
    * @return
    */
   public boolean noticeChan(String chan, String msg){
-      boolean ok = true;
+      boolean success = true;
       
       String[] msgSplit = msg.split("\n");
       
       for(int i=0;i<msgSplit.length;i++) {
         if(!sendln("NOTICE " + chan + " :" + msgSplit[i]) ) {
-          ok = false;
+          success = false;
         }
      }
-      return ok;
+      return success;
   }
   
   /**
@@ -246,16 +257,17 @@ public class Networking {
    * @return
    */
   public boolean noticeUser(String user, String msg) {
-    boolean ok = true;
+    boolean success = true;
       
     String[] msgSplit = msg.split("\n");
       
     for(int i=0;i<msgSplit.length;i++){
       if(!sendln("NOTICE " + user + " :" + msgSplit[i]) ) {
-        ok = false;
-       }
-     }
-     return ok;
+        success = false;
+      }
+    }
+
+    return success;
   }
 
   /*
@@ -265,7 +277,7 @@ public class Networking {
    * It exceeds MAXCHARS
    */
     private String addNewLines(String command) {
-      String[] lines = wrapText(command, 400);
+      String[] lines = wrapText(command, MAXCHARS);
       String tmp = "";
       for (int i = 0; i < lines.length; i++) {
           tmp += lines[i] + "\n";
