@@ -69,6 +69,7 @@ public class ListColors extends MircColors {
    *
    * @param str
    * @return
+   * TODO Delete me
    */
   public String attributeBold(String str) {
       return BOLD + str;
@@ -84,6 +85,21 @@ public class ListColors extends MircColors {
    * @return A color coded line with the bold attribute
    */
   public String colorToken(String str, String colorCode) {
-    return NORMAL + BOLD + colorCode + str;
+    return NORMAL + colorCode + str;
+  }
+
+  /**
+   * Colors a string for IRC and adds bold to it
+   * 
+   * Other color coded Strings can be concatenated with this because 
+   * It does a reset on codes before adding new ones
+   * 
+   * @param str Takes one color code such as the constants in MircColors
+   * @param colorCode
+   * @param noReset
+   * @return
+   */
+  public String colorToken(String str, String colorCode, boolean noReset) {
+    return NORMAL + colorCode + str;
   }
 }
