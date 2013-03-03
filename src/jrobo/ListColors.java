@@ -53,8 +53,9 @@ public class ListColors extends MircColors {
          ch == '[' || ch == ']' || ch == ',') {
         /* Uncomment to get no bold for special chars, same as man pages */
 //        colorStr += NORMAL + line.substring(x, (x+1)) + BOLD;
-        /* Test first before deleting */
+        //TODO BOLD should only be needed one time
 //        colorStr += NORMAL + BOLD + line.substring(x, (x+1));
+        /* Debug, testing */
         colorStr += NORMAL + line.substring(x, (x+1));
         if(lastColorCode != null) {
           colorStr += lastColorCode;
@@ -68,16 +69,6 @@ public class ListColors extends MircColors {
   }
 
   /**
-   *
-   * @param str
-   * @return
-   * TODO Delete me
-   */
-  public String attributeBold(String str) {
-      return BOLD + str;
-  }
-
-  /**
    * Colors a string for IRC and adds bold to it
    * 
    * Other color coded Strings can be concatenated with this because 
@@ -88,7 +79,8 @@ public class ListColors extends MircColors {
    * @return A color coded line with the bold attribute
    */
   public String colorToken(String str, String colorCode) {
-    return NORMAL + colorCode + str;
+    return colorCode + str;
+//    return NORMAL + colorCode + str; //FIXME this NORMAL should not be needed
   }
 
   /**
@@ -102,6 +94,7 @@ public class ListColors extends MircColors {
    * @param noReset Whether or not to use place a color reset
    * @return
    */
+  //TODO Delete me, probably not needed, NORMAL can be passed to the above method if needed anyway
   public String colorToken(String str, String colorCode, boolean noReset) {
     if(noReset) {
       return colorCode + str;
