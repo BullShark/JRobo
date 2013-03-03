@@ -458,7 +458,7 @@ public class BotCommand {
      * such as [] <> , ...
      */
     String colorStr = lc.attributesSynopsisLine(
-      lc.attributeBold("Available commands: ") +
+      lc.colorToken("Available commands: ", MircColors.BOLD, false) +
       lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN) +
       lc.colorToken("<search query>, ", MircColors.CYAN) +
       lc.colorToken("wakeroom|wr, ", MircColors.GREEN) +
