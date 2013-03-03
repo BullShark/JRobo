@@ -458,7 +458,7 @@ public class BotCommand {
      * such as [] <> , ...
      */
     String colorStr = lc.attributesSynopsisLine(
-      lc.colorToken("Available commands: ", MircColors.BOLD, false) +
+      lc.colorToken("Available commands: ", MircColors.BOLD) +
       lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN) +
       lc.colorToken("<search query>, ", MircColors.CYAN) +
       lc.colorToken("wakeroom|wr, ", MircColors.GREEN) +
@@ -487,7 +487,7 @@ public class BotCommand {
       lc.colorToken("version, ", MircColors.GREEN) +
       lc.colorToken("quit|q", MircColors.GREEN)
           );
-    
+   
     connection.msgChannel(botC, colorStr);
   }
 
