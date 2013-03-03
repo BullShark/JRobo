@@ -191,7 +191,7 @@ public class BotCommand {
      */
     String[] usersList;
     
-    usersList = getUsers().split(" ");
+    usersList = getUsers().split("\\s++");
     
     if(usersList != null) {
       return usersList[(int)(Math.random() * usersList.length + 1)];
@@ -511,7 +511,7 @@ public class BotCommand {
   private void versionHelper() {
     connection.msgChannel(botC,
       MircColors.BOLD + MircColors.CYAN + "JRobo" +
-      MircColors.NORMAL + MircColors.BOLD + MircColors.WHITE + " - " +
-      MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "https://github.com/BullShark/JRobo");
+      MircColors.NORMAL + " - " +
+      MircColors.NORMAL + MircColors.GREEN + "https://github.com/BullShark/JRobo");
   }
 } // EOF class
