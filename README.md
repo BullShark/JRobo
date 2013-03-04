@@ -23,12 +23,12 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
   * You have it logged in under one of your groupped nicks
  
 ## Provides many commands
- * google <search query>
+ * google|g &lt;search query&gt;
  * wakeroom|wr
   * Brings a dead channel back to life!
- * weather|w <location, zip, etc.>
+ * weather|w &lt;location, zip, etc.&gt;
   * Queries the wunderground api for a weather summary
- * urbandict|ud <search query>
+ * urbandict|ud &lt;search query&gt;
   * Returns the top 3 results of the search query from urbandictionary.com
   * Sorts by thumbs up, and shows the number of thumbs up and thumbs down for each result
   * Nicely formatted and colored output
@@ -37,13 +37,13 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
   * Uses a Linux Man page type Syntax
  * help [cmd]
   * Provides help output on a particular command
- * pirate [-s|-l|-d] <search query>
+ * pirate [-s|-l|-d] &lt;search query&gt;
   * Queries pirate bay with formatted and colored output
   * -s sort by seeds (default)
   * -l sort by leachers
   * -d sort by total times downloaded
   * Limits output to 3 lines to avoid flooding the channel
- * isup <uro>
+ * isup &lt;url&gt;
   * Checks if the url is really up or down
  * version
  * quit|q
