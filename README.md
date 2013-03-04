@@ -1,13 +1,19 @@
 ## Project Members
 
 [BinaryStroke](https://github.com/BinaryStroke "Developer") (StompinBroknGlas on irc)
+
 Developer
+
 
 [teslasolutions](https://github.com/teslasolution "Developer") (Muhammad Sajid)
+
 Developer
 
+
 [BullShark](https://github.com/BullShark "Core Developer") (Christopher Lemire)
+
 Founder and Lead Developer
+
 
 ## About
 
@@ -65,10 +71,11 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
 
 Requirements
  * Java Apache Ant 1.8 (Recommended but optional)
- * OpenJDK or Oracle/Sun JRE/JDK version 7 or newer
+ * OpenJDK or Oracle/Sun JDK version 7 or newer
+ * git
 
 ### Debian/Linux Mint/Ubuntu
-    $ sudo apt-get install openjdk-7-jre ant
+    $ sudo apt-get install openjdk-7-jdk ant git
     $ git clone https://github.com/BullShark/JRobo.git
     $ cd JRobo
     $ ant clean
@@ -81,7 +88,7 @@ Requirements
     $ java -classpath ../lib/gson-2.2.2.jar:. jrobo.JRobo
 
 ### RHEL/Fedora/CentOS
-    $ yum install java-1.7.0-openjdk-devel ant
+    $ yum install java-1.7.0-openjdk-devel ant git
     $ # The rest is the same as above
 
 # Windows
