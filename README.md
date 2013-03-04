@@ -2,7 +2,6 @@
 
 [BinaryStroke](https://github.com/BinaryStroke "Developer") (StompinBroknGlas on irc)
 Developer
-https://github.com/BinaryStroke
 
 [teslasolutions](https://github.com/teslasolution "Developer") (Muhammad Sajid)
 Developer
