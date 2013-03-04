@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author BullShark
+ * @author bullshark
  */
 public class JRobo {
 
@@ -61,7 +61,7 @@ public class JRobo {
     botC = fReader.getChan();
     isRunning = false;
     SYMB = fReader.getCmdSymb();
-    //TODO Set identd to jrob //test
+    //TODO Set identd to JRobo
   }
 
   private void initiate() {
@@ -80,7 +80,7 @@ public class JRobo {
     /* Identify to server */
     
     connection.sendln("NICK " + botN);
-    connection.sendln("PASS " + botP);
+//    connection.sendln("PASS " + botP);
     connection.sendln("USER JRobo 0 * :Microsoft Exterminator!");
     /*
      * Wait for server message:
@@ -131,6 +131,8 @@ public class JRobo {
 
             /*
              * Match JRobo in any case typed by another user
+             * TODO Should we change this to last.contains(botN) with ignore case
+             * TODO Because the bot's name might be something other than JRobo
              */
             if(last.matches("(?i).*JR[0o]b[0o].*")) {
               try {

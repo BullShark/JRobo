@@ -194,6 +194,7 @@ public class BotCommand {
     usersList = getUsers().split("\\s++");
     
     if(usersList != null) {
+      //TODO Needs testing
       return usersList[(int)(Math.random() * usersList.length + 1)];
     }
     else {
@@ -512,6 +513,6 @@ public class BotCommand {
     connection.msgChannel(botC,
       MircColors.BOLD + MircColors.CYAN + "JRobo" +
       MircColors.NORMAL + " - " +
-      MircColors.NORMAL + MircColors.GREEN + "https://github.com/BullShark/JRobo");
+      MircColors.GREEN + "https://github.com/BullShark/JRobo"); //TODO Probably needs another MircColors.BOLD
   }
 } // EOF class
