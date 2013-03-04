@@ -22,34 +22,35 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
  * Configuration file in plain text JSON, just modify it's values
  * Authenticates with nickserv
   * You have it logged in under one of your groupped nicks
- * Provides many commands
-  * google <search query>
-  * wakeroom|wr
-   * Brings a dead channel back to life!
-  * weather|w <location, zip, etc.>
-   * Queries the wunderground api for a weather summary
-  * urbandict|ud <search query>
-   * Returns the top 3 results of the search query from urbandictionary.com
-   * Sorts by thumbs up, and shows the number of thumbs up and thumbs down for each result
-   * Nicely formatted and colored output
-  * list|l
-   * Provides a list of commands
-   * Uses a Linux Man page type Syntax
-  * help [cmd]
-   * Provides help output on a particular command
-  * pirate [-s|-l|-d] <search query>
-   * Queries pirate bay with formatted and colored output
-   * -s sort by seeds (default)
-   * -l sort by leachers
-   * -d sort by total times downloaded
-   * Limits output to 3 lines to avoid flooding the channel
-  * isup <uro>
-   * Checks if the url is really up or down
-  * version
-  * quit|q
-   * JRobo will only respond to this and other commands/features sent from the master or
-   * One of the list of masters read in from Config.json
-  * And others, download and use the bots in-channel help for more
+ 
+## Provides many commands
+ * google <search query>
+ * wakeroom|wr
+  * Brings a dead channel back to life!
+ * weather|w <location, zip, etc.>
+  * Queries the wunderground api for a weather summary
+ * urbandict|ud <search query>
+  * Returns the top 3 results of the search query from urbandictionary.com
+  * Sorts by thumbs up, and shows the number of thumbs up and thumbs down for each result
+  * Nicely formatted and colored output
+ * list|l
+  * Provides a list of commands
+  * Uses a Linux Man page type Syntax
+ * help [cmd]
+  * Provides help output on a particular command
+ * pirate [-s|-l|-d] <search query>
+  * Queries pirate bay with formatted and colored output
+  * -s sort by seeds (default)
+  * -l sort by leachers
+  * -d sort by total times downloaded
+  * Limits output to 3 lines to avoid flooding the channel
+ * isup <uro>
+  * Checks if the url is really up or down
+ * version
+ * quit|q
+  * JRobo will only respond to this and other commands/features sent from the master or
+  * One of the list of masters read in from Config.json
+ * And others, download and use the bots in-channel help for more
 
 # Features to come
  * RSS Feed Support
