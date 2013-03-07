@@ -512,7 +512,7 @@ public class BotCommand {
   private void versionHelper() {
     connection.msgChannel(botC,
       MircColors.BOLD + MircColors.CYAN + "JRobo" +
-      MircColors.NORMAL + " - " + MircColors.BOLD +
+      MircColors.NORMAL + MircColors.BOLD + " - " +
       MircColors.GREEN + "https://github.com/BullShark/JRobo"); //TODO Probably needs another MircColors.BOLD
   }
 } // EOF class
