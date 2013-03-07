@@ -25,7 +25,7 @@ package jrobo;
 public class ListColors extends MircColors {
   /* Get all inherited members */
   public ListColors() {
-    super();
+    super(); // Comment this out if you get a compile error java.lang.VerifyError
   }
 
   /**
@@ -47,6 +47,11 @@ public class ListColors extends MircColors {
 
       if(ch == '\u0003') {
         lastColorCode = line.substring(x, (x+3));
+        /* Debug code */
+        
+//        for(int j = 0; j < 3; j++) {
+//          System.out.println(lastColorCode.charAt(j));
+//        }
       }
 
       if(ch == '|' || ch == '<' || ch == '>' ||
@@ -54,6 +59,17 @@ public class ListColors extends MircColors {
         /* Uncomment to get no bold for special chars, same as man pages */
 //        colorStr += NORMAL + line.substring(x, (x+1)) + BOLD;
         colorStr += NORMAL + BOLD + line.substring(x, (x+1));
+        /* Debug */
+//        String code = "none ";
+//        switch(line.substring(x, (x+1)) ) {
+//          CASE CYAN:
+//            CASE GREEN:
+//            CASE NORMAL:
+//            CASE BOLD:
+//            default:
+//              System.err.println(Unknown color + line.substring(x, (x+1)));
+//        }
+        System.out.println("NORMAL BOLD ");
         if(lastColorCode != null) {
           colorStr += lastColorCode;
         }
