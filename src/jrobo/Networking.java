@@ -34,6 +34,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Handles all the networking done by the IRC protocol
+ * Including many helpful methods to make coding JRobo easier
  *
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
@@ -42,8 +44,8 @@ public class Networking {
   private BufferedWriter bwriter = null;
   private BufferedReader breader = null;
   private String received = null;
-  /* TODO javadoc Max chars per single irc message */
-  private final int MAXCHARS = 400;
+  private final int MAXCHARS = 450; /* Some RFC says 510 max chars */
+
 
   public Networking(String network) {
     super(); // Gets rid of java.lang.VerifyError
@@ -78,12 +80,9 @@ public class Networking {
 
   /**
    * For sending in raw IRC protocol
-   * @param command
-   * The raw irc line to send
-   * @return
-   * Successful sending
-   * @throws
-   * IOException Network related issues
+   * @param command The raw IRC line to send
+   * @return Successful sending
+   * @throws IOException Network related issues
    */
   public boolean sendln(String command) {
     try {
@@ -103,8 +102,7 @@ public class Networking {
 
   /**
    * For receiving in raw IRC protocol
-   * @return
-   * Successful sending
+   * @return Successful sending
    */
   public String recieveln() {
     try {
@@ -118,16 +116,14 @@ public class Networking {
   }
 
   /**
-   * TODO write me
-   * @param chan
-   * Channel to send the message
-   * @param msg
-   * Message to send to the channel
-   * @param colorLines
-   * If true, use color and attribute codes
-   * @param codes
-   * 
-   * @return
+   * The attribute codes can be lost some times on the messages
+   * After the first one that were split. By giving a code(s),
+   * They will be prepended to the split messages after the first one
+   * @param chan Channel to send the message
+   * @param msg Message to send to the channel
+   * @param colorLines If true, use color and attribute codes
+   * @param codes Attribute codes to use if the message is split. Use an empty string if none.
+   * @return Whether this method was successful
    */
   public boolean msgChannel(String chan, String msg, boolean colorLines, String codes) {
     boolean success = true;
@@ -167,22 +163,23 @@ public class Networking {
   }
 
   /**
-   * Wrapper method
-   * @param chan
-   * @param msg
-   * @return
+   * Wrapper method using defaults, no colors added for split messages
+   * @param chan Channel to send the message to
+   * @param msg Message that gets send to the channel
+   * @return Whether this method was successful
    */
   public boolean msgChannel(String chan, String msg) {
-    return msgChannel(chan, msg, false, null);
+    return msgChannel(chan, msg, false, "");
   }
   
   /**
-   * Overwridden and wrapper method
+   * Overridden and wrapper method
    * @param chan
-   * @param msgArr
-   * @param colorLines
-   * @param codes
-   * @return
+   * @param msgArr An array of messages, each message sent on its own line in IRC
+   * @param colorLines If true, use color and attribute codes
+   * @param codes Attribute codes to use if the message is split. Use an empty string if none.
+   * @return Whether this method was successful
+   * 
    */
   public boolean msgChannel(String chan, String[] msgArr, boolean colorLines, String codes) {
     boolean success = true;
@@ -198,10 +195,10 @@ public class Networking {
 //  public boolean msgChannel(String chan, String msg) {
 
   /**
-   *
-   * @param user
-   * @param msg
-   * @return
+   * Sends a private message to the user
+   * @param user User to message
+   * @param msg Message to send to user
+   * @return Whether this method was successful
    */
   public boolean msgUser(String user, String msg) {
     boolean success = true;
@@ -225,16 +222,16 @@ public class Networking {
    * @return
    */
   public boolean noticeChan(String chan, String msg){
-      boolean ok = true;
+      boolean success = true;
       
       String[] msgSplit = msg.split("\n");
       
       for(int i=0;i<msgSplit.length;i++) {
         if(!sendln("NOTICE " + chan + " :" + msgSplit[i]) ) {
-          ok = false;
+          success = false;
         }
      }
-      return ok;
+      return success;
   }
   
   /**
@@ -244,16 +241,17 @@ public class Networking {
    * @return
    */
   public boolean noticeUser(String user, String msg) {
-    boolean ok = true;
+    boolean success = true;
       
     String[] msgSplit = msg.split("\n");
       
     for(int i=0;i<msgSplit.length;i++){
       if(!sendln("NOTICE " + user + " :" + msgSplit[i]) ) {
-        ok = false;
-       }
-     }
-     return ok;
+        success = false;
+      }
+    }
+
+    return success;
   }
 
   /*
@@ -261,71 +259,98 @@ public class Networking {
    * Newlines occure
    * This is used to prevent a message being truncated by IRC because
    * It exceeds MAXCHARS
+   * 
+   * TODO Is this really needed or does the wrapText make it obsolete?
    */
     private String addNewLines(String command) {
-      String[] lines = wrapText(command, 400);
+      String[] lines = wrapText(command, MAXCHARS);
       String tmp = "";
       for (int i = 0; i < lines.length; i++) {
           tmp += lines[i] + "\n";
       }
       return tmp;
+      
     }
 
-    static String[] wrapText(String text, int len) {
-      // return empty array for null text
-      if (text == null) {
-          return new String[]{};
-      }
 
-      // return text if len is zero or less
-      if (len <= 0) {
-        return new String[]{text};
-      }
+  public static String[] wrapText(String text, int len)
+  {
+    if (text == null) {
+      return new String[0];
+    }
 
-      // return text if less than length
-      if (text.length() <= len) {
-        return new String[]{text};
-      }
+    if (len <= 0) {
+      return new String[] { text };
+    }
 
-      char[] chars = text.toCharArray();
-      Vector lines = new Vector();
-      StringBuffer line = new StringBuffer();
-      StringBuffer word = new StringBuffer();
+    if (text.length() <= len) {
+      return new String[] { text };
+    }
 
-      for (int i = 0; i < chars.length; i++) {
-        word.append(chars[i]);
+    char[] chars = text.toCharArray();
+    Vector lines = new Vector();
+    StringBuffer line = new StringBuffer();
+    StringBuffer word = new StringBuffer();
 
-        if (chars[i] == ' ') {
-          if ((line.length() + word.length()) > len) {
-            lines.add(line.toString());
-            line.delete(0, line.length());
-          }
+    for (int i = 0; i < chars.length; i++) {
+      word.append(chars[i]);
 
-          line.append(word);
-          word.delete(0, word.length());
-        }
-      }
-
-      // handle any extra chars in current word
-      if (word.length() > 0) {
-        if ((line.length() + word.length()) > len) {
+      if (chars[i] == ' ') {
+        if (line.length() + word.length() > len) {
           lines.add(line.toString());
           line.delete(0, line.length());
         }
-          line.append(word);
-        }
 
-        // handle extra line
-        if (line.length() > 0) {
-          lines.add(line.toString());
-        }
+        line.append(word);
+        word.delete(0, word.length());
+      }
 
-        String[] ret = new String[lines.size()];
-        int c = 0; // counter
-        for (Enumeration e = lines.elements(); e.hasMoreElements(); c++) {
-          ret[c] = (String) e.nextElement();
-        }
-
-        return ret;
     }
+
+    if (word.length() > 0) {
+      if (line.length() + word.length() > len) {
+        lines.add(line.toString());
+        line.delete(0, line.length());
+      }
+      line.append(word);
+    }
+
+    if (line.length() > 0) {
+      lines.add(line.toString());
+    }
+
+    String[] ret = new String[lines.size()];
+    int c = 0;
+    for (Enumeration e = lines.elements(); e.hasMoreElements(); c++) {
+      ret[c] = ((String)e.nextElement());
+    }
+
+    return ret;
+  }
+
+  /* Method below uses this */
+  private static final byte[] HEXBYTES = { (byte) '0', (byte) '1', (byte) '2', (byte) '3',
+      (byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9', (byte) 'a',
+      (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f' };
+
+  public static int getUTFSize(String s) {
+
+      int len = (s == null) ? 0
+                            : s.length();
+      int l   = 0;
+
+      for (int i = 0; i < len; i++) {
+          int c = s.charAt(i);
+
+          if ((c >= 0x0001) && (c <= 0x007F)) {
+              l++;
+          } else if (c > 0x07FF) {
+              l += 3;
+          } else {
+              l += 2;
+          }
+      }
+
+      return l;
+  }
 } //EOF class

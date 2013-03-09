@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author chris
+ * @author bullshark
  */
 public class BotCommand {
   private final Networking connection;
@@ -38,6 +38,7 @@ public class BotCommand {
   private String cmd;
   private String cmdArgs;
   private boolean hasArgs;
+  private ListColors lc;
 
   public BotCommand(Networking connection, FileReader fReader, JRobo jRobo) {
     /* Objects */
@@ -53,6 +54,9 @@ public class BotCommand {
     cmd = "";
     cmdArgs = "";
     hasArgs = false;
+
+    /* Misc */
+    lc = new ListColors();
   }
 
   /*
@@ -65,9 +69,6 @@ public class BotCommand {
     cmdArgs = getCmdArgs(fullCmd);
     hasArgs = cmdArgs.isEmpty() ? false : true;
 
-    /*
-     * Java 7 Switch With Strings!!!!!
-     */
     switch(cmd) {
       case "wakeroom": /* Requires no args */
       case "wr":
@@ -111,6 +112,8 @@ public class BotCommand {
         quitHelper();
         break;
       case "^":
+      case "^^":
+      case "^.^":
         doNothingHelper();
         break;
       case "list":
@@ -123,6 +126,9 @@ public class BotCommand {
         break;
       case "pirate":
         pirateHelper();
+        break;
+      case "isup":
+        isUpHelper();
         break;
       case "version":
         versionHelper();
@@ -145,11 +151,16 @@ public class BotCommand {
    * Replacing all other whitespace
    * No matter the length of that whitespace
    * With one '+'
+   * 
+   * TODO JavaDocs
    */
   private String getFormattedQuery(String str) {
     return str.replaceAll("\\s++", "+");
   }
 
+  /*
+   * TODO Javadocs
+   */
   private String getCmdArgs(String fullCmd) {
     //@TODO divded half of the work getFormattedQuery is doing to here
     try {
@@ -160,22 +171,53 @@ public class BotCommand {
     } // EOF try-catch
   } // EOF function
 
+  /*
+   * TODO JavaDocs
+   */
   private String getCmd(String fullCmd) {
     return fullCmd.substring(1).replaceFirst("\\s.*+", "");
   }
 
+  /*
+   * TODO JavaDocs
+   */
   private String getRandChanUser() {
+
     /*
      * TODO: getUsers.split() and choose random index
      * rand fn returns number within 0 and len-1 of arr
      * 
      * TODO: Use with ^mum that's supplied no args
      */
-    return "ChanServ";
+    String[] usersList;
+    
+    usersList = getUsers().split("\\s++");
+    
+    if(usersList != null) {
+      //TODO Needs testing
+      return usersList[(int)(Math.random() * usersList.length + 1)];
+    }
+    else {
+      return "ChanServ";
+    }
+    // Methods you can use as examples to implement this one ,drchaos
+/*
+  public boolean getRandomBoolean() {
+    return ((((int)(Math.random() * 10)) % 2) == 1);
+  }
+
+    String users = getUsers();
+    if(users != null) {
+      connection.msgChannel(botC, users);
+    } else {
+      connection.msgChannel(botC, "Failed to get a list of users; Try again or notify the developer!");
+    }
+*/
   }
 
   /*
    * TODO: Return list of users so this code can be reused
+   * TODO JavaDocs
    */
   private String getUsers() {
     String received = "", users = "";
@@ -200,6 +242,9 @@ public class BotCommand {
     return users;
   }
 
+  /*
+   * TODO Comment me
+   */
   private String getUsers(String chan) {
     String received = "", users = "";
     int tries = 2;
@@ -248,6 +293,15 @@ public class BotCommand {
     }
   }
 
+  private void isUpHelper() {
+    if(!hasArgs) {
+      helpWrapper(cmd);
+    } else {
+      //TODO replace botC
+      connection.msgChannel(botC, new DownForEveryone().isUp(getFormattedQuery(cmdArgs), true));
+    }
+  }
+
   private void weatherHelper() {
   /*
    * Put together a String in the form
@@ -268,8 +322,8 @@ public class BotCommand {
 
   private void mumHelper() {
       
-      Jokes joke =new Jokes(this.connection);
-      
+    Jokes joke =new Jokes(this.connection);
+
     try {
       if(!hasArgs) {
         connection.msgChannel(botC, joke.getMommaJoke(getRandChanUser()));
@@ -292,6 +346,8 @@ public class BotCommand {
   }
 
   private void inviteNickHelper() {
+    if(true) { return; } //TODO Fix this method
+
     if(!hasArgs || !(cmdArgs.split("\\s++").length > 0) ) { // Min 1 Arg
       //@TODO Replace code with getHelp(cmd); //Overloaded method
       connection.msgChannel(botC, "Usage: " + SYMB + "invite-nick {nick} [# of times]" );
@@ -318,6 +374,8 @@ public class BotCommand {
   }
 
   private void inviteChannelHelper() {
+    if(true) { return; } //TODO Fix this method
+
     //TODO Implement and use FileReader.getNickAndHost() instead
     if(jRobo.getFirst().startsWith(fReader.getMaster()) && hasArgs ) {
       String chan = cmdArgs.split(" ")[0], users;
@@ -360,7 +418,6 @@ public class BotCommand {
     + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
   }
 
-
   /*
    * Does nothing
    */
@@ -375,14 +432,64 @@ public class BotCommand {
    * Help messages
    */
   private void listHelper() {
-    //TODO Color me with MircColors
+    /*
     String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
       "wakeroom|wr, weather|w <location, zip, etc.>, " +
       "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
       "next|n, mum|m [user], invite-channel|ic <channel>, " +
       "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-      "version, quit|q"; //@TODO update list for ALL commands
-    connection.msgChannel(botC, str);
+      "isup <url>, version, quit|q"; //@TODO update list for ALL commands
+    */
+
+    String noColorStr = "Available commands: google|g|lmgtfy|stfw <search query>, " +
+      "wakeroom|wr, weather|w <location, zip, etc.>, " +
+      "urbandict|ud <search query, list|l, raw|r <raw irc line>, help|h [cmd], " +
+      "next|n, mum|m [user], invite-channel|ic <channel>, " +
+      "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
+      "isup <url>, version, quit|q"; //@TODO update list for ALL commands
+
+    /*
+     * GREEN = dark color
+     * CYAN = light color
+     * 
+     * cmds|alias = dark
+     * flags = dark
+     * args = light
+     * special characters = no bold, no color
+     * such as [] <> , ...
+     */
+    String colorStr = lc.attributesSynopsisLine(
+      lc.colorToken("Available commands: ", MircColors.BOLD) +
+      lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN) +
+      lc.colorToken("<search query>, ", MircColors.CYAN) +
+      lc.colorToken("wakeroom|wr, ", MircColors.GREEN) +
+      lc.colorToken("weather|w ", MircColors.GREEN) +
+      lc.colorToken("<location, zip, etc.>, ", MircColors.CYAN) +
+      lc.colorToken("urbandict|ud ", MircColors.GREEN) +
+      lc.colorToken("<search query>, ", MircColors.CYAN) +
+      lc.colorToken("list|l, ", MircColors.GREEN) +
+      lc.colorToken("raw|r ", MircColors.GREEN) +
+      lc.colorToken("<raw irc line>, ", MircColors.CYAN) +
+      lc.colorToken("help|h ", MircColors.GREEN) +
+      lc.colorToken("[cmd], ", MircColors.CYAN) +
+      lc.colorToken("next|n, ", MircColors.GREEN) +
+      lc.colorToken("mum|m ", MircColors.GREEN) +
+      lc.colorToken("[user], ", MircColors.CYAN) +
+      lc.colorToken("invite-channel|ic ", MircColors.GREEN) +
+      lc.colorToken("<channel>, ", MircColors.CYAN) +
+      lc.colorToken("invite-nick|in ", MircColors.GREEN) +
+      lc.colorToken("<nick> ", MircColors.CYAN) +
+      lc.colorToken("[# of times], ", MircColors.CYAN) +
+      lc.colorToken("pirate ", MircColors.GREEN) +
+      lc.colorToken("[-s|-l|-d] ", MircColors.CYAN) +
+      lc.colorToken("<search query>, ", MircColors.CYAN) +
+      lc.colorToken("isup ", MircColors.GREEN) +
+      lc.colorToken("<url>, ", MircColors.CYAN) +
+      lc.colorToken("version, ", MircColors.GREEN) +
+      lc.colorToken("quit|q", MircColors.GREEN)
+          );
+   
+    connection.msgChannel(botC, colorStr);
   }
 
   private void unknownCmdHelper() {
@@ -405,7 +512,7 @@ public class BotCommand {
   private void versionHelper() {
     connection.msgChannel(botC,
       MircColors.BOLD + MircColors.CYAN + "JRobo" +
-      MircColors.NORMAL + MircColors.BOLD + MircColors.WHITE + " - " +
-      MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "https://github.com/BullShark/JRobo");
+      MircColors.NORMAL + MircColors.BOLD + " - " +
+      MircColors.GREEN + "https://github.com/BullShark/JRobo"); //TODO Probably needs another MircColors.BOLD
   }
 } // EOF class

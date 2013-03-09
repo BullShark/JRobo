@@ -26,22 +26,12 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.w3c.dom.Document;
 
 /**
  *
- * @author chris
+ * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
-
-
-public class Weather {
-  /* For the XML/DOC */
-  private DocumentBuilderFactory dbf;
-  private DocumentBuilder db;
-  private Document doc;
-
+public class DownForEveryone {
   /* For the HTTP Connection */
   private URL url;
   private URLConnection conn;
@@ -50,39 +40,36 @@ public class Weather {
   private String fullUrl;
 
   /* Miscelanous */
-  private static final String QUERY_URL = "http://www.google.com/ig/api?weather=";
-  private String weather;
-  private String xml;
+  private static final String QUERY_URL = "http://www.downforeveryoneorjustme.com/";
+  private boolean isup;
 
-  public Weather() {
-    /* For the XML/DOC */
-    dbf = null;
-    db = null;
-    doc = null;
-
+  public DownForEveryone() {
     /* For the HTTP Connection */
     url = null;
     conn = null;
-    //TODO: Move BufferedReader declaration here
-//    wr = null;
-//    rd = null;
+    rd = null;
     fullUrl = "";
 
     /* Miscelanous */
-    xml = "";
-    weather = "";
+    isup = false;
   }
 
   /**
+   * Checks if the URL is up
    * 
-   * @param location
-   * @return
+   * @param testUrl URL to check
+   *
+   * @param colors Whether to use IRC colors for result returned
+   *
+   * @return Message for if URL is up or down
+   * 
    */
-  public String getXml(String location) {
+  public String isUp(String testUrl, boolean colors) {
     try {
       /* Create a URL obj from strings */
-      url =  new URL((QUERY_URL.concat(location)).replace(" ", "%20"));
+      url =  new URL((QUERY_URL.concat(testUrl)).replace(" ", "%20"));
 
+      /* Debug */
       System.out.println(fullUrl);
 
       conn = url.openConnection();
@@ -92,7 +79,13 @@ public class Weather {
 
       String line = "";
       while ((line = rd.readLine()) != null) {
-        xml = xml.concat(line);
+//        It's just you.  <a href="http://google.com" class="domain">http://google.com</a></span> is up.
+        if(line.contains("It's just you.  ") && line.contains(" is up.")) {
+          isup = true;
+//      It's not just you!  <a href="http://ggggggasdfgle.com" class="domain">http://ggggggasdfgle.com</a> looks down from here.
+        } else if(line.contains("It's not just you!  ") && line.contains(" looks down from here.")) {
+          isup = false;
+        }
       }
 
       rd.close();
@@ -103,25 +96,37 @@ public class Weather {
       ex.printStackTrace();
     }
 
-    return xml;
-  }
+    String result = "";
 
-  public String getFormattedWeatherSummary(String xml) {
-
-    return xml;
+    if(isup) {
+      if(colors) {
+        result = 
+          MircColors.BOLD + MircColors.GREEN + testUrl + 
+          MircColors.CYAN + " IS UP!";
+      } else {
+        result = testUrl + " IS UP!";
+      }
+    } else {
+      if(colors) {
+        result = 
+          MircColors.BOLD + MircColors.GREEN + testUrl + 
+          MircColors.CYAN + " IS DOWN!";
+      } else {
+        result = testUrl + " IS DOWN!";
+      }
+    }
+    return result;
   }
 
   /*
-   *A main method for testing this class
+   * A main method for testing this class
    */
   public static void main(String[] args) {
     if(args.length == 0) {
-      System.err.println("Usage: java Weather <location>");
+      System.err.println("Usage: java DownForEveryone <url>");
       System.exit(-1);
     }
-    //System.out.println(new Weather().getXML(args[0]) );
-    Weather w = new Weather();
-    System.out.println(w.getXml(args[0]));
+    DownForEveryone w = new DownForEveryone();
+    System.out.println(new DownForEveryone().isUp(args[0], false));
   }
-
-} // EOF class
+}

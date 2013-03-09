@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author chris
+ * @author bullshark
  */
 public class IRCTester {
 
@@ -44,29 +44,29 @@ public class IRCTester {
   private String botC = null;
   private final char SYMB = '$';
 
-  private int randomBoolean = 0;
+  private int randomBoolean;
   private final FileReader fReader;
 
   public IRCTester() {
-    jokes = new Jokes(connection);
-    fReader = new FileReader(connection);
-    connection = new Networking(fReader.getNetwork());
+    this.jokes = new Jokes(connection);
+    this.fReader = new FileReader(connection);
+    this.connection = new Networking(fReader.getNetwork());
 
     /* Set Attributes/State for this JRobo Object */
-//    botN = "JavaBeans";
-//    botP = "haX0rzMe";
-    botN = "ProtoAnazlyer";
-    botP = "";
-    botC = "#blackhats";
+    this.botN = "ProtoAnazlyer";
+    this.botP = "";
+    this.botC = "#blackhats";
 
+    /* Misc */
+    randomBoolean = 0;
   }
 
   public void initiate() {
     System.out.println("\u001b[1;44m *** INITIATED *** \u001b[m");
 
     /* Identify to server */
-    connection.sendln("PASS " + botP);
     connection.sendln("NICK " + botN);
+//    connection.sendln("PASS " + botP);
     connection.sendln("USER RTFM 0 * :Microsoft Exterminator!");
 
 //    /*
@@ -86,7 +86,7 @@ public class IRCTester {
     while(( received = connection.recieveln()) != null ) {
       this.divideTwo();
 
-      if(first.equals("PING")) { //@TODO Implement with regex
+      if(first.equals("PING")) {
         connection.sendln("PONG " + last);
       }
       
@@ -136,7 +136,7 @@ public class IRCTester {
     }
 
   } //@TODO Get List of Users
-  public void getSmartAss() {
+  public void getMumJoke() {
     /* Code to Test JRobo */
     try {
       Thread.sleep(30000);
