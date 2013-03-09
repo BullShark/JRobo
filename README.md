@@ -72,7 +72,7 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
 Requirements
  * Java Apache Ant 1.8 (Recommended but optional)
  * OpenJDK or Oracle/Sun JDK version 7 or newer
- * git
+ * Git of course
 
 ### Debian/Linux Mint/Ubuntu
     $ sudo apt-get install openjdk-7-jdk ant git
