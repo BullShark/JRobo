@@ -93,7 +93,7 @@ Requirements
 
 # Windows
 
-You're on your own.
+Tested, and it works.
 
 ## Develop
 
