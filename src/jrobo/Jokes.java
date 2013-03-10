@@ -37,7 +37,8 @@ public class Jokes {
   public Jokes (Networking connection) {
     
     this.connection = connection;
-    reader = new FileReader();
+    //@FIXME TODO This is causing the FileReader constructor to be called twice, then Config.json is read twice
+    reader = new FileReader(); 
     
     mommaJokes = new ArrayList<>(50);
     pickUpJokes = new ArrayList<>(50);
