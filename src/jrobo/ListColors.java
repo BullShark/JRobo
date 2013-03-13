@@ -60,14 +60,17 @@ public class ListColors extends MircColors {
 //        colorStr += NORMAL + line.substring(x, (x+1)) + BOLD;
         colorStr += NORMAL + BOLD + line.substring(x, (x+1));
         /* Debug */
-//        String code = "none ";
+//        String code = "NONE ";
 //        switch(line.substring(x, (x+1)) ) {
 //          CASE CYAN:
-//            CASE GREEN:
-//            CASE NORMAL:
-//            CASE BOLD:
-//            default:
-//              System.err.println(Unknown color + line.substring(x, (x+1)));
+//            System.out.print("CYAN ");
+//          CASE GREEN:
+//            System.out.print("CYAN ");
+//          CASE NORMAL:
+//            System.out.print("CYAN ");
+//          CASE BOLD:
+//          default:
+//            System.err.println("UNKNOWN " + line.substring(x, (x+1)));
 //        }
         System.out.println("NORMAL BOLD ");
         if(lastColorCode != null) {

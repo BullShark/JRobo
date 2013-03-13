@@ -67,7 +67,6 @@ public class FileReader {
 
 
     config_file = "Config.json";
-
     getConfig();
     
     fileToArrayList("MomJokes.txt", mommaJokes);
@@ -118,7 +117,7 @@ public class FileReader {
   }
   
   public boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
-   out.println("[+++]\tReading: " + fileName);
+   out.println("[+++]\tReading File (" + fileName + ")");
 
    BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
 
@@ -164,7 +163,7 @@ public class FileReader {
    */
   private void getConfig () {
       
-      out.println("[+++]\tReading Configuration file (Config.json)");
+      out.println("[+++]\tReading Configuration File (Config.json)");
       
       InputStream fileStream = FileReader.class.getResourceAsStream(config_file);
       
