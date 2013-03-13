@@ -31,6 +31,7 @@ public class JRobo {
   /* Defined Objects */
   private final Networking connection;
   private final FileReader fReader;
+  private final Config config;
   private final Jokes jokes;
   private final BotCommand bCmd;
 
@@ -51,16 +52,17 @@ public class JRobo {
 
   public JRobo() {
     fReader = new FileReader();
-    connection = new Networking(fReader.getNetwork());
+    config = fReader.getConfig();
+    connection = new Networking(config.getNetwork());
     jokes = new Jokes (connection);
-    bCmd = new BotCommand(connection, fReader, this);
+    bCmd = new BotCommand(connection, config, this);
 
     /* Set Attributes/State for this JRobo Object */
-    botN = fReader.getNick();
-    botP = fReader.getPass();
-    botC = fReader.getChan();
+    botN = config.getName();
+    botP = config.getPass();
+    botC = config.getChannel();
     isRunning = false;
-    SYMB = fReader.getCmdSymb();
+    SYMB = config.getCmdSymb();
     //TODO Set identd to JRobo
   }
 
