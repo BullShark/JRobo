@@ -132,6 +132,7 @@ public class FileReader {
   }
   
   /**
+   * Gets the API key used to get JSON Weather from Wunderground.net
    * 
    * @return the weather underground key
    * @since 2013-02-19
