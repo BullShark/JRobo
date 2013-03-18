@@ -87,17 +87,7 @@ public class FileReader {
    * @return
    */
   public String getChan() {
-//    try {
-//      return new Scanner(new File(pathToFile + "config.xml")).nextLine();
-//    } catch (FileNotFoundException ex) {
-//      Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
-      //err.println("FAILED TO READ CONFIG FOR JOIN CHAN!!!"
-      //        + "\nIMPLEMENT JRobo TO READ AND PARSE XML CONFIG INSTEAD"); //TODO Delete when working
-      //return "#blackhats";
-      //return "##blackhats-bots";
-      //return "#theblackmatrix-bots";
-//    }
-      return config.getChannel();
+    return config.getChannel();
   }
   
   public String getMaster() {  
