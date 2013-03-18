@@ -74,11 +74,6 @@ public class FileReader {
     fileToArrayList("FunnyJokes.txt", pickUpJokes);
   }
   
-  //@TODO Use XML
-  public boolean parseConf() {
-    return false;
-  }
-  
   public String getNick() {
     return config.getName();
   }
