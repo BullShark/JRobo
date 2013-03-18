@@ -2,7 +2,10 @@
     "name": "JRobo",
     "second_name": "^JRobo^",
     "password": "",
-    "masters":["BullShark"],
+    "masters": [
+      { "nick":"BullShark" , "host":"windfyre.net" },
+      { "nick":"StompinBroknGlas" , "host":"StompinBroknGlas.Blackhats" }
+    ],
     "hostmasks":[""],
     "command_symbol":"^",
     "network":"frequency.windfyre.net:6667",
