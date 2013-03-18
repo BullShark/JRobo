@@ -90,11 +90,10 @@ public class FileReader {
     return config.getChannel();
   }
   
-  public String getMaster() {  
-    //return "BullShark";
-    //temp workaround for master
+  public String[] getMaster() {  
     String[] masters = config.getMasters();
-    return masters[0];
+//    return masters[0];
+    return masters;
   }
   
   public char getCmdSymb() {
