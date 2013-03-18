@@ -54,7 +54,7 @@ public class Jokes {
    * Pass null in as String to not precede message
    * With "User: "
    * Be sure to check for null return when calling this
-   * @param user  direct the pickup joke at the user
+   * @param user direct the pickup joke at the user
    * @return a pickup Joke or null
    */
   public String getPhoneNumber(String user) {
