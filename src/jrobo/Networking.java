@@ -46,6 +46,7 @@ public class Networking {
   private String received = null;
   private final int MAXCHARS = 450; /* Some RFC says 510 max chars */
 
+
   public Networking(String network) {
     super(); // Gets rid of java.lang.VerifyError
     

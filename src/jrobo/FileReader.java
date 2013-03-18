@@ -45,7 +45,6 @@ public class FileReader {
   public FileReader () {
       
     config_file = "Config.json";
-    getConfig();
   }
   
   public FileReader(Networking connection) {
@@ -67,7 +66,6 @@ public class FileReader {
 
 
     config_file = "Config.json";
-    getConfig();
     
     fileToArrayList("MomJokes.txt", mommaJokes);
 
@@ -143,10 +141,10 @@ public class FileReader {
   
   /**
    * gets the data from the configuration file
-   * 
+   * @return Returns a Config object, with the settings from Config.json
    * @since 2013-02-18
    */
-  private void getConfig () {
+  public Config getConfig () {
       
       out.println("[+++]\tReading Configuration File (Config.json)");
       
@@ -217,5 +215,7 @@ public class FileReader {
           err.println("[+++]\tError: Unable to find bot's Channel");
           System.exit(1);
       }
+      
+      return config;
   }
 } // EOF class

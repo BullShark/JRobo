@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class BotCommand {
   private final Networking connection;
-  private final FileReader fReader;
+  private final Config config;
   private final String botC;
   private UrbanDict urban;
   private JRobo jRobo;
@@ -40,15 +40,15 @@ public class BotCommand {
   private boolean hasArgs;
   private ListColors lc;
 
-  public BotCommand(Networking connection, FileReader fReader, JRobo jRobo) {
+  public BotCommand(Networking connection, Config config, JRobo jRobo) {
     /* Objects */
     this.connection = connection;
-    this.fReader = fReader;
+    this.config = config;
     this.jRobo = jRobo;
 
     /* Data-types */
-    this.SYMB = fReader.getCmdSymb();
-    this.botC = fReader.getChan();
+    this.SYMB = config.getCmdSymb();
+    this.botC = config.getChannel();
 
     /* Cmds */
     cmd = "";
@@ -233,10 +233,10 @@ public class BotCommand {
         users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
       } catch(ArrayIndexOutOfBoundsException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-        connection.msgUser(fReader.getMaster(), "Could not get list of users!!!");
+        connection.msgUser(config.getMasters()[0], "Could not get list of users!!!");
       }
     } else {
-      connection.msgUser(fReader.getMaster(), "Could not get list of users!!!");
+      connection.msgUser(config.getMasters()[0], "Could not get list of users!!!");
       return null;
     }
     return users;
@@ -259,10 +259,10 @@ public class BotCommand {
         users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
       } catch(ArrayIndexOutOfBoundsException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-        connection.msgUser(fReader.getMaster(), "Could not get list of users!!!");
+        connection.msgUser(config.getMasters()[0], "Could not get list of users!!!");
       }
     } else {
-      connection.msgUser(fReader.getMaster(), "Could not get list of users!!!");
+      connection.msgUser(config.getMasters()[0], "Could not get list of users!!!");
       return null;
     }
     return users;
@@ -323,7 +323,7 @@ public class BotCommand {
   private void mumHelper() {
       
     Jokes joke =new Jokes(this.connection);
-      
+
     try {
       if(!hasArgs) {
         connection.msgChannel(botC, joke.getMommaJoke(getRandChanUser()));
@@ -337,7 +337,7 @@ public class BotCommand {
       }
     } catch(NullPointerException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-      connection.msgUser(fReader.getMaster(), "FIX ^mum; FileReader.java not reading input!!!");
+      connection.msgUser(config.getMasters()[0], "FIX ^mum; FileReader.java not reading input!!!");
     }
   }
 
@@ -377,7 +377,7 @@ public class BotCommand {
     if(true) { return; } //TODO Fix this method
 
     //TODO Implement and use FileReader.getNickAndHost() instead
-    if(jRobo.getFirst().startsWith(fReader.getMaster()) && hasArgs ) {
+    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
       String chan = cmdArgs.split(" ")[0], users;
       connection.sendln("PART " + botC + " :BSOD");
       connection.sendln("JOIN :" + chan);
