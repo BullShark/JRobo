@@ -28,7 +28,7 @@ public class Config {
     public String name;
     public String password;
     public String[] masters;
-    public String[] hostmasks;
+    public String[] hostmasks; //TODO Remove when masters is working
     public char command_symbol;
     public String network;
     public String channel;

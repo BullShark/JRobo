@@ -30,7 +30,7 @@ public class JRobo {
 
   /* Defined Objects */
   private final Networking connection;
-  private final FileReader fReader;
+  private final FileReader reader;
   private final Config config;
   private final Jokes jokes;
   private final BotCommand bCmd;
@@ -44,18 +44,18 @@ public class JRobo {
   private final String botN;
   private final String botP;
   private final String botC;
-  private boolean isRunning;
+  private boolean isRunning; //TODO 
   private final char SYMB;
 
   /* Miscallenous */
   private String user = null;
 
   public JRobo() {
-    fReader = new FileReader();
-    config = fReader.getConfig();
+    reader = new FileReader();
+    config = reader.getConfig();
     connection = new Networking(config.getNetwork());
     jokes = new Jokes (connection);
-    bCmd = new BotCommand(connection, config, this);
+    bCmd = new BotCommand(connection, reader, this);
 
     /* Set Attributes/State for this JRobo Object */
     botN = config.getName();
@@ -161,7 +161,9 @@ public class JRobo {
 
         /* Debug Code */
         user = first.substring(1, first.indexOf('!'));
-        connection.msgUser(fReader.getMaster(), user + " joined " + botC); //@TODO Implement w/ bot owner or bot owners arr instead
+
+        // Inform masters in PM
+        reader.msgMasters(user + " joined " + botC);
       }
 
       else if(received.matches("^:\\S+ KICK " + botC + " " + botN + " :.*")) {

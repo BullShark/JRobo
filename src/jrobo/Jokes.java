@@ -60,6 +60,8 @@ public class Jokes {
   public String getPhoneNumber(String user) {
     if(pickUpJokes.isEmpty()) {
 
+      reader.msgMasters("OUT OF PHONE NUMBERS!!!");
+
       //Inform channel
       connection.noticeChan(reader.getChan(), "[***]RELOADING AMMUNITION");
 
@@ -86,8 +88,7 @@ public class Jokes {
   public String getMommaJoke(String user) {
     if(mommaJokes.isEmpty()) {
   
-      //Inform owner in PM
-      connection.msgUser(reader.getMaster(), "OUT OF PHONE NUMBERS!!!");
+      reader.msgMasters("OUT OF MOM JOKES!!!");
    
       //Inform channel
       connection.noticeChan(reader.getChan(), "[***]RELOADING AMMUNITION");

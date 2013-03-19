@@ -88,7 +88,7 @@ public class FileReader {
     return config.getChannel();
   }
   
-  public String[] getMaster() {  
+  public String[] getMasters() {  
     String[] masters = config.getMasters();
 //    return masters[0];
     return masters;
@@ -217,5 +217,16 @@ public class FileReader {
       }
       
       return config;
+  }
+
+  /**
+   * Inform masters in PM
+   *
+   * @param msg Message to send to all masters
+   */
+  public void msgMasters(String msg) {
+      for(String master : this.getMasters()) {
+        connection.msgUser(master, msg);
+      }
   }
 } // EOF class

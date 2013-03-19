@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class BotCommand {
   private final Networking connection;
-  private final Config config;
+  private final FileReader reader;
   private final String botC;
   private UrbanDict urban;
   private JRobo jRobo;
@@ -40,15 +40,21 @@ public class BotCommand {
   private boolean hasArgs;
   private ListColors lc;
 
-  public BotCommand(Networking connection, Config config, JRobo jRobo) {
+  /**
+   *
+   * @param connection
+   * @param reader
+   * @param jRobo
+   */
+  public BotCommand(Networking connection, FileReader reader, JRobo jRobo) {
     /* Objects */
     this.connection = connection;
-    this.config = config;
+    this.reader = reader;
     this.jRobo = jRobo;
 
     /* Data-types */
-    this.SYMB = config.getCmdSymb();
-    this.botC = config.getChannel();
+    this.SYMB = reader.getCmdSymb();
+    this.botC = reader.getChan();
 
     /* Cmds */
     cmd = "";
@@ -233,10 +239,14 @@ public class BotCommand {
         users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
       } catch(ArrayIndexOutOfBoundsException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-        connection.msgUser(config.getMasters()[0], "Could not get list of users!!!");
+
+        //Inform masters in PM
+        reader.msgMasters("Could not get list of users!!!");
       }
     } else {
-      connection.msgUser(config.getMasters()[0], "Could not get list of users!!!");
+        //Inform masters in PM
+        reader.msgMasters("Could not get list of users!!!");
+
       return null;
     }
     return users;
@@ -259,10 +269,22 @@ public class BotCommand {
         users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
       } catch(ArrayIndexOutOfBoundsException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-        connection.msgUser(config.getMasters()[0], "Could not get list of users!!!");
+        
+        String msg = "Could not get list of users!!!";
+
+        //Inform masters in PM
+        for(String master : reader.getMasters()) { //TODO Use fReader or reader instead of config
+          connection.msgUser(master, msg);
+        }
+        return null;
       }
     } else {
-      connection.msgUser(config.getMasters()[0], "Could not get list of users!!!");
+        String msg = "Could not get list of users!!!";
+
+        //Inform masters in PM
+        for(String master : reader.getMasters()) { //TODO Use fReader or reader instead of config
+          connection.msgUser(master, msg);
+        }
       return null;
     }
     return users;
@@ -337,7 +359,9 @@ public class BotCommand {
       }
     } catch(NullPointerException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-      connection.msgUser(config.getMasters()[0], "FIX ^mum; FileReader.java not reading input!!!");
+
+      //Inform masters in PM
+      reader.msgMasters("FIX ^mum; FileReader.java not reading input!!!");
     }
   }
 
@@ -359,7 +383,7 @@ public class BotCommand {
         try{
           Thread.sleep(1500);
           numInvites = Integer.getInteger(cmdArgsArr[1]);
-          //TODO Make the below string a variable that is mutable to be set by the XML configuration file
+          //TODO replace with FileReader.getMaster()
           if(connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
   //               this.jRobo. 
           }
@@ -377,17 +401,17 @@ public class BotCommand {
     if(true) { return; } //TODO Fix this method
 
     //TODO Implement and use FileReader.getNickAndHost() instead
-    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
-      String chan = cmdArgs.split(" ")[0], users;
-      connection.sendln("PART " + botC + " :BSOD");
-      connection.sendln("JOIN :" + chan);
-      users = getUsers(chan);
-      connection.sendln("PART " + chan + " :BSOD");
-      connection.sendln("JOIN :" + botC);
-      connection.msgChannel(botC, users);
-    } else {
+//FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
+//      String chan = cmdArgs.split(" ")[0], users;
+//      connection.sendln("PART " + botC + " :BSOD");
+//      connection.sendln("JOIN :" + chan);
+//      users = getUsers(chan);
+//      connection.sendln("PART " + chan + " :BSOD");
+//      connection.sendln("JOIN :" + botC);
+//      connection.msgChannel(botC, users);
+//    } else {
     ; // printHelp(ic);
-    }
+//    }
     connection.msgChannel(botC, "Still being implemented!");
     //@TODO arg nick, number of times to invite
   }
