@@ -243,14 +243,4 @@ public class FileReader {
       return config;
   }
 
-  /**
-   * Inform masters in PM
-   * @deprecated 
-   * @param msg Message to send to all masters
-   */
-  public void msgMasters(String msg) {
-      for(String master : this.getMasters()) {
-        connection.msgUser(master, msg);
-      }
-  }
 } // EOF class
