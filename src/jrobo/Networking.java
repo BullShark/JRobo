@@ -43,13 +43,15 @@ public class Networking {
   private Socket sock = null;
   private BufferedWriter bwriter = null;
   private BufferedReader breader = null;
+  private Config config = null;
   private String received = null;
   private final int MAXCHARS = 450; /* Some RFC says 510 max chars */
 
 
-  public Networking(String network) {
+  public Networking(Config config) {
     super(); // Gets rid of java.lang.VerifyError
-    
+    this.config = config;
+    String network = config.getNetwork();
     String[] server = network.split(":");
     String hostname = server[0];
     int port = Integer.parseInt(server[1]);
