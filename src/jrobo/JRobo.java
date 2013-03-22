@@ -213,18 +213,7 @@ public class JRobo {
     return ((((int)(Math.random() * 10)) % 2) == 1);
   }
 
-    /**
-   * Inform masters in PM
-   *
-   * @param msg Message to send to all masters
-   * @since 2013-03-22
-   */
-  public void msgMasters(String msg) {
-      for(String master : config.getMasters()) {
-        connection.msgUser(master, msg);
-      }
-  }
-  
+
   /**
    * @param args the command line arguments
    */
