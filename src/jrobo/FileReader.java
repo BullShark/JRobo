@@ -74,32 +74,55 @@ public class FileReader {
     fileToArrayList("FunnyJokes.txt", pickUpJokes);
   }
   
+  /**
+   * @deprecated 
+   * @return 
+   */
   public String getNick() {
     return config.getName();
   }
   
+  /**
+   * @deprecated
+   * @return 
+   */
   public String getPass() {
     return config.getPass();
   }
   
   /**
-   * 
+   * @deprecated 
    * @return
    */
   public String getChan() {
     return config.getChannel();
   }
   
+  /**
+   * @deprecated 
+   * @return 
+   */
   public String[] getMasters() {  
     String[] masters = config.getMasters();
 //    return masters[0];
     return masters;
   }
   
+  /**
+   * @deprecated 
+   * @return 
+   */
   public char getCmdSymb() {
     return config.getCmdSymb();
   }
   
+  /**
+   * Opens a resource file inside the package, and fills the passed ArrayList
+   * 
+   * @param fileName The file name inside the package to be opened
+   * @param listArr The array list to store the file lines to
+   * @return a True on success, and false on failure
+   */
   public boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
    out.println("[+++]\tReading File (" + fileName + ")");
 
@@ -123,7 +146,7 @@ public class FileReader {
 
   
   /**
-   * 
+   * @deprecated 
    * @return Network address from the configuration
    * @since 2013-02-19
    */
@@ -134,6 +157,7 @@ public class FileReader {
   /**
    * Gets the API key used to get JSON Weather from Wunderground.net
    * 
+   * @deprecated 
    * @return the weather underground key
    * @since 2013-02-19
    */
@@ -221,14 +245,4 @@ public class FileReader {
       return config;
   }
 
-  /**
-   * Inform masters in PM
-   *
-   * @param msg Message to send to all masters
-   */
-  public void msgMasters(String msg) {
-      for(String master : this.getMasters()) {
-        connection.msgUser(master, msg);
-      }
-  }
 } // EOF class

@@ -32,6 +32,7 @@ public class IRCTester {
 
   /* Defined Objects */
   private Networking connection = null;
+  private Config config = null;
   private Jokes jokes = null;
   private BotCommand bCmd = null;
 
@@ -52,7 +53,8 @@ public class IRCTester {
   public IRCTester() {
     this.jokes = new Jokes(connection);
     this.fReader = new FileReader(connection);
-    this.connection = new Networking(fReader.getNetwork());
+    this.config = this.fReader.getConfig();
+    this.connection = new Networking(config);
 
     /* Set Attributes/State for this JRobo Object */
     this.botN = "ProtoAnazlyer";
