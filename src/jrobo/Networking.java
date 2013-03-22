@@ -355,4 +355,16 @@ public class Networking {
 
       return l;
   }
+  
+   /**
+   * Inform masters in PM
+   *
+   * @param msg Message to send to all masters
+   * @since 2013-03-22
+   */
+  public void msgMasters(String msg) {
+      for(String master : config.getMasters()) {
+        this.msgUser(master, msg);
+      }
+  }
 } //EOF class
