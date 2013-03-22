@@ -53,7 +53,7 @@ public class JRobo {
   public JRobo() {
     reader = new FileReader();
     config = reader.getConfig();
-    connection = new Networking(config.getNetwork());
+    connection = new Networking(config);
     jokes = new Jokes (connection);
     bCmd = new BotCommand(connection, reader, this);
 
@@ -163,7 +163,7 @@ public class JRobo {
         user = first.substring(1, first.indexOf('!'));
 
         // Inform masters in PM
-        reader.msgMasters(user + " joined " + botC);
+        connection.msgMasters(user + " joined " + botC);
       }
 
       else if(received.matches("^:\\S+ KICK " + botC + " " + botN + " :.*")) {
@@ -212,7 +212,6 @@ public class JRobo {
   public boolean getRandomBoolean() {
     return ((((int)(Math.random() * 10)) % 2) == 1);
   }
-
 
   /**
    * @param args the command line arguments
