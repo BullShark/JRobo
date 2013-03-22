@@ -364,7 +364,8 @@ public class Networking {
    */
   public void msgMasters(String msg) {
       for(String master : config.getMasters()) {
-        this.msgUser(master, msg);
+          
+        this.msgUser(master.split("@")[0], msg);
       }
   }
 } //EOF class
