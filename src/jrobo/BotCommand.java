@@ -241,11 +241,11 @@ public class BotCommand {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 
         //Inform masters in PM
-        reader.msgMasters("Could not get list of users!!!");
+        connection.msgMasters("Could not get list of users!!!");
       }
     } else {
         //Inform masters in PM
-        reader.msgMasters("Could not get list of users!!!");
+        connection.msgMasters("Could not get list of users!!!");
 
       return null;
     }
@@ -361,7 +361,7 @@ public class BotCommand {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 
       //Inform masters in PM
-      reader.msgMasters("FIX ^mum; FileReader.java not reading input!!!");
+      connection.msgMasters("FIX ^mum; FileReader.java not reading input!!!");
     }
   }
 
