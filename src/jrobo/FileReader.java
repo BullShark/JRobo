@@ -38,47 +38,15 @@ import java.util.Collections;
 public class FileReader {
   /* Standard Java API Classes */
   private String config_file = null;
-  private ArrayList<String> pickUpJokes = null, mommaJokes = null;
   
   /* User-defined Classes */
-  private Networking connection;
   private Config config;
   
   public FileReader () {
       
     config_file = "Config.json";
   }
-  
-  public FileReader(Networking connection) {
-    /*
-     * @TODO ...
-     * Why is Netbeans not complaining about Exceptions
-     * Exceptions needed to determine which file was not able to be read
-     * See if exception will get thrown when file missing
-     * If config fails, catch exception and set defaults
-     * 
-     * If first condition is met, JRobo is being ran from Netbeans
-     * Else if second contidition, JRobo is being ran from CLI
-     */
     
-    this.connection = connection;
-
-    mommaJokes = new ArrayList<>(50);
-    pickUpJokes = new ArrayList<>(50);
-
-
-    config_file = "Config.json";
-    
-    fileToArrayList("MomJokes.txt", mommaJokes);
-
-    fileToArrayList("FunnyJokes.txt", pickUpJokes);
-  }
-  
-
-  
- 
-  
-  
   /**
    * Opens a resource file inside the package, and fills the passed ArrayList
    * @param fileName The file name inside the package to be opened
@@ -104,10 +72,6 @@ public class FileReader {
   
     return true;
   }
-  
-  
-  
-
   
   /**
    * gets the data from the configuration file
@@ -188,5 +152,4 @@ public class FileReader {
       
       return config;
   }
-
 } // EOF class
