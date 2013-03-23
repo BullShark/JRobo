@@ -31,14 +31,16 @@ public class Jokes {
     
   /* Standard Java API Classes */
   private ArrayList<String> pickUpJokes = null, mommaJokes = null;
+  private String channel ;
     
    /* User-defined Classes */
   private Networking connection;
   private FileReader reader;
   
-  public Jokes (Networking connection) {
+  public Jokes (Networking connection,String channel) {
     
     this.connection = connection;
+    this.channel = channel;
     //@FIXME TODO This is causing the FileReader constructor to be called twice, then Config.json is read twice
     reader = new FileReader(); 
     
@@ -65,7 +67,7 @@ public class Jokes {
       connection.msgMasters("OUT OF PHONE NUMBERS!!!");
 
       //Inform channel
-      connection.noticeChan(reader.getChan(), "[***]RELOADING AMMUNITION");
+      connection.noticeChan(this.channel, "[***]RELOADING AMMUNITION");
 
       //Reload the jokes
       reader.fileToArrayList("pickup.txt", pickUpJokes);
@@ -93,7 +95,7 @@ public class Jokes {
       connection.msgMasters("OUT OF MOM JOKES!!!");
    
       //Inform channel
-      connection.noticeChan(reader.getChan(), "[***]RELOADING AMMUNITION");
+      connection.noticeChan(this.channel, "[***]RELOADING AMMUNITION");
 
       //Reload the jokes
       reader.fileToArrayList("MomJokes.txt", mommaJokes);
