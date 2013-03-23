@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  */
 public class BotCommand {
   private final Networking connection;
-  private final FileReader reader;
+  private final Config config;
   private final String botC;
   private UrbanDict urban;
   private JRobo jRobo;
@@ -48,15 +48,15 @@ public class BotCommand {
    * @param reader
    * @param jRobo
    */
-  public BotCommand(Networking connection, FileReader reader, JRobo jRobo) {
+  public BotCommand(Networking connection, Config config, JRobo jRobo) {
     /* Objects */
     this.connection = connection;
-    this.reader = reader;
+    this.config = config;
     this.jRobo = jRobo;
 
     /* Data-types */
-    this.SYMB = reader.getCmdSymb();
-    this.botC = reader.getChan();
+    this.SYMB = config.getCmdSymb();
+    this.botC = config.getChannel();
 
     /* Cmds */
     cmd = "";
@@ -275,7 +275,7 @@ public class BotCommand {
         String msg = "Could not get list of users!!!";
 
         //Inform masters in PM
-        for(String master : reader.getMasters()) { //TODO Use fReader or reader instead of config
+        for(String master : config.getMasters()) { 
           connection.msgUser(master, msg);
         }
         return null;
@@ -284,7 +284,7 @@ public class BotCommand {
         String msg = "Could not get list of users!!!";
 
         //Inform masters in PM
-        for(String master : reader.getMasters()) { //TODO Use fReader or reader instead of config
+        for(String master : config.getMasters()) { 
           connection.msgUser(master, msg);
         }
       return null;
@@ -346,7 +346,7 @@ public class BotCommand {
 
   private void mumHelper() {
       
-    Jokes joke =new Jokes(this.connection);
+    Jokes joke =new Jokes(this.connection, botC);
 
     try {
       if(!hasArgs) {
