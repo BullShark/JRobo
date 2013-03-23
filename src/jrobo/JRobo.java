@@ -56,7 +56,7 @@ public class JRobo {
     reader = new FileReader();
     config = reader.getConfig();
     connection = new Networking(config);
-    jokes = new Jokes (connection);
+    jokes = new Jokes (connection, config.getChannel());
     bCmd = new BotCommand(connection, reader, this);
 
     /* Set Attributes/State for this JRobo Object */

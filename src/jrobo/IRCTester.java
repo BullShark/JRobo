@@ -51,10 +51,10 @@ public class IRCTester {
   private final FileReader fReader;
 
   public IRCTester() {
-    this.jokes = new Jokes(connection);
     this.fReader = new FileReader(connection);
     this.config = this.fReader.getConfig();
     this.connection = new Networking(config);
+    this.jokes = new Jokes(connection,config.getChannel());
 
     /* Set Attributes/State for this JRobo Object */
     this.botN = "ProtoAnazlyer";
