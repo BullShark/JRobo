@@ -275,18 +275,14 @@ public class BotCommand {
         String msg = "Could not get list of users!!!";
 
         //Inform masters in PM
-        for(String master : config.getMasters()) { 
-          connection.msgUser(master, msg);
-        }
+        connection.msgMasters(msg);
         return null;
       }
     } else {
         String msg = "Could not get list of users!!!";
 
         //Inform masters in PM
-        for(String master : config.getMasters()) { 
-          connection.msgUser(master, msg);
-        }
+        connection.msgMasters(msg);
       return null;
     }
     return users;
