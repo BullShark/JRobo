@@ -57,7 +57,7 @@ public class JRobo {
     config = reader.getConfig();
     connection = new Networking(config);
     jokes = new Jokes (connection, config.getChannel());
-    bCmd = new BotCommand(connection, reader, this);
+    bCmd = new BotCommand(connection, config, this);
 
     /* Set Attributes/State for this JRobo Object */
     botN = config.getName();
