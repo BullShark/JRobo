@@ -74,51 +74,13 @@ public class FileReader {
     fileToArrayList("FunnyJokes.txt", pickUpJokes);
   }
   
-  /**
-   * @deprecated 
-   * @return 
-   */
-  public String getNick() {
-    return config.getName();
-  }
+
   
-  /**
-   * @deprecated
-   * @return 
-   */
-  public String getPass() {
-    return config.getPass();
-  }
+ 
   
-  /**
-   * @deprecated 
-   * @return
-   */
-  public String getChan() {
-    return config.getChannel();
-  }
-  
-  /**
-   * @deprecated 
-   * @return 
-   */
-  public String[] getMasters() {  
-    String[] masters = config.getMasters();
-//    return masters[0];
-    return masters;
-  }
-  
-  /**
-   * @deprecated 
-   * @return 
-   */
-  public char getCmdSymb() {
-    return config.getCmdSymb();
-  }
   
   /**
    * Opens a resource file inside the package, and fills the passed ArrayList
-   * 
    * @param fileName The file name inside the package to be opened
    * @param listArr The array list to store the file lines to
    * @return a True on success, and false on failure
@@ -143,27 +105,9 @@ public class FileReader {
     return true;
   }
   
+  
+  
 
-  
-  /**
-   * @deprecated 
-   * @return Network address from the configuration
-   * @since 2013-02-19
-   */
-  public String getNetwork () {
-      return config.getNetwork();
-  }
-  
-  /**
-   * Gets the API key used to get JSON Weather from Wunderground.net
-   * 
-   * @deprecated 
-   * @return the weather underground key
-   * @since 2013-02-19
-   */
-  public String getWundergroundKey (){
-      return config.getWundergroundKey();
-  }
   
   /**
    * gets the data from the configuration file
