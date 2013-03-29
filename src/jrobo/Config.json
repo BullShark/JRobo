@@ -4,11 +4,13 @@
     "password": "",
     "masters": [
       "BullShark@windfyre.net",
-      "StompinBroknGlas@StompinBroknGlas.Blackhats"
+      "StompinBroknGlas@StompinBroknGlas.Blackhats",
+      "StingRay@StompinBroknGlas.Blackhats",
+      "projektile@no-vhost-yet"
     ],
     "hostmasks":[""],
-    "command_symbol":"^",
-    "network":"frequency.windfyre.net:6667",
+    "command_symbol":".",
+    "network":"irc.windfyre.net:6667",
     "channel":"#blackhats",
     "wunderground_key":"abcd"
 }
