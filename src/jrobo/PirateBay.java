@@ -117,8 +117,12 @@ public class PirateBay {
     }
 
     public String getFormattedResult(boolean hasColors) {
-
-        gson = new GsonBuilder().setPrettyPrinting().create();
+        try {
+          gson = new GsonBuilder().setPrettyPrinting().create();
+        } catch(IllegalStateException ex) {
+          ex.printStackTrace();
+          return "";
+        }
         PirateBayJsonItem[] results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
 
         /* Fixes NullPointerException Bug that occurs if the URL DNE */
