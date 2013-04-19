@@ -166,9 +166,9 @@ public class JRobo {
 
         // Inform masters in PM
         connection.msgMasters(user + " joined " + config.getChannel());
-//        if() {
-//          connection.msgChannel(config.getChannel(), last);
-//        }
+        if(user == "iAmerican" || user == "amerikan") {
+          connection.msgChannel(config.getChannel(), user + " is a negra");
+        }
       }
 
       else if(received.matches("^:\\S+ KICK " + config.getChannel() + " " + botN + " :.*")) {
