@@ -105,6 +105,11 @@ public class UrbanDict {
 
   public String[] getFormattedUrbanDef(boolean hasColors, int limit) {
     
+    /*
+     * TODO Add try/catch to handle
+     * TODO The exception that no JSON is received
+     * TODO Look at PirateBay.java as an example
+     */
     gson = new GsonBuilder().setPrettyPrinting().create();
     UrbanJson uj = gson.fromJson(this.getJson(), UrbanJson.class);
 
