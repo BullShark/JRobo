@@ -45,7 +45,7 @@ public class JRobo {
   /* JRobo Attributes */
   private final String botN;
   private final String botP;
-  private final String botC;
+//  private final String botC;
   private boolean isRunning; //TODO 
   private final char SYMB;
 
@@ -62,7 +62,7 @@ public class JRobo {
     /* Set Attributes/State for this JRobo Object */
     botN = config.getName();
     botP = config.getPass();
-    botC = config.getChannel();
+ //   botC = config.getChannel();
     isRunning = false;
     SYMB = config.getCmdSymb();
     //TODO Set identd to JRobo
@@ -102,7 +102,7 @@ public class JRobo {
         break;
       }
     }
-    connection.sendln("JOIN " + botC);
+    connection.sendln("JOIN " + config.getChannel());
 
   /*
    * Conditional checks happen in order
@@ -141,7 +141,7 @@ public class JRobo {
             if(last.matches("(?i).*JR[0o]b[0o].*")) {
               try {
                 user = first.substring(1, first.indexOf('!'));
-                connection.msgChannel(botC, jokes.getPhoneNumber(user));
+                connection.msgChannel(config.getChannel(), jokes.getPhoneNumber(user));
               } catch(StringIndexOutOfBoundsException ex) {
                 Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
               }
@@ -158,20 +158,23 @@ public class JRobo {
        * A user has joined the channel
        * Excluding the bot joining
        */
-      else if(first.contains("JOIN") && last.equals(botC) && !first.contains(botN)) { //@TODO Implement with regex
+      else if(first.contains("JOIN") && last.equals(config.getChannel()) && !first.contains(botN)) { //@TODO Implement with regex
         //@TODO Decide how to handle this and implement it
 
         /* Debug Code */
         user = first.substring(1, first.indexOf('!'));
 
         // Inform masters in PM
-        connection.msgMasters(user + " joined " + botC);
+        connection.msgMasters(user + " joined " + config.getChannel());
+//        if() {
+//          connection.msgChannel(config.getChannel(), last);
+//        }
       }
 
-      else if(received.matches("^:\\S+ KICK " + botC + " " + botN + " :.*")) {
-        connection.sendln("JOIN " + botC);
+      else if(received.matches("^:\\S+ KICK " + config.getChannel() + " " + botN + " :.*")) {
+        connection.sendln("JOIN " + config.getChannel());
         user = first.substring(1, first.indexOf('!'));
-        //connection.msgChannel(botC, user + " >>> I'll rip your head off and shit down your neck!");
+        //connection.msgChannel(config.getChannel(), user + " >>> I'll rip your head off and shit down your neck!");
       } // EOF if-else-if-else...
 
     } // EOF while
