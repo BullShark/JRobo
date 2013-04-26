@@ -18,7 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 //TODO javadoc all
 // http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
 package jrobo;
@@ -31,6 +30,7 @@ import java.util.logging.Logger;
  * @author bullshark
  */
 public class BotCommand {
+
   private final Networking connection;
   private final Config config;
   private final String botC;
@@ -77,7 +77,7 @@ public class BotCommand {
     cmdArgs = getCmdArgs(fullCmd);
     hasArgs = cmdArgs.isEmpty() ? false : true;
 
-    switch(cmd) {
+    switch (cmd) {
       case "wakeroom": /* Requires no args */
       case "wr":
         wakeRoomHelper();
@@ -143,8 +143,8 @@ public class BotCommand {
         break;
       default:
         unknownCmdHelper();
-    //@TODO Accept raw irc commands from bot owner to be sent by the bot
-    //@TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
+      //@TODO Accept raw irc commands from bot owner to be sent by the bot
+      //@TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
     } // EOF switch
   } // EOF function
 
@@ -172,8 +172,8 @@ public class BotCommand {
   private String getCmdArgs(String fullCmd) {
     //@TODO divded half of the work getFormattedQuery is doing to here
     try {
-      return fullCmd.split("\\" + this.SYMB +"\\w++", 2)[1].trim();
-    } catch(ArrayIndexOutOfBoundsException ex) {
+      return fullCmd.split("\\" + this.SYMB + "\\w++", 2)[1].trim();
+    } catch (ArrayIndexOutOfBoundsException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
       return ""; /* Means no args!!! */
     } // EOF try-catch
@@ -198,29 +198,28 @@ public class BotCommand {
      * TODO: Use with ^mum that's supplied no args
      */
     String[] usersList;
-    
+
     usersList = getUsers().split("\\s++");
-    
-    if(usersList != null) {
+
+    if (usersList != null) {
       //TODO Needs testing
-      return usersList[(int)(Math.random() * usersList.length + 1)];
-    }
-    else {
+      return usersList[(int) (Math.random() * usersList.length + 1)];
+    } else {
       return "ChanServ";
     }
     // Methods you can use as examples to implement this one ,drchaos
 /*
-  public boolean getRandomBoolean() {
-    return ((((int)(Math.random() * 10)) % 2) == 1);
-  }
+     public boolean getRandomBoolean() {
+     return ((((int)(Math.random() * 10)) % 2) == 1);
+     }
 
-    String users = getUsers();
-    if(users != null) {
-      connection.msgChannel(botC, users);
-    } else {
-      connection.msgChannel(botC, "Failed to get a list of users; Try again or notify the developer!");
-    }
-*/
+     String users = getUsers();
+     if(users != null) {
+     connection.msgChannel(botC, users);
+     } else {
+     connection.msgChannel(botC, "Failed to get a list of users; Try again or notify the developer!");
+     }
+     */
   }
 
   /*
@@ -229,25 +228,36 @@ public class BotCommand {
    */
   private String getUsers() {
     String received = "", users = "";
-    int tries = 2;
+    String first = "", last = "";
+    int tries = 4;
 
     connection.sendln("NAMES " + botC);
     do {
       received = connection.recieveln();
+      try {
+        first = received.split(" :", 2)[0];
+        last = received.split(" :", 2)[1];
+      } catch (ArrayIndexOutOfBoundsException ex) {
+        first = "";
+        last = "";
+      }
+      if (first.equals("PING")) {
+        connection.sendln("PONG " + last);
+      }
       tries--;
-    } while(!received.matches("^:[a-z\\.]++ 353.*") || tries <= 0);
-    if(received.matches("^:[a-z\\.]++ 353.*")) {
+    } while (!received.matches("^:[a-z\\.]++ 353.*") || tries <= 0);
+    if (received.matches("^:[a-z\\.]++ 353.*")) {
       try {
         users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
-      } catch(ArrayIndexOutOfBoundsException ex) {
+      } catch (ArrayIndexOutOfBoundsException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 
         //Inform masters in PM
         connection.msgMasters("Could not get list of users!!!");
       }
     } else {
-        //Inform masters in PM
-        connection.msgMasters("Could not get list of users!!!");
+      //Inform masters in PM
+      connection.msgMasters("Could not get list of users!!!");
 
       return null;
     }
@@ -265,13 +275,13 @@ public class BotCommand {
     do {
       received = connection.recieveln();
       tries--;
-    } while(!received.matches("^:[a-z\\.]++ 366.*") || tries <= 0);
-    if(received.matches("^:[a-z\\.]++ 353.*")) {
+    } while (!received.matches("^:[a-z\\.]++ 366.*") || tries <= 0);
+    if (received.matches("^:[a-z\\.]++ 353.*")) {
       try {
         users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
-      } catch(ArrayIndexOutOfBoundsException ex) {
+      } catch (ArrayIndexOutOfBoundsException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-        
+
         String msg = "Could not get list of users!!!";
 
         //Inform masters in PM
@@ -279,21 +289,22 @@ public class BotCommand {
         return null;
       }
     } else {
-        String msg = "Could not get list of users!!!";
+      String msg = "Could not get list of users!!!";
 
-        //Inform masters in PM
-        connection.msgMasters(msg);
+      //Inform masters in PM
+      connection.msgMasters(msg);
       return null;
     }
     return users;
   }
 
-  /*****************************************************************************
+  /**
+   * ***************************************************************************
    * Helper methods
    */
   private void wakeRoomHelper() {
     String users = getUsers();
-    if(users != null) {
+    if (users != null) {
       connection.msgChannel(botC, users);
     } else {
       connection.msgChannel(botC, "Failed to get a list of users; Try again or notify the developer!");
@@ -305,7 +316,7 @@ public class BotCommand {
    * http://lmgtfy.com/?q=test+a+b+c
    */
   private void googleHelper() {
-    if(!hasArgs) {
+    if (!hasArgs) {
       helpWrapper(cmd);
     } else {
       String googleUrl = "http://lmgtfy.com/?q=".concat(getFormattedQuery(cmdArgs));
@@ -314,7 +325,7 @@ public class BotCommand {
   }
 
   private void isUpHelper() {
-    if(!hasArgs) {
+    if (!hasArgs) {
       helpWrapper(cmd);
     } else {
       //TODO replace botC
@@ -323,11 +334,10 @@ public class BotCommand {
   }
 
   private void weatherHelper() {
-  /*
-   * Put together a String in the form
-   * http://www.google.com/ig/api?weather=Mountain+View
-   */
-
+    /*
+     * Put together a String in the form
+     * http://www.google.com/ig/api?weather=Mountain+View
+     */
 //        connection.msgUser("BullShark", weatherUrl);
 //        if(!hasArgs) {
 //          helpWrapper(cmd);
@@ -335,27 +345,27 @@ public class BotCommand {
 //          connection.msgChannel(botC, new Weather().getSummary(cmdArgs));
 //          connection.msgChannel(botC, "^g weather " + cmdArgs);
 //        }
-  //TODO Parse and return the formatted JSON or XML instead
+    //TODO Parse and return the formatted JSON or XML instead
 //        connection.msgChannel(botC, new Weather().getXml(cmdArgs));
 //TODO Re-implement all the use wunderground.net
-}
+  }
 
   private void mumHelper() {
-      
-    Jokes joke =new Jokes(this.connection, botC);
+
+    Jokes joke = new Jokes(this.connection, botC);
 
     try {
-      if(!hasArgs) {
+      if (!hasArgs) {
         connection.msgChannel(botC, joke.getMommaJoke(getRandChanUser()));
       } else {
         int temp = cmdArgs.indexOf(' ');
-        if(temp != -1) {
+        if (temp != -1) {
           connection.msgChannel(botC, joke.getMommaJoke(cmdArgs.substring(0, temp)));
         } else {
-          connection.msgChannel(botC , joke.getMommaJoke(cmdArgs) );
+          connection.msgChannel(botC, joke.getMommaJoke(cmdArgs));
         }
       }
-    } catch(NullPointerException ex) {
+    } catch (NullPointerException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 
       //Inform masters in PM
@@ -368,46 +378,50 @@ public class BotCommand {
   }
 
   private void inviteNickHelper() {
-    if(true) { return; } //TODO Fix this method
+    if (true) {
+      return;
+    } //TODO Fix this method
 
-    if(!hasArgs || !(cmdArgs.split("\\s++").length > 0) ) { // Min 1 Arg
+    if (!hasArgs || !(cmdArgs.split("\\s++").length > 0)) { // Min 1 Arg
       //@TODO Replace code with getHelp(cmd); //Overloaded method
-      connection.msgChannel(botC, "Usage: " + SYMB + "invite-nick {nick} [# of times]" );
+      connection.msgChannel(botC, "Usage: " + SYMB + "invite-nick {nick} [# of times]");
     } else {
       connection.msgChannel(this.botC, "Roger that.");
       String cmdArgsArr[] = cmdArgs.split("\\s++");
       int numInvites = 50; // Default value
-      if(cmdArgsArr.length < 1) {
-        try{
+      if (cmdArgsArr.length < 1) {
+        try {
           Thread.sleep(1500);
           numInvites = Integer.getInteger(cmdArgsArr[1]);
           //TODO replace with FileReader.getMaster()
-          if(connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
-  //               this.jRobo. 
+          if (connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
+            //               this.jRobo. 
           }
-        } catch(Exception ex) { //Find out exactly what exceptions are thrown
+        } catch (Exception ex) { //Find out exactly what exceptions are thrown
           Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
       }
-      for(int x = 0; x < numInvites; x++) {
+      for (int x = 0; x < numInvites; x++) {
         connection.sendln("INVITE " + botC + " " + cmdArgsArr[0]);
       }
     }
   }
 
   private void inviteChannelHelper() {
-    if(true) { return; } //TODO Fix this method
+    if (true) {
+      return;
+    } //TODO Fix this method
 
     //TODO Implement and use FileReader.getNickAndHost() instead
-//FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
-//      String chan = cmdArgs.split(" ")[0], users;
-//      connection.sendln("PART " + botC + " :BSOD");
-//      connection.sendln("JOIN :" + chan);
-//      users = getUsers(chan);
-//      connection.sendln("PART " + chan + " :BSOD");
-//      connection.sendln("JOIN :" + botC);
-//      connection.msgChannel(botC, users);
-//    } else {
+    //FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
+    //      String chan = cmdArgs.split(" ")[0], users;
+    //      connection.sendln("PART " + botC + " :BSOD");
+    //      connection.sendln("JOIN :" + chan);
+    //      users = getUsers(chan);
+    //      connection.sendln("PART " + chan + " :BSOD");
+    //      connection.sendln("JOIN :" + botC);
+    //      connection.msgChannel(botC, users);
+    //    } else {
     ; // printHelp(ic);
 //    }
     connection.msgChannel(botC, "Still being implemented!");
@@ -415,15 +429,15 @@ public class BotCommand {
   }
 
   private void rawHelper() {
-  /* We have received a message from the owner */
+    /* We have received a message from the owner */
     //TODO Make the below string a variable that is mutable to be set by the XML configuration file
-    if( jRobo.getFirst().startsWith( ":BullShark!debian-tor@gateway/tor-sasl/nanomachine" ) ) {
+    if (jRobo.getFirst().startsWith(":BullShark!debian-tor@gateway/tor-sasl/nanomachine")) {
       connection.sendln("PRIVMSG " + botC + " :Yes Sir Chief!");
       String rawStr = jRobo.getLast();
       rawStr = rawStr.substring(rawStr.indexOf(' '));
       connection.sendln(rawStr);
       try {
-       Thread.sleep(500);
+        Thread.sleep(500);
         connection.msgChannel(botC, connection.recieveln());
       } catch (InterruptedException | NullPointerException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
@@ -437,7 +451,7 @@ public class BotCommand {
 
   private void quitHelper() {
     connection.msgChannel(botC, "Detenation devices to nuclear reactors! (Zer0 is pressing the "
-    + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
+            + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
   }
 
   /*
@@ -450,25 +464,26 @@ public class BotCommand {
     connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult(true));
   }
 
-  /*****************************************************************************
+  /**
+   * ***************************************************************************
    * Help messages
    */
   private void listHelper() {
     /*
-    String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
-      "wakeroom|wr, weather|w <location, zip, etc.>, " +
-      "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
-      "next|n, mum|m [user], invite-channel|ic <channel>, " +
-      "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-      "isup <url>, version, quit|q"; //@TODO update list for ALL commands
-    */
+     String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
+     "wakeroom|wr, weather|w <location, zip, etc.>, " +
+     "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
+     "next|n, mum|m [user], invite-channel|ic <channel>, " +
+     "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
+     "isup <url>, version, quit|q"; //@TODO update list for ALL commands
+     */
 
-    String noColorStr = "Available commands: google|g|lmgtfy|stfw <search query>, " +
-      "wakeroom|wr, weather|w <location, zip, etc.>, " +
-      "urbandict|ud <search query, list|l, raw|r <raw irc line>, help|h [cmd], " +
-      "next|n, mum|m [user], invite-channel|ic <channel>, " +
-      "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-      "isup <url>, version, quit|q"; //@TODO update list for ALL commands
+    String noColorStr = "Available commands: google|g|lmgtfy|stfw <search query>, "
+            + "wakeroom|wr, weather|w <location, zip, etc.>, "
+            + "urbandict|ud <search query, list|l, raw|r <raw irc line>, help|h [cmd], "
+            + "next|n, mum|m [user], invite-channel|ic <channel>, "
+            + "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, "
+            + "isup <url>, version, quit|q"; //@TODO update list for ALL commands
 
     /*
      * GREEN = dark color
@@ -481,36 +496,35 @@ public class BotCommand {
      * such as [] <> , ...
      */
     String colorStr = lc.attributesSynopsisLine(
-      lc.colorToken("Available commands: ", MircColors.BOLD) +
-      lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN) +
-      lc.colorToken("<search query>, ", MircColors.CYAN) +
-      lc.colorToken("wakeroom|wr, ", MircColors.GREEN) +
-      lc.colorToken("weather|w ", MircColors.GREEN) +
-      lc.colorToken("<location, zip, etc.>, ", MircColors.CYAN) +
-      lc.colorToken("urbandict|ud ", MircColors.GREEN) +
-      lc.colorToken("<search query>, ", MircColors.CYAN) +
-      lc.colorToken("list|l, ", MircColors.GREEN) +
-      lc.colorToken("raw|r ", MircColors.GREEN) +
-      lc.colorToken("<raw irc line>, ", MircColors.CYAN) +
-      lc.colorToken("help|h ", MircColors.GREEN) +
-      lc.colorToken("[cmd], ", MircColors.CYAN) +
-      lc.colorToken("next|n, ", MircColors.GREEN) +
-      lc.colorToken("mum|m ", MircColors.GREEN) +
-      lc.colorToken("[user], ", MircColors.CYAN) +
-      lc.colorToken("invite-channel|ic ", MircColors.GREEN) +
-      lc.colorToken("<channel>, ", MircColors.CYAN) +
-      lc.colorToken("invite-nick|in ", MircColors.GREEN) +
-      lc.colorToken("<nick> ", MircColors.CYAN) +
-      lc.colorToken("[# of times], ", MircColors.CYAN) +
-      lc.colorToken("pirate ", MircColors.GREEN) +
-      lc.colorToken("[-s|-l|-d] ", MircColors.CYAN) +
-      lc.colorToken("<search query>, ", MircColors.CYAN) +
-      lc.colorToken("isup ", MircColors.GREEN) +
-      lc.colorToken("<url>, ", MircColors.CYAN) +
-      lc.colorToken("version, ", MircColors.GREEN) +
-      lc.colorToken("quit|q", MircColors.GREEN)
-          );
-   
+            lc.colorToken("Available commands: ", MircColors.BOLD)
+            + lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN)
+            + lc.colorToken("<search query>, ", MircColors.CYAN)
+            + lc.colorToken("wakeroom|wr, ", MircColors.GREEN)
+            + lc.colorToken("weather|w ", MircColors.GREEN)
+            + lc.colorToken("<location, zip, etc.>, ", MircColors.CYAN)
+            + lc.colorToken("urbandict|ud ", MircColors.GREEN)
+            + lc.colorToken("<search query>, ", MircColors.CYAN)
+            + lc.colorToken("list|l, ", MircColors.GREEN)
+            + lc.colorToken("raw|r ", MircColors.GREEN)
+            + lc.colorToken("<raw irc line>, ", MircColors.CYAN)
+            + lc.colorToken("help|h ", MircColors.GREEN)
+            + lc.colorToken("[cmd], ", MircColors.CYAN)
+            + lc.colorToken("next|n, ", MircColors.GREEN)
+            + lc.colorToken("mum|m ", MircColors.GREEN)
+            + lc.colorToken("[user], ", MircColors.CYAN)
+            + lc.colorToken("invite-channel|ic ", MircColors.GREEN)
+            + lc.colorToken("<channel>, ", MircColors.CYAN)
+            + lc.colorToken("invite-nick|in ", MircColors.GREEN)
+            + lc.colorToken("<nick> ", MircColors.CYAN)
+            + lc.colorToken("[# of times], ", MircColors.CYAN)
+            + lc.colorToken("pirate ", MircColors.GREEN)
+            + lc.colorToken("[-s|-l|-d] ", MircColors.CYAN)
+            + lc.colorToken("<search query>, ", MircColors.CYAN)
+            + lc.colorToken("isup ", MircColors.GREEN)
+            + lc.colorToken("<url>, ", MircColors.CYAN)
+            + lc.colorToken("version, ", MircColors.GREEN)
+            + lc.colorToken("quit|q", MircColors.GREEN));
+
     connection.msgChannel(botC, colorStr);
   }
 
@@ -533,8 +547,8 @@ public class BotCommand {
 
   private void versionHelper() {
     connection.msgChannel(botC,
-      MircColors.BOLD + MircColors.CYAN + "JRobo" +
-      MircColors.NORMAL + MircColors.BOLD + " - " +
-      MircColors.GREEN + "https://github.com/BullShark/JRobo"); //TODO Probably needs another MircColors.BOLD
+            MircColors.BOLD + MircColors.CYAN + "JRobo"
+            + MircColors.NORMAL + MircColors.BOLD + " - "
+            + MircColors.GREEN + "https://github.com/BullShark/JRobo"); //TODO Probably needs another MircColors.BOLD
   }
 } // EOF class
