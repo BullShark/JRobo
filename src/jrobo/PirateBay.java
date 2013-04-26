@@ -49,6 +49,7 @@ public class PirateBay {
     private String json;
     private String s_name="blackhats";
     private String s_switch="s";
+    private int MAX_RESULTS = 5;
 
     /* For the Gson/Json */
     private Gson gson;
@@ -94,7 +95,7 @@ public class PirateBay {
     public String getJson() {
         try {
             /* Create a URL obj from strings */
-            fullUrl = (QUERY_URL.concat("?name=").concat(s_name)).replace(" ", "%20").concat("&orderby=" + s_switch);
+            fullUrl = (QUERY_URL.concat("?name=").concat(s_name)).replace(" ", "%20").concat("&orderby=" + s_switch).concat("&limit=") + MAX_RESULTS;
 
             url = new URL(fullUrl);
             /* Debug */
