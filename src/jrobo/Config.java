@@ -26,14 +26,14 @@ package jrobo;
  * @since 2013-02-18
  */
 public class Config {
-    public String name;
-    public String password;
-    public String[] masters;
-    public String[] hostmasks; //TODO Remove when masters is working
-    public char command_symbol;
-    public String network;
-    public String channel;
-    public String wunderground_key;
+    private String name;
+    private String password;
+    private String[] masters;
+    private String[] hostmasks; //TODO Remove when masters is working
+    private char command_symbol;
+    private String network;
+    private String channel;
+    private String wunderground_key;
     
     /**
      * 
