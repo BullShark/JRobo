@@ -1,12 +1,11 @@
 {
-    "name": "JRobo",
+    "name": "^JRobo^",
     "second_name": "^JRobo^",
     "password": "",
     "masters": [
       "BullShark@windfyre.net",
       "StompinBroknGlas@StompinBroknGlas.Blackhats",
-      "StingRay@StompinBroknGlas.Blackhats",
-      "projektile@no-vhost-yet"
+      "StingRay@StompinBroknGlas.Blackhats"
     ],
     "hostmasks":[""],
     "command_symbol":".",

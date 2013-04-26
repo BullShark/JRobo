@@ -392,10 +392,8 @@ public class BotCommand {
   }
 
   private void inviteChannelHelper() {
-    if (true) {
-      return;
-    } //TODO Fix this method
-
+    //TODO Fix this method
+    //@TODO arg nick, number of times to invite
     //TODO Implement and use FileReader.getNickAndHost() instead
     //FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
     //      String chan = cmdArgs.split(" ")[0], users;
@@ -406,10 +404,9 @@ public class BotCommand {
     //      connection.sendln("JOIN :" + botC);
     //      connection.msgChannel(botC, users);
     //    } else {
-    ; // printHelp(ic);
-//    }
+    // printHelp(ic);
+    //    }
     connection.msgChannel(config.getChannel(), "Still being implemented!");
-    //@TODO arg nick, number of times to invite
   }
 
   private void rawHelper() {
@@ -533,6 +530,6 @@ public class BotCommand {
     connection.msgChannel(config.getChannel(),
             MircColors.BOLD + MircColors.CYAN + "JRobo"
             + MircColors.NORMAL + MircColors.BOLD + " - "
-            + MircColors.GREEN + "https://github.com/BullShark/JRobo"); //TODO Probably needs another MircColors.BOLD
+            + MircColors.GREEN + "https://github.com/BullShark/JRobo");
   }
 } // EOF class
