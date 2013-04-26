@@ -42,13 +42,6 @@ public class JRobo {
   private String last = null;
   private String received = null;
 
-  /* JRobo Attributes */
-  private final String botN;
-  private final String botP;
-//  private final String botC;
-  private boolean isRunning; //TODO 
-  private final char SYMB;
-
   /* Miscallenous */
   private String user = null;
 
@@ -59,32 +52,15 @@ public class JRobo {
     jokes = new Jokes (connection, config.getChannel());
     bCmd = new BotCommand(connection, config, this);
 
-    /* Set Attributes/State for this JRobo Object */
-    botN = config.getName();
-    botP = config.getPass();
- //   botC = config.getChannel();
-    isRunning = false;
-    SYMB = config.getCmdSymb();
-    //TODO Set identd to JRobo
   }
 
   private void initiate() {
     //TODO: Use TermColors.java instead
     System.out.println("\u001b[1;44m *** INITIATED *** \u001b[m");
 
-    /*
-     * Give the server 4 seconds to identify JRobo
-     * Before attempting to join a channel
-     */
-//    try {
-//      Thread.sleep(4000);
-//    } catch (InterruptedException ex) {
-//      Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
-//    }
     /* Identify to server */
-    
-    connection.sendln("NICK " + botN);
-//    connection.sendln("PASS " + botP);
+    connection.sendln("NICK " + config.getName());
+    connection.sendln("PASS " + config.getPass());
     connection.sendln("USER JRobo 0 * :Microsoft Exterminator!");
     /*
      * Wait for server message:
@@ -129,7 +105,7 @@ public class JRobo {
        */
       else if(first.contains("PRIVMSG")) {
         try {
-          if(last.charAt(0) == SYMB) {
+          if(last.charAt(0) == config.getCmdSymb()) {
             bCmd.bCommander(last);
           } else {
 
@@ -146,8 +122,6 @@ public class JRobo {
                 Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
               }
             }
-
-
           }
         } catch(StringIndexOutOfBoundsException ex) {
           Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
@@ -158,29 +132,21 @@ public class JRobo {
        * A user has joined the channel
        * Excluding the bot joining
        */
-      else if(first.contains("JOIN") && last.equals(config.getChannel()) && !first.contains(botN)) { //@TODO Implement with regex
-        //@TODO Decide how to handle this and implement it
-
-        /* Debug Code */
+      else if(first.contains("JOIN") && last.equals(config.getChannel()) && !first.contains(config.getName())) {
         user = first.substring(1, first.indexOf('!'));
 
         // Inform masters in PM
         connection.msgMasters(user + " joined " + config.getChannel());
-        if(user == "iAmerikan" || user == "amerikan") {
-          connection.msgChannel(config.getChannel(), user + " is a negra");
-        }
       }
 
-      else if(received.matches("^:\\S+ KICK " + config.getChannel() + " " + botN + " :.*")) {
+      else if(received.matches("^:\\S+ KICK " + config.getChannel() + " " + config.getName() + " :.*")) {
         connection.sendln("JOIN " + config.getChannel());
         user = first.substring(1, first.indexOf('!'));
         //connection.msgChannel(config.getChannel(), user + " >>> I'll rip your head off and shit down your neck!");
       } // EOF if-else-if-else...
-
     } // EOF while
 
     //@TODO Implement a Networking.killConnection() and call it here
-
     //@TODO onUserJoin, ctcp version whois user
     System.out.println("\u001b[1;44m *** TERMINATED *** \u001b[m");
   }
@@ -193,9 +159,7 @@ public class JRobo {
       first = "";
       last = "";
     }
-
-
-  } //@TODO Get List of Users
+  }
 
   public String getFirst() {
     return first;
@@ -203,19 +167,6 @@ public class JRobo {
   
   public String getLast() {
     return last;
-  }
-
-  /*
-   * One of the few public methods
-   * From this class that is public
-   * For use from other classes
-   *
-   * Returns a random boolean
-   * 
-   * TODO: Use this somewhere
-   */
-  public boolean getRandomBoolean() {
-    return ((((int)(Math.random() * 10)) % 2) == 1);
   }
 
   /**
