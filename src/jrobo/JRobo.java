@@ -76,11 +76,11 @@ public class JRobo {
      * Give the server 4 seconds to identify JRobo
      * Before attempting to join a channel
      */
-    try {
-      Thread.sleep(4000);
-    } catch (InterruptedException ex) {
-      Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
-    }
+//    try {
+//      Thread.sleep(4000);
+//    } catch (InterruptedException ex) {
+//      Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
+//    }
     /* Identify to server */
     
     connection.sendln("NICK " + botN);
@@ -166,7 +166,7 @@ public class JRobo {
 
         // Inform masters in PM
         connection.msgMasters(user + " joined " + config.getChannel());
-        if(user == "iAmerican" || user == "amerikan") {
+        if(user == "iAmerikan" || user == "amerikan") {
           connection.msgChannel(config.getChannel(), user + " is a negra");
         }
       }
