@@ -33,10 +33,7 @@ public class BotCommand {
 
   private final Networking connection;
   private final Config config;
-  private final String botC;
-  private UrbanDict urban;
   private JRobo jRobo;
-  private final char SYMB;
   private String cmd;
   private String cmdArgs;
   private boolean hasArgs;
@@ -53,10 +50,6 @@ public class BotCommand {
     this.connection = connection;
     this.config = config;
     this.jRobo = jRobo;
-
-    /* Data-types */
-    this.SYMB = config.getCmdSymb();
-    this.botC = config.getChannel();
 
     /* Cmds */
     cmd = "";
@@ -119,9 +112,9 @@ public class BotCommand {
       case "q":
         quitHelper();
         break;
-      case "^":
-      case "^^":
-      case "^.^":
+      case ".":
+      case "..":
+      case "-.":
         doNothingHelper();
         break;
       case "list":
@@ -172,7 +165,7 @@ public class BotCommand {
   private String getCmdArgs(String fullCmd) {
     //@TODO divded half of the work getFormattedQuery is doing to here
     try {
-      return fullCmd.split("\\" + this.SYMB + "\\w++", 2)[1].trim();
+      return fullCmd.split("\\" + config.getCmdSymb() + "\\w++", 2)[1].trim();
     } catch (ArrayIndexOutOfBoundsException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
       return ""; /* Means no args!!! */
@@ -207,31 +200,22 @@ public class BotCommand {
     } else {
       return "ChanServ";
     }
-    // Methods you can use as examples to implement this one ,drchaos
-/*
+    /*
      public boolean getRandomBoolean() {
      return ((((int)(Math.random() * 10)) % 2) == 1);
      }
-
-     String users = getUsers();
-     if(users != null) {
-     connection.msgChannel(botC, users);
-     } else {
-     connection.msgChannel(botC, "Failed to get a list of users; Try again or notify the developer!");
-     }
      */
   }
-
-  /*
-   * TODO: Return list of users so this code can be reused
-   * TODO JavaDocs
+  /**
+   * 
+   * @return 
    */
   private String getUsers() {
     String received = "", users = "";
     String first = "", last = "";
     int tries = 4;
 
-    connection.sendln("NAMES " + botC);
+    connection.sendln("NAMES " + config.getChannel());
     do {
       received = connection.recieveln();
       try {
@@ -264,8 +248,10 @@ public class BotCommand {
     return users;
   }
 
-  /*
-   * TODO Comment me
+  /**
+   * 
+   * @param chan
+   * @return 
    */
   private String getUsers(String chan) {
     String received = "", users = "";
@@ -298,20 +284,19 @@ public class BotCommand {
     return users;
   }
 
-  /**
-   * ***************************************************************************
+  /*
    * Helper methods
    */
   private void wakeRoomHelper() {
     String users = getUsers();
     if (users != null) {
-      connection.msgChannel(botC, users);
+      connection.msgChannel(config.getChannel(), users);
     } else {
-      connection.msgChannel(botC, "Failed to get a list of users; Try again or notify the developer!");
+      connection.msgChannel(config.getChannel(), "Failed to get a list of users; Try again or notify the developer!");
     }
   }
 
-  /*
+  /**
    * Puts together a String in the form
    * http://lmgtfy.com/?q=test+a+b+c
    */
@@ -320,7 +305,7 @@ public class BotCommand {
       helpWrapper(cmd);
     } else {
       String googleUrl = "http://lmgtfy.com/?q=".concat(getFormattedQuery(cmdArgs));
-      connection.msgChannel(botC, googleUrl);
+      connection.msgChannel(config.getChannel(), googleUrl);
     }
   }
 
@@ -328,8 +313,7 @@ public class BotCommand {
     if (!hasArgs) {
       helpWrapper(cmd);
     } else {
-      //TODO replace botC
-      connection.msgChannel(botC, new DownForEveryone().isUp(getFormattedQuery(cmdArgs), true));
+      connection.msgChannel(config.getChannel(), new DownForEveryone().isUp(getFormattedQuery(cmdArgs), true));
     }
   }
 
@@ -352,17 +336,17 @@ public class BotCommand {
 
   private void mumHelper() {
 
-    Jokes joke = new Jokes(this.connection, botC);
+    Jokes joke = new Jokes(this.connection, config.getChannel());
 
     try {
       if (!hasArgs) {
-        connection.msgChannel(botC, joke.getMommaJoke(getRandChanUser()));
+        connection.msgChannel(config.getChannel(), joke.getMommaJoke(getRandChanUser()));
       } else {
         int temp = cmdArgs.indexOf(' ');
         if (temp != -1) {
-          connection.msgChannel(botC, joke.getMommaJoke(cmdArgs.substring(0, temp)));
+          connection.msgChannel(config.getChannel(), joke.getMommaJoke(cmdArgs.substring(0, temp)));
         } else {
-          connection.msgChannel(botC, joke.getMommaJoke(cmdArgs));
+          connection.msgChannel(config.getChannel(), joke.getMommaJoke(cmdArgs));
         }
       }
     } catch (NullPointerException ex) {
@@ -374,7 +358,7 @@ public class BotCommand {
   }
 
   private void nextHelper() {
-    connection.msgChannel(botC, "Another satisfied customer, NEXT!!!");
+    connection.msgChannel(config.getChannel(), "Another satisfied customer, NEXT!!!");
   }
 
   private void inviteNickHelper() {
@@ -384,9 +368,9 @@ public class BotCommand {
 
     if (!hasArgs || !(cmdArgs.split("\\s++").length > 0)) { // Min 1 Arg
       //@TODO Replace code with getHelp(cmd); //Overloaded method
-      connection.msgChannel(botC, "Usage: " + SYMB + "invite-nick {nick} [# of times]");
+      connection.msgChannel(config.getChannel(), "Usage: " + config.getCmdSymb() + "invite-nick {nick} [# of times]");
     } else {
-      connection.msgChannel(this.botC, "Roger that.");
+      connection.msgChannel(config.getChannel(), "Roger that.");
       String cmdArgsArr[] = cmdArgs.split("\\s++");
       int numInvites = 50; // Default value
       if (cmdArgsArr.length < 1) {
@@ -402,7 +386,7 @@ public class BotCommand {
         }
       }
       for (int x = 0; x < numInvites; x++) {
-        connection.sendln("INVITE " + botC + " " + cmdArgsArr[0]);
+        connection.sendln("INVITE " + config.getChannel() + " " + cmdArgsArr[0]);
       }
     }
   }
@@ -424,7 +408,7 @@ public class BotCommand {
     //    } else {
     ; // printHelp(ic);
 //    }
-    connection.msgChannel(botC, "Still being implemented!");
+    connection.msgChannel(config.getChannel(), "Still being implemented!");
     //@TODO arg nick, number of times to invite
   }
 
@@ -432,13 +416,13 @@ public class BotCommand {
     /* We have received a message from the owner */
     //TODO Make the below string a variable that is mutable to be set by the XML configuration file
     if (jRobo.getFirst().startsWith(":BullShark!debian-tor@gateway/tor-sasl/nanomachine")) {
-      connection.sendln("PRIVMSG " + botC + " :Yes Sir Chief!");
+      connection.sendln("PRIVMSG " + config.getChannel() + " :Yes Sir Chief!");
       String rawStr = jRobo.getLast();
       rawStr = rawStr.substring(rawStr.indexOf(' '));
       connection.sendln(rawStr);
       try {
         Thread.sleep(500);
-        connection.msgChannel(botC, connection.recieveln());
+        connection.msgChannel(config.getChannel(), connection.recieveln());
       } catch (InterruptedException | NullPointerException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -446,11 +430,11 @@ public class BotCommand {
   }
 
   private void urbanDictionaryHelper() {
-    connection.msgChannel(botC, new UrbanDict(cmdArgs).getFormattedUrbanDef(true, 3), true, MircColors.BOLD);
+    connection.msgChannel(config.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true, 3), true, MircColors.BOLD);
   }
 
   private void quitHelper() {
-    connection.msgChannel(botC, "Detenation devices to nuclear reactors! (Zer0 is pressing the "
+    connection.msgChannel(config.getChannel(), "Detenation devices to nuclear reactors! (Zer0 is pressing the "
             + "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
   }
 
@@ -461,7 +445,7 @@ public class BotCommand {
   }
 
   private void pirateHelper() {
-    connection.msgChannel(botC, new PirateBay(cmdArgs).getFormattedResult(true));
+    connection.msgChannel(config.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
   }
 
   /**
@@ -525,11 +509,11 @@ public class BotCommand {
             + lc.colorToken("version, ", MircColors.GREEN)
             + lc.colorToken("quit|q", MircColors.GREEN));
 
-    connection.msgChannel(botC, colorStr);
+    connection.msgChannel(config.getChannel(), colorStr);
   }
 
   private void unknownCmdHelper() {
-    connection.msgChannel(botC, "Unknown command received: " + cmd);
+    connection.msgChannel(config.getChannel(), "Unknown command received: " + cmd);
   }
 
   /*
@@ -537,16 +521,16 @@ public class BotCommand {
    */
   private void helpWrapper(String cmd) {
     //TODO help string for each command
-    connection.msgChannel(botC, "Invalid usage of command: " + cmd);
+    connection.msgChannel(config.getChannel(), "Invalid usage of command: " + cmd);
   }
 
   private void helpHelper() {
     //@TODO man page style usage for help blah
-    connection.msgChannel(botC, "You implement it!");
+    connection.msgChannel(config.getChannel(), "You implement it!");
   }
 
   private void versionHelper() {
-    connection.msgChannel(botC,
+    connection.msgChannel(config.getChannel(),
             MircColors.BOLD + MircColors.CYAN + "JRobo"
             + MircColors.NORMAL + MircColors.BOLD + " - "
             + MircColors.GREEN + "https://github.com/BullShark/JRobo"); //TODO Probably needs another MircColors.BOLD
