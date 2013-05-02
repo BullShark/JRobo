@@ -207,15 +207,24 @@ public class BotCommand {
      */
   }
   /**
-   * 
+   * Wrapper
    * @return 
    */
   private String getUsers() {
+    return getUsers(config.getChannel());
+  }
+
+  /**
+   * 
+   * @param chan
+   * @return 
+   */
+  private String getUsers(String chan) {
     String received = "", users = "";
     String first = "", last = "";
     int tries = 4;
 
-    connection.sendln("NAMES " + config.getChannel());
+    connection.sendln("NAMES " + chan);
     do {
       received = connection.recieveln();
       try {
@@ -246,42 +255,7 @@ public class BotCommand {
       return null;
     }
     return users;
-  }
 
-  /**
-   * 
-   * @param chan
-   * @return 
-   */
-  private String getUsers(String chan) {
-    String received = "", users = "";
-    int tries = 2;
-
-    connection.sendln("NAMES " + chan);
-    do {
-      received = connection.recieveln();
-      tries--;
-    } while (!received.matches("^:[a-z\\.]++ 366.*") || tries <= 0);
-    if (received.matches("^:[a-z\\.]++ 353.*")) {
-      try {
-        users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
-      } catch (ArrayIndexOutOfBoundsException ex) {
-        Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-
-        String msg = "Could not get list of users!!!";
-
-        //Inform masters in PM
-        connection.msgMasters(msg);
-        return null;
-      }
-    } else {
-      String msg = "Could not get list of users!!!";
-
-      //Inform masters in PM
-      connection.msgMasters(msg);
-      return null;
-    }
-    return users;
   }
 
   /*
