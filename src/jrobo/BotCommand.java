@@ -238,10 +238,10 @@ public class BotCommand {
         connection.sendln("PONG " + last);
       }
       tries--;
-    } while (!received.matches("^:[a-z\\.]++ 353.*") || tries <= 0);
-    if (received.matches("^:[a-z\\.]++ 353.*")) {
+    } while (first.contains("353") || tries >= 0);
+    if (first.contains("353")) {
       try {
-        users += received.split(" :")[1].replaceAll("@|\\+|&|~|%", "");
+        users += last.replaceAll("@|\\+|&|~|%", "");
       } catch (ArrayIndexOutOfBoundsException ex) {
         Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 
