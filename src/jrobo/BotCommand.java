@@ -81,6 +81,9 @@ public class BotCommand {
       case "stfw": /* Show The Fucking World */
         googleHelper();
         break;
+      case "greet":
+        greetHelper();
+        break;
       case "weather":
       case "w":
         weatherHelper();
@@ -505,5 +508,27 @@ public class BotCommand {
             MircColors.BOLD + MircColors.CYAN + "JRobo"
             + MircColors.NORMAL + MircColors.BOLD + " - "
             + MircColors.GREEN + "https://github.com/BullShark/JRobo");
+  }
+
+  private void greetHelper() {
+    Jokes joke = new Jokes(this.connection, config.getChannel());
+
+    try {
+      if (!hasArgs) {
+        connection.msgChannel(config.getChannel(), joke.getPhoneNumber(getRandChanUser()));
+      } else {
+        int temp = cmdArgs.indexOf(' ');
+        if (temp != -1) {
+          connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs.substring(0, temp)));
+        } else {
+          connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs));
+        }
+      }
+    } catch (NullPointerException ex) {
+      Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+
+      //Inform masters in PM
+      connection.msgMasters("FIX ^mum; FileReader.java not reading input!!!");
+    }
   }
 } // EOF class
