@@ -28,8 +28,8 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
 import org.w3c.dom.Document;
 
 /**
@@ -39,11 +39,9 @@ import org.w3c.dom.Document;
 
 
 public class Weather {
-  /* For the XML/DOC */
-  private DocumentBuilderFactory dbf;
-  private DocumentBuilder db;
-  private Document doc;
-
+  /* For the JSON/DOC */
+  JSONObject jsonObject;
+  
   /* For the HTTP Connection */
   private URL url;
   private URLConnection conn;
@@ -52,15 +50,12 @@ public class Weather {
   private String fullUrl;
 
   /* Miscelanous */
-  private static final String QUERY_URL = "http://www.google.com/ig/api?weather=";
+  private static final String QUERY_URL = "http://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
   private String weather;
   private String xml;
 
   public Weather() {
-    /* For the XML/DOC */
-    dbf = null;
-    db = null;
-    doc = null;
+
 
     /* For the HTTP Connection */
     url = null;
@@ -71,7 +66,7 @@ public class Weather {
     fullUrl = "";
 
     /* Miscelanous */
-    xml = "";
+    json= "";
     weather = "";
   }
 
@@ -80,10 +75,12 @@ public class Weather {
    * @param location
    * @return
    */
-  public String getXml(String location) {
+  public String getJson(String location, String city) {
     try {
-      /* Create a URL obj from strings */
-      url =  new URL((QUERY_URL.concat(location)).replace(" ", "%20"));
+      /* Create the query url from template */
+      city = city.replace(" ", "_");
+      location = location.replace(" ", "_");
+      url = String.format(QUERY_URL, location, city);
 
       System.out.println(fullUrl);
 
@@ -94,7 +91,7 @@ public class Weather {
 
       String line = "";
       while ((line = rd.readLine()) != null) {
-        xml = xml.concat(line);
+        json = json.concat(line);
       }
 
       rd.close();
@@ -105,7 +102,7 @@ public class Weather {
       ex.printStackTrace();
     }
 
-    return xml;
+    return json;
   }
 
   public String getFormattedWeatherSummary(String xml) {
