@@ -105,9 +105,10 @@ public class Weather {
     return json;
   }
 
-  public String getFormattedWeatherSummary(String xml) {
-
-    return xml;
+  public String getFormattedWeatherSummary(String json) {
+    String weatherSummary;
+    
+    return json;
   }
 
   /*
