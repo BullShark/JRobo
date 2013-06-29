@@ -18,9 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
+/**
+ *
+ * @author n0per, BullShark
+ *
+ */
 package jrobo;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,100 +34,113 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import org.w3c.dom.Document;
 
 /**
  *
  * @author chris
  */
-
-
 public class Weather {
-  /* For the JSON/DOC */
-  JSONObject jsonObject;
-  
-  /* For the HTTP Connection */
-  private URL url;
-  private URLConnection conn;
-  private OutputStreamWriter wr;
-  private BufferedReader rd;
-  private String fullUrl;
 
-  /* Miscelanous */
-  private static final String QUERY_URL = "http://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
-  private String weather;
-  private String xml;
+    /*
+     * For the JSON/DOC
+     */
+    //JSONObject jsonObject;
+    /*
+     * For the HTTP Connection
+     */
+    private URL url;
+    private URLConnection conn;
+    private OutputStreamWriter wr;
+    private BufferedReader rd;
+    private String fullUrl;
+    // private GSONClass gsons = new GSONClass();
 
-  public Weather() {
+    /*
+     * Miscelanous
+     */
+    private static final String QUERY_URL = "http://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
+    private String json;
+
+    public Weather() {
 
 
-    /* For the HTTP Connection */
-    url = null;
-    conn = null;
-    //TODO: Move BufferedReader declaration here
+        /*
+         * For the HTTP Connection
+         */
+        url = null;
+        conn = null;
+        //TODO: Move BufferedReader declaration here
 //    wr = null;
 //    rd = null;
-    fullUrl = "";
+        fullUrl = "";
 
-    /* Miscelanous */
-    json= "";
-    weather = "";
-  }
-
-  /**
-   * 
-   * @param location
-   * @return
-   */
-  public String getJson(String location, String city) {
-    try {
-      /* Create the query url from template */
-      city = city.replace(" ", "_");
-      location = location.replace(" ", "_");
-      url = String.format(QUERY_URL, location, city);
-
-      System.out.println(fullUrl);
-
-      conn = url.openConnection();
-
-      // Get the response
-      rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-      String line = "";
-      while ((line = rd.readLine()) != null) {
-        json = json.concat(line);
-      }
-
-      rd.close();
-
-    } catch (MalformedURLException ex) {
-      ex.printStackTrace();
-    } catch (IOException ex) {
-      ex.printStackTrace();
+        /*
+         * Miscelanous
+         */
+        json = "";
     }
 
-    return json;
-  }
+    /**
+     *
+     * @param location, city
+     * @return
+     */
+    public String getJson(String location, String city) {
+        try {
+            /*
+             * Create the query url from template
+             */
+            city = city.replace(" ", "_");
+            location = location.replace(" ", "_");
+            String weatherQuery = String.format(QUERY_URL, location, city);
+            System.out.println("URL: " + weatherQuery);
+            url = new URL(weatherQuery);
 
-  public String getFormattedWeatherSummary(String json) {
-    String weatherSummary;
-    
-    return json;
-  }
+            System.out.println(fullUrl);
 
-  /*
-   *A main method for testing this class
-   */
-  public static void main(String[] args) {
-    if(args.length == 0) {
-      System.err.println("Usage: java Weather <location>");
-      System.exit(-1);
+            conn = url.openConnection();
+
+            // Get the response
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                json = json.concat(line);
+            }
+
+            rd.close();
+
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return json;
     }
-    //System.out.println(new Weather().getXML(args[0]) );
-    Weather w = new Weather();
-    System.out.println(w.getXml(args[0]));
-  }
 
+    public String getFormattedWeatherSummary(String json) {
+        Gson gson = new GsonBuilder().create();
+        WeatherJson weatherJson = gson.fromJson(json, WeatherJson.class);
+
+        /*
+         * put the data into a summary, with color
+         */
+
+        return weatherJson.toString();
+    }
+
+    /*
+     * A main method for testing this class
+     */
+    public static void main(String[] args) {
+        /*
+         * if(args.length != 2) { System.err.println("Usage: java Weather
+         * <location> <city>"); System.exit(-1);
+    }
+         */
+        //System.out.println(new Weather().getXML(args[0]) );
+        Weather w = new Weather();
+        System.out.println(w.getFormattedWeatherSummary(w.getJson("Australia", "Melbourne")));
+    }
 } // EOF class
