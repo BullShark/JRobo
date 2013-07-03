@@ -18,14 +18,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package jrobo;
-
 
 /**
  *
  * @author n0per
- * 
+ *
  */
 public class WeatherJson {
 
@@ -36,7 +34,8 @@ public class WeatherJson {
         private String temperature_string;
         private String weather;
         private WeatherJson.ObservationLocation observation_location;
-        
+        private DisplayLocation display_location;
+
         @Override
         public String toString() {
             return (temperature_string + " - " + weather);
@@ -49,33 +48,56 @@ public class WeatherJson {
         public String getWeather() {
             return weather;
         }
-        
+
         public WeatherJson.ObservationLocation getObservationLocation() {
             return observation_location;
+        }
+
+        public DisplayLocation getDisplayLocation() {
+            return display_location;
         }
     }
 
     public class ObservationLocation {
 
-        private String city;
         private String country;
-        private String state;
 
-        public String getCity() {
-            return city;
+
+        /*
+         * public String getCity() { return city;
         }
-        
+         */
         public String getCountry() {
             return country;
         }
 
-        public String getState() {
-            return state;
+        /*
+         * public String getState() { return state;
         }
+         */
+        @Override
+        public String toString() {
+            return country;
+        }
+    }
+
+    public class DisplayLocation {
+
+        private String full;
+        private String city;
+        private String state;
 
         @Override
         public String toString() {
-            return (city + ", " + state + ", " + country);
+            return full;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public String getState() {
+            return state;
         }
     }
 
@@ -92,16 +114,25 @@ public class WeatherJson {
     }
 
     public String getCity() {
-        return current_observation.getObservationLocation().getCity();
+        return current_observation.getDisplayLocation().getCity();
     }
 
     public String getState() {
-        return current_observation.getObservationLocation().getState();
+        return current_observation.getDisplayLocation().getState();
     }
 
     @Override
     public String toString() {
-        return String.format("Weather for %s, %s, %s: is %s - %s",
-                getCity(), getState(), getCountry(), getTemperatureString(), getWeather());
+        if(current_observation != null) {
+        if (!getState().equals("")) {
+            return String.format("Weather for %s, %s, %s: is %s - %s",
+                    getCity(), getState(), getCountry(), getTemperatureString(), getWeather());
+        } else {
+            return String.format("Weather for %s, %s: is %s - %s",
+                    getCity(), getCountry(), getTemperatureString(), getWeather());
+        }
+
+    }
+        return "Unable to retrieve weather";
     }
 }
