@@ -82,8 +82,9 @@ public class Weather {
 
     /**
      *
-     * @param location, city
-     * @return
+     * @param location
+     * @param city
+     * @return String
      */
     public String getJson(String location, String city) {
         try {
