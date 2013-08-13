@@ -9,5 +9,22 @@ package jrobo;
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
 public class NotConfig {
+
+  private String baseChan;
   
+  /**
+   * Channel from where the bot began moving
+   * @return 
+   */
+  public String getBaseChan() {
+    return baseChan;
+  }
+
+  /**
+   * Channel from where the bot began moving
+   * @param baseChan 
+   */
+  public void setBaseChan(String baseChan) {
+    this.baseChan = baseChan;
+  }
 }
