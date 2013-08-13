@@ -54,11 +54,11 @@ public class FileReader {
    * @return a True on success, and false on failure
    */
   public boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
-   out.println("[+++]\tReading File (" + fileName + ")");
+    out.println("[+++]\tReading File (" + fileName + ")");
 
-   BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
+    BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
 
-   String line = "";
+    String line = "";
 
     try {
       while( (line = br.readLine()) != null) {
@@ -127,11 +127,6 @@ public class FileReader {
       
       if (config.getMasters()==null){
           err.println("[+++]\tError: Unable to find bot's Masters");
-          System.exit(1);
-      }
-      
-      if (config.getHostmasks()==null){
-          err.println("[+++]\tError: Unable to find bot's Hostmasks");
           System.exit(1);
       }
       
