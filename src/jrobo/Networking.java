@@ -251,6 +251,8 @@ public class Networking {
       success = false;
     }
 
+    config.setChannel(toChan);
+
     return success;
   }
   
