@@ -74,7 +74,6 @@ public class ListColors extends MircColors {
 //          default:
 //            System.err.println("UNKNOWN " + line.substring(x, (x+1)));
 //        }
-        System.out.println("NORMAL BOLD ");
         if(lastColorCode != null) {
           colorStr += lastColorCode;
         }
