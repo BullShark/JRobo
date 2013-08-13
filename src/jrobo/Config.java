@@ -89,12 +89,23 @@ public class Config extends NotConfig {
     }
     
     /**
+     * Represents the current channel
      * 
      * @return The channel to be joined
      * @since 2013-02-18
      */
     public String getChannel () {
         return channel;
+    }
+
+    /**
+     * Represents the current channel
+     * 
+     * @param chan 
+     * @since 2013-08-12
+     */
+    public void setChannel (String chan) {
+        channel = chan;
     }
     
     /**
