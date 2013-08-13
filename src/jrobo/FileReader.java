@@ -98,8 +98,7 @@ public class FileReader {
       json = "";
       try {
           while ((line= br.readLine()) != null){
-          json = json.concat(line);
-      
+            json = json.concat(line);
           }
           
           br.close();
