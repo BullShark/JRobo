@@ -22,6 +22,7 @@
 // http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
 package jrobo;
 
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -168,7 +169,7 @@ public class BotCommand {
   private String getCmdArgs(String fullCmd) {
     //@TODO divded half of the work getFormattedQuery is doing to here
     try {
-      return fullCmd.split("\\" + config.getCmdSymb() + "\\w++", 2)[1].trim();
+      return fullCmd.split("\\" + config.getCmdSymb() + "[a-zA-Z_0-9\\-]++", 2)[1].trim();
     } catch (ArrayIndexOutOfBoundsException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
       return ""; /* Means no args!!! */
@@ -237,11 +238,14 @@ public class BotCommand {
         first = "";
         last = "";
       }
-      if (first.equals("PING")) {
+      if(first.contains("353")) {
+        break;
+      }
+      if(first.equals("PING")) {
         connection.sendln("PONG " + last);
       }
       tries--;
-    } while (first.contains("353") || tries >= 0);
+    } while (tries > 0);
     if (first.contains("353")) {
       try {
         users += last.replaceAll("@|\\+|&|~|%", "");
@@ -369,11 +373,31 @@ public class BotCommand {
   }
 
   private void inviteChannelHelper() {
-    //TODO Implement and use FileReader.getNickAndHost() instead
-    //FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
+    if(!hasArgs) {
+      helpWrapper(cmd);
+      return;
+    }
+
+    if(cmdArgs.length() < 2 || !cmdArgs.startsWith("#") || cmdArgs.contains(" ")) {
+      connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
+      return;
+    }
 
     config.setBaseChan(config.getChannel()); // The channel JRobo will return to
+    connection.moveToChannel(config.getChannel(), cmdArgs);
+    StringTokenizer userTokens = new StringTokenizer(getUsers(config.getChannel()));
+    connection.moveToChannel(cmdArgs, config.getBaseChan());
 
+    while(userTokens.hasMoreTokens()) {
+      connection.sendln("INVITE " + userTokens + " " + config.getChannel());
+    }
+    
+    
+
+    //TODO Implement and use FileReader.getNickAndHost() instead
+    //FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
+//Use for multiple channels, array    String[] channels = this.cmdArgs.split("\\s++");
+//    if(channels.length )
   }
 
   private void rawHelper() {
