@@ -237,6 +237,22 @@ public class Networking {
      }
       return success;
   }
+
+  /**
+   * 
+   * @param fromChan
+   * @param toChan
+   * @return 
+   */
+  public boolean moveToChannel(String fromChan, String toChan) {
+    boolean success = true;
+
+    if(!sendln("PART " + fromChan) || !sendln("JOIN " + toChan)) {
+      success = false;
+    }
+
+    return success;
+  }
   
   /**
    *
