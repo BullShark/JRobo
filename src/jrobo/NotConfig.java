@@ -8,9 +8,13 @@ package jrobo;
  *
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
-public class NotConfig {
+public class NotConfig extends Config {
 
-  private String baseChan;
+  public String baseChan;
+  
+  public NotConfig() {
+    baseChan = super.getChannel();
+  }
   
   /**
    * Channel from where the bot began moving
