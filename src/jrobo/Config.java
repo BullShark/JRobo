@@ -34,6 +34,12 @@ public class Config {
   private String network;
   private String channel;
   private String wunderground_key;
+  // Chan the bot originally was in before moving between channels
+  private String baseChan;
+
+  public Config() {
+    baseChan = channel;
+  }
 
   /**
    *
@@ -60,14 +66,6 @@ public class Config {
    */
   public String[] getMasters() {
     return masters;
-  }
-
-  /**
-   *
-   * @return The hostmasks in an array
-   */
-  public String[] getHostmasks() {
-    return hostmasks;
   }
 
   /**
@@ -118,17 +116,6 @@ public class Config {
   }
 
   /**
-   *
-   * @return The configured name
-   * @since 2013-02-18
-   */
-  @Override
-  public String toString() {
-    return "My name is " + name;
-  }
-  private String baseChan;
-
-  /**
    * Channel from where the bot began moving
    *
    * @return
@@ -144,5 +131,15 @@ public class Config {
    */
   public void setBaseChan(String baseChan) {
     this.baseChan = baseChan;
+  }
+
+  /**
+   *
+   * @return The configured name
+   * @since 2013-02-18
+   */
+  @Override
+  public String toString() {
+    return "My name is " + name;
   }
 }
