@@ -10,7 +10,7 @@ package jrobo;
  */
 public class NotConfig extends Config {
 
-  public String baseChan;
+  private String baseChan;
   
   public NotConfig() {
     baseChan = super.getChannel();
