@@ -25,7 +25,7 @@ package jrobo;
  * @author BinaryStroke <binarystroke@null.net>
  * @since 2013-02-18
  */
-public class Config {
+public class Config extends NotConfig {
     private String name;
     private String password;
     private String[] masters;
