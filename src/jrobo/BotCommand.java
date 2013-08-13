@@ -369,21 +369,11 @@ public class BotCommand {
   }
 
   private void inviteChannelHelper() {
-    //TODO Fix this method
-    //@TODO arg nick, number of times to invite
     //TODO Implement and use FileReader.getNickAndHost() instead
     //FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
-    //      String chan = cmdArgs.split(" ")[0], users;
-    //      connection.sendln("PART " + botC + " :BSOD");
-    //      connection.sendln("JOIN :" + chan);
-    //      users = getUsers(chan);
-    //      connection.sendln("PART " + chan + " :BSOD");
-    //      connection.sendln("JOIN :" + botC);
-    //      connection.msgChannel(botC, users);
-    //    } else {
-    // printHelp(ic);
-    //    }
-    connection.msgChannel(config.getChannel(), "Still being implemented!");
+
+    config.setBaseChan(config.getChannel()); // The channel JRobo will return to
+
   }
 
   private void rawHelper() {
