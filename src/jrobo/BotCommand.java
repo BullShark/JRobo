@@ -22,7 +22,6 @@
 // http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
 package jrobo;
 
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +38,7 @@ public class BotCommand {
   private String cmdArgs;
   private boolean hasArgs;
   private ListColors lc;
+  private boolean threadCreated;
 
   /**
    *
@@ -59,6 +59,7 @@ public class BotCommand {
 
     /* Misc */
     lc = new ListColors();
+    threadCreated = false;
   }
 
   /*
@@ -82,6 +83,9 @@ public class BotCommand {
       case "stfw": /* Show The Fucking World */
         googleHelper();
         break;
+      case "goto":
+      case "join":
+        moveToChannelHelper();
       case "greet":
         greetHelper();
         break;
@@ -210,23 +214,26 @@ public class BotCommand {
      }
      */
   }
+
   /**
    * Wrapper
-   * @return 
+   *
+   * @return
    */
   private String getUsers() {
     return getUsers(config.getChannel());
   }
 
   /**
-   * 
+   *
    * @param chan
-   * @return 
+   * @return
    */
   private String getUsers(String chan) {
+    //TODO This method needs testing. It might be broke.
     String received = "", users = "";
     String first = "", last = "";
-    int tries = 4;
+    int tries = 8;
 
     connection.sendln("NAMES " + chan);
     do {
@@ -238,10 +245,10 @@ public class BotCommand {
         first = "";
         last = "";
       }
-      if(first.contains("353")) {
+      if (first.contains("366")) {
         break;
       }
-      if(first.equals("PING")) {
+      if (first.equals("PING")) {
         connection.sendln("PONG " + last);
       }
       tries--;
@@ -278,8 +285,7 @@ public class BotCommand {
   }
 
   /**
-   * Puts together a String in the form
-   * http://lmgtfy.com/?q=test+a+b+c
+   * Puts together a String in the form http://lmgtfy.com/?q=test+a+b+c
    */
   private void googleHelper() {
     if (!hasArgs) {
@@ -373,29 +379,66 @@ public class BotCommand {
   }
 
   private void inviteChannelHelper() {
-    if(!hasArgs) {
-      helpWrapper(cmd);
+    if (!hasArgs) {
+//TODO      helpWrapper(cmd);
       return;
     }
 
-    if(cmdArgs.length() < 2 || !cmdArgs.startsWith("#") || cmdArgs.contains(" ")) {
+    if (!threadCreated) {
+      connection.msgChannel("", cmd);
+    }
+
+    if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#") || cmdArgs.contains(" ")) {
       connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
       return;
     }
 
     config.setBaseChan(config.getChannel()); // The channel JRobo will return to
     connection.moveToChannel(config.getChannel(), cmdArgs);
-    StringTokenizer userTokens = new StringTokenizer(getUsers(config.getChannel()));
+    final String[] userArr = getUsers().split("\\s");
     connection.moveToChannel(cmdArgs, config.getBaseChan());
 
-    while(userTokens.hasMoreTokens()) {
-      connection.sendln("INVITE " + userTokens + " " + config.getChannel());
+    // Checking if ChanServ has opped JRobo
+    String first, last, received;
+    for (int tries = 4;;) {
+      received = connection.recieveln();
+      try {
+        first = received.split(" :", 2)[0];
+        last = received.split(" :", 2)[1];
+      } catch (ArrayIndexOutOfBoundsException ex) {
+        first = "";
+        last = "";
+      }
+      if (first.equals("PING")) {
+        connection.sendln("PONG " + last);
+      } else if (received.equals(":ChanServ!ChanServ@services. MODE " + config.getChannel() + " +o " + config.getName())
+              || tries < 0) {
+        break;
+      }
+      tries--;
     }
-    
-    
 
-    //TODO Implement and use FileReader.getNickAndHost() instead
-    //FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
+      Thread inviteT = new Thread() {
+        public void run() {
+
+          // Prevent multiple threads from being created
+          threadCreated = true;
+
+          for (String user : userArr) {
+            try {
+              Thread.sleep(35000); //TODO Delay set by last command arg?
+            } catch (InterruptedException ex) {
+              Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            connection.sendln("INVITE " + user + " " + config.getChannel());
+          }
+          threadCreated = false;
+        }
+      };
+      inviteT.start();
+
+//TODO Implement and use FileReader.getNickAndHost() instead
+//FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
 //Use for multiple channels, array    String[] channels = this.cmdArgs.split("\\s++");
 //    if(channels.length )
   }
@@ -411,8 +454,11 @@ public class BotCommand {
       try {
         Thread.sleep(500);
         connection.msgChannel(config.getChannel(), connection.recieveln());
+
+
       } catch (InterruptedException | NullPointerException ex) {
-        Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(BotCommand.class
+                .getName()).log(Level.SEVERE, null, ex);
       }
     }
   }
@@ -536,13 +582,22 @@ public class BotCommand {
           connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs.substring(0, temp)));
         } else {
           connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs));
+
+
         }
       }
     } catch (NullPointerException ex) {
-      Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(BotCommand.class
+              .getName()).log(Level.SEVERE, null, ex);
 
       //Inform masters in PM
-      connection.msgMasters("FIX ^mum; FileReader.java not reading input!!!");
+      connection.msgMasters(
+              "FIX ^mum; FileReader.java not reading input!!!");
     }
+  }
+
+  private void moveToChannelHelper() {
+    //TODO Only Masters
+    connection.moveToChannel(config.getChannel(), cmdArgs);
   }
 } // EOF class
