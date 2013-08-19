@@ -266,7 +266,7 @@ public class BotCommand {
       //Inform masters in PM
       connection.msgMasters("Could not get list of users!!!");
 
-      return null;
+      return "";
     }
     return users;
 
@@ -418,24 +418,24 @@ public class BotCommand {
       tries--;
     }
 
-      Thread inviteT = new Thread() {
-        public void run() {
+    Thread inviteT = new Thread() {
+      public void run() {
 
-          // Prevent multiple threads from being created
-          threadCreated = true;
+        // Prevent multiple threads from being created
+        threadCreated = true;
 
-          for (String user : userArr) {
-            try {
-              Thread.sleep(35000); //TODO Delay set by last command arg?
-            } catch (InterruptedException ex) {
-              Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            connection.sendln("INVITE " + user + " " + config.getChannel());
+        for (String user : userArr) {
+          try {
+            Thread.sleep(35000); //TODO Delay set by last command arg?
+          } catch (InterruptedException ex) {
+            Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
           }
-          threadCreated = false;
+          connection.sendln("INVITE " + user + " " + config.getChannel());
         }
-      };
-      inviteT.start();
+        threadCreated = false;
+      }
+    };
+    inviteT.start();
 
 //TODO Implement and use FileReader.getNickAndHost() instead
 //FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
