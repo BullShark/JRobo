@@ -245,31 +245,23 @@ public class BotCommand {
         first = "";
         last = "";
       }
-      if (first.contains("366")) {
-        break;
-      }
-      if (first.equals("PING")) {
+      if (first.contains("353")) {
+        try {
+          users += last.replaceAll("@|\\+|&|~|%", "");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+          Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      } else if (first.equals("PING")) {
         connection.sendln("PONG " + last);
       }
       tries--;
-    } while (tries > 0);
-    if (first.contains("353")) {
-      try {
-        users += last.replaceAll("@|\\+|&|~|%", "");
-      } catch (ArrayIndexOutOfBoundsException ex) {
-        Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+    } while (tries > 0 && !first.contains("366"));
 
-        //Inform masters in PM
-        connection.msgMasters("Could not get list of users!!!");
-      }
-    } else {
-      //Inform masters in PM
+    if (users.equals("")) {
       connection.msgMasters("Could not get list of users!!!");
-
-      return "";
     }
-    return users;
 
+    return users;
   }
 
   /*
@@ -384,8 +376,9 @@ public class BotCommand {
       return;
     }
 
-    if (!threadCreated) {
-      connection.msgChannel("", cmd);
+    if (threadCreated) {
+      connection.msgChannel(config.getChannel(), "The invite thread is still active.");
+      return;
     }
 
     if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#") || cmdArgs.contains(" ")) {
