@@ -114,14 +114,14 @@ public class JRobo {
              * TODO Should we change this to last.contains(botN) with ignore case
              * TODO Because the bot's name might be something other than JRobo
              */
-            if(last.matches("(?i).*JR[0o]b[0o].*")) {
-              try {
-                user = first.substring(1, first.indexOf('!'));
-                connection.msgChannel(config.getChannel(), jokes.getPhoneNumber(user));
-              } catch(StringIndexOutOfBoundsException ex) {
-                Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
-              }
-            }
+//            if(last.matches("(?i).*JR[0o]b[0o].*")) {
+//              try {
+//                user = first.substring(1, first.indexOf('!'));
+//                connection.msgChannel(config.getChannel(), jokes.getPhoneNumber(user));
+//              } catch(StringIndexOutOfBoundsException ex) {
+//                Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
+//              }
+//            }
           }
         } catch(StringIndexOutOfBoundsException ex) {
           Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
