@@ -420,11 +420,8 @@ public class BotCommand {
       connection.moveToChannel(cmdArgs, config.getBaseChan());
      
     }
-    //Statement required for Build (try if next)
+    //Statement required for Build (currently is workaround)
     final String[] user2Arr = userArr;
-    if (userArr == null){
-      userArr = getUsers().split("\\s");
-    }
     
     for (int i=0; i<userArr.length; i++){
       System.out.println("userArray: " + userArr[i]);
