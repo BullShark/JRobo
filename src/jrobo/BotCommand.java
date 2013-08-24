@@ -371,6 +371,7 @@ public class BotCommand {
   }
 
   private void inviteChannelHelper() {
+    String[] userArr;
     if (!hasArgs) {
 //TODO      helpWrapper(cmd);
       return;
@@ -380,14 +381,15 @@ public class BotCommand {
       connection.msgChannel(config.getChannel(), "The invite thread is still active.");
       return;
     }
-
+    
+    
+    //You are here
     if (cmdArgs.contains(" ")) {
-      //you are here
       final String[] chansArr = cmdArgs.split("\\s++");
       // Channel must begin with a # and be at least two characters long
       for (int i = 0; i < chansArr.length; i++){
         if (chansArr[i].length() < 2 || !chansArr[i].startsWith("#")){
-          connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
+          connection.msgChannel(config.getChannel(), "Invalid channel: " + chansArr[i]);
           return;  
         }
       }
@@ -396,11 +398,15 @@ public class BotCommand {
       String usersList = "";
       for (int i = 0; i < chansArr.length; i++){
         connection.moveToChannel(config.getChannel(), chansArr[i]);
+        if (config.getChannel().equals(config.getBaseChan())) { 
+          break; 
+        }
         usersList += getUsers();
       }
-      final String[] userArr = usersList.split("\\s");
-      connection.moveToChannel(cmdArgs, config.getBaseChan());
+      userArr = usersList.split("\\s");
+      connection.moveToChannel(chansArr[chansArr.length-1], config.getBaseChan());
     }
+    
     //The command does not contain more than one channel argument
     else {
           // Channel must begin with a # and be at least two characters long
@@ -410,11 +416,20 @@ public class BotCommand {
       }
       config.setBaseChan(config.getChannel()); // The channel JRobo will return to
       connection.moveToChannel(config.getChannel(), cmdArgs);
+      userArr = getUsers().split("\\s");
       connection.moveToChannel(cmdArgs, config.getBaseChan());
      
     }
-    final String[] userArr = getUsers().split("\\s");
-
+    //Statement required for Build (try if next)
+    final String[] user2Arr = userArr;
+    if (userArr == null){
+      userArr = getUsers().split("\\s");
+    }
+    
+    for (int i=0; i<userArr.length; i++){
+      System.out.println("userArray: " + userArr[i]);
+    }
+    
     // Checking if ChanServ has opped JRobo
     String first, last, received;
     for (int tries = 4;;) {
@@ -441,7 +456,7 @@ public class BotCommand {
         // Prevent multiple threads from being created
         threadCreated = true;
 
-        for (String user : userArr) {
+        for (String user : user2Arr) {
           try {
             Thread.sleep(35000); //TODO Delay set by last command arg?
           } catch (InterruptedException ex) {
@@ -452,15 +467,16 @@ public class BotCommand {
         threadCreated = false;
       }
     };
-    inviteT.start();
+    //Remove In a minute -projektile
+    //inviteT.start();
 
-
+    
 //TODO Implement and use FileReader.getNickAndHost() instead
 //FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
 //Use for multiple channels, array    String[] channels = this.cmdArgs.split("\\s++");
 //    if(channels.length )
   }
-
+  
   private void rawHelper() {
     /* We have received a message from the owner */
     //TODO Make the below string a variable that is mutable to be set by the XML configuration file
