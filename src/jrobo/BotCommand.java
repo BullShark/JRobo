@@ -465,7 +465,7 @@ public class BotCommand {
       }
     };
     //Remove In a minute -projektile
-    //inviteT.start();
+    inviteT.start();
 
     
 //TODO Implement and use FileReader.getNickAndHost() instead
