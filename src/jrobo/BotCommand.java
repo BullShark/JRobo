@@ -263,7 +263,7 @@ public class BotCommand {
 
     return users;
   }
-
+  
   /*
    * Helper methods
    */
@@ -381,15 +381,39 @@ public class BotCommand {
       return;
     }
 
-    if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#") || cmdArgs.contains(" ")) {
-      connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
-      return;
+    if (cmdArgs.contains(" ")) {
+      //you are here
+      final String[] chansArr = cmdArgs.split("\\s++");
+      // Channel must begin with a # and be at least two characters long
+      for (int i = 0; i < chansArr.length; i++){
+        if (chansArr[i].length() < 2 || !chansArr[i].startsWith("#")){
+          connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
+          return;  
+        }
+      }
+      
+      config.setBaseChan(config.getChannel()); // The channel JRobo will return to
+      String usersList = "";
+      for (int i = 0; i < chansArr.length; i++){
+        connection.moveToChannel(config.getChannel(), chansArr[i]);
+        usersList += getUsers();
+      }
+      final String[] userArr = usersList.split("\\s");
+      connection.moveToChannel(cmdArgs, config.getBaseChan());
     }
-
-    config.setBaseChan(config.getChannel()); // The channel JRobo will return to
-    connection.moveToChannel(config.getChannel(), cmdArgs);
+    //The command does not contain more than one channel argument
+    else {
+          // Channel must begin with a # and be at least two characters long
+      if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#")) {
+        connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
+        return;
+      }
+      config.setBaseChan(config.getChannel()); // The channel JRobo will return to
+      connection.moveToChannel(config.getChannel(), cmdArgs);
+      connection.moveToChannel(cmdArgs, config.getBaseChan());
+     
+    }
     final String[] userArr = getUsers().split("\\s");
-    connection.moveToChannel(cmdArgs, config.getBaseChan());
 
     // Checking if ChanServ has opped JRobo
     String first, last, received;
@@ -429,6 +453,7 @@ public class BotCommand {
       }
     };
     inviteT.start();
+
 
 //TODO Implement and use FileReader.getNickAndHost() instead
 //FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
