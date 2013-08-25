@@ -5,6 +5,11 @@
 Developer
 
 
+[projektile](https://github.com/projektile "Developer") (Tyler Pollard)
+
+Developer
+
+
 [teslasolutions](https://github.com/teslasolution "Developer") (Muhammad Sajid)
 
 Developer
