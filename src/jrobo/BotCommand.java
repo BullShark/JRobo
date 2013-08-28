@@ -3,6 +3,7 @@
  *
  * Copyright (C) <2013> <Christopher Lemire>
  * Copyright (C) <2013> <BinaryStroke>
+ * Copyright (C) <2013> <Tyler Pollard>
  * Copyright (C) <2013> <Muhammad Sajid>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +25,8 @@ package jrobo;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -283,11 +286,25 @@ public class BotCommand {
   }
   
   /*
-   * Timer starts for bomb
+   * Timer starts for bomb (timer is fucking nightmare)
    */
+  
   private void bomb() {
-    connection.msgChannel(config.getChannel(), user);
+    String holder = user;
+    connection.msgChannel(config.getChannel(), holder + " started the bomb!!!");
+    final Timer timer;
+    
+    timer = new Timer();
+    
+    class BombTask extends TimerTask {
+    public void run() {
+      connection.msgChannel(config.getChannel(), "Time's up!");
+      timer.cancel();
+    }
+    }
+    timer.schedule(new BombTask(), 30000);
   }
+  
   /**
    * Puts together a String in the form http://lmgtfy.com/?q=test+a+b+c
    */
