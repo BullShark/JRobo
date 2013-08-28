@@ -65,9 +65,10 @@ public class BotCommand {
   /*
    * This is called when a bot command is received
    *
+   * user is the user who sent the command
    * fullCmd includes the SYMB, command, and args
    */
-  public void bCommander(String fullCmd) {
+  public void bCommander(String user, String fullCmd) {
     cmd = getCmd(fullCmd);
     cmdArgs = getCmdArgs(fullCmd);
     hasArgs = cmdArgs.isEmpty() ? false : true;
