@@ -34,6 +34,7 @@ public class BotCommand {
   private final Networking connection;
   private final Config config;
   private JRobo jRobo;
+  private String user;
   private String cmd;
   private String cmdArgs;
   private boolean hasArgs;
@@ -68,7 +69,8 @@ public class BotCommand {
    * user is the user who sent the command
    * fullCmd includes the SYMB, command, and args
    */
-  public void bCommander(String user, String fullCmd) {
+  public void bCommander(String User, String fullCmd) {
+    user = User;
     cmd = getCmd(fullCmd);
     cmdArgs = getCmdArgs(fullCmd);
     hasArgs = cmdArgs.isEmpty() ? false : true;
@@ -142,6 +144,9 @@ public class BotCommand {
         break;
       case "version":
         versionHelper();
+        break;
+      case "bomb":
+        bomb();
         break;
       default:
         unknownCmdHelper();
@@ -276,7 +281,13 @@ public class BotCommand {
       connection.msgChannel(config.getChannel(), "Failed to get a list of users; Try again or notify the developer!");
     }
   }
-
+  
+  /*
+   * Timer starts for bomb
+   */
+  private void bomb() {
+    connection.msgChannel(config.getChannel(), user);
+  }
   /**
    * Puts together a String in the form http://lmgtfy.com/?q=test+a+b+c
    */
@@ -384,7 +395,7 @@ public class BotCommand {
     }
     
     
-    //You are here
+    //TODO      exclude duplicates from userarray.
     if (cmdArgs.contains(" ")) {
       final String[] chansArr = cmdArgs.split("\\s++");
       // Channel must begin with a # and be at least two characters long
