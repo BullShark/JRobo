@@ -106,7 +106,9 @@ public class JRobo {
       else if(first.contains("PRIVMSG")) {
         try {
           if(last.charAt(0) == config.getCmdSymb()) {
-            bCmd.bCommander(last);
+            String user = first.substring(1, first.indexOf('!'));
+            String fullCmd = last;
+            bCmd.bCommander(user, fullCmd);
           } else {
 
             /*
