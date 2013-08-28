@@ -395,7 +395,7 @@ public class BotCommand {
     }
     
     
-    //TODO      exclude duplicates from userarray.
+    //TODO      exclude duplicates from useray
     if (cmdArgs.contains(" ")) {
       final String[] chansArr = cmdArgs.split("\\s++");
       // Channel must begin with a # and be at least two characters long
