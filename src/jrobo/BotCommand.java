@@ -290,15 +290,29 @@ public class BotCommand {
    */
   
   private void bomb() {
-    String holder = user;
-    connection.msgChannel(config.getChannel(), holder + " started the bomb!!!");
+    //String holder = user;
+    connection.msgChannel(config.getChannel(), user + " started the bomb!!!");
     final Timer timer;
     
     timer = new Timer();
     
     class BombTask extends TimerTask {
     public void run() {
-      connection.msgChannel(config.getChannel(), "Time's up!");
+      //final holder = holder;
+      connection.msgChannel(config.getChannel(), "               =,=~~:-),+                ");
+      connection.msgChannel(config.getChannel(), "           (==?,::,:::::=:=I             ");
+      connection.msgChannel(config.getChannel(), "          ?:=(,~::::::::~+==:I,          ");
+      connection.msgChannel(config.getChannel(), "       (=:(,=:~++=::~,:~::~~~.)          ");
+      connection.msgChannel(config.getChannel(), "      ({.+~[,:{:==:~~+~~:,$,I?))         ");
+      connection.msgChannel(config.getChannel(), "             ```~~?~=$.~~~               ");
+      connection.msgChannel(config.getChannel(), "                  :=Z=                   ");
+      connection.msgChannel(config.getChannel(), "              .-~~?=:=``~-_              ");
+      connection.msgChannel(config.getChannel(), "               `-=O$Z7++=~`              ");
+      connection.msgChannel(config.getChannel(), "                  .~:~                   ");
+      connection.msgChannel(config.getChannel(), "              ((((?~:.))))               ");
+      connection.msgChannel(config.getChannel(), "        .?~:?.?7::8,::::+,,~+:~==:....   ");
+      connection.msgChannel(config.getChannel(), user + " gets kicked (not actually yet)");
+
       timer.cancel();
     }
     }
