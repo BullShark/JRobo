@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.lang.Math;
 
 /**
  *
@@ -43,6 +44,9 @@ public class BotCommand {
   private boolean hasArgs;
   private ListColors lc;
   private boolean threadCreated;
+  private boolean bombActive;
+  private boolean[] wire = new boolean[3];
+
 
   /**
    *
@@ -64,6 +68,7 @@ public class BotCommand {
     /* Misc */
     lc = new ListColors();
     threadCreated = false;
+
   }
 
   /*
@@ -150,6 +155,12 @@ public class BotCommand {
         break;
       case "bomb":
         bomb();
+        break;
+      case "pass":
+        pass();
+        break;
+      case "defuse":
+        defuse();
         break;
       default:
         unknownCmdHelper();
@@ -289,34 +300,85 @@ public class BotCommand {
    * Timer starts for bomb (timer is fucking nightmare)
    */
   
-  private void bomb() {
-    //String holder = user;
+  public void bomb() {
     connection.msgChannel(config.getChannel(), user + " started the bomb!!!");
+    connection.msgChannel(config.getChannel(), "You can pass it to another user with >pass [nick].");
+    connection.msgChannel(config.getChannel(), "You can attempt to defuse with >defuse [RGB-color].");
+    bombActive = true;
+    wire[0] = false;
+    wire[1] = false;
+    wire[2] = false;
+    wire[(int)(3.0 * Math.random())] = true;
     final Timer timer;
     
     timer = new Timer();
     
     class BombTask extends TimerTask {
     public void run() {
-      //final holder = holder;
-      connection.msgChannel(config.getChannel(), "               =,=~~:-),+                ");
-      connection.msgChannel(config.getChannel(), "           (==?,::,:::::=:=I             ");
-      connection.msgChannel(config.getChannel(), "          ?:=(,~::::::::~+==:I,          ");
-      connection.msgChannel(config.getChannel(), "       (=:(,=:~++=::~,:~::~~~.)          ");
-      connection.msgChannel(config.getChannel(), "      ({.+~[,:{:==:~~+~~:,$,I?))         ");
-      connection.msgChannel(config.getChannel(), "             ```~~?~=$.~~~               ");
-      connection.msgChannel(config.getChannel(), "                  :=Z=                   ");
-      connection.msgChannel(config.getChannel(), "              .-~~?=:=``~-_              ");
-      connection.msgChannel(config.getChannel(), "               `-=O$Z7++=~`              ");
-      connection.msgChannel(config.getChannel(), "                  .~:~                   ");
-      connection.msgChannel(config.getChannel(), "              ((((?~:.))))               ");
-      connection.msgChannel(config.getChannel(), "        .?~:?.?7::8,::::+,,~+:~==:....   ");
-      connection.msgChannel(config.getChannel(), user + " gets kicked (not actually yet)");
-
+      if (!bombActive) {
+        timer.cancel();
+        //connection.msgChannel(config.getChannel(), "Bomb defused!!!");
+      } else {
+      connection.msgChannel(config.getChannel(), "          ,_=~~:-),,          ");
+      connection.msgChannel(config.getChannel(), "      (==?,::,:::::)=:=I      ");
+      connection.msgChannel(config.getChannel(), "     ?:=(,~:::::::}~+=:I,     ");
+      connection.msgChannel(config.getChannel(), "  (=:(,=:~++=::~,:~:)~~~.)    ");
+      connection.msgChannel(config.getChannel(), "  (.+~[,:{:==:~~+~~:,$,I?))   ");
+      connection.msgChannel(config.getChannel(), "    ``  ```~~?~=$.~~~  ``     ");
+      connection.msgChannel(config.getChannel(), "             :=Z=             ");
+      connection.msgChannel(config.getChannel(), "         .-~~?=:=``~-_        ");
+      connection.msgChannel(config.getChannel(), "         `--=~=+~++=~`        ");
+      connection.msgChannel(config.getChannel(), "             .~:~             ");
+      connection.msgChannel(config.getChannel(), "         ((.(\\.!/.):?)        ");
+      connection.msgChannel(config.getChannel(), "   .?~:?.?7::,::::+,,~+~=:... ");
+      connection.msgChannel("kick " + config.getChannel() + " " + user + " got blowed up.", "");
+      bombActive = false;
       timer.cancel();
+      }
     }
     }
     timer.schedule(new BombTask(), 30000);
+  }
+  
+  private void pass() {
+    String users = getUsers();
+    if (users.contains(cmdArgs) && bombActive == true) {
+      user = cmdArgs;
+      connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + user + "!!!");
+    } else {
+      connection.msgChannel(config.getChannel(), "Invalid");
+    }
+  }
+  
+  public void defuse() {
+    if (bombActive)  {
+      switch (cmdArgs){
+        case "red":
+          if (wire[0]==true) {
+            connection.msgChannel(config.getChannel(), "Bomb defused.");
+            bombActive = false;
+          } else {
+            connection.msgChannel(config.getChannel(), "Bomb still active.");
+          }
+          break;
+        case "green":
+          if (wire[1]==true) {
+            connection.msgChannel(config.getChannel(), "Bomb defused.");
+            bombActive = false;
+          } else {
+            connection.msgChannel(config.getChannel(), "Bomb still active.");
+          }
+          break;
+        case "blue":
+          if (wire[2]==true) {
+            connection.msgChannel(config.getChannel(), "Bomb defused.");
+            bombActive = false;
+          } else {
+            connection.msgChannel(config.getChannel(), "Bomb still active.");
+          }
+          break;
+      }
+    }
   }
   
   /**
