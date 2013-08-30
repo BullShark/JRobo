@@ -3,6 +3,7 @@
  *
  * Copyright (C) <2013> <Christopher Lemire>
  * Copyright (C) <2013> <BinaryStroke>
+ * Copyright (C) <2013> <Tyler Pollard>
  * Copyright (C) <2013> <Muhammad Sajid>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -166,6 +167,31 @@ public class Networking {
     return success;
   }
 
+  
+  /*
+   * The following function is only used to kick members from a channel.
+   * It should probably be modified at some point to pass any desired irc command.
+   * 
+   */
+  //TODO    msgArr commit moar than one word after " "
+    public boolean kickFromChannel(String chan, String msg) {
+    boolean success = true;
+    msg = addNewLines(msg);
+    String[] msgArr = msg.split("\n");
+    char ch;
+
+    for(int j=0;j<msgArr.length;j++) {
+      /*
+       * Meaning if one call to sendln returns false
+       * This entire function will return false
+       */
+      if( !sendln("kick " + chan + " " + msgArr[j]) ) {
+        success = false; 
+      }
+    }
+    return success;
+  }
+  
   /**
    * Wrapper method using defaults, no colors added for split messages
    * @param chan Channel to send the message to
