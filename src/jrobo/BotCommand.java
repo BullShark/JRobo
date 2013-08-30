@@ -323,13 +323,12 @@ public class BotCommand {
     public void run() {
       if (!bombActive) {
         timer.cancel();
-        //connection.msgChannel(config.getChannel(), "Bomb defused!!!");
       } else {
       connection.msgChannel(config.getChannel(), MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          ");
       connection.msgChannel(config.getChannel(), MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       ");
       connection.msgChannel(config.getChannel(), MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     ");
       connection.msgChannel(config.getChannel(), MircColors.YELLOW + "   (" + MircColors.BROWN + "=:" + MircColors.YELLOW + "(" + MircColors.BROWN + ",=:~++" + MircColors.YELLOW + "=:" + MircColors.BROWN + "::~,:~:" + MircColors.YELLOW + "))" + MircColors.BROWN + "~~~." + MircColors.YELLOW + ")    ");
-      connection.msgChannel(config.getChannel(), MircColors.YELLOW +"    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~:,$,I?" + MircColors.YELLOW + "))   ");
+      connection.msgChannel(config.getChannel(), MircColors.YELLOW +"    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~" + MircColors.YELLOW + ")" + MircColors.BROWN + ",$,I?" + MircColors.YELLOW + "))   ");
       connection.msgChannel(config.getChannel(), MircColors.BROWN + "    ``  ```" + MircColors.YELLOW + "~~" + MircColors.BROWN + "?" + MircColors.YELLOW + "~=" + MircColors.BROWN + "$.~~~  ``     ");
       connection.msgChannel(config.getChannel(), MircColors.YELLOW + "             :" + MircColors.BROWN + "S" + MircColors.YELLOW + "Z=             ");
       connection.msgChannel(config.getChannel(), MircColors.YELLOW + "         .-~~" + MircColors.BROWN + "?=:=" + MircColors.YELLOW + "``~-_        ");
@@ -354,6 +353,16 @@ public class BotCommand {
     if (users.contains(cmdArgs) && user.equals(bombHolder) && bombActive == true) {
       bombHolder = cmdArgs;
       connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
+      if (cmdArgs.equals(config.getName())) {
+        try {
+          Thread.sleep(1500);
+        } catch (Exception ex) { //Find out exactly what exceptions are thrown
+            //Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connection.msgChannel(config.getChannel(), ">pass " + user);
+        bombHolder = user;
+        connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
+      }
     } else {
       connection.msgChannel(config.getChannel(), "Invalid.");
     }
