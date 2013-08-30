@@ -301,9 +301,9 @@ public class BotCommand {
    */
   
   public void bomb() {
-    connection.msgChannel(config.getChannel(), user + " started the bomb!!!");
-    connection.msgChannel(config.getChannel(), "You can pass it to another user with >pass [nick].");
-    connection.msgChannel(config.getChannel(), "You can attempt to defuse with >defuse [RGB-color].");
+    connection.msgChannel(config.getChannel(), MircColors.BOLD + user + MircColors.WHITE + " started the bomb!!!");
+    connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
+    connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
     bombActive = true;
     wire[0] = false;
     wire[1] = false;
@@ -319,25 +319,25 @@ public class BotCommand {
         timer.cancel();
         //connection.msgChannel(config.getChannel(), "Bomb defused!!!");
       } else {
-      connection.msgChannel(config.getChannel(), "          ,_=~~:-),,          ");
-      connection.msgChannel(config.getChannel(), "      (==?,::,:::::)=:=I      ");
-      connection.msgChannel(config.getChannel(), "     ?:=(,~:::::::}~+=:I,     ");
-      connection.msgChannel(config.getChannel(), "  (=:(,=:~++=::~,:~:)~~~.)    ");
-      connection.msgChannel(config.getChannel(), "  (.+~[,:{:==:~~+~~:,$,I?))   ");
-      connection.msgChannel(config.getChannel(), "    ``  ```~~?~=$.~~~  ``     ");
-      connection.msgChannel(config.getChannel(), "             :=Z=             ");
-      connection.msgChannel(config.getChannel(), "         .-~~?=:=``~-_        ");
-      connection.msgChannel(config.getChannel(), "         `--=~=+~++=~`        ");
-      connection.msgChannel(config.getChannel(), "             .~:~             ");
-      connection.msgChannel(config.getChannel(), "         ((.(\\.!/.):?)        ");
-      connection.msgChannel(config.getChannel(), "   .?~:?.?7::,::::+,,~+~=:... ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "          ,_=~~:-),,          ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "      (==?,::,:::::)=:=I      ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "     ?:=(,~:::::::}~+=:I,     ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "  (=:(,=:~++=::~,:~:)~~~.)    ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "  (.+~[,:{:==:~~+~~:,$,I?))   ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "    ``  ```~~?~=$.~~~  ``     ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "             :=Z=             ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "         .-~~?=:=``~-_        ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "         `--=~=+~++=~`        ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "             .~:~             ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "         ((.(\\.!/.):?)        ");
+      connection.msgChannel(config.getChannel(), MircColors.RED + "   .?~:?.?7::,::::+,,~+~=:... ");
       connection.kickFromChannel(config.getChannel(), user + " KABOOM!!!");
       bombActive = false;
       timer.cancel();
       }
     }
     }
-    timer.schedule(new BombTask(), 30000);
+    timer.schedule(new BombTask(), 20000);
   }
   
   private void pass() {
@@ -355,26 +355,26 @@ public class BotCommand {
       switch (cmdArgs){
         case "red":
           if (wire[0]==true) {
-            connection.msgChannel(config.getChannel(), "Bomb defused.");
+            connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
             bombActive = false;
           } else {
-            connection.msgChannel(config.getChannel(), "Bomb still active.");
+            connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb still active.");
           }
           break;
         case "green":
           if (wire[1]==true) {
-            connection.msgChannel(config.getChannel(), "Bomb defused.");
+            connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
             bombActive = false;
           } else {
-            connection.msgChannel(config.getChannel(), "Bomb still active.");
+            connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb still active.");
           }
           break;
         case "blue":
           if (wire[2]==true) {
-            connection.msgChannel(config.getChannel(), "Bomb defused.");
+            connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
             bombActive = false;
           } else {
-            connection.msgChannel(config.getChannel(), "Bomb still active.");
+            connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb still active.");
           }
           break;
       }
