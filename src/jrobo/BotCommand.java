@@ -331,7 +331,7 @@ public class BotCommand {
       connection.msgChannel(config.getChannel(), "             .~:~             ");
       connection.msgChannel(config.getChannel(), "         ((.(\\.!/.):?)        ");
       connection.msgChannel(config.getChannel(), "   .?~:?.?7::,::::+,,~+~=:... ");
-      connection.msgChannel("kick " + config.getChannel() + " " + user + " got blowed up.", "");
+      connection.kickFromChannel(config.getChannel(), user + " KABOOM!!!");
       bombActive = false;
       timer.cancel();
       }
