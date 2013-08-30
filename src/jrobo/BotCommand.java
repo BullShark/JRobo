@@ -27,7 +27,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.lang.Math;
 
 /**
  *
@@ -39,6 +38,7 @@ public class BotCommand {
   private final Config config;
   private JRobo jRobo;
   private String user;
+  private String bombHolder;
   private String cmd;
   private String cmdArgs;
   private boolean hasArgs;
@@ -306,7 +306,8 @@ public class BotCommand {
    * Prints explosion and kicks user holding at [20] seconds
    */
   public void bomb() {
-    connection.msgChannel(config.getChannel(), MircColors.BOLD + user + MircColors.WHITE + " started the bomb!!!");
+    bombHolder = user;
+    connection.msgChannel(config.getChannel(), MircColors.BOLD + bombHolder + MircColors.WHITE + " started the bomb!!!");
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
     bombActive = true;
@@ -350,11 +351,11 @@ public class BotCommand {
    */
   private void pass() {
     String users = getUsers();
-    if (users.contains(cmdArgs) && bombActive == true) {
-      user = cmdArgs;
-      connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + user + "!!!");
+    if (users.contains(cmdArgs) && user.equals(bombHolder) && bombActive == true) {
+      bombHolder = cmdArgs;
+      connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
     } else {
-      connection.msgChannel(config.getChannel(), "Invalid");
+      connection.msgChannel(config.getChannel(), "Invalid.");
     }
   }
   
@@ -363,7 +364,7 @@ public class BotCommand {
    * Ative wire is set to true in bomb() function.
    */
   public void defuse() {
-    if (bombActive)  {
+    if (bombActive && user.equals(bombHolder))  {
       switch (cmdArgs){
         case "red":
           if (wire[0]==true) {
@@ -390,6 +391,8 @@ public class BotCommand {
           }
           break;
       }
+    } else {
+      connection.msgChannel(config.getChannel(), "Invalid.");
     }
   }
   
