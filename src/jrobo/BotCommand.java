@@ -346,7 +346,8 @@ public class BotCommand {
   }
   
   /*
-   * Simply passes the bomb to another user
+   * Simply passes the bomb to another user.
+   * Returns it if they attempt to pass to JRobo.
    */
   private void pass() {
     String users = getUsers();
@@ -355,7 +356,7 @@ public class BotCommand {
       connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
       if (cmdArgs.equals(config.getName())) {
         try {
-          Thread.sleep(1500);
+          Thread.sleep(2500);
         } catch (Exception ex) { //Find out exactly what exceptions are thrown
             //Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -407,7 +408,7 @@ public class BotCommand {
         connection.msgChannel(config.getChannel(), MircColors.BROWN + "         ((.(\\.!/.):?)        ");
         connection.msgChannel(config.getChannel(), MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
         connection.kickFromChannel(config.getChannel(), user + " KABOOM!!!");
-        bombActive = false;         
+        bombActive = false;      
       }
     } else {
       connection.msgChannel(config.getChannel(), "Invalid.");
