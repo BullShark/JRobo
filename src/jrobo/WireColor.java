@@ -12,8 +12,7 @@ import java.util.Random;
 /**
  *
  * @author Christopher Lemire <christopher.lemire@gmail.com>
- * http://stackoverflow.com/questions/1972392/java-pick-a-random-value-from-an-enum/1972399#1972399
- * TODO Why does the first private static line have an error?
+ * TODO Change to class and move code here
  */
 public enum WireColor {
 
