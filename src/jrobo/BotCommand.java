@@ -374,22 +374,6 @@ public class BotCommand {
   }
 
   /*
-   * This function will return a wire for a given color.
-   * It is only to be used within defuse.
-   *
-  private boolean wire(String color) {
-    switch (color) {
-      case "red":
-        return wire[0];
-      case "green":
-        return wire[1];
-      case "blue":
-        return wire[2];
-    }
-    return false;
-  }
-
-  /*
    * This is the defuse method, refers to a global boolean array of wires.
    * Ative wire is set to true in bomb() function.
    */
