@@ -45,8 +45,6 @@ public class BotCommand {
   private ListColors lc;
   private boolean threadCreated;
   private boolean bombActive;
-  private boolean[] wire = new boolean[3];
-  private String liveWire;
 
   /**
    *
@@ -303,7 +301,7 @@ public class BotCommand {
   /*
    * Starts timer for bomb.
    * Sets an active wire
-   * Prints explosion and kicks user holding at [20] seconds
+   * Prints explosion and kicks user holding at [20-30] seconds
    */
   public void bomb() {
     bombHolder = user;
@@ -311,15 +309,8 @@ public class BotCommand {
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
     bombActive = true;
-    liveWire = WireColor.randomColor().toString().toLowerCase();
-    System.out.println(liveWire);
-    connection.msgChannel(config.getChannel(), liveWire);
-    //wire[0] = false;
-    //wire[1] = false;
-    //wire[2] = false;
-    //wire[(int) (3.0 * Math.random())] = true;
+    
     final Timer timer;
-
     timer = new Timer();
 
     class BombTask extends TimerTask {
@@ -379,7 +370,7 @@ public class BotCommand {
    */
   public void defuse() {
     if (bombActive && user.equals(bombHolder)) {
-      if ( cmdArgs.equals(liveWire)) {
+      if (cmdArgs.equals(WireColor.randomColor().toString().toLowerCase())) {
         connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
         bombActive = false;
       } else {
