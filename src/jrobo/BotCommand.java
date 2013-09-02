@@ -46,6 +46,7 @@ public class BotCommand {
   private boolean threadCreated;
   private boolean bombActive;
   private boolean[] wire = new boolean[3];
+  private String liveWire;
 
   /**
    *
@@ -310,10 +311,13 @@ public class BotCommand {
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
     bombActive = true;
-    wire[0] = false;
-    wire[1] = false;
-    wire[2] = false;
-    wire[(int) (3.0 * Math.random())] = true;
+    liveWire = WireColor.randomColor().toString().toLowerCase();
+    System.out.println(liveWire);
+    connection.msgChannel(config.getChannel(), liveWire);
+    //wire[0] = false;
+    //wire[1] = false;
+    //wire[2] = false;
+    //wire[(int) (3.0 * Math.random())] = true;
     final Timer timer;
 
     timer = new Timer();
@@ -372,7 +376,7 @@ public class BotCommand {
   /*
    * This function will return a wire for a given color.
    * It is only to be used within defuse.
-   */
+   *
   private boolean wire(String color) {
     switch (color) {
       case "red":
@@ -391,7 +395,7 @@ public class BotCommand {
    */
   public void defuse() {
     if (bombActive && user.equals(bombHolder)) {
-      if (wire(cmdArgs) == true) {
+      if ( cmdArgs.equals(liveWire)) {
         connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
         bombActive = false;
       } else {
