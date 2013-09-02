@@ -346,7 +346,7 @@ public class BotCommand {
         }
       }
     }
-    timer.schedule(new BombTask(), 20000);
+    timer.schedule(new BombTask(), (int)(10000.0 * Math.random()) + 20000);
   }
 
   /*
