@@ -23,28 +23,25 @@ public class Bomb{
   //public boolean bombActive = true;
   public BotCommand user;
  // public String bombHolder;
-  public String liveWire = Bomb.WireColor.randomColor().toString();
+  public String liveWire;
  
 
 /*
  * This is the bombs initial class containing timer.
  * Will likely suck to move all this code
  */
-  public void Bomb(Networking connection, String user) {
+  public void Bomb(Networking connection, Config config, String user) {
        
     this.connection = connection;
-    //this.config = config;
-    //String bombHolder = user;
+    this.config = config;
+    BotCommand.bombHolder = user;
+    liveWire = Bomb.WireColor.randomColor().toString().toLowerCase();
     
-    /*
-     * fucks up at connection.msgChannel()
-     * is null pointer exception...
-     *
     connection.msgChannel(config.getChannel(), MircColors.BOLD + BotCommand.bombHolder + MircColors.WHITE + " started the bomb!!!");
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
     BotCommand.bombActive = true;
-  */
+  
     final Timer timer;
     timer = new Timer();
 
@@ -83,7 +80,8 @@ public class Bomb{
   }
   
   
-  public void defuse(String color) {
+  public void defuse(String user, String color) {
+    System.out.println("bombHolder= " + BotCommand.bombHolder + "\nuser= " + user + "\nliveWire= " + liveWire);
     if (BotCommand.bombActive && user.toString().equals(BotCommand.bombHolder)) {
       if (color.equals(liveWire)) {
         connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
