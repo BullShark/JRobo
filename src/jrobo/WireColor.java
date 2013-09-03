@@ -27,3 +27,5 @@ public enum WireColor {
     return VALUES.get(RANDOM.nextInt(SIZE));
   }
 }
+
+
