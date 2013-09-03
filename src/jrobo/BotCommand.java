@@ -45,7 +45,7 @@ public class BotCommand {
   private ListColors lc;
   private boolean threadCreated;
   public static boolean bombActive;
-  public Bomb bomb = new Bomb();
+  public Bomb bomb;
  
 
   /**
@@ -68,6 +68,7 @@ public class BotCommand {
     /* Misc */
     lc = new ListColors();
     threadCreated = false;
+    bomb = new Bomb();
 
   }
 
@@ -348,7 +349,7 @@ public class BotCommand {
     if (bombActive) {
       connection.msgChannel(config.getChannel(), "Bomb already active");
     } else {
-      bomb.Bomb(user, true);
+      bomb.Bomb(user);
       //Bomb bomb = new Bomb();  
     }
   }
