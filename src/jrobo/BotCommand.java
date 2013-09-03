@@ -337,7 +337,11 @@ public class BotCommand {
    * This is the underhanded function that will blow the bomb on call.
    */
   public void explodeHelper() {
-    bomb.explode();
+    if (bombActive) {
+      bomb.explode();
+    } else {
+      connection.msgChannel(config.getChannel(), "Invalid");
+    }
   }
 
   /**
