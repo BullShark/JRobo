@@ -25,8 +25,8 @@ package jrobo;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Timer;
-import java.util.TimerTask;
+//import java.util.Timer;
+//import java.util.TimerTask;
 
 /**
  *
@@ -44,7 +44,8 @@ public class BotCommand {
   private boolean hasArgs;
   private ListColors lc;
   private boolean threadCreated;
-  private boolean bombActive;
+  public boolean bombActive;
+ 
 
   /**
    *
@@ -156,7 +157,7 @@ public class BotCommand {
         driveBy();
         break;
       case "bomb":
-        bomb();
+        bombHelper();
         break;
       case "pass":
         pass();
@@ -302,7 +303,7 @@ public class BotCommand {
    * Starts timer for bomb.
    * Sets an active wire
    * Prints explosion and kicks user holding at [20-30] seconds
-   */
+   *
   public void bomb() {
     bombHolder = user;
     connection.msgChannel(config.getChannel(), MircColors.BOLD + bombHolder + MircColors.WHITE + " started the bomb!!!");
@@ -339,7 +340,13 @@ public class BotCommand {
     }
     timer.schedule(new BombTask(), (int)(10000.0 * Math.random()) + 20000);
   }
+   * 
+   */
 
+  private void bombHelper(){
+    Bomb bomb = new Bomb();  
+  }
+  
   /*
    * Simply passes the bomb to another user.
    * Returns it if they attempt to pass to JRobo.
@@ -370,7 +377,7 @@ public class BotCommand {
    */
   public void defuse() {
     if (bombActive && user.equals(bombHolder)) {
-      if (cmdArgs.equals(TheBomb.WireColor.randomColor().toString().toLowerCase())) {
+      if (cmdArgs.equals(Bomb.WireColor.randomColor().toString().toLowerCase())) {
         connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
         bombActive = false;
       } else {
