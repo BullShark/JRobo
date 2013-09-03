@@ -22,7 +22,7 @@ public class Bomb{
   private Config config;  
   //public boolean bombActive = true;
   public BotCommand user;
- // public String bombHolder;
+  public String bombHolder;
   public String liveWire;
  
 
@@ -34,10 +34,10 @@ public class Bomb{
        
     this.connection = connection;
     this.config = config;
-    BotCommand.bombHolder = user;
+    bombHolder = user;
     liveWire = Bomb.WireColor.randomColor().toString().toLowerCase();
     
-    connection.msgChannel(config.getChannel(), MircColors.BOLD + BotCommand.bombHolder + MircColors.WHITE + " started the bomb!!!");
+    connection.msgChannel(config.getChannel(), MircColors.BOLD + bombHolder + MircColors.WHITE + " started the bomb!!!");
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
     connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
     BotCommand.bombActive = true;
@@ -50,7 +50,7 @@ public class Bomb{
         if (!BotCommand.bombActive) {
           timer.cancel();
         } else {
-          explode(BotCommand.bombHolder);
+          explode(bombHolder);
           timer.cancel();
         }
       }
@@ -81,13 +81,13 @@ public class Bomb{
   
   
   public void defuse(String user, String color) {
-    System.out.println("bombHolder= " + BotCommand.bombHolder + "\nuser= " + user + "\nliveWire= " + liveWire);
-    if (BotCommand.bombActive && user.toString().equals(BotCommand.bombHolder)) {
+    System.out.println("bombHolder= " + bombHolder + "\nuser= " + user + "\nliveWire= " + liveWire);
+    if (BotCommand.bombActive && user.toString().equals(bombHolder)) {
       if (color.equals(liveWire)) {
         connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
         BotCommand.bombActive = false;
       } else {
-        explode(BotCommand.bombHolder);
+        explode(bombHolder);
         BotCommand.bombActive = false;
       }
     } else {
@@ -106,6 +106,25 @@ public class Bomb{
 
     public static WireColor randomColor() {
       return VALUES.get(RANDOM.nextInt(SIZE));
+    }
+  }
+  
+  public void pass(String user, String cmdArgs, String users) {
+    if (users.contains(cmdArgs) && !cmdArgs.equals("") && user.equals(bombHolder) && BotCommand.bombActive == true) {
+      bombHolder = cmdArgs;
+      connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
+      if (cmdArgs.equals(config.getName())) {
+        try {
+          Thread.sleep(2500);
+        } catch (Exception ex) { //Find out exactly what exceptions are thrown
+          //Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connection.msgChannel(config.getChannel(), ">pass " + user);
+        bombHolder = user;
+        connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
+      }
+    } else {
+      connection.msgChannel(config.getChannel(), "Invalid.");
     }
   }
 }
