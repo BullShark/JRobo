@@ -50,7 +50,7 @@ public class Bomb{
         if (!BotCommand.bombActive) {
           timer.cancel();
         } else {
-          explode(bombHolder);
+          explode();
           timer.cancel();
         }
       }
@@ -63,7 +63,7 @@ public class Bomb{
    * This function/method will define what happens when the timer goes off
    * or the wrong wire is cut
    */
-  public void explode(String bombHolder) {
+  public void explode() {
     connection.msgChannel(config.getChannel(), MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          ");
     connection.msgChannel(config.getChannel(), MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       ");
     connection.msgChannel(config.getChannel(), MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     ");
@@ -90,7 +90,7 @@ public class Bomb{
         connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
         BotCommand.bombActive = false;
       } else {
-        explode(bombHolder);
+        explode();
       }
     } else {
       connection.msgChannel(config.getChannel(), "Invalid.");
