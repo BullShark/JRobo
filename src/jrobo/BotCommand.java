@@ -45,6 +45,7 @@ public class BotCommand {
   private ListColors lc;
   private boolean threadCreated;
   public static boolean bombActive;
+  public Bomb bomb = new Bomb();
  
 
   /**
@@ -347,7 +348,7 @@ public class BotCommand {
     if (bombActive) {
       connection.msgChannel(config.getChannel(), "Bomb already active");
     } else {
-    Bomb bomb = new Bomb();  
+      Bomb bomb = new Bomb();  
     }
   }
   
@@ -380,6 +381,8 @@ public class BotCommand {
    * Ative wire is set to true in bomb() function.
    */
   public void defuse() {
+    bomb.defuse(cmdArgs);
+    /*
     if (bombActive && user.equals(bombHolder)) {
       if (cmdArgs.equals(Bomb.WireColor.randomColor().toString().toLowerCase())) {
         connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
@@ -390,7 +393,7 @@ public class BotCommand {
       }
     } else {
       connection.msgChannel(config.getChannel(), "Invalid.");
-    }
+    }*/
   }
 
   /**
