@@ -320,7 +320,19 @@ public class BotCommand {
    * Returns it if they attempt to pass to JRobo.
    */
   private void passHelper() {
-    bomb.pass(user, cmdArgs, getUsers());
+    boolean validUser = false;
+    String[] userArr = getUsers().split("\\s");
+    for (int i = 0; i < userArr.length; i++){
+      if (cmdArgs.equals(userArr[i])){
+        validUser = true;
+        break;
+      }
+    }
+    if (validUser) {
+      bomb.pass(user, cmdArgs, getUsers());
+    } else {
+      connection.msgChannel(config.getChannel(), "Invalid");
+    }
   }
 
   /*
