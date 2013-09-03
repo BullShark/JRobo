@@ -348,7 +348,8 @@ public class BotCommand {
     if (bombActive) {
       connection.msgChannel(config.getChannel(), "Bomb already active");
     } else {
-      Bomb bomb = new Bomb();  
+      bomb.Bomb(user, true);
+      //Bomb bomb = new Bomb();  
     }
   }
   
