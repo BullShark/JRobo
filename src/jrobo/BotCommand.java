@@ -166,6 +166,9 @@ public class BotCommand {
       case "defuse":
         defuseHelper();
         break;
+      case "explode":
+        explodeHelper();
+        break;
       default:
         unknownCmdHelper();
       //@TODO Accept raw irc commands from bot owner to be sent by the bot
@@ -328,6 +331,13 @@ public class BotCommand {
    */
   public void defuseHelper() {
     bomb.defuse(user, cmdArgs);
+  }
+  
+  /*
+   * This is the underhanded function that will blow the bomb on call.
+   */
+  public void explodeHelper() {
+    bomb.explode();
   }
 
   /**
