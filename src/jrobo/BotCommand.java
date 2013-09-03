@@ -25,8 +25,6 @@ package jrobo;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import java.util.Timer;
-//import java.util.TimerTask;
 
 /**
  *
@@ -310,7 +308,7 @@ public class BotCommand {
    */
   private void bombHelper(){
     if (bombActive) {
-      connection.msgChannel(config.getChannel(), "Bomb already active");
+      connection.msgChannel(config.getChannel(), "Bomb already active!");
     } else {
       bomb.Bomb(connection, config, user);
       //Bomb bomb = new Bomb();  
@@ -337,7 +335,7 @@ public class BotCommand {
    * This is the underhanded function that will blow the bomb on call.
    */
   public void explodeHelper() {
-    if (bombActive) {
+    if (bombActive && config.getMasters().toString().contains(user)) {
       bomb.explode();
     } else {
       connection.msgChannel(config.getChannel(), "Invalid");
@@ -361,7 +359,7 @@ public class BotCommand {
         connection.msgChannel(config.getChannel(), "lol");
         try {
           Thread.sleep(1000);
-          if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
+          if (connection.recieveln().contains("Excess Flood")) {
             break;
           }
         } catch (Exception ex) { //Find out exactly what exceptions are thrown
@@ -371,7 +369,7 @@ public class BotCommand {
       connection.moveToChannel(cmdArgs, config.getBaseChan());
       try {
         Thread.sleep(2500);
-        if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
+        if (connection.recieveln().contains("Excess Flood")) {
           break;
         }
       } catch (Exception ex) { //Find out exactly what exceptions are thrown
