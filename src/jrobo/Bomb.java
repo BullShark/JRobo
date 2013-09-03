@@ -27,8 +27,8 @@ public class Bomb{
  
 
 /*
- * This is the bombs initial class containing timer.
- * Will likely suck to move all this code
+ * This method is the bombs initial constructor method.
+ * contains and starts the timer, initializes the bombHolder, and sets liveWire  
  */
   public void Bomb(Networking connection, Config config, String user) {
        
@@ -60,7 +60,7 @@ public class Bomb{
   
   
   /*
-   * This function will define what happens when the timer goes off
+   * This function/method will define what happens when the timer goes off
    * or the wrong wire is cut
    */
   public void explode(String bombHolder) {
@@ -79,7 +79,10 @@ public class Bomb{
     BotCommand.bombActive = false; 
   }
   
-  
+  /*
+   * This method allows a user to defuse the bomb if the liveWire is argued.
+   * It blows up otherwise.
+   */
   public void defuse(String user, String color) {
     System.out.println("bombHolder= " + bombHolder + "\nuser= " + user + "\nliveWire= " + liveWire);
     if (BotCommand.bombActive && user.toString().equals(bombHolder)) {
@@ -88,13 +91,16 @@ public class Bomb{
         BotCommand.bombActive = false;
       } else {
         explode(bombHolder);
-        BotCommand.bombActive = false;
       }
     } else {
       connection.msgChannel(config.getChannel(), "Invalid.");
     }
   }
   
+  /*
+   * This is the enumating class for wire function.
+   * It contains all the options for WireColors used elsewhere.
+   */
   public enum WireColor {
 
     RED, GREEN, BLUE;
@@ -109,11 +115,15 @@ public class Bomb{
     }
   }
   
-  public void pass(String user, String cmdArgs, String users) {
-    if (users.contains(cmdArgs) && !cmdArgs.equals("") && user.equals(bombHolder) && BotCommand.bombActive == true) {
-      bombHolder = cmdArgs;
+  /*
+   * This Method allows the bombHolder to pass the bomb to another user;
+   * Granted the user passed in the argument is present in the channel.
+   */
+  public void pass(String user, String toUser, String users) {
+    if (users.contains(toUser) && !toUser.equals("") && user.equals(bombHolder) && BotCommand.bombActive == true) {
+      bombHolder = toUser;
       connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
-      if (cmdArgs.equals(config.getName())) {
+      if (toUser.equals(config.getName())) {
         try {
           Thread.sleep(2500);
         } catch (Exception ex) { //Find out exactly what exceptions are thrown
