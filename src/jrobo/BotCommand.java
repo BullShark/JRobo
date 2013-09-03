@@ -370,7 +370,7 @@ public class BotCommand {
    */
   public void defuse() {
     if (bombActive && user.equals(bombHolder)) {
-      if (cmdArgs.equals(WireColor.randomColor().toString().toLowerCase())) {
+      if (cmdArgs.equals(TheBomb.WireColor.randomColor().toString().toLowerCase())) {
         connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
         bombActive = false;
       } else {
