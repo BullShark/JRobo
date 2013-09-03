@@ -38,7 +38,7 @@ public class BotCommand {
   private final Config config;
   private JRobo jRobo;
   private String user;
-  public static String bombHolder;
+  //public static String bombHolder;
   private String cmd;
   private String cmdArgs;
   private boolean hasArgs;
@@ -359,7 +359,8 @@ public class BotCommand {
    * Returns it if they attempt to pass to JRobo.
    */
   private void pass() {
-    String users = getUsers();
+    bomb.pass(user, cmdArgs, getUsers());
+  /*  String users = getUsers();
     if (users.contains(cmdArgs) && !cmdArgs.equals("") && user.equals(bombHolder) && bombActive == true) {
       bombHolder = cmdArgs;
       connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
@@ -375,7 +376,7 @@ public class BotCommand {
       }
     } else {
       connection.msgChannel(config.getChannel(), "Invalid.");
-    }
+    }*/
   }
 
   /*
