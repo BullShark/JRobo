@@ -349,7 +349,7 @@ public class BotCommand {
     if (bombActive) {
       connection.msgChannel(config.getChannel(), "Bomb already active");
     } else {
-      bomb.Bomb(connection, user);
+      bomb.Bomb(connection, config, user);
       //Bomb bomb = new Bomb();  
     }
   }
@@ -383,7 +383,7 @@ public class BotCommand {
    * Ative wire is set to true in bomb() function.
    */
   public void defuse() {
-    bomb.defuse(cmdArgs);
+    bomb.defuse(user, cmdArgs);
     /*
     if (bombActive && user.equals(bombHolder)) {
       if (cmdArgs.equals(Bomb.WireColor.randomColor().toString().toLowerCase())) {
