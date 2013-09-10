@@ -54,6 +54,16 @@ public class JRobo {
 
   }
 
+  public JRobo(String proxy, int port) { //TODO
+    reader = new FileReader();
+    config = reader.getConfig();
+    connection = new Networking(config);
+    jokes = new Jokes (connection, config.getChannel());
+    bCmd = new BotCommand(connection, config, this);
+
+  }
+
+
   private void initiate() {
     //TODO: Use TermColors.java instead
     System.out.println("\u001b[1;44m *** INITIATED *** \u001b[m");
