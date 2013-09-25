@@ -36,6 +36,7 @@ public class JRobo {
   private final FileReader reader;
   private final Config config;
   private final Jokes jokes;
+  private final CommandFactory factory;
 
   /* Networking */
   private String first = null;
@@ -50,7 +51,7 @@ public class JRobo {
     config = reader.getConfig();
     connection = new Networking(config);
     jokes = new Jokes (connection, config.getChannel());
-
+    factory = new CommandFactory();
   }
 
   public JRobo(String proxy, int port) { //TODO
@@ -58,7 +59,7 @@ public class JRobo {
     config = reader.getConfig();
     connection = new Networking(config);
     jokes = new Jokes (connection, config.getChannel());
-
+    factory = new CommandFactory();
   }
 
 
@@ -115,7 +116,11 @@ public class JRobo {
         try {
           if(last.charAt(0) == config.getCmdSymb()) {
             String user = first.substring(1, first.indexOf('!'));
-            String fullCmd = last;
+            String cmd = getCommand(last);
+            BotCommand botCmd = factory.newCommand(cmd);
+
+            botCmd.setJRobo(this);
+            botCmd.execute(getTarget(first), getParameters(last));
           } else {
 
             /*
@@ -133,6 +138,10 @@ public class JRobo {
 //            }
           }
         } catch(StringIndexOutOfBoundsException ex) {
+          Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(InstantiationException ex) {
+          Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(IllegalAccessException ex) {
           Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
         }
       }
@@ -158,6 +167,44 @@ public class JRobo {
     //@TODO Implement a Networking.killConnection() and call it here
     //@TODO onUserJoin, ctcp version whois user
     System.out.println("\u001b[1;44m *** TERMINATED *** \u001b[m");
+  }
+
+  /**
+   * @author jotaki
+   * @param line The full message line received after the `:'.
+   * @return The command to be interpreted.
+   */
+  private String getCommand(String line) {
+    try {
+      return line.substring(1, line.indexOf(' '));
+    } catch(StringIndexOutOfBoundsException ex) {
+      return line.substring(1, line.length());
+    }
+  }
+
+  /**
+   * @author jotaki
+   * @param line The message line before the `:'
+   * @return The considered target
+   * TODO: If target == Bot.nick return FromLine.nick
+   */
+  private String getTarget(String line) {
+    String[] lineSplit = line.split(" ");
+    try {
+      return lineSplit[lineSplit.length-1];
+    } catch(ArrayIndexOutOfBoundsException ex) {
+      return "";
+    }
+  }
+
+  /**
+   * @author jotaki
+   * @param line the full message line received after the `:'
+   * @return the parameters to the bot command as a String array split by spaces.
+   *         Note: arg[0] is command.
+   */
+  private String[] getParameters(String line) {
+    return line.split(" ");
   }
 
   private void divideTwo() {
