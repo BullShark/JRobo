@@ -3,3 +3,5 @@
 #/dist/
 #/dist/JRobo.jar
 /src/jrobo/thepiratebay.php
+.*.swo
+.*.swp
