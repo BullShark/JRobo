@@ -27,25 +27,19 @@ import jrobo.Networking;
 import jrobo.Config;
 import jrobo.JRobo;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.Timer;
-import java.util.TimerTask;
-
-/**
- *
- * @author bullshark, jotaki
- */
 public abstract class BotCommand {
-  private final JRobo jRobo;
+  private JRobo jRobo;
 
-  public BotCommand(JRobo jRobo) {
-    this.jRobo = jRobo;
+  public BotCommand() {
   }
 
   public void privmsg(String target, String msg) {
     jRobo.getConnection().sendln("PRIVMSG " + target + " :" + msg);
   }
 
+  public void setJRobo(JRobo jRobo) {
+    this.jRobo = jRobo;
+  }
+
   public abstract void execute(String target, String[] args);
-} // EOF class
+}
