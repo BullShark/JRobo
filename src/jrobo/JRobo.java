@@ -21,6 +21,7 @@
 
 package jrobo;
 
+import jrobo.command.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,7 +36,6 @@ public class JRobo {
   private final FileReader reader;
   private final Config config;
   private final Jokes jokes;
-  private final BotCommand bCmd;
 
   /* Networking */
   private String first = null;
@@ -50,7 +50,6 @@ public class JRobo {
     config = reader.getConfig();
     connection = new Networking(config);
     jokes = new Jokes (connection, config.getChannel());
-    bCmd = new BotCommand(connection, config, this);
 
   }
 
@@ -59,7 +58,6 @@ public class JRobo {
     config = reader.getConfig();
     connection = new Networking(config);
     jokes = new Jokes (connection, config.getChannel());
-    bCmd = new BotCommand(connection, config, this);
 
   }
 
@@ -118,7 +116,6 @@ public class JRobo {
           if(last.charAt(0) == config.getCmdSymb()) {
             String user = first.substring(1, first.indexOf('!'));
             String fullCmd = last;
-            bCmd.bCommander(user, fullCmd);
           } else {
 
             /*
@@ -186,5 +183,9 @@ public class JRobo {
    */
   public static void main(String[] args) {
     new JRobo().initiate();
+  }
+
+  public Networking getConnection() {
+    return connection;
   }
 }
