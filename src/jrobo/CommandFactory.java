@@ -12,9 +12,12 @@ public class CommandFactory {
     Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(JRoboCommand.class);
 
     for(Class<?> klass : annotated) {
-      JRoboCommand cmd = klass.getAnnotation(JRoboCommand.class);
-      if(command.equals(cmd.command())) {
-        botCommand = (BotCommand) klass.newInstance();
+      JRoboCommand jRoboCommand = klass.getAnnotation(JRoboCommand.class);
+      for(String cmd : jRoboCommand.command().split(",")) {
+        if(command.equals(cmd)) {
+          botCommand = (BotCommand) klass.newInstance();
+          break;
+        }
       }
     }
 
