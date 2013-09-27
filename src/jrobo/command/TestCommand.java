@@ -1,7 +1,7 @@
 package jrobo.command;
 import jrobo.JRobo;
 
-@JRoboCommand(author="jotaki",date="2013/09/25",command="test")
+@JRoboCommand(author="jotaki",date="2013/09/25",command="test,alias")
 public class TestCommand extends BotCommand {
   public TestCommand() {
     super();
