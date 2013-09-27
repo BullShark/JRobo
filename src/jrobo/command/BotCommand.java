@@ -41,5 +41,17 @@ public abstract class BotCommand {
     this.jRobo = jRobo;
   }
 
+  public String strJoin(String[] arr, String sep) {
+    String result = "";
+    int i;
+
+    for(i = 0; i < arr.length; i++) {
+      result += arr[i];
+      if(i+1 < arr.length)
+        result += sep;
+    }
+    return result;
+  }
+
   public abstract void execute(String target, String[] args);
 }
