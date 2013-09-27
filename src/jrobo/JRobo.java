@@ -24,6 +24,9 @@ package jrobo;
 import jrobo.command.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -201,10 +204,17 @@ public class JRobo {
    * @author jotaki
    * @param line the full message line received after the `:'
    * @return the parameters to the bot command as a String array split by spaces.
-   *         Note: arg[0] is command.
    */
   private String[] getParameters(String line) {
-    return line.split(" ");
+    String[] fullArgs = line.split(" ");
+    String[] args = new String[fullArgs.length - 1];
+    int i;
+
+    for(i = 1; i < fullArgs.length; i++) {
+      args[i-1] = fullArgs[i];
+    }
+
+    return args;
   }
 
   private void divideTwo() {
