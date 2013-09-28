@@ -8,6 +8,6 @@ public class TestCommand extends BotCommand {
   }
 
   public void execute(String target, String[] args) {
-    privmsg(target, "Hello!");
+    privmsg(target, "Hello " + strJoin(getUsers(target), ", ") + "!");
   }
 }
