@@ -8,8 +8,10 @@ public class OpCommands extends BotCommand {
   }
 
   public void execute(String target, String[] args) {
-    if(args.length == 0)
+    if(args.length == 0) {
       help(target);
+      return;
+    }
 
     switch(inputCommand) {
       case "goto":
