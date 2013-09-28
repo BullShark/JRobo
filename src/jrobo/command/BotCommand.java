@@ -29,16 +29,53 @@ import jrobo.JRobo;
 
 public abstract class BotCommand {
   private JRobo jRobo;
+  protected String inputCommand;
 
   public BotCommand() {
   }
 
+  public void sendRaw(String message) {
+    jRobo.getConnection().sendln(message);
+  }
+
   public void privmsg(String target, String msg) {
-    jRobo.getConnection().sendln("PRIVMSG " + target + " :" + msg);
+    sendRaw("PRIVMSG " + target + " :" + msg);
+  }
+
+  public void notice(String target, String msg) {
+    sendRaw("NOTICE " + target + " :" + msg);
+  }
+
+  public void join(String channel, String key) {
+    sendRaw("JOIN " + channel + " " + key);
+  }
+
+  public void join(String channel) {
+    join(channel, "");
+  }
+
+  public void part(String channel, String msg) {
+    sendRaw("PART " + channel + " " + msg);
+  }
+
+  public void part(String channel) {
+    part(channel, "Leaving");
+  }
+
+  public void quit(String msg) {
+    sendRaw("QUIT :" + msg);
+  }
+
+  public void mode(String target, String... modes) {
+    sendRaw("MODE " + target + " " + strJoin(modes, " "));
   }
 
   public void setJRobo(JRobo jRobo) {
     this.jRobo = jRobo;
+  }
+
+  public void setInputCommand(String inputCommand) {
+    this.inputCommand = inputCommand;
   }
 
   public String strJoin(String[] arr, String sep) {
