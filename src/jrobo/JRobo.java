@@ -123,6 +123,7 @@ public class JRobo {
             BotCommand botCmd = factory.newCommand(cmd);
 
             botCmd.setJRobo(this);
+            botCmd.setInputCommand(cmd);
             botCmd.execute(getTarget(first), getParameters(last));
           } else {
 
