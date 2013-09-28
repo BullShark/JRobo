@@ -26,6 +26,7 @@ package jrobo.command;
 import jrobo.Networking;
 import jrobo.Config;
 import jrobo.JRobo;
+import java.util.Set;
 
 public abstract class BotCommand {
   private JRobo jRobo;
@@ -88,6 +89,14 @@ public abstract class BotCommand {
         result += sep;
     }
     return result;
+  }
+
+  public String[] getUsers(String channel) {
+    Set<String> set = jRobo.getUsers(channel);
+    if(set == null)
+      return new String[0];
+
+    return set.toArray(new String[0]);
   }
 
   public abstract void execute(String target, String[] args);
