@@ -24,7 +24,6 @@ public class Bomb{
   public BotCommand user;
   public String bombHolder;
   public String liveWire;
- 
 
 /*
  * This method is the bombs initial constructor method.
@@ -38,8 +37,8 @@ public class Bomb{
     liveWire = Bomb.WireColor.randomColor().toString().toLowerCase();
     
     connection.msgChannel(config.getChannel(), MircColors.BOLD + bombHolder + MircColors.WHITE + " started the bomb!!!");
-    connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
-    connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
+    connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with " + config.getCmdSymb() +  "pass [nick].");
+    connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse it with " + config.getCmdSymb() + "defuse [" + MircColors.RED + "red" + MircColors.WHITE + "/" + MircColors.GREEN + "green" + MircColors.WHITE + "/" + MircColors.BLUE + "blue" + MircColors.WHITE + "]");
     BotCommand.bombActive = true;
   
     final Timer timer;
@@ -92,8 +91,10 @@ public class Bomb{
       } else {
         explode();
       }
+    } else if (!user.toString().equals(bombHolder)){
+      connection.msgChannel(config.getChannel(), "Invalid." + user + " You're not holding the bomb, " + bombHolder + " is!!!");
     } else {
-      connection.msgChannel(config.getChannel(), "Invalid.");
+      connection.msgChannel(config.getChannel(), "Invalid. Bomb not active.");
     }
   }
   
@@ -129,12 +130,14 @@ public class Bomb{
         } catch (Exception ex) { //Find out exactly what exceptions are thrown
           //Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
-        connection.msgChannel(config.getChannel(), ">pass " + user);
+        connection.msgChannel(config.getChannel(), config.getCmdSymb() + "pass " + user);
         bombHolder = user;
         connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
       }
+    } else if (!user.equals(bombHolder)) {
+      connection.msgChannel(config.getChannel(), "Invalid. " + user + " you're not holding the bomb, " + bombHolder + " is!!!");
     } else {
-      connection.msgChannel(config.getChannel(), "Invalid.");
+      connection.msgChannel(config.getChannel(), "Invalid. Bomb not active.");
     }
   }
 }
