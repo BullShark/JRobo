@@ -43,6 +43,7 @@ public class BotCommand {
   private boolean threadCreated;
   public static boolean bombActive;
   public Bomb bomb;
+  public JRobo jrobo;
  
 
   /**
@@ -167,6 +168,9 @@ public class BotCommand {
       case "explode":
         explodeHelper();
         break;
+      case "clone":
+        cloneHelper();
+        break;
       default:
         unknownCmdHelper();
       //@TODO Accept raw irc commands from bot owner to be sent by the bot
@@ -190,6 +194,18 @@ public class BotCommand {
    */
   private String getFormattedQuery(String str) {
     return str.replaceAll("\\s++", "+");
+  }
+  
+  /*
+   * Stage one in cloning process
+   * This is how JRobo will run in multiple intances
+   */
+  private void cloneHelper(){
+    int copies = Integer.parseInt(cmdArgs);
+    for (int instance = 0; instance < copies; instance++){
+      jrobo = new JRobo();
+      
+    }
   }
 
   /*
@@ -331,7 +347,7 @@ public class BotCommand {
     if (validUser) {
       bomb.pass(user, cmdArgs, getUsers());
     } else {
-      connection.msgChannel(config.getChannel(), "Invalid");
+      connection.msgChannel(config.getChannel(), "Invalid user");
     }
   }
 
@@ -347,10 +363,18 @@ public class BotCommand {
    * This is the underhanded function that will blow the bomb on call.
    */
   public void explodeHelper() {
+    String masters[] = config.getMasters();
     if (bombActive) {
-      bomb.explode();
+      for (int i=0; i<masters.length; i++) {
+        if (masters[i].contains(user)) {
+          bomb.explode();
+          return;
+        }
+      }
+      connection.msgChannel(config.getChannel(), "Invalid. You're not my master!!!");
+      connection.kickFromChannel(config.getChannel(), user + " FAGGOT!!!");
     } else {
-      connection.msgChannel(config.getChannel(), "Invalid");
+      connection.msgChannel(config.getChannel(), "Invalid. Bomb not active.");
     }
   }
 
