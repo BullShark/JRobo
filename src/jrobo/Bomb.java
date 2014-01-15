@@ -92,7 +92,7 @@ public class Bomb{
         explode();
       }
     } else if (!user.toString().equals(bombHolder)){
-      connection.msgChannel(config.getChannel(), "Invalid." + user + " You're not holding the bomb, " + bombHolder + " is!!!");
+      connection.msgChannel(config.getChannel(), "Invalid. " + user + " You're not holding the bomb, " + bombHolder + " is!!!");
     } else {
       connection.msgChannel(config.getChannel(), "Invalid. Bomb not active.");
     }
