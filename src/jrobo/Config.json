@@ -7,6 +7,7 @@
       "StompinBroknGlas@StompinBroknGlas.Blackhats",
       "StingRay@StompinBroknGlas.Blackhats"
     ],
+    "ssl_enabled": "TRUE",
     "hostmasks":[""],
     "command_symbol":".",
     "network":"irc.windfyre.net:6667",
