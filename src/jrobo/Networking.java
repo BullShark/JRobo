@@ -67,11 +67,11 @@ public class Networking {
     if (sslEnabled) {
       try {
         SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        SSLSocket socket = (SSLSocket) factory.createSocket(hostname, port);
-        socket.startHandshake(); //@TODO make this print the certificate upon connect.
+        SSLSocket sock = (SSLSocket) factory.createSocket(hostname, port);
+        sock.startHandshake(); //@TODO make this print the certificate upon connect.
    
-        bwriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        breader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        bwriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+        breader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         
       } catch (SSLException ex) {
         Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
