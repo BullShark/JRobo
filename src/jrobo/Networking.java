@@ -35,6 +35,10 @@ import java.util.Enumeration;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.SSLException;
+
 
 /**
  * Handles all the networking done by the IRC protocol
@@ -57,29 +61,51 @@ public class Networking {
     String network = config.getNetwork();
     String[] server = network.split(":");
     String hostname = server[0];
+    boolean sslEnabled = config.getConnectionType();
     int port = Integer.parseInt(server[1]);
-    
-    try {
-      sock = new Socket(hostname, port); //TODO SSL conn on port 6697
-    } catch (UnknownHostException ex) {
-      Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
-      err.println("Possible DNS resolution failed");
-      //@TODO close streams, connections, etc
-      System.exit(-1);
-    } catch (IOException ex) {
-      Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
-      err.println("I/O Error, Check networking");
-      //@TODO close streams, connections, etc
-      System.exit(-1);
-    }
-    try {
-      bwriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-      breader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-    } catch (IOException ex) {
-      Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
-      err.println("Error getting streams with server");
-      //@TODO close streams, connections, etc
-      System.exit(-1);
+
+    if (sslEnabled) {
+      try {
+        SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocket socket = (SSLSocket) factory.createSocket(hostname, port);
+        socket.startHandshake(); //@TODO make this print the certificate upon connect.
+   
+        bwriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        breader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        
+      } catch (SSLException ex) {
+        Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+        err.println("I/O Error, Check ssl/networking");
+        //@TODO close streams, connections, etc
+      } catch (IOException ex) {
+        Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+        err.println("I/O Error, Check networking");
+        //@TODO close streams, connections, etc
+        System.exit(-1);
+      }
+    } else {  //if not ssl than normal socket
+      try {
+        sock = new Socket(hostname, port); //TODO SSL conn on port 6697
+      } catch (UnknownHostException ex) {
+        Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+        err.println("Possible DNS resolution failed");
+        //@TODO close streams, connections, etc
+        System.exit(-1);
+      } catch (IOException ex) {
+        Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+        err.println("I/O Error, Check networking");
+        //@TODO close streams, connections, etc
+        System.exit(-1);
+      }
+      try {
+        bwriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+        breader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+      } catch (IOException ex) {
+        Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+        err.println("Error getting streams with server");
+        //@TODO close streams, connections, etc
+        System.exit(-1);
+      }
     }
   }
 
