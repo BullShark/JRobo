@@ -67,6 +67,15 @@ public class Config {
   public String[] getMasters() {
     return masters;
   }
+  
+    /**
+   * 
+   * @return the bot's connection type (ssl: yes/no)
+   * @since 2014-03-09
+   */
+  public boolean getConnectionType() {
+    return ssl_enabled;
+  }
 
   /**
    *
