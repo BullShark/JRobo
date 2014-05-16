@@ -30,6 +30,7 @@ public class Config {
   private String name;
   private String password;
   private String[] masters;
+  private boolean ssl_enabled;
   private char command_symbol;
   private String network;
   private String channel;
