@@ -10,7 +10,7 @@ Developer
 Developer
 
 
-[teslasolutions](https://github.com/teslasolution "Developer") (Muhammad Sajid)
+[teslasolutions](https://github.com/teslasolution "Developer") (Kamal Sajid)
 
 Developer
 
