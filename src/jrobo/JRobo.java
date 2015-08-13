@@ -21,8 +21,13 @@
 
 package jrobo;
 
+import jrobo.command.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -35,7 +40,7 @@ public class JRobo {
   private final FileReader reader;
   private final Config config;
   private final Jokes jokes;
-  private final BotCommand bCmd;
+  private final CommandFactory factory;
 
   /* Networking */
   private String first = null;
@@ -44,25 +49,16 @@ public class JRobo {
 
   /* Miscallenous */
   private String user = null;
+  private Map<String, Set<String>> channelUsers;
 
   public JRobo() {
     reader = new FileReader();
     config = reader.getConfig();
     connection = new Networking(config);
     jokes = new Jokes (connection, config.getChannel());
-    bCmd = new BotCommand(connection, config, this);
-
+    factory = new CommandFactory();
+    channelUsers = new HashMap<String, Set<String>>();
   }
-
-  public JRobo(String proxy, int port) { //TODO
-    reader = new FileReader();
-    config = reader.getConfig();
-    connection = new Networking(config);
-    jokes = new Jokes (connection, config.getChannel());
-    bCmd = new BotCommand(connection, config, this);
-
-  }
-
 
   private void initiate() {
     //TODO: Use TermColors.java instead
@@ -107,61 +103,197 @@ public class JRobo {
        */
       if(first.equals("PING")) { //@TODO Implement with regex
         connection.sendln("PONG " + last);
+        continue;
+      }
+
+      /*
+       * Lets break the first half the message down a bit more
+       */
+      String ircMessage;
+      try {
+        ircMessage = first.split(" ")[1].toUpperCase();
+      } catch(ArrayIndexOutOfBoundsException ex) {
+        ircMessage = "";
       }
 
       /*
        * A message was sent either to the channel
        * Or to the bot; Could be a command
        */
-      else if(first.contains("PRIVMSG")) {
+      if(ircMessage.equals("PRIVMSG")) {
         try {
           if(last.charAt(0) == config.getCmdSymb()) {
             String user = first.substring(1, first.indexOf('!'));
-            String fullCmd = last;
-            bCmd.bCommander(user, fullCmd);
-          } else {
+            String cmd = getCommand(last);
+            BotCommand botCmd = factory.newCommand(cmd);
 
-            /*
-             * Match JRobo in any case typed by another user
-             * TODO Should we change this to last.contains(botN) with ignore case
-             * TODO Because the bot's name might be something other than JRobo
-             */
-//            if(last.matches("(?i).*JR[0o]b[0o].*")) {
-//              try {
-//                user = first.substring(1, first.indexOf('!'));
-//                connection.msgChannel(config.getChannel(), jokes.getPhoneNumber(user));
-//              } catch(StringIndexOutOfBoundsException ex) {
-//                Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
-//              }
-//            }
+            botCmd.setJRobo(this);
+            botCmd.setInputCommand(cmd);
+            botCmd.execute(getTarget(first), getParameters(last));
           }
         } catch(StringIndexOutOfBoundsException ex) {
+          Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(InstantiationException ex) {
+          Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(IllegalAccessException ex) {
           Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
         }
       }
 
       /*
-       * A user has joined the channel
-       * Excluding the bot joining
+       * A /NAMES list was received update the channelUsers list
+       * for the channel in question.
        */
-      else if(first.contains("JOIN") && last.equals(config.getChannel()) && !first.contains(config.getName())) {
-        user = first.substring(1, first.indexOf('!'));
 
-        // Inform masters in PM
-        connection.msgMasters(user + " joined " + config.getChannel());
+      else if(ircMessage.equals("353")) {
+        String channel;
+        Set<String> users = new HashSet<String>();
+
+        try {
+          channel = first.split(" ")[4];
+        } catch(ArrayIndexOutOfBoundsException ex) {
+          continue;
+        }
+
+        last = last.replaceAll("@|\\+|&|~|%", "");
+        for(String nickname : last.split(" ")) {
+          users.add(nickname);
+        }
+
+        if(channelUsers.get(channel) != null) {
+          channelUsers.get(channel).addAll(users);
+        } else {
+          channelUsers.put(channel, users);
+        }
       }
 
-      else if(received.matches("^:\\S+ KICK " + config.getChannel() + " " + config.getName() + " :.*")) {
-        connection.sendln("JOIN " + config.getChannel());
-        user = first.substring(1, first.indexOf('!'));
-        //connection.msgChannel(config.getChannel(), user + " >>> I'll rip your head off and shit down your neck!");
-      } // EOF if-else-if-else...
-    } // EOF while
+      /*
+       * A JOIN message was received. Add that user to
+       * the channel's user list.
+       */
+      else if(ircMessage.equals("JOIN")) {
+        String nickname = getNickname();
+        String channel  = last;
 
-    //@TODO Implement a Networking.killConnection() and call it here
-    //@TODO onUserJoin, ctcp version whois user
+        if(nickname != null) {
+          if(channelUsers.get(channel) != null) {
+            channelUsers.get(channel).add(nickname);
+          } else { 
+            // TODO
+          }
+        }
+      }
+
+      /*
+       * A PART message was received. Remove that user from
+       * the channel's user list.
+       */
+      else if(ircMessage.equals("PART")) {
+        try {
+          String nickname = getNickname();
+          String channel  = first.split(" ")[2];
+
+          if(nickname != null) {
+            if(nickname != myNickname()) {
+              channelUsers.get(channel).remove(nickname);
+            } else {
+              channelUsers.remove(channel);
+            }
+          }
+        } catch(ArrayIndexOutOfBoundsException ex) {
+        }
+      }
+    }
+
     System.out.println("\u001b[1;44m *** TERMINATED *** \u001b[m");
   }
+
+  /**
+   * @author jotaki
+   * @param line The full message line received after the `:'.
+   * @return The command to be interpreted.
+   */
+  private String getCommand(String line) {
+    try {
+      return line.substring(1, line.indexOf(' '));
+    } catch(StringIndexOutOfBoundsException ex) {
+      return line.substring(1, line.length());
+    }
+  }
+
+  /**
+   * @author jotaki
+   * @param line The message line before the `:'
+   * @return The considered target
+   * TODO: If target == Bot.nick return FromLine.nick
+   */
+  private String getTarget(String line) {
+    String[] lineSplit = line.split(" ");
+    try {
+      return lineSplit[lineSplit.length-1];
+    } catch(ArrayIndexOutOfBoundsException ex) {
+      return "";
+    }
+  }
+
+  /**
+   * @author jotaki
+   * @param line the full message line received after the `:'
+   * @return the parameters to the bot command as a String array split by spaces.
+   */
+  private String[] getParameters(String line) {
+    String[] fullArgs = line.split(" ");
+    String[] args = new String[fullArgs.length - 1];
+    int i;
+
+    for(i = 1; i < fullArgs.length; i++) {
+      args[i-1] = fullArgs[i];
+    }
+
+    return args;
+  }
+
+  public String getNickname(String line) {
+    try {
+      return line.substring(1, line.indexOf('!'));
+    } catch(StringIndexOutOfBoundsException ex) {
+      return null;
+    }
+  }
+
+  public String getNickname() {
+    return getNickname(first);
+  }
+
+  public String getUsername(String line) {
+    try {
+      return line.substring(line.indexOf('!')+1, line.indexOf('@'));
+    } catch(StringIndexOutOfBoundsException ex) {
+      return null;
+    }
+  }
+
+  public String getUsername() {
+    return getUsername(first);
+  }
+
+  public String getHostname(String line) {
+    try {
+      return line.substring(line.indexOf('@')+1, line.indexOf(' '));
+    } catch(StringIndexOutOfBoundsException ex) {
+      return null;
+    }
+  }
+
+  public String getHostname() {
+    return getHostname(first);
+  }
+
+  public String myNickname() {
+    /* XXX: TODO: Make smarter / better */
+    return config.getName();
+  }
+
 
   private void divideTwo() {
     try {
@@ -186,5 +318,13 @@ public class JRobo {
    */
   public static void main(String[] args) {
     new JRobo().initiate();
+  }
+
+  public Networking getConnection() {
+    return connection;
+  }
+
+  public Set<String> getUsers(String channel) {
+    return channelUsers.get(channel);
   }
 }

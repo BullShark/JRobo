@@ -1,5 +1,6 @@
 /nbproject/private/
 /build/
-#/dist/
-#/dist/JRobo.jar
+/dist/
 /src/jrobo/thepiratebay.php
+.*.swo
+.*.swp
