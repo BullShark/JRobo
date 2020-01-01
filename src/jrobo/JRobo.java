@@ -122,18 +122,17 @@ public class JRobo {
           } else {
 
             /*
-             * Match JRobo in any case typed by another user
-             * TODO Should we change this to last.contains(botN) with ignore case
-             * TODO Because the bot's name might be something other than JRobo
+             * Match JRobo in any case
+             * Typed by another user
              */
-//            if(last.matches("(?i).*JR[0o]b[0o].*")) {
-//              try {
-//                user = first.substring(1, first.indexOf('!'));
-//                connection.msgChannel(config.getChannel(), jokes.getPhoneNumber(user));
-//              } catch(StringIndexOutOfBoundsException ex) {
-//                Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
-//              }
-//            }
+            if(last.matches("(?i).*JR[0o]b[0o].*")) {
+              try {
+                user = first.substring(1, first.indexOf('!'));
+                connection.msgChannel(config.getChannel(), jokes.getPhoneNumber(user));
+              } catch(StringIndexOutOfBoundsException ex) {
+                Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
+              }
+            }
           }
         } catch(StringIndexOutOfBoundsException ex) {
           Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
@@ -154,12 +153,10 @@ public class JRobo {
       else if(received.matches("^:\\S+ KICK " + config.getChannel() + " " + config.getName() + " :.*")) {
         connection.sendln("JOIN " + config.getChannel());
         user = first.substring(1, first.indexOf('!'));
-        //connection.msgChannel(config.getChannel(), user + " >>> I'll rip your head off and shit down your neck!");
       } // EOF if-else-if-else...
     } // EOF while
 
     //@TODO Implement a Networking.killConnection() and call it here
-    //@TODO onUserJoin, ctcp version whois user
     System.out.println("\u001b[1;44m *** TERMINATED *** \u001b[m");
   }
 

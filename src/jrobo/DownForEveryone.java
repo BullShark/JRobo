@@ -39,10 +39,9 @@ public class DownForEveryone {
   private URLConnection conn;
   private OutputStreamWriter wr;
   private BufferedReader rd;
-  private String fullUrl;
 
   /* Miscelanous */
-  private static final String QUERY_URL = "http://www.downforeveryoneorjustme.com/";
+  private static final String QUERY_URL = "https://www.downforeveryoneorjustme.com/";
   private boolean isup;
 
   public DownForEveryone() {
@@ -50,7 +49,6 @@ public class DownForEveryone {
     url = null;
     conn = null;
     rd = null;
-    fullUrl = "";
 
     /* Miscelanous */
     isup = false;
@@ -68,9 +66,10 @@ public class DownForEveryone {
       url =  new URL((QUERY_URL.concat(testUrl)).replace(" ", "%20"));
 
       /* Debug */
-      System.out.println(fullUrl);
+      System.out.println("URL: " + url);
 
       conn = url.openConnection();
+      conn.addRequestProperty("User-Agent", "Mozilla/4.0"); // Resolves the 403 error
 
       // Get the response
       rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
