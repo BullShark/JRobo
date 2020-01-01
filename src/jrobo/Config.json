@@ -1,13 +1,13 @@
 {
-    "name": "JRobo",
-    "second_name": "^JRobo^",
-    "password": "",
+    "name": "^JRobo^",
+    "second_name": "JRobo",
+    "password": "AndroidJava345",
     "masters": [
       "BullShark_@irc.freenode.net"
     ],
     "hostmasks":[""],
     "command_symbol":".",
-    "network":"irc.freenode.net:6667",
+    "network":"irc.ipv6.freenode.net:6667",
     "channel":"##blackhats",
     "wunderground_key":"abcd"
 }
