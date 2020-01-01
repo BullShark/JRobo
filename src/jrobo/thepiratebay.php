@@ -11,8 +11,8 @@ if (isset($_GET['name']) && isset($_GET['orderby'])) {
     if ($debug) {
         header("Content-Type: text/plain; charset=UTF-8");
     }
-    // http://thepiratebay.se/search/test/5/7/0
-    // http://thepiratebay.se/search/softwear name/single line/order by/0
+    // http://thepiratebay.org/search/test/5/7/0
+    // http://thepiratebay.org/search/softwear name/single line/order by/0
     // single line =5
     //order by seeder = 7
     // order by peer = 9
@@ -20,7 +20,7 @@ if (isset($_GET['name']) && isset($_GET['orderby'])) {
     // order by name =2
 
     define("FS_USER_AGENT", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.3) Gecko/20070309 Firefox/2.0.0.3");
-    $url = "http://thepiratebay.se/search/" . urlencode(trim($_GET['name'])) . "/0/" . getOrderby(trim($_GET['orderby'])) . "/0";
+    $url = "http://thepiratebay.org/search/" . urlencode(trim($_GET['name'])) . "/0/" . getOrderby(trim($_GET['orderby'])) . "/0";
     if ($debug) {
         echo $url . "\n";
     }
@@ -111,8 +111,8 @@ function HTMLParser($html) {
                                     // get result name and url
                                     if ($node2->nodeName == "div" && $node3->nodeName == "a" && $column == 2) {
                                         $out[$row]["name"] = (trim($node3->nodeValue));
-                                        $out[$row]["url"] = "http://thepiratebay.se" . trim($node3->getAttribute('href'));
-                                        $out[$row]["tinyurl"] = createTinyUrl("http://thepiratebay.se" . trim($node3->getAttribute('href')));
+                                        $out[$row]["url"] = "http://thepiratebay.org" . trim($node3->getAttribute('href'));
+                                        $out[$row]["tinyurl"] = createTinyUrl("http://thepiratebay.org" . trim($node3->getAttribute('href')));
                                     }
                                     // get result details
                                     if ($node2->nodeName == "font" && $column == 2) {

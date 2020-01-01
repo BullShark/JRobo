@@ -44,10 +44,9 @@ public class UrbanDict {
   private URLConnection conn;
   private OutputStreamWriter wr;
   private BufferedReader rd;
-  private String fullUrl;
 
   /* Miscelanous */
-  private static final String QUERY_URL = "http://www.urbandictionary.com/iphone/search/define?term=";
+  private static final String QUERY_URL = "https://api.urbandictionary.com/v0/define?term=";
   private String def;
   private String json;
   private String word;
@@ -60,7 +59,6 @@ public class UrbanDict {
     /* For the HTTP Connection */
     url = null;
     conn = null;
-    fullUrl = "";
     this.word = word;
 
     /* Miscelanous */
@@ -80,7 +78,7 @@ public class UrbanDict {
       /* Create a URL obj from strings */
       url =  new URL((QUERY_URL.concat(word)).replace(" ", "%20"));
 
-      System.out.println(fullUrl);
+      System.out.println(url);
 
       conn = url.openConnection();
 
@@ -89,7 +87,8 @@ public class UrbanDict {
 
       String line = "";
       while ((line = rd.readLine()) != null) {
-        json = json.concat(line);
+//        json = json.concat(line);
+        json += line;
       }
 
       rd.close();
@@ -100,6 +99,7 @@ public class UrbanDict {
       ex.printStackTrace();
     }
 
+//    System.out.println("JSON: " + json);
     return json;
   }
 
@@ -144,7 +144,7 @@ public class UrbanDict {
       }
     } catch (NullPointerException ex) {
       ex.printStackTrace();
-      String[] emptyArr = {""};
+      String[] emptyArr = {"Could not be retrieved!"};
       return emptyArr;
     }
     
