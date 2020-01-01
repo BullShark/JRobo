@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
 /**
  *
  * @author n0per, BullShark
@@ -52,13 +53,12 @@ public class Weather {
     private URLConnection conn;
     private OutputStreamWriter wr;
     private BufferedReader rd;
-    private String fullUrl;
     // private GSONClass gsons = new GSONClass();
 
     /*
      * Miscelanous
      */
-    private static final String QUERY_URL = "http://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
+    private static final String QUERY_URL = "https://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
     private String json;
 
     public Weather() {
@@ -72,7 +72,6 @@ public class Weather {
         //TODO: Move BufferedReader declaration here
 //    wr = null;
 //    rd = null;
-        fullUrl = "";
 
         /*
          * Miscelanous
@@ -97,7 +96,7 @@ public class Weather {
             System.out.println("URL: " + weatherQuery);
             url = new URL(weatherQuery);
 
-            System.out.println(fullUrl);
+            System.out.println(url);
 
             conn = url.openConnection();
 
@@ -106,7 +105,7 @@ public class Weather {
 
             String line = "";
             while ((line = rd.readLine()) != null) {
-                json = json.concat(line);
+                json += line;
             }
 
             rd.close();

@@ -70,7 +70,7 @@ public class Jokes {
       connection.noticeChan(this.channel, "[***]RELOADING AMMUNITION");
 
       //Reload the jokes
-      reader.fileToArrayList("pickup.txt", pickUpJokes);
+      reader.fileToArrayList("FunnyJokes.txt", pickUpJokes);
     }
     if(user == null) {
   
