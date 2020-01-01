@@ -1,24 +1,12 @@
-## Project Members
-
-[BinaryStroke](https://github.com/BinaryStroke "Developer") (StompinBroknGlas on irc)
-
-Developer
-
-
-[projektile](https://github.com/projektile "Developer") (Tyler Pollard)
-
-Developer
-
-
-[teslasolutions](https://github.com/teslasolution "Developer") (Kamal Sajid)
-
-Developer
-
+## Project Members (Developers)
 
 [BullShark](https://github.com/BullShark "Core Developer") (Christopher Lemire)
 
-Founder and Lead Developer
+[BinaryStroke](https://github.com/BinaryStroke "Developer") (StompinBroknGlas on irc)
 
+[projektile](https://github.com/projektile "Developer") (Tyler Pollard)
+
+[teslasolutions](https://github.com/teslasolution "Developer") (Kamal Sajid)
 
 ## About
 
@@ -31,7 +19,6 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
  * Uses its own IRC framework
  * Configuration file in plain text JSON, just modify it's values
  * Authenticates with nickserv
-  * You have it logged in under one of your groupped nicks
  
 ## Provides many commands
  * google|g &lt;search query&gt;
@@ -58,31 +45,28 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
   * Checks if the url is really up or down
  * version
  * quit|q
-  * JRobo will only respond to this and other commands/features sent from the master or
+  * JRobo will only respond to this and other commands/features sent from the master or (Not implemented fully yet)
   * One of the list of masters read in from Config.json
  * And others, download and use the bots in-channel help for more
 
 # Features to come
  * RSS Feed Support
-  * Works differently and better than all other RSS Feed bots I've used
- * Quizzes
-  * Practice Certification Exam Questions
-  * And others read in by files (Add your own as well)
- * More
 
 ## Install and run
 
 # Linux
 
 Requirements
- * Java Apache Ant 1.8 (Recommended but optional)
+ * Java Apache Ant (Recommended but optional)
  * OpenJDK or Oracle/Sun JDK version 7 or newer
  * Git of course
 
 ### Debian/Linux Mint/Ubuntu
-    $ sudo apt-get install openjdk-7-jdk ant git
+    $ sudo apt-get install openjdk-8-jdk ant git
     $ git clone https://github.com/BullShark/JRobo.git
     $ cd JRobo
+    $ mv src/jrobo/Config.json-example src/JRobo/Config.json
+    $ nano src/jrobo/Config.json
     $ ant clean
     $ ant jar
     $ ant run
@@ -93,7 +77,7 @@ Requirements
     $ java -classpath ../lib/gson-2.2.2.jar:. jrobo.JRobo
 
 ### RHEL/Fedora/CentOS
-    $ yum install java-1.7.0-openjdk-devel ant git
+    $ yum install java-1.8.0-openjdk-devel ant git
     $ # The rest is the same as above
 
 # Windows
