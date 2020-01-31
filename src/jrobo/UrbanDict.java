@@ -46,7 +46,8 @@ public class UrbanDict {
   private BufferedReader rd;
 
   /* Miscelanous */
-  private static final String QUERY_URL = "https://api.urbandictionary.com/v0/define?term=";
+//  private static final String QUERY_URL = "https://api.urbandictionary.com/v0/define?term="; // JVM needs ssl certificate to use this
+  private static final String QUERY_URL = "http://api.urbandictionary.com/v0/define?term=";
   private String def;
   private String json;
   private String word;
