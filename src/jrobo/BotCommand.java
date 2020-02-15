@@ -292,6 +292,10 @@ public class BotCommand {
    */
   private void wakeRoomHelper() {
     String users = getUsers();
+    
+    // Change nick[m] to nick for Matrix/Riot.im IRC Bridge
+    users = users.replace("[m]", "");
+
     if (users != null) {
       connection.msgChannel(config.getChannel(), users);
     } else {
