@@ -8,6 +8,7 @@
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
 <project name="JRobo" default="default" basedir=".">
+    <!-- <javac srcdir="src" destdir="bin" /> -->
     <description>Builds, tests, and runs the project JRobo.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--

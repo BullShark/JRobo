@@ -43,9 +43,11 @@ public class BotCommand {
   private String cmdArgs;
   private boolean hasArgs;
   private ListColors lc;
-//  private boolean threadCreated;
-//  private boolean bombActive;
-//  private boolean[] wire = new boolean[3];
+  private boolean threadCreated;
+  private boolean bombActive;
+  private boolean[] wire;
+  private Jokes joke;
+
 
   /**
    *
@@ -58,6 +60,7 @@ public class BotCommand {
     this.connection = connection;
     this.config = config;
     this.jRobo = jRobo;
+    joke = new Jokes(this.connection, this.config.getChannel());
 
     /* Cmds */
     cmd = "";
@@ -67,6 +70,11 @@ public class BotCommand {
     /* Misc */
     lc = new ListColors();
     threadCreated = false;
+
+    /* Bomb game */
+    wire = new boolean[3];
+    bombActive = false;
+    bombHolder = "nobody";
 
   }
 
@@ -88,7 +96,6 @@ public class BotCommand {
         wakeRoomHelper();
         break;
       case "google":
-      case "g":
       case "lmgtfy":
       case "stfw": /* Show The Fucking World */
         googleHelper();
@@ -96,6 +103,7 @@ public class BotCommand {
       case "goto":
       case "join":
         moveToChannelHelper();
+      case "g":
       case "greet":
         greetHelper();
         break;
@@ -215,27 +223,17 @@ public class BotCommand {
    */
   private String getRandChanUser() {
 
-    /*
-     * TODO: getUsers.split() and choose random index
-     * rand fn returns number within 0 and len-1 of arr
-     * 
-     * TODO: Use with ^mum that's supplied no args
-     */
     String[] usersList;
 
     usersList = getUsers().split("\\s++");
 
     if (usersList != null) {
-      //TODO Needs testing
-      return usersList[(int) (Math.random() * usersList.length + 1)];
+      // Random array index
+      int randIndex = (int) (Math.random() * usersList.length); // This should never be incorrect and cause an ArrayIndexOutOfBoundsException
+      return usersList[randIndex];
     } else {
       return "ChanServ";
     }
-    /*
-     public boolean getRandomBoolean() {
-     return ((((int)(Math.random() * 10)) % 2) == 1);
-     }
-     */
   }
 
   /**
@@ -499,13 +497,12 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
   }
 
   private void mumHelper() {
-
-    Jokes joke = new Jokes(this.connection, config.getChannel());
-
     try {
       if (!hasArgs) {
-        connection.msgChannel(config.getChannel(), joke.getMommaJoke(getRandChanUser()));
+        connection.msgChannel(config.getChannel(),
+          joke.getMommaJoke( getRandChanUser().replace("[m]", "") ));
       } else {
+        //TODO I don't remember why I wrote this. What does it do? Is it really needed?
         int temp = cmdArgs.indexOf(' ');
         if (temp != -1) {
           connection.msgChannel(config.getChannel(), joke.getMommaJoke(cmdArgs.substring(0, temp)));
@@ -515,9 +512,8 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
       }
     } catch (NullPointerException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-
-      //Inform masters in PM
-      connection.msgMasters("FIX ^mum; FileReader.java not reading input!!!");
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 
@@ -702,23 +698,6 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
    */
   private void listHelper() {
     /*
-     String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
-     "wakeroom|wr, weather|w <location, zip, etc.>, " +
-     "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
-     "next|n, mum|m [user], invite-channel|ic <channel>, " +
-     "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-     "isup <url>, version, quit|q"; //@TODO update list for ALL commands
-     */
-
-    String noColorStr =
-              "Available commands: google|g|lmgtfy|stfw <search query>, "
-            + "greet [user], wakeroom|wr, weather|w <location, zip, etc.>, "
-            + "urbandict|ud <search query, list|l, raw|r <raw irc line>, help|h [cmd], "
-            + "next|n, mum|m [user], invite-channel|ic <channel>, "
-            + "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, "
-            + "isup <url>, version, quit|q"; //@TODO update list for ALL commands
-
-    /*
      * GREEN = dark color
      * CYAN = light color
      * 
@@ -730,10 +709,10 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
      */
     String colorStr = lc.attributesSynopsisLine(
             lc.colorToken("Available commands: ", MircColors.BOLD)
-            + lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN)
-            + lc.colorToken("greet ", MircColors.GREEN)
-            + lc.colorToken("[user], ", MircColors.CYAN)
+            + lc.colorToken("google|lmgtfy|stfw ", MircColors.GREEN)
             + lc.colorToken("<search query>, ", MircColors.CYAN)
+            + lc.colorToken("greet|g ", MircColors.GREEN)
+            + lc.colorToken("[user], ", MircColors.CYAN)
             + lc.colorToken("wakeroom|wr, ", MircColors.GREEN)
             + lc.colorToken("weather|w ", MircColors.GREEN)
             + lc.colorToken("<location, zip, etc.>, ", MircColors.CYAN)
@@ -747,7 +726,7 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
             + lc.colorToken("next|n, ", MircColors.GREEN)
             + lc.colorToken("mum|m ", MircColors.GREEN)
             + lc.colorToken("[user], ", MircColors.CYAN)
-            + lc.colorToken("invite-channel|ic ", MircColors.GREEN)
+            + lc.colorToken("invite-channel|ic ", MircColors.BOLD + MircColors.GREEN)
             + lc.colorToken("<channel>, ", MircColors.CYAN)
             + lc.colorToken("invite-nick|in ", MircColors.GREEN)
             + lc.colorToken("<nick> ", MircColors.CYAN)
@@ -759,6 +738,9 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
             + lc.colorToken("<url>, ", MircColors.CYAN)
             + lc.colorToken("version, ", MircColors.GREEN)
             + lc.colorToken("quit|q", MircColors.GREEN));
+
+    String noColorStr = colorStr.replaceAll("(\\P{Print}|[0-9]{2})", "");
+    //System.out.println("String without colors: " + noColorStr);
 
     connection.msgChannel(config.getChannel(), colorStr);
   }
@@ -775,6 +757,7 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
     connection.msgChannel(config.getChannel(), "Invalid usage of command: " + cmd);
   }
 
+  //TODO Remove this. We don't need the list command and this. Just list is fine.
   private void helpHelper() {
     //@TODO man page style usage for help blah
     connection.msgChannel(config.getChannel(), "You implement it!");
@@ -788,8 +771,6 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
   }
 
   private void greetHelper() {
-    Jokes joke = new Jokes(this.connection, config.getChannel());
-
     try {
       if (!hasArgs) {
         connection.msgChannel(config.getChannel(), joke.getPhoneNumber(getRandChanUser()));
@@ -799,17 +780,14 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
           connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs.substring(0, temp)));
         } else {
           connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs));
-
-
         }
       }
     } catch (NullPointerException ex) {
       Logger.getLogger(BotCommand.class
               .getName()).log(Level.SEVERE, null, ex);
-
-      //Inform masters in PM
-      connection.msgMasters(
-              "FIX ^mum; FileReader.java not reading input!!!");
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      Logger.getLogger(BotCommand.class
+              .getName()).log(Level.SEVERE, null, ex);
     }
   }
 

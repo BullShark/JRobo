@@ -36,16 +36,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- *
- * @author chris
- */
 public class Weather {
 
     /*
      * For the JSON/DOC
      */
     //JSONObject jsonObject;
+	
     /*
      * For the HTTP Connection
      */
@@ -53,16 +50,20 @@ public class Weather {
     private URLConnection conn;
     private OutputStreamWriter wr;
     private BufferedReader rd;
-    // private GSONClass gsons = new GSONClass();
+    // private GSONClass gson = new GSONClass();
 
     /*
-     * Miscelanous
+     * Miscellaneous
+     * XXX https://www.weather.gov/documentation/services-web-api
+     * XXX https://api.weather.gov/points/{latitude},{longitude}
+     * XXX Get the latitude, longitude using Google
+     * XXX Not working for this longitude, latitude I found by googling...
+     * XXX https://api.weather.gov/points/29.7438,98.4531
      */
     private static final String QUERY_URL = "https://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
     private String json;
 
     public Weather() {
-
 
         /*
          * For the HTTP Connection
@@ -70,11 +71,11 @@ public class Weather {
         url = null;
         conn = null;
         //TODO: Move BufferedReader declaration here
-//    wr = null;
-//    rd = null;
+//      wr = null;
+//    	rd = null;
 
         /*
-         * Miscelanous
+         * Miscellaneous
          */
         json = "";
     }
