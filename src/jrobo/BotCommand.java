@@ -43,9 +43,9 @@ public class BotCommand {
   private String cmdArgs;
   private boolean hasArgs;
   private ListColors lc;
-//  private boolean threadCreated;
-//  private boolean bombActive;
-//  private boolean[] wire = new boolean[3];
+  private boolean threadCreated;
+  private boolean bombActive;
+  private boolean[] wire = new boolean[3];
 
   /**
    *
