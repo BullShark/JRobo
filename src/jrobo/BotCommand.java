@@ -484,8 +484,6 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
      * Put together a String in the form
      * http://www.google.com/ig/api?weather=Mountain+View
      */
-//        connection.msgUser("BullShark", weatherUrl);
-//        if(!hasArgs) {
 //          helpWrapper(cmd);
 //        } else {
 //          connection.msgChannel(botC, new Weather().getSummary(cmdArgs));
@@ -708,8 +706,9 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
      "isup <url>, version, quit|q"; //@TODO update list for ALL commands
      */
 
-    String noColorStr = "Available commands: google|g|lmgtfy|stfw <search query>, "
-            + "wakeroom|wr, weather|w <location, zip, etc.>, "
+    String noColorStr =
+              "Available commands: google|g|lmgtfy|stfw <search query>, "
+            + "greet [user], wakeroom|wr, weather|w <location, zip, etc.>, "
             + "urbandict|ud <search query, list|l, raw|r <raw irc line>, help|h [cmd], "
             + "next|n, mum|m [user], invite-channel|ic <channel>, "
             + "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, "
@@ -728,6 +727,8 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
     String colorStr = lc.attributesSynopsisLine(
             lc.colorToken("Available commands: ", MircColors.BOLD)
             + lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN)
+            + lc.colorToken("greet ", MircColors.GREEN)
+            + lc.colorToken("[user], ", MircColors.CYAN)
             + lc.colorToken("<search query>, ", MircColors.CYAN)
             + lc.colorToken("wakeroom|wr, ", MircColors.GREEN)
             + lc.colorToken("weather|w ", MircColors.GREEN)
