@@ -45,7 +45,7 @@ public class BotCommand {
   private ListColors lc;
   private boolean threadCreated;
   private boolean bombActive;
-  private boolean[] wire = new boolean[3];
+  private boolean[] wire;
 
   /**
    *
@@ -67,6 +67,11 @@ public class BotCommand {
     /* Misc */
     lc = new ListColors();
     threadCreated = false;
+
+    /* Bomb game */
+    wire = new boolean[3];
+    bombActive = false;
+    bombHolder = "nobody";
 
   }
 
@@ -504,7 +509,8 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
 
     try {
       if (!hasArgs) {
-        connection.msgChannel(config.getChannel(), joke.getMommaJoke(getRandChanUser()));
+        connection.msgChannel(config.getChannel(),
+          joke.getMommaJoke( getRandChanUser().replace("[m]", "") ));
       } else {
         int temp = cmdArgs.indexOf(' ');
         if (temp != -1) {
