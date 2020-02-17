@@ -226,7 +226,7 @@ public class BotCommand {
 
     if (usersList != null) {
       // Random array index
-      int randIndex = (int) (Math.ranom() * usersList.length); // This should never be incorrect and cause an ArrayIndexOutOfBoundsException
+      int randIndex = (int) (Math.random() * usersList.length); // This should never be incorrect and cause an ArrayIndexOutOfBoundsException
       return usersList[randIndex];
     } else {
       return "ChanServ";
