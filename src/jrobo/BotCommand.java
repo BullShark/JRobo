@@ -46,6 +46,8 @@ public class BotCommand {
   private boolean threadCreated;
   private boolean bombActive;
   private boolean[] wire;
+  private Jokes joke;
+
 
   /**
    *
@@ -58,6 +60,7 @@ public class BotCommand {
     this.connection = connection;
     this.config = config;
     this.jRobo = jRobo;
+    joke = new Jokes(this.connection, this.config.getChannel());
 
     /* Cmds */
     cmd = "";
@@ -494,14 +497,12 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
   }
 
   private void mumHelper() {
-
-    Jokes joke = new Jokes(this.connection, config.getChannel());
-
     try {
       if (!hasArgs) {
         connection.msgChannel(config.getChannel(),
           joke.getMommaJoke( getRandChanUser().replace("[m]", "") ));
       } else {
+        //TODO I don't remember why I wrote this. What does it do? Is it really needed?
         int temp = cmdArgs.indexOf(' ');
         if (temp != -1) {
           connection.msgChannel(config.getChannel(), joke.getMommaJoke(cmdArgs.substring(0, temp)));
@@ -511,9 +512,6 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
       }
     } catch (NullPointerException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-
-      //Inform masters in PM
-      connection.msgMasters("FIX ^mum; FileReader.java not reading input!!!");
     } catch (ArrayIndexOutOfBoundsException ex) {
       Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
     }
@@ -773,6 +771,7 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
     connection.msgChannel(config.getChannel(), "Invalid usage of command: " + cmd);
   }
 
+  //TODO Remove this. We don't need the list command and this. Just list is fine.
   private void helpHelper() {
     //@TODO man page style usage for help blah
     connection.msgChannel(config.getChannel(), "You implement it!");
@@ -786,8 +785,6 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
   }
 
   private void greetHelper() {
-    Jokes joke = new Jokes(this.connection, config.getChannel());
-
     try {
       if (!hasArgs) {
         connection.msgChannel(config.getChannel(), joke.getPhoneNumber(getRandChanUser()));
@@ -797,17 +794,14 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
           connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs.substring(0, temp)));
         } else {
           connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs));
-
-
         }
       }
     } catch (NullPointerException ex) {
       Logger.getLogger(BotCommand.class
               .getName()).log(Level.SEVERE, null, ex);
-
-      //Inform masters in PM
-      connection.msgMasters(
-              "FIX ^greet; FileReader.java not reading input!!!");
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      Logger.getLogger(BotCommand.class
+              .getName()).log(Level.SEVERE, null, ex);
     }
   }
 
