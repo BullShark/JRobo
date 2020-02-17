@@ -220,39 +220,17 @@ public class BotCommand {
    */
   private String getRandChanUser() {
 
-    /*
-     * TODO: getUsers.split() and choose random index
-     * rand fn returns number within 0 and len-1 of arr
-     * 
-     * TODO: Use with ^mum that's supplied no args
-     */
     String[] usersList;
 
     usersList = getUsers().split("\\s++");
-    // An Example:
-    // {"jon", "chris", "gabe", "anoduck"}  // indices 0,1,2,3 and length 4
 
     if (usersList != null) {
-      //TODO Needs testing
-      //                      (int) (Math.random() * usersList.length + 1)
-      //
-      //                      Math.random() = double range 0.0(inclusive) to 1.0(exclusive) OR [0,1) include 0 but don't include 1
-      //                                      length = 4       + 1
-      //                            (low) 0 * 4 + 1= 1
-      //                          (high) .9 * 4 + 1= 4.9999999999 and cast to int and truncate floating point = 4
-      //                                     range = [1,4]
-      //
       // Random array index
-      int randIndex = (int) (Math.ranom() * usersList.length + 1)
+      int randIndex = (int) (Math.ranom() * usersList.length); // This should never be incorrect and cause an ArrayIndexOutOfBoundsException
       return usersList[randIndex];
     } else {
       return "ChanServ";
     }
-    /*
-     public boolean getRandomBoolean() {
-     return ((((int)(Math.random() * 10)) % 2) == 1);
-     }
-     */
   }
 
   /**
