@@ -229,10 +229,22 @@ public class BotCommand {
     String[] usersList;
 
     usersList = getUsers().split("\\s++");
+    // An Example:
+    // {"jon", "chris", "gabe", "anoduck"}  // indices 0,1,2,3 and length 4
 
     if (usersList != null) {
       //TODO Needs testing
-      return usersList[(int) (Math.random() * usersList.length + 1)];
+      //                      (int) (Math.random() * usersList.length + 1)
+      //
+      //                      Math.random() = double range 0.0(inclusive) to 1.0(exclusive) OR [0,1) include 0 but don't include 1
+      //                                      length = 4       + 1
+      //                            (low) 0 * 4 + 1= 1
+      //                          (high) .9 * 4 + 1= 4.9999999999 and cast to int and truncate floating point = 4
+      //                                     range = [1,4]
+      //
+      // Random array index
+      int randIndex = (int) (Math.ranom() * usersList.length + 1)
+      return usersList[randIndex];
     } else {
       return "ChanServ";
     }
@@ -524,6 +536,8 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
 
       //Inform masters in PM
       connection.msgMasters("FIX ^mum; FileReader.java not reading input!!!");
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 
@@ -737,9 +751,9 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
     String colorStr = lc.attributesSynopsisLine(
             lc.colorToken("Available commands: ", MircColors.BOLD)
             + lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN)
+            + lc.colorToken("<search query>, ", MircColors.CYAN)
             + lc.colorToken("greet ", MircColors.GREEN)
             + lc.colorToken("[user], ", MircColors.CYAN)
-            + lc.colorToken("<search query>, ", MircColors.CYAN)
             + lc.colorToken("wakeroom|wr, ", MircColors.GREEN)
             + lc.colorToken("weather|w ", MircColors.GREEN)
             + lc.colorToken("<location, zip, etc.>, ", MircColors.CYAN)
@@ -815,7 +829,7 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
 
       //Inform masters in PM
       connection.msgMasters(
-              "FIX ^mum; FileReader.java not reading input!!!");
+              "FIX ^greet; FileReader.java not reading input!!!");
     }
   }
 
