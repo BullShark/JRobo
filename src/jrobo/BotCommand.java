@@ -743,7 +743,7 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
             + lc.colorToken("next|n, ", MircColors.GREEN)
             + lc.colorToken("mum|m ", MircColors.GREEN)
             + lc.colorToken("[user], ", MircColors.CYAN)
-            + lc.colorToken("invite-channel|ic ", MircColors.GREEN)
+            + lc.colorToken("invite-channel|ic ", MircColors.BOLD + MircColors.GREEN)
             + lc.colorToken("<channel>, ", MircColors.CYAN)
             + lc.colorToken("invite-nick|in ", MircColors.GREEN)
             + lc.colorToken("<nick> ", MircColors.CYAN)
