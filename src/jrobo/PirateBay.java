@@ -112,9 +112,9 @@ public class PirateBay {
             rd.close();
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
         } catch (ConnectException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 
