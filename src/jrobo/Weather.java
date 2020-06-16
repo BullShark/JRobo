@@ -36,16 +36,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- *
- * @author chris
- */
 public class Weather {
 
     /*
      * For the JSON/DOC
      */
     //JSONObject jsonObject;
+	
     /*
      * For the HTTP Connection
      */
@@ -53,10 +50,10 @@ public class Weather {
     private URLConnection conn;
     private OutputStreamWriter wr;
     private BufferedReader rd;
-    // private GSONClass gsons = new GSONClass();
+    // private GSONClass gson = new GSONClass();
 
     /*
-     * Miscelanous
+     * Miscellaneous
      * XXX https://www.weather.gov/documentation/services-web-api
      * XXX https://api.weather.gov/points/{latitude},{longitude}
      * XXX Get the latitude, longitude using Google
@@ -68,18 +65,17 @@ public class Weather {
 
     public Weather() {
 
-
         /*
          * For the HTTP Connection
          */
         url = null;
         conn = null;
         //TODO: Move BufferedReader declaration here
-//    wr = null;
-//    rd = null;
+//      wr = null;
+//    	rd = null;
 
         /*
-         * Miscelanous
+         * Miscellaneous
          */
         json = "";
     }
