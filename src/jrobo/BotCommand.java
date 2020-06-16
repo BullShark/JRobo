@@ -96,7 +96,6 @@ public class BotCommand {
         wakeRoomHelper();
         break;
       case "google":
-      case "g":
       case "lmgtfy":
       case "stfw": /* Show The Fucking World */
         googleHelper();
@@ -104,6 +103,7 @@ public class BotCommand {
       case "goto":
       case "join":
         moveToChannelHelper();
+      case "g":
       case "greet":
         greetHelper();
         break;
@@ -698,23 +698,6 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
    */
   private void listHelper() {
     /*
-     String str = "Available commands: google|g|lmgtfy|stfw <search query>, " +
-     "wakeroom|wr, weather|w <location, zip, etc.>, " +
-     "urbandict|ud <search query, list|l, raw|r <raw irc line> help|h [cmd], " +
-     "next|n, mum|m [user], invite-channel|ic <channel>, " +
-     "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, " +
-     "isup <url>, version, quit|q"; //@TODO update list for ALL commands
-     */
-
-    String noColorStr =
-              "Available commands: google|g|lmgtfy|stfw <search query>, "
-            + "greet [user], wakeroom|wr, weather|w <location, zip, etc.>, "
-            + "urbandict|ud <search query, list|l, raw|r <raw irc line>, help|h [cmd], "
-            + "next|n, mum|m [user], invite-channel|ic <channel>, "
-            + "invite-nick|in <nick> [# of times], pirate [-s|-l|-d] <search query>, "
-            + "isup <url>, version, quit|q"; //@TODO update list for ALL commands
-
-    /*
      * GREEN = dark color
      * CYAN = light color
      * 
@@ -726,9 +709,9 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
      */
     String colorStr = lc.attributesSynopsisLine(
             lc.colorToken("Available commands: ", MircColors.BOLD)
-            + lc.colorToken("google|g|lmgtfy|stfw ", MircColors.GREEN)
+            + lc.colorToken("google|lmgtfy|stfw ", MircColors.GREEN)
             + lc.colorToken("<search query>, ", MircColors.CYAN)
-            + lc.colorToken("greet ", MircColors.GREEN)
+            + lc.colorToken("greet|g ", MircColors.GREEN)
             + lc.colorToken("[user], ", MircColors.CYAN)
             + lc.colorToken("wakeroom|wr, ", MircColors.GREEN)
             + lc.colorToken("weather|w ", MircColors.GREEN)
@@ -755,6 +738,9 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
             + lc.colorToken("<url>, ", MircColors.CYAN)
             + lc.colorToken("version, ", MircColors.GREEN)
             + lc.colorToken("quit|q", MircColors.GREEN));
+
+    String noColorStr = colorStr.replaceAll("(\\P{Print}|[0-9]{2})", "");
+    //System.out.println("String without colors: " + noColorStr);
 
     connection.msgChannel(config.getChannel(), colorStr);
   }
