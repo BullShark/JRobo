@@ -57,6 +57,11 @@ public class Weather {
 
     /*
      * Miscelanous
+     * XXX https://www.weather.gov/documentation/services-web-api
+     * XXX https://api.weather.gov/points/{latitude},{longitude}
+     * XXX Get the latitude, longitude using Google
+     * XXX Not working for this longitude, latitude I found by googling...
+     * XXX https://api.weather.gov/points/29.7438,98.4531
      */
     private static final String QUERY_URL = "https://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
     private String json;
