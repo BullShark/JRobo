@@ -1,0 +1,12 @@
+{
+    "name": "^JRobo^",
+    "second_name": "JRobo",
+    "password": "",
+    "masters": [
+      "BullShark_"
+    ],
+    "command_symbol":".",
+    "network":"irc.ipv6.freenode.net:6667",
+    "channel":"##blackhats",
+    "openweathermap_apikey":"abcd"
+}

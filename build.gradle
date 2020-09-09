@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'application'
+
+
+description = 'Advanced IRC Robot'
+
+mainClassName = 'jrobo.JRobo'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation     'junit:junit:4.13'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'org.apache.httpcomponents:httpcore:4.4.9'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.9'
+}

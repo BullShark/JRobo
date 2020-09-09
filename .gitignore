@@ -1,6 +1,24 @@
-/nbproject/private/
-/build/
-/dist/
-/dist/JRobo.jar
-/src/jrobo/thepiratebay.php
-/src/jrobo/Config.json
+
+# Created by https://www.toptal.com/developers/gitignore/api/netbeans
+# Edit at https://www.toptal.com/developers/gitignore?templates=netbeans
+
+### NetBeans ###
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+src/main/java/jrobo/Config.json
+# Ignore this directory
+build/
+# But descend into directories
+!*/
+# Recursively allow files under build
+#!/build/**
+build/libs/JRobo.jar
+# Allow this
+!.gitignore
+
+# End of https://www.toptal.com/developers/gitignore/api/netbeans
