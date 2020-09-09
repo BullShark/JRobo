@@ -60,7 +60,9 @@ public class Weather {
      * XXX Not working for this longitude, latitude I found by googling...
      * XXX https://api.weather.gov/points/29.7438,98.4531
      */
-    private static final String QUERY_URL = "https://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
+//    private static final String QUERY_URL = "https://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
+    //XXX Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
+    private static final String QUERY_URL = "https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key"
     private String json;
 
     public Weather() {
