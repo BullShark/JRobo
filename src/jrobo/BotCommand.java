@@ -662,9 +662,12 @@ public class BotCommand {
 	}
 
 	private void rawHelper() {
-		/* We have received a message from the owner */
-		//TODO Make the below string a variable that is mutable to be set by the XML configuration file
-		if (jRobo.getFirst().startsWith(":BullShark!debian-tor@gateway/tor-sasl/nanomachine")) {
+		/* We have received a message from the owner
+		 * TODO Make the below string a variable that is mutable to be set by the XML configuration file
+		 *
+		 * FIXME Use Config.getMasters()
+		 */
+		if (jRobo.getFirst().startsWith(":BullShark!")) {
 			connection.sendln("PRIVMSG " + config.getChannel() + " :Yes Sir Chief!");
 			String rawStr = jRobo.getLast();
 			rawStr = rawStr.substring(rawStr.indexOf(' '));
