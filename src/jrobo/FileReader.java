@@ -37,7 +37,7 @@ import java.util.Collections;
 public class FileReader {
 
 	/* Standard Java API Classes */
-	private String config_file = null;
+	private static String config_file = null;
 
 	/* User-defined Classes */
 	private static Config config;
@@ -83,7 +83,7 @@ public class FileReader {
 	public static Config getConfig() {
 		out.println("[+++]\tReading Configuration File (Config.json)");
 
-		InputStream fileStream = FileReader.class.getResourceAsStream(config_file);
+	        InputStream fileStream = FileReader.class.getResourceAsStream(config_file);
 
 		if (fileStream == null) {
 			err.println("[+++]\tError: " + config_file + " was not found");
@@ -97,7 +97,7 @@ public class FileReader {
 		json = "";
 		try {
 			while ((line = br.readLine()) != null) {
-				json = json.concat(line);
+				json += line;
 			}
 
 			br.close();
@@ -140,6 +140,11 @@ public class FileReader {
 		if (config.getChannel() == null) {
 			err.println("[+++]\tError: Unable to find bot's Channel");
 			System.exit(1);
+		}
+
+		if (config.getOpenWeatherMapKey() == null) {
+			err.println("[+++]\tError: Unable to find bot's OpenWeatherMap API Key");
+			//System.exit(1);
 		}
 
 		return config;
