@@ -149,7 +149,6 @@ public class Epic {
 		} catch (NullPointerException ex) {
 			ex.printStackTrace();
 
-			// Last element
         		for (String element : outArr) {
 				System.err.println(element);
 			}
