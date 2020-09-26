@@ -37,7 +37,7 @@ import java.util.Collections;
 public class FileReader {
 
 	/* Standard Java API Classes */
-	private static String config_file = null;
+	private String config_file = null;
 
 	/* User-defined Classes */
 	private static Config config;
@@ -80,7 +80,7 @@ public class FileReader {
 	 * @return Returns a Config object, with the settings from Config.json
 	 * @since 2013-02-18
 	 */
-	public Config getConfig() {
+	public static Config getConfig() {
 		out.println("[+++]\tReading Configuration File (Config.json)");
 
 		InputStream fileStream = FileReader.class.getResourceAsStream(config_file);
