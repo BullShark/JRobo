@@ -655,10 +655,12 @@ public class BotCommand {
 		//Remove In a minute -projektile
 		inviteT.start();
 
-//TODO Implement and use FileReader.getNickAndHost() instead
-//FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
-//Use for multiple channels, array    String[] channels = this.cmdArgs.split("\\s++");
-//    if(channels.length )
+		/*
+		 * TODO Implement and use FileReader.getNickAndHost() instead
+		 * FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
+		 * Use for multiple channels, array    String[] channels = this.cmdArgs.split("\\s++");
+		 *    if(channels.length )
+		 */
 	}
 
 	private void rawHelper() {
