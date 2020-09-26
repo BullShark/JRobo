@@ -18,7 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package jrobo;
 
 import com.google.gson.Gson;
@@ -36,114 +35,113 @@ import java.util.Collections;
  * @author chris
  */
 public class FileReader {
-  /* Standard Java API Classes */
-  private String config_file = null;
-  
-  /* User-defined Classes */
-  private Config config;
-  
-  public FileReader () {
-      
-    config_file = "Config.json";
-  }
-    
-  /**
-   * Opens a resource file inside the package, and fills the passed ArrayList
-   * @param fileName The file name inside the package to be opened
-   * @param listArr The array list to store the file lines to
-   * @return a True on success, and false on failure
-   */
-  public boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
-    out.println("[+++]\tReading File (" + fileName + ")");
 
-    BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
+	/* Standard Java API Classes */
+	private String config_file = null;
 
-    String line = "";
+	/* User-defined Classes */
+	private Config config;
 
-    try {
-      while( (line = br.readLine()) != null) {
-        listArr.add(line);
-      }
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
-  
-    Collections.shuffle(listArr);
-  
-    return true;
-  }
-  
-  /**
-   * gets the data from the configuration file
-   * @return Returns a Config object, with the settings from Config.json
-   * @since 2013-02-18
-   */
-  public Config getConfig () {
-      
-      out.println("[+++]\tReading Configuration File (Config.json)");
-      
-      InputStream fileStream = FileReader.class.getResourceAsStream(config_file);
-      
-      if (fileStream == null) {
-          err.println("[+++]\tError: " + config_file + " was not found");
-          System.exit(1);
-      }
-      
-      InputStreamReader fileStreamReader = new InputStreamReader(fileStream);
-      
-      BufferedReader br = new BufferedReader(fileStreamReader);
-      
-      String line, json;
-      
-      json = "";
-      try {
-          while ((line= br.readLine()) != null){
-            json = json.concat(line);
-          }
-          
-          br.close();
-          
-      } catch (IOException ex) {
-          err.println("[+++]\tError:" + ex.getMessage());
-          ex.printStackTrace();
-          System.exit(1);
-      } 
-      
-      Gson gson = new Gson();
-      config = gson.fromJson(json, Config.class);
-      
-      // Verifiying important settings for connection
-      
-      if (config.getName()==null){
-          err.println("[+++]\tError: Unable to find bot's nickname");
-          System.exit(1);
-      }
-      
-      if (config.getPass()==null){
-          err.println("[+++]\tError: Unable to find bot's password");
-          System.exit(1);
-      }
-      
-      if (config.getMasters()==null){
-          err.println("[+++]\tError: Unable to find bot's Masters");
-          System.exit(1);
-      }
-      
-      if (config.getCmdSymb()=='\u0000'){
-          err.println("[+++]\tError: Unable to find bot's Command Symbol");
-          System.exit(1);
-      }
-      
-      if (config.getNetwork()==null){
-          err.println("[+++]\tError: Unable to find bot's Network");
-          System.exit(1);
-      }
-      
-      if (config.getChannel()==null){
-          err.println("[+++]\tError: Unable to find bot's Channel");
-          System.exit(1);
-      }
-      
-      return config;
-  }
+	public FileReader() {
+		config_file = "Config.json";
+	}
+
+	/**
+	 * Opens a resource file inside the package, and fills the passed
+	 * ArrayList
+	 *
+	 * @param fileName The file name inside the package to be opened
+	 * @param listArr The array list to store the file lines to
+	 * @return a True on success, and false on failure
+	 */
+	public boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
+		out.println("[+++]\tReading File (" + fileName + ")");
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
+
+		String line = "";
+
+		try {
+			while ((line = br.readLine()) != null) {
+				listArr.add(line);
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
+		Collections.shuffle(listArr);
+
+		return true;
+	}
+
+	/**
+	 * gets the data from the configuration file
+	 *
+	 * @return Returns a Config object, with the settings from Config.json
+	 * @since 2013-02-18
+	 */
+	public Config getConfig() {
+		out.println("[+++]\tReading Configuration File (Config.json)");
+
+		InputStream fileStream = FileReader.class.getResourceAsStream(config_file);
+
+		if (fileStream == null) {
+			err.println("[+++]\tError: " + config_file + " was not found");
+			System.exit(1);
+		}
+
+		InputStreamReader fileStreamReader = new InputStreamReader(fileStream);
+		BufferedReader br = new BufferedReader(fileStreamReader);
+		String line, json;
+
+		json = "";
+		try {
+			while ((line = br.readLine()) != null) {
+				json = json.concat(line);
+			}
+
+			br.close();
+
+		} catch (IOException ex) {
+			err.println("[+++]\tError:" + ex.getMessage());
+			ex.printStackTrace();
+			System.exit(1);
+		}
+
+		Gson gson = new Gson();
+		config = gson.fromJson(json, Config.class);
+
+		// Verifiying important settings for connection
+		if (config.getName() == null) {
+			err.println("[+++]\tError: Unable to find bot's nickname");
+			System.exit(1);
+		}
+
+		if (config.getPass() == null) {
+			err.println("[+++]\tError: Unable to find bot's password");
+			System.exit(1);
+		}
+
+		if (config.getMasters() == null) {
+			err.println("[+++]\tError: Unable to find bot's Masters");
+			System.exit(1);
+		}
+
+		if (config.getCmdSymb() == '\u0000') {
+			err.println("[+++]\tError: Unable to find bot's Command Symbol");
+			System.exit(1);
+		}
+
+		if (config.getNetwork() == null) {
+			err.println("[+++]\tError: Unable to find bot's Network");
+			System.exit(1);
+		}
+
+		if (config.getChannel() == null) {
+			err.println("[+++]\tError: Unable to find bot's Channel");
+			System.exit(1);
+		}
+
+		return config;
+	}
 } // EOF class

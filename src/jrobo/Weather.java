@@ -63,7 +63,7 @@ public class Weather {
 //    private static final String QUERY_URL = "https://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
     //XXX Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
     //XXX Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
-    private static final String QUERY_URL = "https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key"
+    private final String QUERY_URL = "https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key";
     private String json;
 
     public Weather() {
