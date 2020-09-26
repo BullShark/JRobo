@@ -153,8 +153,7 @@ public class Epic {
 				System.err.println(element);
 			}
 
-			Arrays.fill(outArr, "Could not be retrieved!");
-			return outArr;
+			return new String[] { "Could not be retrieved!" };
 		}
 
 		return outArr;
