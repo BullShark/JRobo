@@ -37,10 +37,10 @@ import java.util.Collections;
 public class FileReader {
 
 	/* Standard Java API Classes */
-	private String config_file = null;
+	private static String config_file = null;
 
 	/* User-defined Classes */
-	private Config config;
+	private static Config config;
 
 	public FileReader() {
 		config_file = "Config.json";
