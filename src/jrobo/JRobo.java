@@ -160,11 +160,11 @@ public class JRobo {
 		}
 	}
 
-	private String getFirst() {
+	public String getFirst() {
 		return first;
 	}
 
-	private String getLast() {
+	public String getLast() {
 		return last;
 	}
 
