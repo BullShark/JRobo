@@ -167,6 +167,6 @@ public class Epic {
 			System.err.println("Usage: java Epic");
 			System.exit(-1);
 		}
-		System.out.println(new Epic().getFormattedEpic(false, -1));
+		System.out.println(Arrays.toString(new Epic().getFormattedEpic(false, -1)));
 	} // EOF main
 } // EOF class
