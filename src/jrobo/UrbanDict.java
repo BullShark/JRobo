@@ -28,6 +28,7 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 
 /**
  *
@@ -158,6 +159,6 @@ public class UrbanDict {
       System.err.println("Usage: java UrbanDict <word>");
       System.exit(-1);
     }
-    System.out.println(new UrbanDict(args[0]).getFormattedUrbanDef(false, -1));
+    System.out.println(Arrays.toString(new UrbanDict(args[0]).getFormattedUrbanDef(false, -1)));
   } // EOF main
 } // EOF class
