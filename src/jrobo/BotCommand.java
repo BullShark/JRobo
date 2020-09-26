@@ -736,6 +736,7 @@ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
             + lc.colorToken("<search query>, ", MircColors.CYAN)
             + lc.colorToken("isup ", MircColors.GREEN)
             + lc.colorToken("<url>, ", MircColors.CYAN)
+            + lc.colorToken("epic|e", MircColors.GREEN)
             + lc.colorToken("version, ", MircColors.GREEN)
             + lc.colorToken("quit|q", MircColors.GREEN));
 
