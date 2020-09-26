@@ -28,6 +28,7 @@ import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 
 /**
  *
@@ -153,7 +154,7 @@ public class Epic {
 				System.err.println(element);
 			}
 
-			outArr = { "Could not be retrieved!", };
+			Arrays.fill(outArr, "Could not be retrieved!");
 			return outArr;
 		}
 
