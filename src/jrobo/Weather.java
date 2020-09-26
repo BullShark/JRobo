@@ -17,11 +17,6 @@
  *
  */
 
-/**
- *
- * @author n0per, BullShark
- *
- */
 package jrobo;
 
 import com.google.gson.Gson;
@@ -75,8 +70,7 @@ public class Weather {
         /*
          * Miscellaneous
          */
-    	reader = new FileReader();
-    	config = reader.getConfig();
+    	config = FileReader.getConfig();
         json = "";
     }
 
@@ -132,7 +126,7 @@ public class Weather {
     }
 
     private String getApiKey() {
-	    return "";
+	    return config.getOpenWeatherMapKey();
     }
 
     /*

@@ -116,7 +116,7 @@ public class Config {
    * @return The weatherUndergound API key
    * @since 2013-02-18
    */
-  public String getWundergroundKey() {
+  public String getOpenWeatherMapKey() {
     return openweathermap_apikey;
   }
 
