@@ -45,7 +45,7 @@ public class JRobo {
 
   public JRobo() {
     reader = new FileReader();
-    config = reader.getConfig();
+    config = FileReader.getConfig();
     connection = new Networking(config);
     jokes = new Jokes (connection, config.getChannel());
     bCmd = new BotCommand(connection, config, this);
@@ -53,13 +53,15 @@ public class JRobo {
 
   public JRobo(String proxy, int port) { //TODO
     reader = new FileReader();
-    config = reader.getConfig();
+    config = FileReader.getConfig();
     connection = new Networking(config);
     jokes = new Jokes (connection, config.getChannel());
     bCmd = new BotCommand(connection, config, this);
   }
 
   private void initiate() {
+    System.out.println(config.toString());
+
     //TODO: Use TermColors.java instead
     System.out.println("\u001b[1;44m *** INITIATED *** \u001b[m");
 
