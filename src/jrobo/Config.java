@@ -20,10 +20,15 @@
  */
 package jrobo;
 
+import java.util.Arrays;
+
 /**
  *
  * @author BinaryStroke <binarystroke@null.net>
  * @since 2013-02-18
+ * 
+ * TODO Make this class, variables or methods static,
+ * TODO so the same data can be accessed from multiple classes
  */
 public class Config {
 
@@ -33,7 +38,7 @@ public class Config {
   private char command_symbol;
   private String network;
   private String channel;
-  private String wunderground_key;
+  private String openweathermap_apikey;
   // Chan the bot originally was in before moving between channels
   private String baseChan;
 
@@ -112,7 +117,7 @@ public class Config {
    * @since 2013-02-18
    */
   public String getWundergroundKey() {
-    return wunderground_key;
+    return openweathermap_apikey;
   }
 
   /**
@@ -140,6 +145,13 @@ public class Config {
    */
   @Override
   public String toString() {
-    return "My name is " + name;
+    return "My name is " + name
+	    + ", password is " + password.replaceAll(".", "*")
+	    + ", masters are " + Arrays.toString(masters)
+	    + ", command_symbol is " + command_symbol
+	    + ", network is " + network
+	    + ", channel is " + channel
+	    + ", openweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*")
+	    + ", baseChan is " + baseChan;
   }
 }
