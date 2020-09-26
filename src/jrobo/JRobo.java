@@ -102,7 +102,7 @@ public class JRobo {
       /*
        * A PING was received from the IRC server
        */
-      if(first.equals("PING")) { //@TODO Implement with regex
+      if(first.equals("PING")) {
         connection.sendln("PONG " + last);
       }
 
