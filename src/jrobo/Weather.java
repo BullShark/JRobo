@@ -52,12 +52,13 @@ public class Weather {
      * XXX Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
      */
 
-    private final String QUERY_URL = "https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key";
+    // https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key
+    private final String QUERY_URL = "https://api.openweathermap.org";
     private String json;
     private final Config config;
 
     public Weather() {
-
+	// "/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key"
         /*
          * For the HTTP Connection
          */
