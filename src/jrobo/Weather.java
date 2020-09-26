@@ -39,18 +39,13 @@ import java.net.URLConnection;
 public class Weather {
 
     /*
-     * For the JSON/DOC
-     */
-    //JSONObject jsonObject;
-	
-    /*
      * For the HTTP Connection
      */
     private URL url;
     private URLConnection conn;
     private OutputStreamWriter wr;
     private BufferedReader rd;
-    // private GSONClass gson = new GSONClass();
+    //private GSONClass gson = new GSONClass();
 
     /*
      * Miscellaneous
@@ -59,10 +54,11 @@ public class Weather {
      * XXX Get the latitude, longitude using Google
      * XXX Not working for this longitude, latitude I found by googling...
      * XXX https://api.weather.gov/points/29.7438,98.4531
+     * private static final String QUERY_URL = "https://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
+     * XXX Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
+     * XXX Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
      */
-//    private static final String QUERY_URL = "https://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
-    //XXX Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
-    //XXX Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
+
     private final String QUERY_URL = "https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key";
     private String json;
 
@@ -73,9 +69,9 @@ public class Weather {
          */
         url = null;
         conn = null;
-        //TODO: Move BufferedReader declaration here
-//      wr = null;
-//    	rd = null;
+        //TODO Move BufferedReader declaration here
+        //wr = null;
+    	//rd = null;
 
         /*
          * Miscellaneous
@@ -138,12 +134,17 @@ public class Weather {
      * A main method for testing this class
      */
     public static void main(String[] args) {
-        /*
-         * if(args.length != 2) { System.err.println("Usage: java Weather
-         * <location> <city>"); System.exit(-1);
-    }
+
+	/*
+         * if(args.length != 2)
+	 * {
+	 *     System.err.println("Usage: java Weather<location> <city>");
+	 *     System.exit(-1);
+	 * }
+	 *
+	 * System.out.println(new Weather().getXML(args[0]) );
          */
-        //System.out.println(new Weather().getXML(args[0]) );
+
         Weather w = new Weather();
         System.out.println(w.getFormattedWeatherSummary(w.getJson("Australia", "Melbourne")));
     }
