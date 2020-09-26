@@ -695,7 +695,7 @@ public class BotCommand {
 	}
 
 	/*
-   * Does nothing
+         * Does nothing
 	 */
 	private void doNothingHelper() {
 	}
