@@ -76,7 +76,7 @@ public class Epic {
 			/* Create a URL obj from strings */
 
 			url = new URL(
-				("QUERY_URL +"
+				(QUERY_URL
 					+ "/freeGamesPromotions"
 					+ "?locale=" + locale
 					+ "&country=" + countrycode
@@ -106,12 +106,12 @@ public class Epic {
 			ex.printStackTrace();
 		}
 
-		//System.out.println(json);
+		System.out.println(json);
 
 		return json;
 	}
 
-	public String[] getFormattedEpic(boolean hasColors, int limit) {
+	public String[] getFormattedEpic(final boolean hasColors, final int limit) {
 
 		/*
 		 * TODO Add try/catch to handle
@@ -122,24 +122,24 @@ public class Epic {
 		EpicJson ej = gson.fromJson(this.getJson(), EpicJson.class);
 
 		String[] outArr = new String[limit];
-		int count = 0;
+		int count = 0, index = limit;
 
 		/* Fixes NullPointerException Bug that occurs if the URL DNE */
 		try {
 			if (hasColors) {
 				for (EpicJsonItem eji : ej.list) {
-					if (limit > 0) {
+					if (index > 0) {
 						outArr[count++] = eji.getColorString();
-						limit--;
+						index--;
 					} else {
 						break;
 					}
 				}
 			} else {
 				for (EpicJsonItem eji : ej.list) {
-					if (limit > 0) {
+					if (index > 0) {
 						outArr[count++] = eji.toString();
-						limit--;
+						index--;
 					} else {
 						break;
 					}
@@ -147,8 +147,13 @@ public class Epic {
 			}
 		} catch (NullPointerException ex) {
 			ex.printStackTrace();
+
 			// Last element
-			outArr[limit-1] = "Could not be retrieved!";
+        		for (String element : outArr) {
+				System.err.println(element);
+			}
+
+			outArr = { "Could not be retrieved!", };
 			return outArr;
 		}
 
@@ -159,7 +164,7 @@ public class Epic {
          * A main method for testing this class
 	 */
 	public static void main(String[] args) {
-		if (args.length == 0) {
+		if(args.length == 0) {
 			System.err.println("Usage: java Epic");
 			System.exit(-1);
 		}
