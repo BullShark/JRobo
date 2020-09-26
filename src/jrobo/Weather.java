@@ -2,8 +2,6 @@
  * JRobo - An Advanced IRC Bot written in Java
  *
  * Copyright (C) <2013> <Christopher Lemire>
- * Copyright (C) <2013> <BinaryStroke>
- * Copyright (C) <2013> <Muhammad Sajid>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -61,6 +59,7 @@ public class Weather {
 
     private final String QUERY_URL = "https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key";
     private String json;
+    private final Config config;
 
     public Weather() {
 
@@ -76,6 +75,8 @@ public class Weather {
         /*
          * Miscellaneous
          */
+    	reader = new FileReader();
+    	config = reader.getConfig();
         json = "";
     }
 
@@ -128,6 +129,10 @@ public class Weather {
          */
 
         return weatherJson.toString();
+    }
+
+    private String getApiKey() {
+	    return "";
     }
 
     /*
