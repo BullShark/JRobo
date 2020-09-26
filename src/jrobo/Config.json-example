@@ -9,5 +9,5 @@
     "command_symbol":".",
     "network":"irc.ipv6.freenode.net:6667",
     "channel":"##blackhats",
-    "wunderground_key":"abcd"
+    "openweathermap_apikey":"abcd"
 }
