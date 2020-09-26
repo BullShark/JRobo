@@ -31,10 +31,8 @@ import java.net.URLConnection;
 
 /**
  *
- * @author chris
+ * @author Chris Lemire
  */
-
-
 public class UrbanDict {
 
   /* For the HTTP Connection */
@@ -43,9 +41,11 @@ public class UrbanDict {
   private OutputStreamWriter wr;
   private BufferedReader rd;
 
-  /* Miscelanous */
-//  private static final String QUERY_URL = "https://api.urbandictionary.com/v0/define?term="; // JVM needs ssl certificate to use this
-  private static final String QUERY_URL = "http://api.urbandictionary.com/v0/define?term=";
+  /* Miscelanous
+   * JVM needs ssl certificate to use this
+   * https://api.urbandictionary.com/v0/define?term=
+   */
+  private static final String QUERY_URL = "http://api.urbandictionary.com";
   private String def;
   private String json;
   private String word;
@@ -70,12 +70,17 @@ public class UrbanDict {
 
   /**
    * 
-   * @return
+   * @return json
    */
   public String getJson() {
     try {
       /* Create a URL obj from strings */
-      url =  new URL((QUERY_URL.concat(word)).replace(" ", "%20"));
+      url = new URL(
+        (QUERY_URL
+          + "/v0/define"
+          + "?term=" + word
+        ).replace(" ", "%20") //FIXME String.replace() or String.replaceAll()
+      );
 
       System.out.println(url);
 
@@ -86,7 +91,6 @@ public class UrbanDict {
 
       String line = "";
       while ((line = rd.readLine()) != null) {
-//        json = json.concat(line);
         json += line;
       }
 
@@ -98,11 +102,11 @@ public class UrbanDict {
       ex.printStackTrace();
     }
 
-//    System.out.println("JSON: " + json);
+    //System.out.println("JSON: " + json);
     return json;
   }
 
-  public String[] getFormattedUrbanDef(boolean hasColors, int limit) {
+  public String[] getFormattedUrbanDef(final boolean hasColors, final int limit) {
     
     /*
      * TODO Add try/catch to handle
@@ -112,20 +116,17 @@ public class UrbanDict {
     gson = new GsonBuilder().setPrettyPrinting().create();
     UrbanJson uj = gson.fromJson(this.getJson(), UrbanJson.class);
 
-
     String output = "";
     String[] outArr = new String[limit];
-    int count = 0;
-   
+    int count = 0, index = limit;
 
     /* Fixes NullPointerException Bug that occurs if the URL DNE */
     try {
       if(hasColors) {
         for(UrbanJsonItem uji : uj.list) {
           if(limit > 0) {
-            //output += uji.getColorString();
             outArr[count++] = uji.getColorString();
-            limit--;
+            index--;
           } else {
             break;
           }
@@ -133,9 +134,8 @@ public class UrbanDict {
       } else {
         for(UrbanJsonItem uji : uj.list) {
           if(limit > 0) {
-            //output += uji.toString();
             outArr[count++] = uji.toString();
-            limit--;
+            index--;
           } else {
             break;
           }
@@ -143,11 +143,10 @@ public class UrbanDict {
       }
     } catch (NullPointerException ex) {
       ex.printStackTrace();
-      String[] emptyArr = {"Could not be retrieved!"};
-      return emptyArr;
+
+      return new String[] {"Could not be retrieved!"};
     }
     
-//    return output;
     return outArr;
   }
 
