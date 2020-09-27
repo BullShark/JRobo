@@ -2,8 +2,6 @@
  * JRobo - An Advanced IRC Bot written in Java
  *
  * Copyright (C) <2013> <Christopher Lemire>
- * Copyright (C) <2013> <BinaryStroke>
- * Copyright (C) <2013> <Muhammad Sajid>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -25,6 +23,7 @@ import java.util.Arrays;
 /**
  *
  * @author BinaryStroke <binarystroke@null.net>
+ * @author BullShark <goodbye300@aim.net>
  * @since 2013-02-18
  * 
  * TODO Make this class, variables or methods static,
@@ -145,13 +144,13 @@ public class Config {
    */
   @Override
   public String toString() {
-    return "My name is " + name + "\n"
-	    + "password is " + password.replaceAll(".", "*") + "\n"
-	    + "masters are " + Arrays.toString(masters) + "\n"
-	    + "command_symbol is " + command_symbol + "\n"
-	    + "network is " + network + "\n"
-	    + "channel is " + channel + "\n"
-	    + "openweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*") + "\n"
-	    + "baseChan is " + baseChan + "\n";
+    return    "[+++]\t\tMy name is " + name + "\n"
+	    + "[+++]\t\tpassword is " + password.replaceAll(".", "*") + "\n"
+	    + "[+++]\t\tmasters are " + Arrays.toString(masters) + "\n"
+	    + "[+++]\t\tcommand_symbol is " + command_symbol + "\n"
+	    + "[+++]\t\tnetwork is " + network + "\n"
+	    + "[+++]\t\tchannel is " + channel + "\n"
+	    + "[+++]\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*") + "\n"
+	    + "[+++]\t\tbaseChan is " + baseChan + "\n";
   }
 }

@@ -73,8 +73,8 @@ Requirements
     $ ant <tab><tab> for a full listing (Useful if you want to develop for JRobo)
     $ # Or build and run without ant
     $ cd src
-    $ javac -classpath ../lib/gson-2.2.2.jar:. jrobo/JRobo.java
-    $ java -classpath ../lib/gson-2.2.2.jar:. jrobo.JRobo
+    $ javac -classpath ../lib/gson-2.8.6.jar:. jrobo/JRobo.java
+    $ java -classpath ../lib/gson-2.8.6.jar:. jrobo.JRobo
 
 ### RHEL/Fedora/CentOS
     $ yum install java-1.8.0-openjdk-devel ant git

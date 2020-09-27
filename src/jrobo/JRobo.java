@@ -59,7 +59,7 @@ public class JRobo {
 	}
 
 	private void initiate() {
-		System.out.println("[+++]\tUsing configuration: \n" + config.toString());
+		System.out.print("[+++]\tUsing configuration: \n" + config.toString());
 
 		//TODO: Use TermColors.java instead
 		System.out.println("\u001b[1;44m *** INITIATED *** \u001b[m");
