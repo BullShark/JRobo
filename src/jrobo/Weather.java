@@ -157,10 +157,6 @@ public class Weather {
                 ).replaceAll(" ", "%20")
             );
 
-            /*
-             * Create the query url from template
-             */
-
             System.out.println(url);
 
             conn = url.openConnection();
