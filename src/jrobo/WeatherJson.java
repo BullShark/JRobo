@@ -31,18 +31,6 @@ public class WeatherJson {
   public String cod;
   public int count;
   public List<WeatherJsonItem> list;
-//  public List<WeatherJsonItem> coord;
-//  public List<WeatherJsonItem> weather;
-//  public String base;
-//  public List<WeatherJsonItem> main;
-//  public String visibility;
-//  public List<WeatherJsonItem> wind;
-//  public List<WeatherJsonItem> clouds;
-//  public String dt;
-//  public List<WeatherJsonItem> sys;
-//  public String timezone;
-//  public String id;
-//  public String name;
 
 /**
  *
