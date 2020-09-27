@@ -32,7 +32,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author Chris Lemire
+ * @author Chris Lemire <goodbye300@aim.com>
  */
 public class UrbanDict {
 
@@ -42,11 +42,8 @@ public class UrbanDict {
   private OutputStreamWriter wr;
   private BufferedReader rd;
 
-  /* Miscelanous
-   * JVM needs ssl certificate to use this
-   * https://api.urbandictionary.com/v0/define?term=
-   */
-  private static final String QUERY_URL = "http://api.urbandictionary.com";
+  /* Miscelanous */
+  private static final String QUERY_URL = "https://api.urbandictionary.com";
   private String def;
   private String json;
   private String word;
