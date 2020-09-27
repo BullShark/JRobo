@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  *
- * @author Christopher Lemire <christopher.lemire@gmail.com>
+ * @author Chris Lemire <goodbye300@aim.com>
  */
 public class WeatherJson {
   public String message;
