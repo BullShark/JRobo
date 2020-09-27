@@ -146,12 +146,12 @@ public class Config {
   @Override
   public String toString() {
     return "My name is " + name + "\n"
-	    + ", password is " + password.replaceAll(".", "*") + "\n"
-	    + ", masters are " + Arrays.toString(masters) + "\n"
-	    + ", command_symbol is " + command_symbol + "\n"
-	    + ", network is " + network + "\n"
-	    + ", channel is " + channel + "\n"
-	    + ", openweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*") + "\n"
-	    + ", baseChan is " + baseChan + "\n";
+	    + "password is " + password.replaceAll(".", "*") + "\n"
+	    + "masters are " + Arrays.toString(masters) + "\n"
+	    + "command_symbol is " + command_symbol + "\n"
+	    + "network is " + network + "\n"
+	    + "channel is " + channel + "\n"
+	    + "openweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*") + "\n"
+	    + "baseChan is " + baseChan + "\n";
   }
 }
