@@ -24,7 +24,6 @@ import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -36,61 +35,131 @@ public class Weather {
      */
     private URL url;
     private URLConnection conn;
-    private OutputStreamWriter wr;
     private BufferedReader rd;
-    //private GSONClass gson = new GSONClass();
 
     /*
      * Miscellaneous
-     * XXX https://www.weather.gov/documentation/services-web-api
-     * XXX https://api.weather.gov/points/{latitude},{longitude}
-     * XXX Get the latitude, longitude using Google
-     * XXX Not working for this longitude, latitude I found by googling...
-     * XXX https://api.weather.gov/points/29.7438,98.4531
-     * private static final String QUERY_URL = "https://api.wunderground.com/api/92c71a10c8515070/conditions/lang:EN/q/%s/%s.json";
-     * XXX Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
-     * XXX Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
+     * Weather.gov and Google
+     * https://www.weather.gov/documentation/services-web-api
+     * https://api.weather.gov/points/{latitude},{longitude}
+     * Get the latitude, longitude using Google
+     * Not working for this longitude, latitude I found by googling...
+     * https://api.weather.gov/points/29.7438,98.4531
+     *
+     * OpenWeatherMap
+     * Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
+     * Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
+     * Example: https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key
      */
+    public enum Unit {
+	    IMPERIAL, METRIC
+    }
 
-    // https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key
+    public enum Type { //FIXME What other types are there?
+	    ACCURATE
+    }
+
+    public enum Mode {
+	    JSON, XML
+    }
+
+    public enum StateCode {
+	    TX, FL, CA, NY
+    }
+
+    public enum CountryCode {
+	    US, TK, AU
+    }
+
     private final String QUERY_URL = "https://api.openweathermap.org";
     private String json;
     private final Config config;
 
+    /*
+     * API URL Parameters
+     */
+    private final String cityName;
+    private final String apikey;
+    private Unit unit;
+    private Type type;
+    private Mode mode;
+    private StateCode stateCode;
+    private CountryCode countryCode;
+
     public Weather() {
-	// "/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key"
+
         /*
          * For the HTTP Connection
          */
         url = null;
         conn = null;
-        //TODO Move BufferedReader declaration here
-        //wr = null;
-    	//rd = null;
 
         /*
          * Miscellaneous
          */
     	config = FileReader.getConfig();
         json = "";
+
+	/*
+         * API URL Parameters
+	 */
+	cityName="San Antonio";
+	stateCode=StateCode.TX;
+        countryCode=CountryCode.US;
+	unit=Unit.IMPERIAL;
+        type=Type.ACCURATE;
+	mode=Mode.JSON;
+	apikey=getApiKey();
+
+/*
+        + "?q=" + location
+        + "&units=" + "imperial"
+        + "&type=" + "accurate"
+        + "&mode=" + "json"
+        + "&APPID=" + "api-key"
+*/
+ 
     }
 
     /**
      *
-     * @param location
-     * @param city
+     * @param cityName
+     * @param stateCode
+     * @param countryCode
      * @return String
      */
-    public String getJson(String location, String city) {
+    public String getJson(String cityName, String stateCode, String countryCode) {
         try {
+	    if (cityName==null || stateCode==null || countryCode==null) {
+                throw new NullPointerException();
+	    }
+
+	    String location = "";
+
+	    if(!cityName.equals("") && stateCode.equals("") && countryCode.equals("")) {
+                location = cityName;
+	    } else if(!cityName.equals("") && !stateCode.equals("") && countryCode.equals("")) {
+	        location = cityName + "," + stateCode;
+            } else if(!cityName.equals("") && !stateCode.equals("") && !countryCode.equals("")) {
+	        location = cityName + "," + stateCode + "," + countryCode;
+	    } else {
+	        location = this.cityName + "," + this.stateCode + "," + this.countryCode;
+	    }
+
+            url = new URL(
+                (QUERY_URL
+                    + "/data/2.5/find"
+                    + "?q=" + location
+                    + "&units=" + "imperial"
+                    + "&type=" + "accurate"
+                    + "&mode=" + "json"
+                    + "&appid=" + apikey
+                ).replaceAll(" ", "%20")
+            );
+
             /*
              * Create the query url from template
              */
-            city = city.replace(" ", "_");
-            location = location.replace(" ", "_");
-            String weatherQuery = String.format(QUERY_URL, location, city);
-            System.out.println("URL: " + weatherQuery);
-            url = new URL(weatherQuery);
 
             System.out.println(url);
 
@@ -146,6 +215,6 @@ public class Weather {
          */
 
         Weather w = new Weather();
-        System.out.println(w.getFormattedWeatherSummary(w.getJson("Australia", "Melbourne")));
+        System.out.println(w.getFormattedWeatherSummary(w.getJson("Australia", "Melbourne", "AU")));
     }
 } // EOF class
