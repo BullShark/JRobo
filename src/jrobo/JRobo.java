@@ -66,7 +66,7 @@ public class JRobo {
 
 		/* Identify to server */
 		connection.sendln("NICK " + config.getName());
-		connection.sendln("PASS " + config.getPass());
+		connection.sendln("PASS " + config.getPass().replaceAll(".", "*"));
 		connection.sendln("USER JRobo 0 * :Microsoft Exterminator!");
 		/*
                  * Wait for server message:

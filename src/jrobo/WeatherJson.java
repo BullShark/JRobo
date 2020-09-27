@@ -20,119 +20,39 @@
  */
 package jrobo;
 
+import java.util.List;
+
 /**
  *
- * @author n0per
- *
+ * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
 public class WeatherJson {
+  public String message;
+  public String cod;
+  public int count;
+  public List<WeatherJsonItem> list;
+//  public List<WeatherJsonItem> coord;
+//  public List<WeatherJsonItem> weather;
+//  public String base;
+//  public List<WeatherJsonItem> main;
+//  public String visibility;
+//  public List<WeatherJsonItem> wind;
+//  public List<WeatherJsonItem> clouds;
+//  public String dt;
+//  public List<WeatherJsonItem> sys;
+//  public String timezone;
+//  public String id;
+//  public String name;
 
-    private WeatherJson.CurrentObservation current_observation;
-
-    public class CurrentObservation {
-
-        private String temperature_string;
-        private String weather;
-        private WeatherJson.ObservationLocation observation_location;
-        private DisplayLocation display_location;
-
-        @Override
-        public String toString() {
-            return (temperature_string + " - " + weather);
-        }
-
-        public String getTemperatureString() {
-            return temperature_string;
-        }
-
-        public String getWeather() {
-            return weather;
-        }
-
-        public WeatherJson.ObservationLocation getObservationLocation() {
-            return observation_location;
-        }
-
-        public DisplayLocation getDisplayLocation() {
-            return display_location;
-        }
-    }
-
-    public class ObservationLocation {
-
-        private String country;
-
-
-        /*
-         * public String getCity() { return city;
-        }
-         */
-        public String getCountry() {
-            return country;
-        }
-
-        /*
-         * public String getState() { return state;
-        }
-         */
-        @Override
-        public String toString() {
-            return country;
-        }
-    }
-
-    public class DisplayLocation {
-
-        private String full;
-        private String city;
-        private String state;
-
-        @Override
-        public String toString() {
-            return full;
-        }
-
-        public String getCity() {
-            return city;
-        }
-
-        public String getState() {
-            return state;
-        }
-    }
-
-    public String getTemperatureString() {
-        return current_observation.getTemperatureString();
-    }
-
-    public String getWeather() {
-        return current_observation.getWeather();
-    }
-
-    public String getCountry() {
-        return current_observation.getObservationLocation().getCountry();
-    }
-
-    public String getCity() {
-        return current_observation.getDisplayLocation().getCity();
-    }
-
-    public String getState() {
-        return current_observation.getDisplayLocation().getState();
-    }
-
-    @Override
-    public String toString() {
-        if(current_observation != null) {
-        if (!getState().equals("")) {
-            return String.format("Weather for %s, %s, %s: is %s - %s",
-                    getCity(), getState(), getCountry(), getTemperatureString(), getWeather());
-        } else {
-            return String.format("Weather for %s, %s: is %s - %s",
-                    getCity(), getCountry(), getTemperatureString(), getWeather());
-        }
-
-    }
-        return "Unable to retrieve weather";
-    }
+/**
+ *
+ * @override
+ */
+  public String toString() {
+    return "message: " + message + "\n"
+	    + "cod: " + cod + "\n"
+            + "count: " + Integer.toString(count) + "\n"
+            + "list: " + list.toString() + "\n";
+  }
 }
+

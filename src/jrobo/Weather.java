@@ -52,7 +52,7 @@ public class Weather {
      * Example: https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key
      */
     public enum Unit {
-	    IMPERIAL, METRIC
+	    IMPERIAL, METRIC, STANDARD
     }
 
     public enum Type { //FIXME What other types are there?
@@ -60,7 +60,7 @@ public class Weather {
     }
 
     public enum Mode {
-	    JSON, XML
+	    JSON, XML, HTML
     }
 
     public enum StateCode {
@@ -96,6 +96,7 @@ public class Weather {
 
         /*
          * Miscellaneous
+         * TODO Exception handling needed: NullPointerException
          */
     	config = FileReader.getConfig();
         json = "";
@@ -111,14 +112,6 @@ public class Weather {
 	mode=Mode.JSON;
 	apikey=getApiKey();
 
-/*
-        + "?q=" + location
-        + "&units=" + "imperial"
-        + "&type=" + "accurate"
-        + "&mode=" + "json"
-        + "&APPID=" + "api-key"
-*/
- 
     }
 
     /**

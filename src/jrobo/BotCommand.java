@@ -218,14 +218,14 @@ public class BotCommand {
 	} // EOF function
 
 	/*
-   * TODO JavaDocs
+         * TODO JavaDocs
 	 */
 	private String getCmd(String fullCmd) {
 		return fullCmd.substring(1).replaceFirst("\\s.*+", "");
 	}
 
 	/*
-   * TODO JavaDocs
+         * TODO JavaDocs
 	 */
 	private String getRandChanUser() {
 
@@ -292,7 +292,7 @@ public class BotCommand {
 	}
 
 	/*
-   * Helper methods
+         * Helper methods
 	 */
 	private void wakeRoomHelper() {
 		String users = getUsers();
@@ -308,9 +308,9 @@ public class BotCommand {
 	}
 
 	/*
-   * Starts timer for bomb.
-   * Sets an active wire
-   * Prints explosion and kicks user holding at [20] seconds
+         * Starts timer for bomb.
+         * Sets an active wire
+         * Prints explosion and kicks user holding at [20] seconds
 	 */
 	public void bomb() {
 		bombHolder = user;
@@ -354,8 +354,8 @@ public class BotCommand {
 	}
 
 	/*
-   * Simply passes the bomb to another user.
-   * Returns it if they attempt to pass to JRobo.
+         * Simply passes the bomb to another user.
+         * Returns it if they attempt to pass to JRobo.
 	 */
 	private void pass() {
 		String users = getUsers();
@@ -378,8 +378,8 @@ public class BotCommand {
 	}
 
 	/*
-   * This function will return a wire for a given color.
-   * It is only to be used within defuse.
+         * This function will return a wire for a given color.
+         * It is only to be used within defuse.
 	 */
 	private boolean wire(String color) {
 		switch (color) {
@@ -394,8 +394,8 @@ public class BotCommand {
 	}
 
 	/*
-   * This is the defuse method, refers to a global boolean array of wires.
-   * Ative wire is set to true in bomb() function.
+         * This is the defuse method, refers to a global boolean array of wires.
+         * Active wire is set to true in bomb() function.
 	 */
 	public void defuse() {
 		if (bombActive && user.equals(bombHolder)) {
@@ -488,22 +488,33 @@ public class BotCommand {
 
 	//TODO Implement me
 	private void epicHelper() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		try {
+			throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		} catch (UnsupportedOperationException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	private void weatherHelper() {
-		/*
-     * Put together a String in the form
-     * http://www.google.com/ig/api?weather=Mountain+View
-		 */
-//          helpWrapper(cmd);
-//        } else {
-//          connection.msgChannel(botC, new Weather().getSummary(cmdArgs));
-//          connection.msgChannel(botC, "^g weather " + cmdArgs);
-//        }
+		if(!hasArgs) {
+			/*
+			 * Put together a String in the form
+			 * http://www.google.com/ig/api?weather=Mountain+View
+			 */
+	        	helpWrapper(cmd);
+        	} else {
+        		connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
+
+        		Weather w = new Weather();
+        		//System.out.println("w.getFormattedWeatherSummary(w.getJson(\"Australia\", \"Melbourne\", \"AU\")));");
+        		//System.out.println(w.getFormattedWeatherSummary(w.getJson("Australia", "Melbourne", "AU")));
+			//cmdArgs.split(","); //FIXME Match whitespace 0 or more times comma and then whitespace 0 or more times
+        		connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs, "", "")));
+        	}
+
 		//TODO Parse and return the formatted JSON or XML instead
-//        connection.msgChannel(botC, new Weather().getXml(cmdArgs));
-//TODO Re-implement all the use wunderground.net
+		//new Weather().getJson(cmd, cmd, user)
+	        //connection.msgChannel(config.getChannel(), new Weather().getXml(cmdArgs));
 	}
 
 	private void mumHelper() {
