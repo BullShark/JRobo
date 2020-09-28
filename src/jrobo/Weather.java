@@ -138,7 +138,7 @@ public class Weather {
 		locationArr = location.split("\\s*,\\s*", 3); //@TODO More than 3 should give the help message for the weather command
 
 		//getJson(cityName, stateCode, countryCode);
-		throw new UnsupportedOperationException("Not supported yet.");
+		throw new InvalidLocationException("Not supported yet.");
 	}
 
 	/**
@@ -222,11 +222,17 @@ public class Weather {
 		System.out.println(w.getFormattedWeatherSummary(w.getJson("San Antonio", "Texas", "US")));
 	}
 
+	private static class InvalidLocationException extends Exception {
+
+		public InvalidLocationException(String not_supported_yet) {
+		}
+	}
+
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
 	 */
-	public class WeatherJson {
+	private class WeatherJson {
 
 		public String message;
 		public String cod;
@@ -253,7 +259,7 @@ public class Weather {
 		 *
 		 * @author Chris Lemire <goodbye300@aim.com>
 		 */
-		public class WeatherListJsonItem {
+		protected class WeatherListJsonItem {
 
 			public int id;
 			public String name;
@@ -266,7 +272,7 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			public class WeatherAbcJsonItem {
+			protected class WeatherAbcJsonItem {
 
 				public int id;
 				public String name;
