@@ -2,8 +2,6 @@
  * JRobo - An Advanced IRC Bot written in Java
  *
  * Copyright (C) <2013> <Christopher Lemire>
- * Copyright (C) <2013> <BinaryStroke>
- * Copyright (C) <2013> <Muhammad Sajid>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -27,20 +25,35 @@ import java.util.List;
  * @author Chris Lemire <goodbye300@aim.com>
  */
 public class WeatherJson {
-  public String message;
-  public String cod;
-  public int count;
-  public List<WeatherJsonItem> list;
 
-/**
- *
- * @override
- */
-  public String toString() {
-    return "message: " + message + "\n"
-	    + "cod: " + cod + "\n"
-            + "count: " + Integer.toString(count) + "\n"
-            + "list: " + list.toString() + "\n";
-  }
+	public String message;
+	public String cod;
+	public int count;
+	public List<WeatherJsonItem> list;
+
+	/**
+	 *
+	 * @override
+	 */
+	public String toString() {
+		return "message: " + message + "\n"
+			+ "cod: " + cod + "\n"
+			+ "count: " + Integer.toString(count) + "\n"
+			+ "list: " + list.toString() + "\n";
+	}
+
+	class WeatherJsonItem {
+
+		public int id;
+		public String name;
+
+		public String getColorString() {
+			String mystring = "test string";
+			return mystring;
+		}
+
+		public String toString() {
+			return "id: " + id + ", name: " + name;
+		}
+	}
 }
-
