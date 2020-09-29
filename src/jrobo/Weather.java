@@ -114,7 +114,7 @@ public class Weather {
 		stateCode = StateCode.TX;
 		countryCode = CountryCode.US;
 		unit = Unit.IMPERIAL;
-//		type = Type.ACCURATE;
+		type = Type.ACCURATE;
 		mode = Mode.JSON;
 		apikey = getApiKey();
 
@@ -442,4 +442,3 @@ public class Weather {
 	} // EOF WeatherJson
 
 } // EOF Weather
-
