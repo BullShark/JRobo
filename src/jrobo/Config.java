@@ -141,6 +141,7 @@ public class Config {
    *
    * @return The configured name
    * @since 2013-02-18
+   * @TODO Move the "[+++]\t\t" to its own method
    */
   @Override
   public String toString() {
