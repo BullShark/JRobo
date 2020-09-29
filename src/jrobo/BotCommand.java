@@ -90,7 +90,7 @@ public class BotCommand {
 		this.user = user;
 		cmd = getCmd(fullCmd);
 		cmdArgs = getCmdArgs(fullCmd);
-		hasArgs = cmdArgs.isEmpty();
+		hasArgs = cmdArgs.isEmpty() ? true : false;
 
 		switch (cmd) {
 			case "wakeroom":
@@ -512,7 +512,9 @@ public class BotCommand {
         		Weather w = new Weather();
 
 			try {
-				connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs)));
+				connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs, "", "")));
+
+				throw new Weather.InvalidLocationException("Remove me"); //@TODO Remove me
 			} catch (Weather.InvalidLocationException ex) {
 				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				helpWrapper(cmd);
@@ -589,7 +591,7 @@ public class BotCommand {
 	private void inviteChannelHelper() {
 		String[] userArr;
 		if (!hasArgs) {
-//TODO      helpWrapper(cmd);
+		//TODO      helpWrapper(cmd);
 			return;
 		}
 
