@@ -29,7 +29,7 @@ import java.util.TimerTask;
 /**
  *
  * @author Chris Lemire <goodbye300@aim.com>
- * @TODO javadoc all
+ * @TODO JavaDoc all
  * @TODO http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
  */
 public class BotCommand {
@@ -86,11 +86,11 @@ public class BotCommand {
 	 * @TODO Accept raw irc commands from bot owner to be sent by the bot
 	 * @TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 	 */
-	public void bCommander(String user, String fullCmd) {
+	public void bCommander(final String user, final String fullCmd) {
 		this.user = user;
 		cmd = getCmd(fullCmd);
 		cmdArgs = getCmdArgs(fullCmd);
-		hasArgs = cmdArgs.isEmpty() ? false : true;
+		hasArgs = cmdArgs.isEmpty();
 
 		switch (cmd) {
 			case "wakeroom":
@@ -196,7 +196,10 @@ public class BotCommand {
 	}
 
 	/**
+	 * 
 	 * @TODO divided half of the work getFormattedQuery is doing to here
+	 * @param 
+	 * @return 
 	 */
 	private String getCmdArgs(final String fullCmd) {
 		
@@ -211,6 +214,7 @@ public class BotCommand {
 
 	/**
          *
+	 * @param 
 	 * @return 
 	 */
 	private String getCmd(final String fullCmd) {
@@ -290,8 +294,8 @@ public class BotCommand {
 		return users;
 	}
 
-	/*
-         * Helper methods
+	/**
+         * Helper method
 	 */
 	private void wakeRoomHelper() {
 		String users = getUsers();
@@ -306,10 +310,8 @@ public class BotCommand {
 		}
 	}
 
-	/*
-         * Starts timer for bomb.
-         * Sets an active wire
-         * Prints explosion and kicks user holding at [20] seconds
+	/**
+         * Starts timer for bomb, sets an active wire and prints explosion and kicks user holding at [20] seconds.
 	 */
 	public void bomb() {
 		bombHolder = user;
@@ -352,9 +354,8 @@ public class BotCommand {
 		timer.schedule(new BombTask(), 20000);
 	}
 
-	/*
-         * Simply passes the bomb to another user.
-         * Returns it if they attempt to pass to JRobo.
+	/**
+         * Simply passes the bomb to another user and returns it if they attempt to pass to JRobo.
 	 */
 	private void pass() {
 		String users = getUsers();
@@ -376,11 +377,11 @@ public class BotCommand {
 		}
 	}
 
-	/*
-         * This function will return a wire for a given color.
-         * It is only to be used within defuse.
+	/**
+         * This function will return a wire for a given color and is only to be used within defuse.
+	 * @return 
 	 */
-	private boolean wire(String color) {
+	private boolean wire(final String color) {
 		switch (color) {
 			case "red":
 				return wire[0];
@@ -392,9 +393,8 @@ public class BotCommand {
 		return false;
 	}
 
-	/*
-         * This is the defuse method, refers to a global boolean array of wires.
-         * Active wire is set to true in bomb() function.
+	/**
+         * This is the defuse method and refers to a global boolean array of wires and the active wire is set to true in bomb() function.
 	 */
 	public void defuse() {
 		if (bombActive && user.equals(bombHolder)) {
@@ -426,8 +426,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * Does driveby lol's Parts and returns as well as try-sleeps in loop to
-	 * avoid flooding.
+	 * Does a drive-by lol's parts and returns as well as try-sleeps in loop to avoid flooding.
 	 */
 	private void driveBy() {
 		if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#")) {
@@ -468,7 +467,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * Puts together a String in the form http://lmgtfy.com/?q=test+a+b+c
+	 * Puts together a String in the form http://lmgtfy.com/?q=test+a+b+c .
 	 */
 	private void googleHelper() {
 		if (!hasArgs) {
@@ -479,6 +478,9 @@ public class BotCommand {
 		}
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void isUpHelper() {
 		if (!hasArgs) {
 			helpWrapper(cmd);
@@ -487,7 +489,9 @@ public class BotCommand {
 		}
 	}
 
-	//TODO Implement me
+	/**
+	 * @TODO Implement me
+	 */
 	private void epicHelper() {
 		try {
 			throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -496,28 +500,23 @@ public class BotCommand {
 		}
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void weatherHelper() {
 		if(!hasArgs) {
-			/*
-			 * Put together a String in the form
-			 * http://www.google.com/ig/api?weather=Mountain+View
-			 */
 	        	helpWrapper(cmd);
         	} else {
         		connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
 
         		Weather w = new Weather();
-        		//System.out.println("w.getFormattedWeatherSummary(w.getJson(\"Australia\", \"Melbourne\", \"AU\")));");
-        		//System.out.println(w.getFormattedWeatherSummary(w.getJson("Australia", "Melbourne", "AU")));
-			//cmdArgs.split(","); //FIXME Match whitespace 0 or more times comma and then whitespace 0 or more times
-        		connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummaryWrapper(w.getJson(cmdArgs)));
+        		connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs)));
         	}
-
-		//TODO Parse and return the formatted JSON or XML instead
-		//new Weather().getJson(cmd, cmd, user)
-	        //connection.msgChannel(config.getChannel(), new Weather().getXml(cmdArgs));
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void mumHelper() {
 		try {
 			if (!hasArgs) {
@@ -539,6 +538,9 @@ public class BotCommand {
 		}
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void nextHelper() {
 		connection.msgChannel(config.getChannel(), "Another satisfied customer, NEXT!!!");
 	}
@@ -577,6 +579,9 @@ public class BotCommand {
 		}
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void inviteChannelHelper() {
 		String[] userArr;
 		if (!hasArgs) {
@@ -679,12 +684,11 @@ public class BotCommand {
 		 */
 	}
 
+	/**
+	 * @TODO Write me
+	 * @FIXME Use Config.getMasters()
+	 */
 	private void rawHelper() {
-		/* We have received a message from the owner
-		 * TODO Make the below string a variable that is mutable to be set by the XML configuration file
-		 *
-		 * FIXME Use Config.getMasters()
-		 */
 		if (jRobo.getFirst().startsWith(":BullShark!")) {
 			connection.sendln("PRIVMSG " + config.getChannel() + " :Yes Sir Chief!");
 			String rawStr = jRobo.getLast();
@@ -701,28 +705,36 @@ public class BotCommand {
 		}
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void urbanDictionaryHelper() {
 		connection.msgChannel(config.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true, 3), true, MircColors.BOLD);
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void quitHelper() {
 		connection.msgChannel(config.getChannel(), "Detenation devices to nuclear reactors! (Zer0 is pressing the "
 			+ "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
 	}
 
-	/*
-         * Does nothing
+	/**
+         * Does nothing at all.
 	 */
 	private void doNothingHelper() {
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void pirateHelper() {
 		connection.msgChannel(config.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
 	}
 
 	/**
-	 * 
-	 * Help messages
+	 * @TODO Write me
 	 */
 	private void listHelper() {
 
@@ -765,7 +777,7 @@ public class BotCommand {
 			+ lc.colorToken("<search query>, ", MircColors.CYAN)
 			+ lc.colorToken("isup ", MircColors.GREEN)
 			+ lc.colorToken("<url>, ", MircColors.CYAN)
-			+ lc.colorToken("epic|e", MircColors.GREEN)
+			+ lc.colorToken("epic|e, ", MircColors.GREEN)
 			+ lc.colorToken("version, ", MircColors.GREEN)
 			+ lc.colorToken("quit|q", MircColors.GREEN));
 
@@ -775,6 +787,9 @@ public class BotCommand {
 		connection.msgChannel(config.getChannel(), colorStr);
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void unknownCmdHelper() {
 		connection.msgChannel(config.getChannel(), "Unknown command received: " + cmd);
 	}
@@ -795,6 +810,9 @@ public class BotCommand {
 		connection.msgChannel(config.getChannel(), "You implement it!");
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void versionHelper() {
 		connection.msgChannel(config.getChannel(),
 			MircColors.BOLD + MircColors.CYAN + "JRobo"
@@ -802,6 +820,9 @@ public class BotCommand {
 			+ MircColors.GREEN + "https://github.com/BullShark/JRobo");
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void greetHelper() {
 		try {
 			if (!hasArgs) {

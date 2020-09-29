@@ -54,12 +54,13 @@ public class Weather {
 	 * Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
 	 * Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
 	 * Example: https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key
+	 * FIXME What other Type's are there?
 	 */
 	public enum Unit {
 		IMPERIAL, METRIC, STANDARD
 	}
 
-	public enum Type { //FIXME What other types are there?
+	public enum Type {
 		ACCURATE
 	}
 
@@ -123,11 +124,14 @@ public class Weather {
 	}
 
 	/**
-	 *
+	 * Tries to determine the city name, state code and country code from a location string and returns the json for it if valid
+	 * 
+	 * @TODO Should I use greedy, reluctant or possessive quantifiers?
+	 * @throws 
 	 * @param location
 	 * @return
 	 */
-	public String getJson(String location) {
+	public String getJson(String location) throws InvalidLocationException {
 
 		cityName = "";
 		stateCode = StateCode.TX;
@@ -137,8 +141,11 @@ public class Weather {
 
 		locationArr = location.split("\\s*,\\s*", 3); //@TODO More than 3 should give the help message for the weather command
 
-		//getJson(cityName, stateCode, countryCode);
-		throw new InvalidLocationException("Not supported yet.");
+		if(false) {
+			throw new InvalidLocationException("Not supported yet.");
+		}
+		
+		return getJson(cityName, stateCode.name().toLowerCase(), countryCode.name().toLowerCase());
 	}
 
 	/**
@@ -173,17 +180,18 @@ public class Weather {
 					+ "&units=" + "imperial"
 					+ "&type=" + "accurate"
 					+ "&mode=" + "json"
-					+ "&appid=" + apikey).replaceAll(" ", "%20")
+					+ "&appid=" + apikey
+				).replaceAll(" ", "%20")
 			);
 
-			System.out.println(url);
+			System.out.println("[+++] " + url);
 
 			conn = url.openConnection();
 
 			// Get the response
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-			String line = "";
+			String line;
 			while ((line = rd.readLine()) != null) {
 				json += line;
 			}
@@ -199,16 +207,22 @@ public class Weather {
 		return json;
 	}
 
+	/**
+	 * Retrieve the data as a summary with irc color codes and formatting
+	 * @param 
+	 * @return 
+	 */
 	public String getFormattedWeatherSummary(String json) {
-		Gson gson = new GsonBuilder().create();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		WeatherJson weatherJson = gson.fromJson(json, WeatherJson.class);
 
-		/*
-		 * put the data into a summary, with color
-		 */
 		return weatherJson.toString();
 	}
 
+	/**
+	 * 
+	 * @return 
+	 */
 	private String getApiKey() {
 		return config.getOpenWeatherMapKey();
 	}
