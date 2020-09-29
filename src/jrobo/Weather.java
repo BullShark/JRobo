@@ -290,6 +290,20 @@ public class Weather {
 			public List<WeatherCloudsJsonItem> clouds;
 			public List<WeatherWeatherJsonItem> weather;
 
+			public String toString() {
+				return "id: " + id + 
+					", name: " + name  + 
+					", coord: " + coord + 
+					", main: " + main + 
+					", dt: " + dt + 
+					", sys: " + sys + 
+					", rain: " + rain + 
+					", snow: " + snow + 
+					", clouds: " + clouds + 
+					", weather " + weather;
+			}
+
+
 /*
 			"id": 2651513,
 			"name": "Darlington",
@@ -325,43 +339,42 @@ public class Weather {
 					"icon": "04n"
 			}]
 */
-
-			public String toString() {
-				return "id: " + id + ", name: " + name  + ", coord: " + coord + ", main: " + main + ", dt: " + dt + ", sys: " + sys + ", rain: " + rain + ", snow: " + snow + ", clouds: " + clouds + ", weather " + weather.toString();
-			}
-
-			/**
-			 *
-			 * @author Chris Lemire <goodbye300@aim.com>
-			 */
-			protected class WeatherWeatherJsonItem {
-
-				public int id;
-				public String main;
-				public String description;
-				public String icon;
-
-				public String toString() {
-					return "id: " + id + ", main: " + main + ", description: " + description + ", icon: " + icon;
-				}
-			} // EOF WeatherWeatherJsonItem
-
 			/**
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
 			protected class WeatherCoordJsonItem {
 	
-				public int id;
-				public String main;
+				private float lat;
+				private float lon;
 
 				public String toString() {
-					return "id: " + id + ", main: " + main;
+					return "lat: " + lat + ", lon: " + lon;
 				}
 			} // EOF WeatherCoordJsonItem
 
+			/**
+			 *
+			 * @author Chris Lemire <goodbye300@aim.com>
+			 */
+			protected class WeatherMainJsonItem {
+	
+				private float temp;
+				private float feels_like;
+				private float temp_min;
+				private float temp_max;
+				private int pressure;
+				private String humidity;
 
-
+				public String toString() {
+					return "temp: " + temp + 
+						", feels_like: " + feels_like + 
+						", temp_min: " + temp_min + 
+						", temp_max: " + temp_max + 
+						", pressure: " + pressure + 
+						", humidity: " + humidity;
+				}
+			} // EOF WeatherSysJsonItem
 
 			/**
 			 *
@@ -369,11 +382,11 @@ public class Weather {
 			 */
 			protected class WeatherWindJsonItem {
 	
-				public int id;
-				public String main;
+				private int speed;
+				private int deg;
 
 				public String toString() {
-					return "id: " + id + ", main: " + main;
+					return "speed: " + speed + ", deg: " + deg;
 				}
 			} // EOF WeatherWindJsonItem
 
@@ -383,11 +396,10 @@ public class Weather {
 			 */
 			protected class WeatherSysJsonItem {
 	
-				public int id;
-				public String main;
+				private String country;
 
 				public String toString() {
-					return "id: " + id + ", main: " + main;
+					return "country: " + country;
 				}
 			} // EOF WeatherSysJsonItem
 
@@ -397,13 +409,28 @@ public class Weather {
 			 */
 			protected class WeatherCloudsJsonItem {
 	
-				public int id;
-				public String main;
+				private String all;
 
 				public String toString() {
-					return "id: " + id + ", main: " + main;
+					return "all: " + all;
 				}
 			} // EOF WeatherCloudsJsonItem
+
+			/**
+			 *
+			 * @author Chris Lemire <goodbye300@aim.com>
+			 */
+			protected class WeatherWeatherJsonItem {
+
+				private int id;
+				private String main;
+				private String description;
+				private String icon;
+
+				public String toString() {
+					return "id: " + id + ", main: " + main + ", description: " + description + ", icon: " + icon;
+				}
+			} // EOF WeatherWeatherJsonItem
 
 		} // EOF WeatherListJsonItem
 
