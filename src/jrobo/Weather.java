@@ -209,7 +209,7 @@ public class Weather {
 
 	/**
 	 * Retrieve the data as a summary with irc color codes and formatting
-	 * @param 
+	 * @param json
 	 * @return 
 	 */
 	public String getFormattedWeatherSummary(String json) {
@@ -278,22 +278,68 @@ public class Weather {
 
 			public int id;
 			public String name;
+			public String coord;
+			public String main;
+			public int dt;
+			public String sys;
+			public String rain;
+			public String snow;
+			public String clouds;
+			public List<WeatherWeatherJsonItem> weather;
+
+/*
+			"id": 2651513,
+			"name": "Darlington",
+			"coord": {
+				"lat": 54.5243,
+				"lon": -1.5504
+			},
+			"main": {
+				"temp": 55.27,
+				"feels_like": 53.02,
+				"temp_min": 54,
+				"temp_max": 55.99,
+				"pressure": 1012,
+				"humidity": 93
+			},
+			"dt": 1601323843,
+			"wind": {
+				"speed": 5.82,
+				"deg": 240
+			},
+			"sys": {
+				"country": "GB"
+			},
+			"rain": null,
+			"snow": null,
+			"clouds": {
+				"all": 75
+			},
+			"weather": [{
+					"id": 803,
+					"main": "Clouds",
+					"description": "broken clouds",
+					"icon": "04n"
+			}]
+*/
 
 			public String toString() {
-				return "id: " + id + ", name: " + name;
+				return "id: " + id + ", name: " + name  + ", coord: " + coord + ", main: " + main + ", dt: " + dt + ", sys: " + sys + ", rain: " + rain + ", snow: " + snow + ", clouds: " + clouds + ", weather " + weather.toString();
 			}
 
 			/**
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			protected class WeatherAbcJsonItem {
+			protected class WeatherWeatherJsonItem {
 
 				public int id;
-				public String name;
+				public String main;
+				public String description;
+				public String icon;
 
 				public String toString() {
-					return "id: " + id + ", name: " + name;
+					return "id: " + id + ", main: " + main + ", description: " + description + ", icon: " + icon;
 				}
 			} // EOF WeatherAbcJsonItem
 
