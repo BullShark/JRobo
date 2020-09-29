@@ -53,6 +53,8 @@ public class FileReader {
 	 * @return a True on success, and false on failure
 	 */
 	public boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
+
+		Thread.dumpStack();
 		out.println("[+++]\tReading File (" + fileName + ")");
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
@@ -79,6 +81,8 @@ public class FileReader {
 	 * @since 2013-02-18
 	 */
 	public static Config getConfig() {
+
+		Thread.dumpStack();
 		out.println("[+++]\tReading Configuration File (Config.json)");
 
 	        InputStream fileStream = FileReader.class.getResourceAsStream(config_file);
