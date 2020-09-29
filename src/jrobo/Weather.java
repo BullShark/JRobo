@@ -236,7 +236,7 @@ public class Weather {
 		System.out.println(w.getFormattedWeatherSummary(w.getJson("San Antonio", "Texas", "US")));
 	}
 
-	private static class InvalidLocationException extends Exception {
+	public static class InvalidLocationException extends Exception {
 
 		public InvalidLocationException(String not_supported_yet) {
 		}
