@@ -53,14 +53,14 @@ public class FileReader {
 	 * @return a True on success, and false on failure
 	 */
 	public boolean fileToArrayList(final String fileName, ArrayList<String> listArr) {
-		BufferedReader br = null;
+		BufferedReader br;
 		try {
 			Thread.dumpStack();
 			out.println("[+++]\tReading File (" + fileName + ")");
 
 			br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
 
-			String line = "";
+			String line;
 
 			while ((line = br.readLine()) != null) {
 				listArr.add(line);
