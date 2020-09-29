@@ -127,9 +127,9 @@ public class Weather {
 	 * Tries to determine the city name, state code and country code from a location string and returns the json for it if valid
 	 * 
 	 * @TODO Should I use greedy, reluctant or possessive quantifiers?
-	 * @throws 
+	 * @throws InvalidLocationException
 	 * @param location
-	 * @return
+	 * @return json
 	 */
 	public String getJson(String location) throws InvalidLocationException {
 
@@ -145,7 +145,9 @@ public class Weather {
 			throw new InvalidLocationException("Not supported yet.");
 		}
 		
-		return getJson(cityName, stateCode.name().toLowerCase(), countryCode.name().toLowerCase());
+		//return getJson(cityName, stateCode.name().toLowerCase(), countryCode.name().toLowerCase());
+
+		return getJson(cityName, "", "");
 	}
 
 	/**
@@ -161,7 +163,7 @@ public class Weather {
 				throw new NullPointerException();
 			}
 
-			String location = "";
+			String location;
 
 			if (!cityName.equals("") && stateCode.equals("") && countryCode.equals("")) {
 				location = cityName;
@@ -278,13 +280,14 @@ public class Weather {
 
 			public int id;
 			public String name;
-			public String coord;
-			public String main;
+			public List<WeatherCoordJsonItem> coord;
+			public List<WeatherMainJsonItem> main;
 			public int dt;
-			public String sys;
+			public List<WeatherWindJsonItem> wind;
+			public List<WeatherSysJsonItem> sys;
 			public String rain;
 			public String snow;
-			public String clouds;
+			public List<WeatherCloudsJsonItem> clouds;
 			public List<WeatherWeatherJsonItem> weather;
 
 /*
@@ -341,7 +344,66 @@ public class Weather {
 				public String toString() {
 					return "id: " + id + ", main: " + main + ", description: " + description + ", icon: " + icon;
 				}
-			} // EOF WeatherAbcJsonItem
+			} // EOF WeatherWeatherJsonItem
+
+			/**
+			 *
+			 * @author Chris Lemire <goodbye300@aim.com>
+			 */
+			protected class WeatherCoordJsonItem {
+	
+				public int id;
+				public String main;
+
+				public String toString() {
+					return "id: " + id + ", main: " + main;
+				}
+			} // EOF WeatherCoordJsonItem
+
+
+
+
+			/**
+			 *
+			 * @author Chris Lemire <goodbye300@aim.com>
+			 */
+			protected class WeatherWindJsonItem {
+	
+				public int id;
+				public String main;
+
+				public String toString() {
+					return "id: " + id + ", main: " + main;
+				}
+			} // EOF WeatherWindJsonItem
+
+			/**
+			 *
+			 * @author Chris Lemire <goodbye300@aim.com>
+			 */
+			protected class WeatherSysJsonItem {
+	
+				public int id;
+				public String main;
+
+				public String toString() {
+					return "id: " + id + ", main: " + main;
+				}
+			} // EOF WeatherSysJsonItem
+
+			/**
+			 *
+			 * @author Chris Lemire <goodbye300@aim.com>
+			 */
+			protected class WeatherCloudsJsonItem {
+	
+				public int id;
+				public String main;
+
+				public String toString() {
+					return "id: " + id + ", main: " + main;
+				}
+			} // EOF WeatherCloudsJsonItem
 
 		} // EOF WeatherListJsonItem
 
