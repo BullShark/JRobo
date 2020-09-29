@@ -504,9 +504,11 @@ public class BotCommand {
 	 * @TODO Write me
 	 */
 	private void weatherHelper() {
+/*
 		if(!hasArgs) {
 	        	helpWrapper(cmd);
         	} else {
+*/
         		connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
 
         		Weather w = new Weather();
@@ -519,7 +521,7 @@ public class BotCommand {
 				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				helpWrapper(cmd);
 			}
-        	}
+//        	}
 	}
 
 	/**
