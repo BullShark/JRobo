@@ -47,10 +47,10 @@ public class FileReader {
 
 	/**
 	 * Opens a resource file inside the package and fills the passed ArrayList
-	 *
+	 * 
 	 * @param fileName The file name inside the package to be opened
 	 * @param listArr The array list to store the file lines to
-	 * @return a True on success, and false on failure
+	 * @return A true on success and false on failure
 	 */
 	public boolean fileToArrayList(final String fileName, ArrayList<String> listArr) {
 		BufferedReader br;
@@ -94,7 +94,7 @@ public class FileReader {
 
 	        InputStream fileStream = FileReader.class.getResourceAsStream(configFile);
 
-		if (fileStream == null) {
+		if(fileStream == null) {
 			err.println("[+++]\tError: " + configFile + " was not found");
 			System.exit(1);
 		}
@@ -105,7 +105,7 @@ public class FileReader {
 
 		json = "";
 		try {
-			while ((line = br.readLine()) != null) {
+			while((line = br.readLine()) != null) {
 				json += line;
 			}
 
@@ -122,12 +122,12 @@ public class FileReader {
 
 		// Verifiying important settings for connection
 		if (config.getName() == null) {
-			err.println("[+++]\tError: Unable to find bot's nickname");
+			err.println("[+++]\tError: Unable to find bot's Nickname");
 			System.exit(1);
 		}
 
 		if (config.getPass() == null) {
-			err.println("[+++]\tError: Unable to find bot's password");
+			err.println("[+++]\tError: Unable to find bot's Password");
 			System.exit(1);
 		}
 
