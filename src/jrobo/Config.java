@@ -26,8 +26,8 @@ import java.util.Arrays;
  * @author BullShark <goodbye300@aim.net>
  * @since 2013-02-18
  * 
- * TODO Make this class, variables or methods static,
- * TODO so the same data can be accessed from multiple classes
+ * @TODO Make this class, variables or methods static,
+ * @TODO so the same data can be accessed from multiple classes
  */
 public class Config {
 
