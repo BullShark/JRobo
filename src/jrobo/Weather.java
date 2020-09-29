@@ -20,13 +20,20 @@ package jrobo;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -60,10 +67,11 @@ public class Weather {
 		IMPERIAL, METRIC, STANDARD
 	}
 
+	/*
 	public enum Type {
 		ACCURATE
 	}
-
+	 */
 	public enum Mode {
 		JSON, XML, HTML
 	}
@@ -88,7 +96,7 @@ public class Weather {
 	private CountryCode countryCode;
 	private final String apikey;
 	private Unit unit;
-	private Type type;
+//	private Type type;
 	private Mode mode;
 
 	/**
@@ -117,21 +125,22 @@ public class Weather {
 		stateCode = StateCode.TX;
 		countryCode = CountryCode.US;
 		unit = Unit.IMPERIAL;
-		type = Type.ACCURATE;
+//		type = Type.ACCURATE;
 		mode = Mode.JSON;
 		apikey = getApiKey();
 
 	}
 
 	/**
-	 * Tries to determine the city name, state code and country code from a location string and returns the json for it if valid
-	 * 
+	 * Tries to determine the city name, state code and country code from a
+	 * location string and returns the json for it if valid
+	 *
 	 * @TODO Should I use greedy, reluctant or possessive quantifiers?
 	 * @throws InvalidLocationException
 	 * @param location
-	 * @return json
+	 * @return br
 	 */
-	public String getJson(String location) throws InvalidLocationException {
+	public Reader getReaderForJson(String location) throws InvalidLocationException {
 
 		cityName = "";
 		stateCode = StateCode.TX;
@@ -141,13 +150,12 @@ public class Weather {
 
 		locationArr = location.split("\\s*,\\s*", 3); //@TODO More than 3 should give the help message for the weather command
 
-		if(false) {
+		if (false) {
 			throw new InvalidLocationException("Not supported yet.");
 		}
-		
-		//return getJson(cityName, stateCode.name().toLowerCase(), countryCode.name().toLowerCase());
 
-		return getJson(cityName, "", "");
+		//return getJson(cityName, stateCode.name().toLowerCase(), countryCode.name().toLowerCase());
+		return getReaderForJson(cityName, "", "");
 	}
 
 	/**
@@ -157,7 +165,7 @@ public class Weather {
 	 * @param countryCode
 	 * @return String
 	 */
-	public String getJson(String cityName, String stateCode, String countryCode) {
+	public Reader getReaderForJson(String cityName, String stateCode, String countryCode) {
 		try {
 			if (cityName == null || stateCode == null || countryCode == null) {
 				throw new NullPointerException();
@@ -182,8 +190,7 @@ public class Weather {
 					+ "&units=" + "imperial"
 					+ "&type=" + "accurate"
 					+ "&mode=" + "json"
-					+ "&appid=" + apikey
-				).replaceAll(" ", "%20")
+					+ "&appid=" + apikey).replaceAll(" ", "%20")
 			);
 
 			System.out.println("[+++] " + url);
@@ -193,37 +200,57 @@ public class Weather {
 			// Get the response
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
+			/*
 			String line;
 			while ((line = rd.readLine()) != null) {
 				json += line;
 			}
 
 			rd.close();
-
+			 */
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 
-		return json;
+//		return json;
+		return rd;
 	}
 
 	/**
 	 * Retrieve the data as a summary with irc color codes and formatting
-	 * @param json
-	 * @return 
+	 *
+	 * @param reader
+	 * @return
 	 */
-	public String getFormattedWeatherSummary(String json) {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		WeatherJson weatherJson = gson.fromJson(json, WeatherJson.class);
+	public String getFormattedWeatherSummary(Reader reader) {
 
+		WeatherJson weatherJson;
+
+		try {
+			Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>() {
+			}.getType();
+			System.out.println("[+++]\tWeatherJson Type: " + WeatherJsonT);
+
+			Gson gson = new GsonBuilder().create(); //.setPrettyPrinting().create();
+			weatherJson = gson.fromJson(reader, WeatherJson.class);
+//			weatherJson = gson.fromJson(reader, WeatherJsonT);
+
+		} catch (JsonSyntaxException ex) {
+			ex.printStackTrace();
+			return "Where's the fridge?";
+		}
+
+		//WeatherListJsonItem
+		//PirateBayJsonItem[] results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
+		//StackOverflow Example: Post post = gson.fromJson(reader, Post.class);
 		return weatherJson.toString();
 	}
 
 	/**
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 */
 	private String getApiKey() {
 		return config.getOpenWeatherMapKey();
@@ -235,7 +262,12 @@ public class Weather {
 	public static void main(String[] args) {
 
 		Weather w = new Weather();
-		System.out.println(w.getFormattedWeatherSummary(w.getJson("San Antonio", "Texas", "US")));
+		try {
+			System.out.println(w.getFormattedWeatherSummary(w.getReaderForJson("San Antonio, TX, US")));
+		} catch (InvalidLocationException ex) {
+			System.out.println("Invalid Location, Try Again");
+			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	public static class InvalidLocationException extends Exception {
@@ -280,35 +312,36 @@ public class Weather {
 
 			public int id;
 			public String name;
-			public List<WeatherCoordJsonItem> coord;
-			public List<WeatherMainJsonItem> main;
+//			public List<WeatherCoordJsonItem> coord;
+//			public List<WeatherMainJsonItem> main;
 			public int dt;
-			public List<WeatherWindJsonItem> wind;
-			public List<WeatherSysJsonItem> sys;
+//			public List<WeatherWindJsonItem> wind;
+//			public List<WeatherSysJsonItem> sys;
 			public String rain;
 			public String snow;
-			public List<WeatherCloudsJsonItem> clouds;
+//			public List<WeatherCloudsJsonItem> clouds;
 			public List<WeatherWeatherJsonItem> weather;
 
 			public String toString() {
-				return "id: " + id + 
-					", name: " + name + "\n" +
-					", coord: " + coord + "\n" +
-					", main: " + main + "\n" +
-					", dt: " + dt + "\n" +
-					", sys: " + sys + "\n" +
-					", rain: " + rain + "\n" +
-					", snow: " + snow + "\n" +
-					", clouds: " + clouds + "\n" +
-					", weather " + weather + "\n";
+				return "id: " + id + "\n"
+					+ "name: " + name + "\n"
+					+ //					"coord: " + coord + "\n" +
+					//					"main: " + main + "\n" +
+					"dt: " + dt + "\n"
+					+ //					"sys: " + sys + "\n" +
+					//					"wind: " + wind + "\n" +
+					"rain: " + rain + "\n"
+					+ "snow: " + snow + "\n"
+					+ "clouds: " + clouds + "\n"
+					+ "weather " + weather + "\n";
 			}
 
 			/**
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			protected class WeatherCoordJsonItem {
-	
+			public class WeatherCoordJsonItem {
+
 				private float lat;
 				private float lon;
 
@@ -321,8 +354,8 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			protected class WeatherMainJsonItem {
-	
+			public class WeatherMainJsonItem {
+
 				private float temp;
 				private float feels_like;
 				private float temp_min;
@@ -331,12 +364,12 @@ public class Weather {
 				private String humidity;
 
 				public String toString() {
-					return "temp: " + temp + 
-						", feels_like: " + feels_like + 
-						", temp_min: " + temp_min + 
-						", temp_max: " + temp_max + 
-						", pressure: " + pressure + 
-						", humidity: " + humidity;
+					return "temp: " + temp
+						+ ", feels_like: " + feels_like
+						+ ", temp_min: " + temp_min
+						+ ", temp_max: " + temp_max
+						+ ", pressure: " + pressure
+						+ ", humidity: " + humidity;
 				}
 			} // EOF WeatherSysJsonItem
 
@@ -344,8 +377,8 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			protected class WeatherWindJsonItem {
-	
+			public class WeatherWindJsonItem {
+
 				private int speed;
 				private int deg;
 
@@ -358,8 +391,8 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			protected class WeatherSysJsonItem {
-	
+			public class WeatherSysJsonItem {
+
 				private String country;
 
 				public String toString() {
@@ -371,9 +404,9 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			protected class WeatherCloudsJsonItem {
-	
-				private String all;
+			public class WeatherCloudsJsonItem {
+
+				public int all;
 
 				public String toString() {
 					return "all: " + all;
@@ -384,7 +417,7 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			protected class WeatherWeatherJsonItem {
+			public class WeatherWeatherJsonItem {
 
 				private int id;
 				private String main;

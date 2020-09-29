@@ -90,7 +90,7 @@ public class BotCommand {
 		this.user = user;
 		cmd = getCmd(fullCmd);
 		cmdArgs = getCmdArgs(fullCmd);
-		hasArgs = cmdArgs.isEmpty() ? true : false;
+		hasArgs = cmdArgs.isEmpty() ? false : true;
 
 		switch (cmd) {
 			case "wakeroom":
@@ -504,24 +504,19 @@ public class BotCommand {
 	 * @TODO Write me
 	 */
 	private void weatherHelper() {
-/*
+
 		if(!hasArgs) {
 	        	helpWrapper(cmd);
         	} else {
-*/
+
         		connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
 
         		Weather w = new Weather();
 
-			try {
-				connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs, "", "")));
-
-				throw new Weather.InvalidLocationException("Remove me"); //@TODO Remove me
-			} catch (Weather.InvalidLocationException ex) {
-				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-				helpWrapper(cmd);
-			}
-//        	}
+			connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getReaderForJson(cmdArgs, "", "")));
+			
+//				throw new Weather.InvalidLocationException("Remove me"); //@TODO Remove me
+		}
 	}
 
 	/**
