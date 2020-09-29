@@ -283,7 +283,7 @@ public class Weather {
 		 */
 		@Override
 		public String toString() {
-			return String.format("Found %i results: \n%s", count, list);
+			return String.format("Found %d results: \n%s", count, list);
 
 			/*
 			return "message: " + message + "\n"
