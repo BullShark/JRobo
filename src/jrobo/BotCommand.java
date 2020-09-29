@@ -515,6 +515,7 @@ public class BotCommand {
 				connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs)));
 			} catch (Weather.InvalidLocationException ex) {
 				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+				helpWrapper(cmd);
 			}
         	}
 	}
