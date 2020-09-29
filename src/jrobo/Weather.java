@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -49,29 +48,33 @@ public class Weather {
 	private BufferedReader rd;
 
 	/*
-	 * Miscellaneous
-	 * Weather.gov and Google
-	 * https://www.weather.gov/documentation/services-web-api
-	 * https://api.weather.gov/points/{latitude},{longitude}
-	 * Get the latitude, longitude using Google
-	 * Not working for this longitude, latitude I found by googling...
-	 * https://api.weather.gov/points/29.7438,98.4531
-	 *
 	 * OpenWeatherMap
 	 * Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
 	 * Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
-	 * Example: https://api.openweathermap.org/data/2.5/find?q=%s&units=imperial&type=accurate&mode=json&APPID=api-key
 	 * FIXME What other Type's are there?
 	 */
+	private final String QUERY_URL = "https://api.openweathermap.org";
+	private String json;
+	private final Config config;
+
+	/*
+	 * API URL Parameters
+	 */
+	private String cityName;
+	private StateCode stateCode;
+	private CountryCode countryCode;
+	private final String apikey;
+	private final Unit unit;
+	private final Type type;
+	private final Mode mode;
+
 	public enum Unit {
 		IMPERIAL, METRIC, STANDARD
 	}
 
-/*
 	public enum Type {
 		ACCURATE
 	}
-*/
 
 	public enum Mode {
 		JSON, XML, HTML
@@ -84,21 +87,6 @@ public class Weather {
 	public enum CountryCode {
 		US, TK, AU, UK
 	}
-
-	private final String QUERY_URL = "https://api.openweathermap.org";
-	private String json;
-	private final Config config;
-
-	/*
-	 * API URL Parameters
-	 */
-	private String cityName;
-	private StateCode stateCode;
-	private CountryCode countryCode;
-	private final String apikey;
-	private Unit unit;
-//	private Type type;
-	private Mode mode;
 
 	/**
 	 *
@@ -138,7 +126,7 @@ public class Weather {
 	 * @TODO Should I use greedy, reluctant or possessive quantifiers?
 	 * @throws InvalidLocationException
 	 * @param location
-	 * @return json
+	 * @return BufferedReader
 	 */
 	public Reader getReaderForJson(String location) throws InvalidLocationException {
 
@@ -153,7 +141,7 @@ public class Weather {
 		if(false) {
 			throw new InvalidLocationException("Not supported yet.");
 		}
-		
+
 		//return getJson(cityName, stateCode.name().toLowerCase(), countryCode.name().toLowerCase());
 
 		return getReaderForJson(cityName, "", "");
@@ -224,35 +212,30 @@ public class Weather {
 	/**
 	 * Retrieve the data as a summary with irc color codes and formatting
 	 * @param reader
-	 * @return 
+	 * @return Formatted Json
 	 */
 	public String getFormattedWeatherSummary(Reader reader) {
 
 		WeatherJson weatherJson;
 
 		try {
-			Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>(){}.getType();  
+			java.lang.reflect.Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>(){}.getType();  
 			System.out.println("[+++]\tWeatherJson Type: " + WeatherJsonT);
 
 			Gson gson = new GsonBuilder().create(); //.setPrettyPrinting().create();
 			weatherJson = gson.fromJson(reader, WeatherJson.class);
-//			weatherJson = gson.fromJson(reader, WeatherJsonT);
 
 		} catch (JsonSyntaxException ex) {
 			ex.printStackTrace();
-			return "Where's the fridge?";
+			return "Unable to retrieve the weather: JsonSyntaxError";
 		}
-
-		//WeatherListJsonItem
-        	//PirateBayJsonItem[] results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
-		//StackOverflow Example: Post post = gson.fromJson(reader, Post.class);
 
 		return weatherJson.toString();
 	}
 
 	/**
 	 * 
-	 * @return 
+	 * @return API Key for OpenWeatherMap retrieved from Config.json
 	 */
 	private String getApiKey() {
 		return config.getOpenWeatherMapKey();
@@ -300,42 +283,65 @@ public class Weather {
 		 */
 		@Override
 		public String toString() {
+			return String.format("Found %i results: \n%s", count, list);
+
+			/*
 			return "message: " + message + "\n"
 				+ "cod: " + cod + "\n"
 				+ "count: " + Integer.toString(count) + "\n"
 				+ "list: " + list.toString() + "\n";
+			*/
 		}
 
 		/**
 		 *
 		 * @author Chris Lemire <goodbye300@aim.com>
+		 * @TODO Make rain a String
 		 */
 		protected class WeatherListJsonItem {
 
 			public int id;
 			public String name;
-//			public List<WeatherCoordJsonItem> coord;
-//			public List<WeatherMainJsonItem> main;
+			public WeatherCoordJsonItem coord;
+			public WeatherMainJsonItem main;
 			public int dt;
-//			public List<WeatherWindJsonItem> wind;
-//			public List<WeatherSysJsonItem> sys;
-			public String rain;
+			public WeatherWindJsonItem wind;
+			public WeatherSysJsonItem sys;
+			public Object rain;
 			public String snow;
-//			public List<WeatherCloudsJsonItem> clouds;
+			public WeatherCloudsJsonItem clouds;
 			public List<WeatherWeatherJsonItem> weather;
 
 			public String toString() {
+				String result = 
+					String.format("Weather for %s, %s at %s\n" + "%s %s %s %s"
+, name, sys, coord, main, wind, clouds, weather);
+
+				if(rain != null) {
+					result += rain;
+				}
+				
+				if(rain != null) {
+					result += snow;
+				}
+
+				return result;
+
+				/*
 				return "id: " + id + "\n" +
 					"name: " + name + "\n" +
-//					"coord: " + coord + "\n" +
-//					"main: " + main + "\n" +
+					"coord: " + coord + "\n" +
+					"main: " + main + "\n" +
 					"dt: " + dt + "\n" +
-//					"sys: " + sys + "\n" +
-//					"wind: " + wind + "\n" +
+					"sys: " + sys + "\n" +
+					"wind: " + wind + "\n" +
 					"rain: " + rain + "\n" +
 					"snow: " + snow + "\n" +
 					"clouds: " + clouds + "\n" +
 					"weather " + weather + "\n";
+				*/
+
+			}
 			}
 
 			/**
@@ -348,7 +354,7 @@ public class Weather {
 				private float lon;
 
 				public String toString() {
-					return "lat: " + lat + ", lon: " + lon;
+					return String.format("Latitude:%s Longitude:%s", lat, lon);
 				}
 			} // EOF WeatherCoordJsonItem
 
@@ -366,6 +372,7 @@ public class Weather {
 				private String humidity;
 
 				public String toString() {
+					String.format("Temperature is %sF, Feels like %sF", temp, feels_like, temp_min, temp_max, pressure, humidity);
 					return "temp: " + temp + 
 						", feels_like: " + feels_like + 
 						", temp_min: " + temp_min + 
@@ -381,7 +388,7 @@ public class Weather {
 			 */
 			public class WeatherWindJsonItem {
 	
-				private int speed;
+				private float speed;
 				private int deg;
 
 				public String toString() {
