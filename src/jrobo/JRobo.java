@@ -42,6 +42,9 @@ public class JRobo {
 	/* Miscallenous */
 	private String user = null;
 
+	/**
+	 * @TODO Write me
+	 */
 	public JRobo() {
 		reader = new FileReader();
 		config = FileReader.getConfig();
@@ -50,7 +53,12 @@ public class JRobo {
 		bCmd = new BotCommand(connection, config, this);
 	}
 
-	public JRobo(String proxy, int port) {
+	/**
+	 * @TODO Write me
+	 * @param proxy
+	 * @param port
+	 */
+	public JRobo(final String proxy, final int port) {
 		reader = new FileReader();
 		config = FileReader.getConfig();
 		connection = new Networking(config);
@@ -58,6 +66,9 @@ public class JRobo {
 		bCmd = new BotCommand(connection, config, this);
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void initiate() {
 		System.out.print("[+++]\tUsing configuration: \n" + config.toString());
 
@@ -150,6 +161,9 @@ public class JRobo {
 		System.out.println("\u001b[1;44m *** TERMINATED *** \u001b[m");
 	}
 
+	/**
+	 * @TODO Write me
+	 */
 	private void divideTwo() {
 		try {
 			first = received.split(" :", 2)[0];
@@ -160,16 +174,24 @@ public class JRobo {
 		}
 	}
 
+	/**
+	 * @TODO Write me
+	 * @return 
+	 */
 	public String getFirst() {
 		return first;
 	}
 
+	/**
+	 * @TODO Write me
+	 * @return 
+	 */
 	public String getLast() {
 		return last;
 	}
 
 	/**
-	 * @param args the command line arguments
+	 * @param args The command line arguments
 	 */
 	public static void main(String[] args) {
 		new JRobo().initiate();
