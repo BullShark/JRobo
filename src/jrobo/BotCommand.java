@@ -537,9 +537,7 @@ public class BotCommand {
 					connection.msgChannel(config.getChannel(), joke.getMommaJoke(cmdArgs));
 				}
 			}
-		} catch (NullPointerException ex) {
-			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (ArrayIndexOutOfBoundsException ex) {
+		} catch (NullPointerException | ArrayIndexOutOfBoundsException ex) {
 			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
