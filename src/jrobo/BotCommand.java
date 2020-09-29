@@ -19,8 +19,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-//TODO javadoc all
-// http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
 package jrobo;
 
 import java.util.logging.Level;
@@ -30,13 +28,15 @@ import java.util.TimerTask;
 
 /**
  *
- * @author bullshark
+ * @author Chris Lemire <goodbye300@aim.com>
+ * @TODO javadoc all
+ * @TODO http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
  */
 public class BotCommand {
 
 	private final Networking connection;
 	private final Config config;
-	private JRobo jRobo;
+	private final JRobo jRobo;
 	private String user;
 	private String bombHolder;
 	private String cmd;
@@ -50,11 +50,12 @@ public class BotCommand {
 
 	/**
 	 *
-	 * @param connection
-	 * @param reader
+	 * @param connection Takes the connection created by JRobo.
+	 * @param config
 	 * @param jRobo
 	 */
-	public BotCommand(Networking connection, Config config, JRobo jRobo) {
+	public BotCommand(final Networking connection, final Config config, final JRobo jRobo) {
+
 		/* Objects */
 		this.connection = connection;
 		this.config = config;
@@ -77,11 +78,13 @@ public class BotCommand {
 
 	}
 
-	/*
-   * This is called when a bot command is received
-   *
-   * user is the user who sent the command
-   * fullCmd includes the SYMB, command, and args
+	/**
+	 * This is called when a bot command is received
+	 *
+	 * @user The user who sent the command
+	 * @fullCmd Includes the SYMB, command, and args
+	 * @TODO Accept raw irc commands from bot owner to be sent by the bot
+	 * @TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 	 */
 	public void bCommander(String user, String fullCmd) {
 		this.user = user;
@@ -180,52 +183,47 @@ public class BotCommand {
 				break;
 			default:
 				unknownCmdHelper();
-			//@TODO Accept raw irc commands from bot owner to be sent by the bot
-			//@TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 		} // EOF switch
 	} // EOF function
 
-	/*
-   * Puts together a String in the form
-   * test+a+b+c
-   * From fullCmd
-   *
-   * Takes a string and manipulates it
-   * By removing all starting and ending
-   * Whitespace and then
-   * Replacing all other whitespace
-   * No matter the length of that whitespace
-   * With one '+'
-   * 
-   * TODO JavaDocs
+	/**
+	 * Puts together a String in the form "test+a+b+c"
+	 *
+	 * @return Returns a new String from the String argument by removing all starting and ending whitespace, and then replacing all other whitespace, no matter the length of that whitespace, with one '+'.
 	 */
-	private String getFormattedQuery(String str) {
-		return str.replaceAll("\\s++", "+");
+	private String getFormattedQuery(final String str) {
+		return str.trim().replaceAll("\\s++", "+");
 	}
 
-	/*
-   * TODO Javadocs
+	/**
+	 * @TODO divided half of the work getFormattedQuery is doing to here
 	 */
-	private String getCmdArgs(String fullCmd) {
-		//@TODO divded half of the work getFormattedQuery is doing to here
+	private String getCmdArgs(final String fullCmd) {
+		
 		try {
 			return fullCmd.split("\\" + config.getCmdSymb() + "[a-zA-Z_0-9\\-]++", 2)[1].trim();
 		} catch (ArrayIndexOutOfBoundsException ex) {
+			/* Means no args!!! */
 			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 			return "";
-			/* Means no args!!! */
 		} // EOF try-catch
 	} // EOF function
 
-	/*
-         * TODO JavaDocs
+	/**
+         *
+	 * @return 
 	 */
-	private String getCmd(String fullCmd) {
-		return fullCmd.substring(1).replaceFirst("\\s.*+", "");
+	private String getCmd(final String fullCmd) {
+		try {
+			return fullCmd.substring(1).replaceFirst("\\s.*+", "");
+		} catch (IndexOutOfBoundsException ex) {
+			ex.printStackTrace();
+			return "";
+		}
 	}
 
-	/*
-         * TODO JavaDocs
+	/**
+         * @return Returns a random user in the chat. If that fails such as when the user list is empty, it returns ChanServ.
 	 */
 	private String getRandChanUser() {
 
@@ -233,19 +231,20 @@ public class BotCommand {
 
 		usersList = getUsers().split("\\s++");
 
-		if (usersList != null) {
+		try {
 			// Random array index
-			int randIndex = (int) (Math.random() * usersList.length); // This should never be incorrect and cause an ArrayIndexOutOfBoundsException
+			int randIndex = (int) (Math.random() * usersList.length);
 			return usersList[randIndex];
-		} else {
+		} catch(NullPointerException | ArrayIndexOutOfBoundsException ex) {
+			ex.printStackTrace();
 			return "ChanServ";
 		}
 	}
 
 	/**
-	 * Wrapper
+	 * Wrapper to getUsers(String chan) that uses channel defined by Config
 	 *
-	 * @return
+	 * @return Returns the list of users in the channel defined by Config.getChannel()
 	 */
 	private String getUsers() {
 		return getUsers(config.getChannel());
@@ -253,11 +252,11 @@ public class BotCommand {
 
 	/**
 	 *
+	 * @TODO This method needs testing. It might be broke.
 	 * @param chan
 	 * @return
 	 */
-	private String getUsers(String chan) {
-		//TODO This method needs testing. It might be broke.
+	private String getUsers(final String chan) {
 		String received = "", users = "";
 		String first = "", last = "";
 		int tries = 8;
@@ -443,6 +442,7 @@ public class BotCommand {
 				connection.msgChannel(config.getChannel(), "lol");
 				try {
 					Thread.sleep(1000);
+					//FIXME Bad coding
 					if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
 						break;
 					}
@@ -453,6 +453,7 @@ public class BotCommand {
 			connection.moveToChannel(cmdArgs, config.getBaseChan());
 			try {
 				Thread.sleep(2500);
+				//FIXME Bad coding
 				if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
 					break;
 				}
@@ -509,7 +510,7 @@ public class BotCommand {
         		//System.out.println("w.getFormattedWeatherSummary(w.getJson(\"Australia\", \"Melbourne\", \"AU\")));");
         		//System.out.println(w.getFormattedWeatherSummary(w.getJson("Australia", "Melbourne", "AU")));
 			//cmdArgs.split(","); //FIXME Match whitespace 0 or more times comma and then whitespace 0 or more times
-        		connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs, "", "")));
+        		connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummaryWrapper(w.getJson(cmdArgs)));
         	}
 
 		//TODO Parse and return the formatted JSON or XML instead
@@ -542,13 +543,17 @@ public class BotCommand {
 		connection.msgChannel(config.getChannel(), "Another satisfied customer, NEXT!!!");
 	}
 
+	/**
+	 * @TODO Fix this method
+	 * @TODO Replace code with getHelp(cmd); //Overloaded method
+	 */
 	private void inviteNickHelper() {
 		if (true) {
 			return;
-		} //TODO Fix this method
+		}
 
 		if (!hasArgs || !(cmdArgs.split("\\s++").length > 0)) { // Min 1 Arg
-			//@TODO Replace code with getHelp(cmd); //Overloaded method
+			
 			connection.msgChannel(config.getChannel(), "Usage: " + config.getCmdSymb() + "invite-nick {nick} [# of times]");
 		} else {
 			connection.msgChannel(config.getChannel(), "Roger that.");
@@ -558,7 +563,7 @@ public class BotCommand {
 				try {
 					Thread.sleep(1500);
 					numInvites = Integer.getInteger(cmdArgsArr[1]);
-					//TODO replace with FileReader.getMaster()
+					//TODO replace with config.getMaster()
 					if (connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
 						//               this.jRobo. 
 					}
@@ -716,19 +721,20 @@ public class BotCommand {
 	}
 
 	/**
-	 * ***************************************************************************
+	 * 
 	 * Help messages
 	 */
 	private void listHelper() {
+
 		/*
-     * GREEN = dark color
-     * CYAN = light color
-     * 
-     * cmds|alias = dark
-     * flags = dark
-     * args = light
-     * special characters = no bold, no color
-     * such as [] <> , ...
+		 * GREEN = dark color
+		 * CYAN = light color
+		 * 
+		 * cmds|alias = dark
+		 * flags = dark
+		 * args = light
+		 * special characters = no bold, no color
+		 * such as [] <> , ...
 		 */
 		String colorStr = lc.attributesSynopsisLine(
 			lc.colorToken("Available commands: ", MircColors.BOLD)
@@ -773,17 +779,19 @@ public class BotCommand {
 		connection.msgChannel(config.getChannel(), "Unknown command received: " + cmd);
 	}
 
-	/*
-   * Wrapper Help command messages
+	/**
+	 * Wrapper Help command messages
 	 */
 	private void helpWrapper(String cmd) {
 		//TODO help string for each command
 		connection.msgChannel(config.getChannel(), "Invalid usage of command: " + cmd);
 	}
 
-	//TODO Remove this. We don't need the list command and this. Just list is fine.
+	/**
+	 * @TODO Remove this. We don't need the list command and this. Just list is fine.
+	 * @TODO man page style usage for help blah
+	 */
 	private void helpHelper() {
-		//@TODO man page style usage for help blah
 		connection.msgChannel(config.getChannel(), "You implement it!");
 	}
 
@@ -806,17 +814,16 @@ public class BotCommand {
 					connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs));
 				}
 			}
-		} catch (NullPointerException ex) {
-			Logger.getLogger(BotCommand.class
-				.getName()).log(Level.SEVERE, null, ex);
-		} catch (ArrayIndexOutOfBoundsException ex) {
+		} catch (NullPointerException | ArrayIndexOutOfBoundsException ex) {
 			Logger.getLogger(BotCommand.class
 				.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
 
+	/**
+	 * @TODO Only Masters
+	 */
 	private void moveToChannelHelper() {
-		//TODO Only Masters
 		connection.moveToChannel(config.getChannel(), cmdArgs);
 	}
 } // EOF class

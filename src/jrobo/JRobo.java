@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author bullshark
+ * @author Christopher Lemire <goodbye300@aim.com>
  */
 public class JRobo {
 
@@ -50,7 +50,7 @@ public class JRobo {
 		bCmd = new BotCommand(connection, config, this);
 	}
 
-	public JRobo(String proxy, int port) { //TODO
+	public JRobo(String proxy, int port) {
 		reader = new FileReader();
 		config = FileReader.getConfig();
 		connection = new Networking(config);
