@@ -30,43 +30,45 @@ import java.util.Collections;
 
 /**
  *
- * @author chris
+ * @author Chris Lemire <goodbye300@aim.com>
  */
 public class FileReader {
 
 	/* Standard Java API Classes */
-	private static String config_file = null;
+	private static String configFile;
 
 	/* User-defined Classes */
 	private static Config config;
 
 	public FileReader() {
-		config_file = "Config.json";
+		configFile = "Config.json";
+		config = null;
 	}
 
 	/**
-	 * Opens a resource file inside the package, and fills the passed
-	 * ArrayList
+	 * Opens a resource file inside the package and fills the passed ArrayList
 	 *
 	 * @param fileName The file name inside the package to be opened
 	 * @param listArr The array list to store the file lines to
 	 * @return a True on success, and false on failure
 	 */
-	public boolean fileToArrayList(String fileName, ArrayList<String> listArr) {
-
-		Thread.dumpStack();
-		out.println("[+++]\tReading File (" + fileName + ")");
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
-
-		String line = "";
-
+	public boolean fileToArrayList(final String fileName, ArrayList<String> listArr) {
+		BufferedReader br = null;
 		try {
+			Thread.dumpStack();
+			out.println("[+++]\tReading File (" + fileName + ")");
+
+			br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));
+
+			String line = "";
+
 			while ((line = br.readLine()) != null) {
 				listArr.add(line);
 			}
 		} catch (IOException ex) {
 			ex.printStackTrace();
+			br = null;
+			return false;
 		}
 
 		Collections.shuffle(listArr);
@@ -75,20 +77,25 @@ public class FileReader {
 	}
 
 	/**
-	 * gets the data from the configuration file
+	 * Gets the data from the configuration file
 	 *
 	 * @return Returns a Config object, with the settings from Config.json
 	 * @since 2013-02-18
 	 */
 	public static Config getConfig() {
+		
+		/* Should only be null if this method has already been ran once or the constructor has never been called */
+		if(config != null) {
+			return config;
+		}
 
 		Thread.dumpStack();
 		out.println("[+++]\tReading Configuration File (Config.json)");
 
-	        InputStream fileStream = FileReader.class.getResourceAsStream(config_file);
+	        InputStream fileStream = FileReader.class.getResourceAsStream(configFile);
 
 		if (fileStream == null) {
-			err.println("[+++]\tError: " + config_file + " was not found");
+			err.println("[+++]\tError: " + configFile + " was not found");
 			System.exit(1);
 		}
 
