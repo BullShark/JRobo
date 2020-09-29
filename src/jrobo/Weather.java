@@ -292,7 +292,6 @@ public class Weather {
 				+ "list: " + list.toString() + "\n";
 			*/
 		}
-	}
 
 		/**
 		 *
@@ -342,7 +341,6 @@ public class Weather {
 					"weather " + weather + "\n";
 				*/
 
-			}
 			}
 
 			/**
@@ -444,3 +442,4 @@ public class Weather {
 	} // EOF WeatherJson
 
 } // EOF Weather
+
