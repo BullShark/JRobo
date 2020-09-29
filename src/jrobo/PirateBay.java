@@ -2,7 +2,6 @@
  * JRobo - An Advanced IRC Bot written in Java
  *
  * Copyright (C) <2013> <Christopher Lemire>
- * Copyright (C) <2013> <BinaryStroke>
  * Copyright (C) <2013> <Muhammad Sajid>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,14 +39,16 @@ public class PirateBay {
     private BufferedReader rd;
     private String fullUrl;
 
-    /* Miscelanous */
-    //TODO Fix bug, if the url is not available, the bot will throw an exception and crash
+    /*
+     * Miscelanous
+     *@TODO Fix bug, if the url is not available, the bot will throw an exception and crash
+     */
     private static final String QUERY_URL = "http://odin.root.sx/thepiratebay.php";
     private String def;
     private String json;
     private String s_name="blackhats";
     private String s_switch="s";
-    private int MAX_RESULTS = 5;
+    private final int MAX_RESULTS = 5;
 
     /* For the Gson/Json */
     private Gson gson;
@@ -93,9 +94,15 @@ public class PirateBay {
     public String getJson() {
         try {
             /* Create a URL obj from strings */
-            fullUrl = (QUERY_URL.concat("?name=").concat(s_name)).replace(" ", "%20").concat("&orderby=" + s_switch).concat("&limit=") + MAX_RESULTS;
+            fullUrl =
+		    (QUERY_URL + 
+			    "?name=" + s_name + 
+			    "&orderby=" + s_switch + 
+			    "&limit=" + MAX_RESULTS
+		    ).replaceAll(" ", "%20");
 
             url = new URL(fullUrl);
+
             /* Debug */
             System.out.println(fullUrl);
 
@@ -128,7 +135,7 @@ public class PirateBay {
 
         PirateBayJsonItem[] results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
 
-        /* Fixes NullPointerException Bug that occurs if the URL DNE */
+        /* Prevent a NullPointerException that occurs if the URL DNE */
         if(results == null) {
           return "";
         }
