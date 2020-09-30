@@ -316,7 +316,7 @@ public class Weather {
 					"Weather for " +
 					MircColors.BOLD + MircColors.GREEN + name + ", " + sys +  MircColors.NORMAL +
 					" at " + coord.getColorString() + " " +
-					main + 
+					main.getColorString() + 
 					wind + 
 					clouds + 
 					weather;
@@ -397,10 +397,11 @@ public class Weather {
 */
 					String result =
 						MircColors.BOLD +
-						"Current temperature is " + MircColors.GREEN + temp + "F, " + MircColors.NORMAL +
-						"Feels like " + MircColors.GREEN + feels_like + "F, " + MircColors.NORMAL +
-						"Min / Max is " + MircColors.GREEN + temp_min + " / " + temp_max + MircColors.NORMAL +
-						" " + pressure + humidity;
+						"Current temperature is " + MircColors.GREEN + temp + "F, " + MircColors.NORMAL + MircColors.BOLD +
+						"Feels like " + MircColors.GREEN + feels_like + "F" + MircColors.NORMAL + MircColors.BOLD + ", " +
+						"Min / Max is " + MircColors.GREEN + temp_min + " / " + temp_max + MircColors.NORMAL + MircColors.BOLD + ", " +
+						"Pressure is " + pressure + ", " +
+						"Humidity is " + humidity;
 
 
 					return result;
