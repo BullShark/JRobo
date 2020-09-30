@@ -126,23 +126,21 @@ public class PirateBay {
     }
 
     public String getFormattedResult(boolean hasColors) {
+
+	PirateBayJsonItem[] results;
+
         try {
+
           gson = new GsonBuilder().setPrettyPrinting().create();
-        } catch(IllegalStateException ex) {
+          results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
+
+        } catch(IllegalStateException | NullPointerException ex) {
           ex.printStackTrace();
           return "";
         }
 
-        PirateBayJsonItem[] results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
-
-        /* Prevent a NullPointerException that occurs if the URL DNE */
-        if(results == null) {
-          return "";
-        }
-
         String output = "";
-//        System.out.println(results.length);
-//        System.out.println(results.toString());
+
         if(hasColors) {
           for (PirateBayJsonItem result : results) {
             output += result.getColorString();
@@ -159,11 +157,7 @@ public class PirateBay {
      *A main method for testing this class
      */
     public static void main(String[] args) {
-//    if(args.length == 0) {
-//      System.err.println("Usage: java PirateBay <-orderby-argument> <softwear name>");
-//      System.exit(-1);
-//    }
-       // System.out.println(new PirateBay("-s matrix reloaded"));
+
        System.out.println(new PirateBay("-s matrix reloaded").getFormattedResult(false));
 
     } // EOF main
