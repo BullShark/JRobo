@@ -25,10 +25,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -128,23 +128,24 @@ public class Weather {
 	 * @param location
 	 * @return BufferedReader
 	 */
-	public Reader getReaderForJson(String location) throws InvalidLocationException {
+	public String getJson(String location) throws InvalidLocationException {
 
 		cityName = "";
 		stateCode = StateCode.TX;
 		countryCode = CountryCode.US;
 
-		String locationArr[] = {"", "", ""};
+		String locationArr[];
 
-		locationArr = location.split("\\s*,\\s*", 3); //@TODO More than 3 should give the help message for the weather command
+		locationArr = location.split("\\s*,\\s*"); //@TODO More than 3 should give the help message for the weather command
 
-		if(false) {
-			throw new InvalidLocationException("Not supported yet.");
+		// There should be 0-2 commas and if locationArr is 0 then there's another problem
+		if(locationArr.length < 1 || locationArr.length > 3) {
+			throw new InvalidLocationException("Too many commas");
 		}
 
 		//return getJson(cityName, stateCode.name().toLowerCase(), countryCode.name().toLowerCase());
 
-		return getReaderForJson(cityName, "", "");
+		return getJson(cityName, "", "");
 	}
 
 	/**
@@ -154,7 +155,7 @@ public class Weather {
 	 * @param countryCode
 	 * @return String
 	 */
-	public Reader getReaderForJson(String cityName, String stateCode, String countryCode) {
+	public String getJson(String cityName, String stateCode, String countryCode) {
 		try {
 			if (cityName == null || stateCode == null || countryCode == null) {
 				throw new NullPointerException();
@@ -190,14 +191,12 @@ public class Weather {
 			// Get the response
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-/*
 			String line;
 			while ((line = rd.readLine()) != null) {
 				json += line;
 			}
 
 			rd.close();
-*/
 
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();
@@ -205,16 +204,15 @@ public class Weather {
 			ex.printStackTrace();
 		}
 
-//		return json;
-		return rd;
+		return json;
 	}
 
 	/**
 	 * Retrieve the data as a summary with irc color codes and formatting
-	 * @param reader
+	 * @param Json
 	 * @return Formatted Json
 	 */
-	public String getFormattedWeatherSummary(Reader reader) {
+	public String getFormattedWeatherSummary(String json) {
 
 		WeatherJson weatherJson;
 
@@ -222,15 +220,18 @@ public class Weather {
 			java.lang.reflect.Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>(){}.getType();  
 			System.out.println("[+++]\tWeatherJson Type: " + WeatherJsonT);
 
-			Gson gson = new GsonBuilder().create(); //.setPrettyPrinting().create();
-			weatherJson = gson.fromJson(reader, WeatherJson.class);
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			weatherJson = gson.fromJson(json, WeatherJson.class);
 
 		} catch (JsonSyntaxException ex) {
 			ex.printStackTrace();
-			return "Unable to retrieve the weather: JsonSyntaxError";
+			return "Unable to retrieve the weather";
 		}
 
-		return weatherJson.toString();
+//		return weatherJson.toString();
+
+		return weatherJson.getColorString();
+
 	}
 
 	/**
@@ -248,7 +249,7 @@ public class Weather {
 
 		Weather w = new Weather();
 		try {
-			System.out.println(w.getFormattedWeatherSummary(w.getReaderForJson("San Antonio, TX, US")));
+			System.out.println(w.getFormattedWeatherSummary(w.getJson("San Antonio, TX, US")));
 		} catch (InvalidLocationException ex) {
 			System.out.println("Invalid Location, Try Again");
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
@@ -273,8 +274,8 @@ public class Weather {
 		public List<WeatherListJsonItem> list;
 
 		public String getColorString() {
-			String mystring = "test string";
-			return mystring;
+
+			return String.format( "Result 1 / %d: %s", count, list.get(0).getColorString() );
 		}
 
 		/**
@@ -283,14 +284,11 @@ public class Weather {
 		 */
 		@Override
 		public String toString() {
-			return String.format("Found %d results: \n%s", count, list);
 
-			/*
 			return "message: " + message + "\n"
 				+ "cod: " + cod + "\n"
-				+ "count: " + Integer.toString(count) + "\n"
-				+ "list: " + list.toString() + "\n";
-			*/
+				+ "count: " + count + "\n"
+				+ "list: " + list + "\n";
 		}
 
 		/**
@@ -312,10 +310,16 @@ public class Weather {
 			public WeatherCloudsJsonItem clouds;
 			public List<WeatherWeatherJsonItem> weather;
 
-			public String toString() {
+			public String getColorString() {
+
 				String result = 
-					String.format("Weather for %s, %s at %s\n" + "%s %s %s %s"
-, name, sys, coord, main, wind, clouds, weather);
+					"Weather for " +
+					MircColors.BOLD + MircColors.GREEN + name + ", " + sys +  MircColors.NORMAL +
+					" at " + coord.getColorString() + " " +
+					main + 
+					wind + 
+					clouds + 
+					weather;
 
 				if(rain != null) {
 					result += rain;
@@ -326,8 +330,10 @@ public class Weather {
 				}
 
 				return result;
+			}
 
-				/*
+			public String toString() {
+
 				return "id: " + id + "\n" +
 					"name: " + name + "\n" +
 					"coord: " + coord + "\n" +
@@ -339,7 +345,6 @@ public class Weather {
 					"snow: " + snow + "\n" +
 					"clouds: " + clouds + "\n" +
 					"weather " + weather + "\n";
-				*/
 
 			}
 
@@ -352,8 +357,23 @@ public class Weather {
 				private float lat;
 				private float lon;
 
+				public String getColorString() {
+
+					DecimalFormat fmt = new DecimalFormat("0.##");
+
+					String result = 
+						MircColors.BOLD + 
+						MircColors.CYAN + "lat: " + 
+						MircColors.GREEN + fmt.format(lat) + " " +
+						MircColors.CYAN + "lon: " + 
+						MircColors.GREEN + fmt.format(lon) + 
+						MircColors.NORMAL;
+
+					return result;
+				}
+
 				public String toString() {
-					return String.format("Latitude:%s Longitude:%s", lat, lon);
+					return String.format("lat: %s lon: %s", lat, lon);
 				}
 			} // EOF WeatherCoordJsonItem
 
@@ -370,14 +390,32 @@ public class Weather {
 				private int pressure;
 				private String humidity;
 
+				public String getColorString() {
+/*
+					String str = 
+						String.format("Current temperature is %sF, Feels like %sF, ", temp, feels_like, temp_min, temp_max, pressure, humidity);
+*/
+					String result =
+						MircColors.BOLD +
+						"Current temperature is " + MircColors.GREEN + temp + "F, " + MircColors.NORMAL +
+						"Feels like " + MircColors.GREEN + feels_like + "F, " + MircColors.NORMAL +
+						"Min / Max is " + MircColors.GREEN + temp_min + " / " + temp_max + MircColors.NORMAL +
+						" " + pressure + humidity;
+
+
+					return result;
+
+				}
+
 				public String toString() {
-					String.format("Temperature is %sF, Feels like %sF", temp, feels_like, temp_min, temp_max, pressure, humidity);
+
 					return "temp: " + temp + 
-						", feels_like: " + feels_like + 
+						", feels like: " + feels_like + 
 						", temp_min: " + temp_min + 
 						", temp_max: " + temp_max + 
 						", pressure: " + pressure + 
 						", humidity: " + humidity;
+
 				}
 			} // EOF WeatherSysJsonItem
 
@@ -404,7 +442,12 @@ public class Weather {
 				private String country;
 
 				public String toString() {
+
+					return country;
+
+					/*
 					return "country: " + country;
+					*/
 				}
 			} // EOF WeatherSysJsonItem
 
