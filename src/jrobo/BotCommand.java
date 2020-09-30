@@ -513,7 +513,7 @@ public class BotCommand {
 
         		Weather w = new Weather();
 
-			connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getReaderForJson(cmdArgs, "", "")));
+			connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs, "", "")));
 			
 //				throw new Weather.InvalidLocationException("Remove me"); //@TODO Remove me
 		}
