@@ -440,7 +440,7 @@ public class Weather {
 
 					String result =
 						"Wind speed is " + MircColors.GREEN + speed + "MPH " + MircColors.NORMAL + MircColors.BOLD + 
-						"at " + MircColors.GREEN + deg + " degrees" + MircColors.NORMAL;
+						"at " + MircColors.GREEN + deg + "°" + MircColors.NORMAL;
 						
 					return result;
 				}
