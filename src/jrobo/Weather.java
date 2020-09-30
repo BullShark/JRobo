@@ -268,10 +268,10 @@ public class Weather {
 	 */
 	private class WeatherJson {
 
-		public String message;
-		public String cod;
-		public int count;
-		public List<WeatherListJsonItem> list;
+		private String message;
+		private String cod;
+		private int count;
+		private List<WeatherListJsonItem> list;
 
 		public String getColorString() {
 
@@ -303,17 +303,17 @@ public class Weather {
 		 */
 		protected class WeatherListJsonItem {
 
-			public int id;
-			public String name;
-			public WeatherCoordJsonItem coord;
-			public WeatherMainJsonItem main;
-			public int dt;
-			public WeatherWindJsonItem wind;
-			public WeatherSysJsonItem sys;
-			public Object rain;
-			public String snow;
-			public WeatherCloudsJsonItem clouds;
-			public List<WeatherWeatherJsonItem> weather;
+			private int id;
+			private String name;
+			private WeatherCoordJsonItem coord;
+			private WeatherMainJsonItem main;
+			private int dt;
+			private WeatherWindJsonItem wind;
+			private WeatherSysJsonItem sys;
+			private Object rain;
+			private String snow;
+			private WeatherCloudsJsonItem clouds;
+			private List<WeatherWeatherJsonItem> weather;
 
 			public String getColorString() {
 
@@ -359,7 +359,7 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			public class WeatherCoordJsonItem {
+			private class WeatherCoordJsonItem {
 	
 				private float lat;
 				private float lon;
@@ -388,7 +388,7 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			public class WeatherMainJsonItem {
+			private class WeatherMainJsonItem {
 	
 				private float temp;
 				private float feels_like;
@@ -431,7 +431,7 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			public class WeatherWindJsonItem {
+			private class WeatherWindJsonItem {
 	
 				private float speed;
 				private int deg;
@@ -454,7 +454,7 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			public class WeatherSysJsonItem {
+			private class WeatherSysJsonItem {
 	
 				private String country;
 
@@ -472,11 +472,11 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			public class WeatherCloudsJsonItem {
+			private class WeatherCloudsJsonItem {
 	
-				public int all;
+				private int all;
 
-				private String getColorString() {
+				public String getColorString() {
 					return this.toString();
 				}
 
@@ -489,7 +489,7 @@ public class Weather {
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
 			 */
-			public class WeatherWeatherJsonItem {
+			private class WeatherWeatherJsonItem {
 
 				private int id;
 				private String main;
