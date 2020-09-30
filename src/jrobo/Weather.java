@@ -175,7 +175,8 @@ public class Weather {
 
 			url = new URL(
 				(QUERY_URL
-					+ "/data/2.5/find"
+//					+ "/data/2.5/find"
+					+ "/data/2.5/weather"
 					+ "?q=" + location
 					+ "&units=" + "imperial"
 					+ "&type=" + "accurate"
@@ -268,10 +269,13 @@ public class Weather {
 	 */
 	private class WeatherJson {
 
-		private String message;
-		private String cod;
-		private int count;
-		private List<WeatherListJsonItem> list;
+		private String base;
+                private long timezone;
+		private int id;
+		private String name;
+                private int cod;
+
+//		private List<WeatherListJsonItem> list;
 
 		public String getColorString() {
 
@@ -397,6 +401,7 @@ public class Weather {
 				private int pressure;
 				private String humidity;
 
+
 				public String getColorString() {
 
 					String result =
@@ -425,7 +430,7 @@ public class Weather {
 						", humidity: " + humidity;
 
 				}
-			} // EOF WeatherSysJsonItem
+			} // EOF WeatherMainJsonItem
 
 			/**
 			 *
@@ -456,7 +461,11 @@ public class Weather {
 			 */
 			private class WeatherSysJsonItem {
 	
+                                private int type;
+                                private int id;
 				private String country;
+                                private long sunrise;
+                                private long sunset;
 
 				public String toString() {
 
@@ -510,3 +519,53 @@ public class Weather {
 	} // EOF WeatherJson
 
 } // EOF Weather
+
+/*
+curl 'api.openweathermap.org/data/2.5/weather?q=san%20antonio,tx,us&appid=0dcf84bfef65b293b5e3b444246ad6b2' 2>/dev/null | jq
+
+{
+  "coord": {
+    "lon": -98.49,
+    "lat": 29.42
+  },
+  "weather": [
+    {
+      "id": 800,
+      "main": "Clear",
+      "description": "clear sky",
+      "icon": "01d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 289.16,
+    "feels_like": 288.1,
+    "temp_min": 286.48,
+    "temp_max": 290.93,
+    "pressure": 1020,
+    "humidity": 67
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 1.54,
+    "deg": 227
+  },
+  "clouds": {
+    "all": 1
+  },
+  "dt": 1601475380,
+  "sys": {
+    "type": 1,
+    "id": 5920,
+    "country": "US",
+    "sunrise": 1601468809,
+    "sunset": 1601511632
+  },
+  "timezone": -18000,
+  "id": 4726206,
+  "name": "San Antonio",
+  "cod": 200
+}
+
+*/
+
