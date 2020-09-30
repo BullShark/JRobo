@@ -275,7 +275,12 @@ public class Weather {
 
 		public String getColorString() {
 
-			return String.format( "Result 1 / %d: %s", count, list.get(0).getColorString() );
+			String result =
+				MircColors.BOLD + 
+				"Result 1 / " + MircColors.GREEN + count + MircColors.NORMAL + 
+				" " + list.get(0).getColorString();
+
+			return result;
 		}
 
 		/**
@@ -313,13 +318,14 @@ public class Weather {
 			public String getColorString() {
 
 				String result = 
-					"Weather for " +
+					MircColors.BOLD + "Weather for " +
 					MircColors.BOLD + MircColors.GREEN + name + ", " + sys +  MircColors.NORMAL +
 					" at " + coord.getColorString() + " " +
-					main.getColorString() + 
-					wind + 
-					clouds + 
-					weather;
+					main.getColorString() +  ", " + 
+					wind.getColorString() +  ", " + 
+					clouds.getColorString() +  ", " + 
+					weather  + ", " + 
+					"\n<embed> https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif </embed>";
 
 				if(rain != null) {
 					result += rain;
@@ -363,9 +369,9 @@ public class Weather {
 
 					String result = 
 						MircColors.BOLD + 
-						MircColors.CYAN + "lat: " + 
+						MircColors.CYAN + "Lat: " + 
 						MircColors.GREEN + fmt.format(lat) + " " +
-						MircColors.CYAN + "lon: " + 
+						MircColors.CYAN + "Lon: " + 
 						MircColors.GREEN + fmt.format(lon) + 
 						MircColors.NORMAL;
 
@@ -391,17 +397,17 @@ public class Weather {
 				private String humidity;
 
 				public String getColorString() {
-/*
-					String str = 
-						String.format("Current temperature is %sF, Feels like %sF, ", temp, feels_like, temp_min, temp_max, pressure, humidity);
-*/
+
 					String result =
 						MircColors.BOLD +
 						"Current temperature is " + MircColors.GREEN + temp + "F, " + MircColors.NORMAL + MircColors.BOLD +
 						"Feels like " + MircColors.GREEN + feels_like + "F" + MircColors.NORMAL + MircColors.BOLD + ", " +
-						"Min / Max is " + MircColors.GREEN + temp_min + " / " + temp_max + MircColors.NORMAL + MircColors.BOLD + ", " +
-						"Pressure is " + pressure + ", " +
-						"Humidity is " + humidity;
+						"Min / Max is " + 
+						MircColors.GREEN + temp_min + "F" + 
+						MircColors.NORMAL + MircColors.BOLD + " / " + 
+						MircColors.GREEN + temp_max + "F" + MircColors.NORMAL + MircColors.BOLD + ", " +
+						"Pressure is " + MircColors.GREEN + pressure + "UNITS" +  MircColors.NORMAL + MircColors.BOLD + ", " +
+						"Humidity is " + MircColors.GREEN + humidity + "%" + MircColors.NORMAL;
 
 
 					return result;
@@ -428,6 +434,15 @@ public class Weather {
 	
 				private float speed;
 				private int deg;
+
+				public String getColorString() {
+
+					String result =
+						"Wind speed is " + MircColors.GREEN + speed + "MPH " + MircColors.NORMAL + MircColors.BOLD + 
+						"at " + MircColors.GREEN + deg + " degrees" + MircColors.NORMAL;
+						
+					return result;
+				}
 
 				public String toString() {
 					return "speed: " + speed + ", deg: " + deg;
@@ -460,6 +475,10 @@ public class Weather {
 	
 				public int all;
 
+				private String getColorString() {
+					return this.toString();
+				}
+
 				public String toString() {
 					return "all: " + all;
 				}
@@ -475,6 +494,10 @@ public class Weather {
 				private String main;
 				private String description;
 				private String icon;
+
+				private String getColorString() {
+					return this.toString();
+				}
 
 				public String toString() {
 					return "id: " + id + ", main: " + main + ", description: " + description + ", icon: " + icon;
