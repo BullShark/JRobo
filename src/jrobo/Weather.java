@@ -301,7 +301,7 @@ public class Weather {
 		 * @author Chris Lemire <goodbye300@aim.com>
 		 * @TODO Make rain a String
 		 */
-		protected class WeatherListJsonItem {
+		private class WeatherListJsonItem {
 
 			private int id;
 			private String name;
