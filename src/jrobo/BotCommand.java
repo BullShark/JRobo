@@ -509,13 +509,12 @@ public class BotCommand {
 	        	helpWrapper(cmd);
         	} else {
 
-        		connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
+        		//connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
 
         		Weather w = new Weather();
 
 			connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs, "", "")));
 			
-//				throw new Weather.InvalidLocationException("Remove me"); //@TODO Remove me
 		}
 	}
 
