@@ -277,8 +277,8 @@ public class Weather {
 
 			String result =
 				MircColors.BOLD + 
-				"Result 1 / " + MircColors.GREEN + count + MircColors.NORMAL + 
-				" " + list.get(0).getColorString();
+				"Result 1 / " + MircColors.GREEN + count + MircColors.NORMAL + MircColors.BOLD + ": " + MircColors.NORMAL + 
+				list.get(0).getColorString();
 
 			return result;
 		}
@@ -319,13 +319,14 @@ public class Weather {
 
 				String result = 
 					MircColors.BOLD + "Weather for " +
-					MircColors.BOLD + MircColors.GREEN + name + ", " + sys +  MircColors.NORMAL +
-					" at " + coord.getColorString() + " " +
-					main.getColorString() +  ", " + 
+					MircColors.GREEN + name + ", " + sys +  MircColors.NORMAL + MircColors.BOLD +
+					" at " + MircColors.NORMAL +
+					coord.getColorString() + " " +
+					main.getColorString() +  ", " + MircColors.BOLD + 
 					wind.getColorString() +  ", " + 
 					clouds.getColorString() +  ", " + 
-					weather  + ", " + 
-					"\n<embed> https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif </embed>";
+					weather  + "\n" + 
+					"<embed> https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif </embed>";
 
 				if(rain != null) {
 					result += rain;
