@@ -120,7 +120,7 @@ public class Epic {
 		return json;
 	}
 
-	public String[] getFormattedEpicSummary(final String locale, final boolean hasColors, final int limit) {
+	public String getFormattedEpicSummary(final String locale, final boolean hasColors, final int limit) {
 
 		if (locale != null && !locale.equals("")) {
 			this.locale = locale;
@@ -131,7 +131,6 @@ public class Epic {
 		 * TODO The exception that no JSON is received
 		 */
 		EpicJson epicJson;
-
 		try {
 			Type EpicJsonT = new TypeToken<ArrayList<EpicJson>>() {
 			}.getType();
@@ -142,55 +141,16 @@ public class Epic {
 
 		} catch (JsonSyntaxException | IllegalStateException ex) {
 			ex.printStackTrace();
-			return new String[]{"Unable to retrieve the weather"};
+			return "Unable to retrieve the weather";
 		}
-
-		String[] outArr;
-		try {
-			outArr = new String[limit];
-		} catch (NegativeArraySizeException ex) {
-			ex.printStackTrace();
-			outArr = new String[defaultLimit];
-		}
-
-		int count = 0, index = limit;
 
 		/* Handles NullPointerException that occurs if the URL DNE */
-		try {
-			if (hasColors) {
-				/*
-				for (EpicJson.EpicJsonItem eji : ej.data) {
-					if (index > 0) {
-						outArr[count++] = eji.getColorString();
-						index--;
-					} else {
-						break;
-					}
-				}
-				 */
-			} else {
-				/*
-				for (EpicJson.EpicJsonItem eji : ej.data) {
-					if (index > 0) {
-						outArr[count++] = eji.toString();
-						index--;
-					} else {
-						break;
-					}
-				}
-				 */
-			}
-		} catch (NullPointerException ex) {
-			ex.printStackTrace();
+		//return new String[]{"Could not be retrieved!"};
 
-			for (String element : outArr) {
-				System.err.println(element);
-			}
+		return epicJson.toString();
 
-			return new String[]{"Could not be retrieved!"};
-		}
+//		return EpicJson.getColorString();
 
-		return outArr;
 	}
 
 	/*
@@ -202,7 +162,8 @@ public class Epic {
 			System.exit(-1);
 		}
 
-		System.out.println(Arrays.toString(new Epic().getFormattedEpicSummary(null, false, 10)));
+		System.out.println(new Epic().getFormattedEpicSummary(null, false, 10));
+
 	} // EOF main
 
 	/**
