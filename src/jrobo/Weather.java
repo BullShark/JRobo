@@ -304,20 +304,32 @@ public class Weather {
 					wind.getColorString() +  ", " +
 					clouds.getColorString() +  " ";
 
+				if(rain != null) {
+					 
+					result += 
+						MircColors.BOLD + 
+						", " + 
+						MircColors.CYAN +
+						"Rain: " + MircColors.GREEN + rain + " " + 
+						MircColors.NORMAL;
+				}
+				
+				if(snow != null) {
+
+					result += 
+						MircColors.BOLD + 
+						", " + 
+						MircColors.CYAN +
+						"Snow: " + MircColors.GREEN + snow + " " + 
+						MircColors.NORMAL;
+				}
+
 				for(WeatherWeatherJsonItem element : weather) {
 					result += element.getColorString() +  " ";
 				}
 
 //				result = result + "\n" + 
 //					"https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif";
-
-				if(rain != null) {
-					result += rain;
-				}
-				
-				if(rain != null) {
-					result += snow;
-				}
 
 				return result;
 			}
