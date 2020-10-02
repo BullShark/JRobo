@@ -331,7 +331,7 @@ promotions	{…}
 							private EpicTotalPriceJsonItem totalPrice;
 
 							public String toString() {
-								return "Catalog: " + Catalog;
+								return "totalPrice: " + totalPrice;
 
 							}
 
