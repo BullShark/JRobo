@@ -50,8 +50,8 @@ public class Epic {
 	 */
 	private static final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
 	private String json;
-	private String locale = "en-US";
-	private String countrycode = "TR";
+	private String locale;
+	private String countrycode;
 
 	/* For the Gson/Json */
 	private Gson gson;
@@ -180,7 +180,7 @@ public class Epic {
 	public class EpicJson {
 
 		public int total;
-		public String result_type;
+		public String resultType;
 		public List<EpicJsonItem> list;
 
 		/**
@@ -188,7 +188,7 @@ public class Epic {
 		 * @override
 		 */
 		public String toString() {
-			return "Total: " + Integer.toString(total) + " has result_type: " + result_type;
+			return "Total: " + Integer.toString(total) + " has resultType: " + resultType;
 		}
 
 		/**
@@ -202,19 +202,12 @@ public class Epic {
 			public int thumbs_down;
 
 			public String getColorString() {
-				definition = definition.replaceAll("\\r|\\n", " ");
-				definition = definition.replaceAll("\\s++", " ");
-				String mystring
-					= MircColors.BOLD + MircColors.GREEN + "Thumbs:"
-					+ MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") "
-					+ MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:"
-					+ MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n";
-				return mystring;
+				String result = "";
+
+				return result;
 			}
 
 			public String toString() {
-				definition = definition.replaceAll("\\r|\\n", " ");
-				definition = definition.replaceAll("\\s++", " ");
 				return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
 
 			}
