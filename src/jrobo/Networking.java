@@ -2,9 +2,6 @@
  * JRobo - An Advanced IRC Bot written in Java
  *
  * Copyright (C) <2013> <Christopher Lemire>
- * Copyright (C) <2013> <BinaryStroke>
- * Copyright (C) <2013> <Tyler Pollard>
- * Copyright (C) <2013> <Muhammad Sajid>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -40,7 +37,7 @@ import java.util.logging.Logger;
  * Handles all the networking done by the IRC protocol
  * Including many helpful methods to make coding JRobo easier
  *
- * @author Christopher Lemire <christopher.lemire@gmail.com>
+ * @author Christopher Lemire <goodbye300@aim.com>
  */
 public class Networking {
   private Socket sock = null;
