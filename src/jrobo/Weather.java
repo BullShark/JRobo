@@ -278,7 +278,8 @@ public class Weather {
 
 			String result =
 				MircColors.BOLD + 
-				"Result " + MircColors.GREEN + "1" + MircColors.NORMAL + MircColors.BOLD + " / " + MircColors.CYAN + count + MircColors.NORMAL + MircColors.BOLD + ": " + MircColors.NORMAL + 
+				"Result " + MircColors.GREEN + "1" + MircColors.NORMAL + MircColors.BOLD + " / " + MircColors.GREEN + count + MircColors.NORMAL + MircColors.BOLD + ": " + 
+				MircColors.NORMAL + 
 				list.get(0).getColorString();
 
 			return result;
@@ -320,13 +321,14 @@ public class Weather {
 
 
 				String result = 
-					MircColors.BOLD + "Weather for " +
-					MircColors.GREEN + name + ", " + sys +  MircColors.NORMAL + MircColors.BOLD +
-					" at " + MircColors.NORMAL +
+					MircColors.BOLD + 
+					"Weather for " +
+					MircColors.GREEN + name + ", " + sys +  MircColors.NORMAL + MircColors.BOLD + " at " + 
+					MircColors.NORMAL +
 					coord.getColorString() + " " +
-					main.getColorString() +  ", " + MircColors.BOLD + 
-					wind.getColorString() +  ", " + 
-					clouds.getColorString() +  ", ";
+					main.getColorString() +  ", " +
+					wind.getColorString() +  ", " +
+					clouds.getColorString() +  " ";
 
 				result = weather.stream().map(element -> element.getColorString()).reduce(result, String::concat);
 
@@ -406,15 +408,17 @@ public class Weather {
 
 					String result =
 						MircColors.BOLD +
-						"Current temperature is " + MircColors.GREEN + temp + "F, " + MircColors.NORMAL + MircColors.BOLD +
-						"Feels like " + MircColors.GREEN + feels_like + "F" + MircColors.NORMAL + MircColors.BOLD + ", " +
-						"Min / Max is " + 
+						MircColors.CYAN + "Current temperature" + MircColors.NORMAL + MircColors.BOLD + " is " + MircColors.GREEN + temp + "F, " + MircColors.NORMAL + MircColors.BOLD +
+						MircColors.CYAN + "Feels" + MircColors.NORMAL + MircColors.BOLD + " like " + MircColors.GREEN + feels_like + "F" + MircColors.NORMAL + MircColors.BOLD + ", " +
+						MircColors.CYAN + "Min" + MircColors.NORMAL + MircColors.BOLD + " / " + MircColors.CYAN + "Max" + MircColors.NORMAL + MircColors.BOLD + " is " + 
 						MircColors.GREEN + temp_min + "F" + 
-						MircColors.NORMAL + MircColors.BOLD + " / " + 
+						MircColors.NORMAL + 
+						MircColors.BOLD + 
+						" / " + 
 						MircColors.GREEN + temp_max + "F" + MircColors.NORMAL + MircColors.BOLD + ", " +
-						"Pressure is " + MircColors.GREEN + pressure + "hPa" +  MircColors.NORMAL + MircColors.BOLD + ", " +
-						"Humidity is " + MircColors.GREEN + humidity + "%" + MircColors.NORMAL;
-
+						MircColors.CYAN + "Pressure" + MircColors.NORMAL + MircColors.BOLD + " is " + MircColors.GREEN + pressure + "hPa" +  MircColors.NORMAL + MircColors.BOLD + ", " +
+						MircColors.CYAN + "Humidity" + MircColors.NORMAL + MircColors.BOLD + " is " + MircColors.GREEN + humidity + "%" + 
+						MircColors.NORMAL;
 
 					return result;
 
@@ -444,8 +448,10 @@ public class Weather {
 				public String getColorString() {
 
 					String result =
-						"Wind speed is " + MircColors.GREEN + speed + "MPH " + MircColors.NORMAL + MircColors.BOLD + 
-						"at " + MircColors.GREEN + deg + "°" + MircColors.NORMAL;
+						MircColors.BOLD + 
+						MircColors.CYAN + "Wind speed" + MircColors.NORMAL + MircColors.BOLD + " is " + MircColors.GREEN + speed + "MPH " + MircColors.NORMAL + MircColors.BOLD + 
+						"at " + MircColors.GREEN + deg + "°" + 
+						MircColors.NORMAL;
 						
 					return result;
 				}
@@ -482,7 +488,13 @@ public class Weather {
 				private int all;
 
 				public String getColorString() {
-					return "cloudiness " + all + "%";
+					
+					String result = 
+						MircColors.BOLD +
+						MircColors.CYAN + "Cloudiness " + MircColors.GREEN + all + "%" +
+						MircColors.NORMAL;
+
+					return result;
 				}
 
 				public String toString() {
@@ -504,7 +516,13 @@ public class Weather {
 
 				private String getColorString() {
 					String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
-					return "with (a) " + MircColors.GREEN + description + MircColors.NORMAL + ".\n" + iconUrl;
+					String result = 
+						MircColors.BOLD +
+						"with (a) " + MircColors.GREEN + description + ".\n" +
+						iconUrl + 
+						MircColors.NORMAL;
+
+					return result;
 				}
 
 				public String toString() {
