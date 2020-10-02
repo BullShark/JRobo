@@ -55,6 +55,7 @@ public class Epic {
 
 	/* For the Gson/Json */
 	private Gson gson;
+	private int defaultLimit;
 
 	public Epic() {
 
@@ -67,6 +68,7 @@ public class Epic {
 		locale = "en-US";
 		countrycode = "TR";
 		json = "";
+		defaultLimit = 5;
 
 		/* For the Gson/Json */
 		gson = new Gson();
@@ -89,7 +91,8 @@ public class Epic {
 				).replaceAll(" ", "%20")
 			);
 
-			//System.out.println(url);
+			System.out.println("[+++] " + url);
+
 			conn = url.openConnection();
 
 			// Get the response
@@ -120,15 +123,21 @@ public class Epic {
 		/*
 		 * TODO Add try/catch to handle
 		 * TODO The exception that no JSON is received
-		 * TODO Look at PirateBay.java as an example
 		 */
 		gson = new GsonBuilder().setPrettyPrinting().create();
 		EpicJson ej = gson.fromJson(this.getJson(), EpicJson.class);
 
-		String[] outArr = new String[limit];
+		String[] outArr;
+		try {
+			outArr = new String[limit];
+		} catch (NegativeArraySizeException ex) {
+			ex.printStackTrace();
+			outArr = new String[defaultLimit];
+		}
+
 		int count = 0, index = limit;
 
-		/* Fixes NullPointerException Bug that occurs if the URL DNE */
+		/* Handles NullPointerException that occurs if the URL DNE */
 		try {
 			if (hasColors) {
 				for (EpicJson.EpicJsonItem eji : ej.list) {
