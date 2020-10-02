@@ -180,6 +180,7 @@ public class Weather {
 					+ "&units=" + "imperial"
 					+ "&type=" + "accurate"
 					+ "&mode=" + "json"
+					+ "&lang=" + "en"
 					+ "&appid=" + apikey
 				).replaceAll(" ", "%20")
 			);
