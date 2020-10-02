@@ -175,7 +175,7 @@ public class Weather {
 
 			url = new URL(
 				(QUERY_URL
-					+ "/data/2.5/" + "find" // Possible values: find, weather
+					+ "/data/2.5/" + "find" // Possible values: find, weather, forecast
 					+ "?q=" + location
 					+ "&units=" + "imperial"
 					+ "&type=" + "accurate"
@@ -278,7 +278,7 @@ public class Weather {
 
 			String result =
 				MircColors.BOLD + 
-				"Result 1 / " + MircColors.GREEN + count + MircColors.NORMAL + MircColors.BOLD + ": " + MircColors.NORMAL + 
+				"Result " + MircColors.GREEN + "1" + MircColors.NORMAL + MircColors.BOLD + " / " + MircColors.CYAN + count + MircColors.NORMAL + MircColors.BOLD + ": " + MircColors.NORMAL + 
 				list.get(0).getColorString();
 
 			return result;
@@ -328,12 +328,10 @@ public class Weather {
 					wind.getColorString() +  ", " + 
 					clouds.getColorString() +  ", ";
 
-					for(WeatherWeatherJsonItem element : weather) {
-						result += element.getColorString();
-					}
+				result = weather.stream().map(element -> element.getColorString()).reduce(result, String::concat);
 
 					result = result + "\n" + 
-					"<embed> https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif </embed>";
+					"https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif";
 
 				if(rain != null) {
 					result += rain;
@@ -414,7 +412,7 @@ public class Weather {
 						MircColors.GREEN + temp_min + "F" + 
 						MircColors.NORMAL + MircColors.BOLD + " / " + 
 						MircColors.GREEN + temp_max + "F" + MircColors.NORMAL + MircColors.BOLD + ", " +
-						"Pressure is " + MircColors.GREEN + pressure + "UNITS" +  MircColors.NORMAL + MircColors.BOLD + ", " +
+						"Pressure is " + MircColors.GREEN + pressure + "hPa" +  MircColors.NORMAL + MircColors.BOLD + ", " +
 						"Humidity is " + MircColors.GREEN + humidity + "%" + MircColors.NORMAL;
 
 
@@ -484,7 +482,7 @@ public class Weather {
 				private int all;
 
 				public String getColorString() {
-					return this.toString();
+					return "cloudiness " + all + "%";
 				}
 
 				public String toString() {
@@ -506,7 +504,7 @@ public class Weather {
 
 				private String getColorString() {
 					String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
-					return "With " + description + "\n" + iconUrl;
+					return "with (a) " + MircColors.GREEN + description + MircColors.NORMAL + ".\n" + iconUrl;
 				}
 
 				public String toString() {
