@@ -299,7 +299,6 @@ promotions	{…}
 						}
 
 						public String toString() {
-							return "Catalog: " + Catalog;
 							/*
 								title;
 								id;
@@ -317,6 +316,38 @@ promotions	{…}
 								price;
 								promotions;
 							 */
+
+							return "title: " + title +
+								"id: " + id + 
+								"description: " + description + 
+								"effectiveDate" + effectiveDate +
+//								"keyImages: " + keyImages +
+//								"seller: " + seller + 
+								"productSlug: " + productSlug +
+								"urlSlug: " + urlSlug +
+								"url: " + url +
+//								"items: " + items +
+								"url: " + url +
+//								"customAttributes: " + customAttributes +
+//								"categories: " + categories +
+//								"tags: " + tags +
+								"price: " + price+
+//								"promotions: " + promotions
+								;
+
+				return "id: " + id + "\n" +
+					"name: " + name + "\n" +
+					"coord: " + coord + "\n" +
+					"main: " + main + "\n" +
+					"dt: " + dt + "\n" +
+					"sys: " + sys + "\n" +
+					"wind: " + wind + "\n" +
+					"rain: " + rain + "\n" +
+					"snow: " + snow + "\n" +
+					"clouds: " + clouds + "\n" +
+					"weather " + weather + "\n";
+
+
 						}
 
 						/**
