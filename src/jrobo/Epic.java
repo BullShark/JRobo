@@ -20,20 +20,24 @@ package jrobo;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  *
- * @author bullshark
+ * @author Christopher Lemire
+ * <goodbye300@aim.com>
  */
 public class Epic {
 
@@ -126,9 +130,21 @@ public class Epic {
 		 * TODO Add try/catch to handle
 		 * TODO The exception that no JSON is received
 		 */
-		gson = new GsonBuilder().setPrettyPrinting().create();
-		EpicJson ej = gson.fromJson(this.getJson(), EpicJson.class);
 
+		EpicJson epicJson;
+
+		try {
+			Type EpicJsonT = new TypeToken<ArrayList<EpicJson>>(){}.getType();  
+			System.out.println("[+++]\tEpicJson Type: " + EpicJsonT);
+
+			gson = new GsonBuilder().setPrettyPrinting().create();
+			epicJson = gson.fromJson(this.getJson(), EpicJson.class);
+
+		} catch (JsonSyntaxException | IllegalStateException ex) {
+			ex.printStackTrace();
+			return new String[] {"Unable to retrieve the weather"};
+		}
+		
 		String[] outArr;
 		try {
 			outArr = new String[limit];
@@ -142,6 +158,7 @@ public class Epic {
 		/* Handles NullPointerException that occurs if the URL DNE */
 		try {
 			if (hasColors) {
+				/*
 				for (EpicJson.EpicJsonItem eji : ej.data) {
 					if (index > 0) {
 						outArr[count++] = eji.getColorString();
@@ -150,7 +167,9 @@ public class Epic {
 						break;
 					}
 				}
+				 */
 			} else {
+				/*
 				for (EpicJson.EpicJsonItem eji : ej.data) {
 					if (index > 0) {
 						outArr[count++] = eji.toString();
@@ -159,6 +178,7 @@ public class Epic {
 						break;
 					}
 				}
+				 */
 			}
 		} catch (NullPointerException ex) {
 			ex.printStackTrace();
@@ -187,14 +207,25 @@ public class Epic {
 
 	/**
 	 *
-	 * @author Christopher Lemire <christopher.lemire@gmail.com>
+	 * @author Christopher Lemire
+	 * <goodbye300@aim.com>
 	 */
-	public class EpicJson {
+	private class EpicJson {
 
-		public List<EpicDataJsonItem> data;
-		//extensions
+		/**
+		 * Example:
+		 * 
+		 * private WeatherCloudsJsonItem clouds;
+		 * private ArrayList<WeatherWeatherJsonItem> weather;
+		 * 
+		 * Class object { ... }
+		 * List<Class> object [ ... ]
+		 */
 
-		public String getColorString() {
+		private EpicDataJsonItem data;
+		private EpicExtensionsJsonItem extensions;
+
+		private String getColorString() {
 			String result = "";
 
 			return result;
@@ -205,22 +236,20 @@ public class Epic {
 		 * @override
 		 */
 		public String toString() {
-			return "data: " + data + "unknown: " + null;
+			return "data: " + data + "extensions: " + extensions;
 		}
 
 		/**
 		 *
-		 * @author Christopher Lemire <christopher.lemire@gmail.com>
+		 * @author Christopher Lemire
+		 * <goodbye300@aim.com>
 		 */
-		public class EpicDataJsonItem {
+		private class EpicDataJsonItem {
 
-			public String Catalog;
+			// Class object { ... }
+			// List<Class> object [ ... ]
 
-			public String getColorString() {
-				String result = "";
-
-				return result;
-			}
+			private EpicCatalogJsonItem Catalog;
 
 			public String toString() {
 				return "Catalog: " + Catalog;
@@ -232,46 +261,141 @@ public class Epic {
 			 * @author Christopher Lemire
 			 * <christopher.lemire@gmail.com>
 			 */
-			public class EpicCatalogJsonItem {
+			private class EpicCatalogJsonItem {
 
-				public String searchStore;
+				// Class object { ... }
+				// List<Class> object [ ... ]
 
-				public String getColorString() {
-					String result = "";
-
-					return result;
-				}
+				private EpicSearchStoreJsonItem searchStore;
 
 				public String toString() {
-					return "Catalog: " + Catalog;
+					return "searchStore: " + searchStore;
 
 				}
+
+				/**
+				 *
+				 * @author Christopher Lemire
+				 * <goodbye300@aim.com>
+				 */
+				private class EpicSearchStoreJsonItem {
+
+					// Class object { ... }
+					// List<Class> object [ ... ]
+
+					private ArrayList<EpicElementsJsonItem> elements;
+
+					public String toString() {
+						return "elements: " + elements;
+
+					}
+
+					/**
+					 *
+					 * @author Christopher Lemire
+					 * <goodbye300@aim.com>
+					 */
+					private class EpicElementsJsonItem {
+
+						/**
+						 * Example:
+						 * 
+						 * private WeatherCloudsJsonItem clouds;
+						 * private ArrayList<WeatherWeatherJsonItem> weather;
+						 * 
+						 * Class object { ... }
+						 * List<Class> object [ ... ]
+						 */
+
+						private String title;
+						private String id;
+						private String description;
+						private String effectiveDate;
+						//keyImages
+						//seller
+						private String productSlug;
+						private String urlSlug;
+						private String url;
+						//items
+						//customAttributes
+						//categories
+						//tags
+						//price
+						//promotions
+
+						/*
+title	"ABZU"
+id	"dedd448c38d947ab90291540f183378b"
+namespace	"7af7476ff9eb4a8d9cd9d6486224de76"
+description	"ABZU"
+effectiveDate	"2019-09-04T00:00:00.000Z"
+keyImages	[…]
+seller	{…}
+productSlug	"abzu/home"
+urlSlug	"currygeneralaudience"
+url	null
+items	[…]
+customAttributes	[…]
+categories	[…]
+tags	[…]
+price	{…}
+promotions	{…}
+						 */
+						private String getColorString() {
+							String result = "";
+
+							return result;
+						}
+
+						public String toString() {
+							return "Catalog: " + Catalog;
+
+						}
+					}
+
+				}
+
+			}
+		}
+
+		/**
+		 *
+		 * @author Christopher Lemire <christopher.lemire@gmail.com>
+		 */
+		private class EpicExtensionsJsonItem {
+
+			private EpicCacheControlJsonItem cacheControl;
+
+			/**
+			 *
+			 * @override
+			 */
+			public String toString() {
+				return "cacheControl " + cacheControl;
+			}
 
 			/**
 			 *
 			 * @author Christopher Lemire
 			 * <christopher.lemire@gmail.com>
 			 */
-			public class EpicSearchStoreJsonItem {
+			private class EpicCacheControlJsonItem {
 
-				public String elements;
+				private String version;
+				//private List<EpicHintsJsonItem> hints;
 
-				public String getColorString() {
-					String result = "";
-
-					return result;
-				}
-
+				/**
+				 *
+				 * @override
+				 */
 				public String toString() {
-					return "Catalog: " + Catalog;
-
+					return null;
 				}
-			}
 
 			}
+
 		}
 
 	}
 
 } // EOF class
-
