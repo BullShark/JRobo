@@ -502,9 +502,9 @@ public class BotCommand {
 
         		Epic epic = new Epic();
 
-//			System.out.println(Arrays.toString(new Epic().getFormattedEpicSummary(false, -1)));
+//			System.out.println(Arrays.toString(new Epic().getFormattedEpicSummary(null, false, -1)));
 
-			connection.msgChannel(config.getChannel(), Arrays.toString(new Epic().getFormattedEpicSummary(null, false, -1)));
+			connection.msgChannel(config.getChannel(), new Epic().getFormattedEpicSummary(null, false, -1));
 			
 		}
 	
