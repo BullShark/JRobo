@@ -286,8 +286,6 @@ public class Weather {
 					ex.printStackTrace();
 				}
 
-				
-
 			return result;
 		}
 
