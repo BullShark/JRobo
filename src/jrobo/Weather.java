@@ -61,32 +61,9 @@ public class Weather {
 	 * API URL Parameters
 	 */
 	private String cityName;
-	private StateCode stateCode;
-	private CountryCode countryCode;
+	private String stateCode;
+	private String countryCode;
 	private final String apikey;
-	private final Unit unit;
-	private final Type type;
-	private final Mode mode;
-
-	public enum Unit {
-		IMPERIAL, METRIC, STANDARD
-	}
-
-	public enum Type {
-		ACCURATE
-	}
-
-	public enum Mode {
-		JSON, XML, HTML
-	}
-
-	public enum StateCode {
-		TX, FL, CA, NY
-	}
-
-	public enum CountryCode {
-		US, TK, AU, UK
-	}
 
 	/**
 	 *
@@ -111,11 +88,8 @@ public class Weather {
 		 * API URL Parameters
 		 */
 		cityName = "San Antonio";
-		stateCode = StateCode.TX;
-		countryCode = CountryCode.US;
-		unit = Unit.IMPERIAL;
-		type = Type.ACCURATE;
-		mode = Mode.JSON;
+		stateCode = "TX";
+		countryCode = "US";
 		apikey = getApiKey();
 
 	}
@@ -129,10 +103,6 @@ public class Weather {
 	 * @return BufferedReader
 	 */
 	public String getJson(String location) throws InvalidLocationException {
-
-		cityName = "";
-		stateCode = StateCode.TX;
-		countryCode = CountryCode.US;
 
 		String locationArr[];
 
