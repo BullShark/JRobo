@@ -63,6 +63,9 @@ public class Epic {
 		conn = null;
 
 		/* Miscelanous */
+
+		locale = "en-US";
+		countrycode = "TR";
 		json = "";
 
 		/* For the Gson/Json */
