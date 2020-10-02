@@ -493,11 +493,18 @@ public class BotCommand {
 	 * @TODO Implement me
 	 */
 	private void epicHelper() {
-		try {
-			throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-		} catch (UnsupportedOperationException ex) {
-			ex.printStackTrace();
+		if(hasArgs) {
+	        	helpWrapper(cmd);
+        	} else {
+
+        		//connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
+
+        		Epic epic = new Epic();
+
+			connection.msgChannel(config.getChannel(), epic.getFormattedEpicSummary(epic.getJson()));
+			
 		}
+	
 	}
 
 	/**
