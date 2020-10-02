@@ -175,7 +175,7 @@ public class Weather {
 
 			url = new URL(
 				(QUERY_URL
-					+ "/data/2.5/find"
+					+ "/data/2.5/" + "find" // Possible values: find, weather
 					+ "?q=" + location
 					+ "&units=" + "imperial"
 					+ "&type=" + "accurate"
@@ -489,6 +489,7 @@ public class Weather {
 			/**
 			 *
 			 * @author Chris Lemire <goodbye300@aim.com>
+			 * @TODO Icons can be found here: https://openweathermap.org/weather-conditions
 			 */
 			private class WeatherWeatherJsonItem {
 
