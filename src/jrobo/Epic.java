@@ -146,11 +146,9 @@ public class Epic {
 
 		/* Handles NullPointerException that occurs if the URL DNE */
 		//return new String[]{"Could not be retrieved!"};
-
 		return epicJson.toString();
 
 //		return EpicJson.getColorString();
-
 	}
 
 	/*
@@ -274,24 +272,6 @@ public class Epic {
 						private EpicPriceJsonItem price;
 						//private EpicPromotionsJsonItem promotions;
 
-						/*
-title	"ABZU"
-id	"dedd448c38d947ab90291540f183378b"
-namespace	"7af7476ff9eb4a8d9cd9d6486224de76"
-description	"ABZU"
-effectiveDate	"2019-09-04T00:00:00.000Z"
-keyImages	[…]
-seller	{…}
-productSlug	"abzu/home"
-urlSlug	"currygeneralaudience"
-url	null
-items	[…]
-customAttributes	[…]
-categories	[…]
-tags	[…]
-price	{…}
-promotions	{…}
-						 */
 						private String getColorString() {
 							String result = "";
 
@@ -300,22 +280,14 @@ promotions	{…}
 
 						public String toString() {
 
-							return "title: " + title + "\n" +
-								"id: " + id +  "\n" +
-								"description: " + description +  "\n" +
-								"effectiveDate" + effectiveDate + "\n" +
-//								"keyImages: " + keyImages + "\n" +
-//								"seller: " + seller +  "\n" +
-								"productSlug: " + productSlug + "\n" +
-								"urlSlug: " + urlSlug + "\n" +
-								"url: " + url + "\n" +
-//								"items: " + items + "\n" +
-								"url: " + url + "\n" +
-//								"customAttributes: " + customAttributes + "\n" +
-//								"categories: " + categories + "\n" +
-//								"tags: " + tags + "\n" +
-								"price: " + price + "\n"
-//								"promotions: " + promotions
+							return "title: " + title + "\n"
+								+ "id: " + id + "\n"
+								+ "description: " + description + "\n"
+								+ "effectiveDate" + effectiveDate + "\n"
+								+ "productSlug: " + productSlug + "\n"
+								+ "urlSlug: " + urlSlug + "\n"
+								+ "url: " + url + "\n"
+								+ "price: " + price + "\n"
 								;
 						}
 
@@ -329,10 +301,22 @@ promotions	{…}
 							// Class object { ... }
 							// List<Class> object [ ... ]
 							private EpicTotalPriceJsonItem totalPrice;
+							private int discountPrice;
+							private int originalPrice;
+							private int voucherDiscount;
+							private int discount;
+							private String currencyCode;
+							//EpicCurrencyInfoJsonItem currencyInfo;
+							//EpicfmtPriceJsonItem fmtPrice;
 
 							public String toString() {
-								return "totalPrice: " + totalPrice;
-
+								return "totalPrice: " + totalPrice
+									+ "discountPrice: " + discountPrice + "\n"
+									+ "originalPrice: " + originalPrice + "\n"
+									+ "voucherDiscount: " + voucherDiscount + "\n"
+									+ "discount: " + discount + "\n"
+									+ "currencyCode: " + currencyCode + "\n"
+									;
 							}
 
 							/**
