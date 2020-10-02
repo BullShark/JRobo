@@ -278,9 +278,15 @@ public class Weather {
 
 			String result =
 				MircColors.BOLD + 
-				"Result " + MircColors.GREEN + "1" + MircColors.NORMAL + MircColors.BOLD + " / " + MircColors.GREEN + count + MircColors.NORMAL + MircColors.BOLD + ": " + 
-				MircColors.NORMAL + 
-				list.get(0).getColorString();
+				"Result " + MircColors.GREEN + "1" + MircColors.NORMAL + MircColors.BOLD + " / " + MircColors.GREEN + count + MircColors.NORMAL + MircColors.BOLD + ": "; 
+
+				try { 
+					result += list.get(0).getColorString();
+				} catch (IndexOutOfBoundsException ex) {
+					ex.printStackTrace();
+				}
+
+				
 
 			return result;
 		}
@@ -323,17 +329,24 @@ public class Weather {
 				String result = 
 					MircColors.BOLD + 
 					"Weather for " +
-					MircColors.GREEN + name + ", " + sys +  MircColors.NORMAL + MircColors.BOLD + " at " + 
-					MircColors.NORMAL +
+					MircColors.GREEN + name + ", " + 
+					MircColors.NORMAL + 
+					sys.getColorString() + " " +
 					coord.getColorString() + " " +
 					main.getColorString() +  ", " +
 					wind.getColorString() +  ", " +
 					clouds.getColorString() +  " ";
 
-				result = weather.stream().map(element -> element.getColorString()).reduce(result, String::concat);
+				try { 
+					result += weather.get(0).getColorString() +  " ";
+				} catch (IndexOutOfBoundsException ex) {
+					ex.printStackTrace();
+				}
 
-					result = result + "\n" + 
-					"https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif";
+//				result = weather.stream().map(element -> element.getColorString()).reduce(result, String::concat);
+
+//				result = result + "\n" + 
+//					"https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif";
 
 				if(rain != null) {
 					result += rain;
@@ -434,7 +447,7 @@ public class Weather {
 						", humidity: " + humidity;
 
 				}
-			} // EOF WeatherSysJsonItem
+			} // EOF WeatherMainJsonItem
 
 			/**
 			 *
@@ -469,13 +482,25 @@ public class Weather {
 	
 				private String country;
 
+				public String getColorString() {
+
+					String result;
+					if(country != null) {
+						result = 
+							MircColors.BOLD +
+							MircColors.GREEN +
+							country + 
+							MircColors.NORMAL;
+					} else {
+						result = "";
+					}
+
+					return result;
+				}
+
 				public String toString() {
-
-					return country;
-
-					/*
+	
 					return "country: " + country;
-					*/
 				}
 			} // EOF WeatherSysJsonItem
 
@@ -518,7 +543,7 @@ public class Weather {
 					String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
 					String result = 
 						MircColors.BOLD +
-						"with (a) " + MircColors.GREEN + description + ".\n" +
+						"with (a) " + MircColors.GREEN + description + MircColors.NORMAL + MircColors.BOLD + ".\n" +
 						iconUrl + 
 						MircColors.NORMAL;
 
@@ -535,4 +560,3 @@ public class Weather {
 	} // EOF WeatherJson
 
 } // EOF Weather
-
