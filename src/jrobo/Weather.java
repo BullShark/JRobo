@@ -294,7 +294,6 @@ public class Weather {
 
 			public String getColorString() {
 
-
 				String result = 
 					MircColors.BOLD + 
 					"Weather for " +
