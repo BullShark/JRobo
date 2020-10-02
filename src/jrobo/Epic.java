@@ -29,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -86,7 +87,6 @@ public class Epic {
 			);
 
 			//System.out.println(url);
-
 			conn = url.openConnection();
 
 			// Get the response
@@ -128,7 +128,7 @@ public class Epic {
 		/* Fixes NullPointerException Bug that occurs if the URL DNE */
 		try {
 			if (hasColors) {
-				for (EpicJsonItem eji : ej.list) {
+				for (EpicJson.EpicJsonItem eji : ej.list) {
 					if (index > 0) {
 						outArr[count++] = eji.getColorString();
 						index--;
@@ -137,7 +137,7 @@ public class Epic {
 					}
 				}
 			} else {
-				for (EpicJsonItem eji : ej.list) {
+				for (EpicJson.EpicJsonItem eji : ej.list) {
 					if (index > 0) {
 						outArr[count++] = eji.toString();
 						index--;
@@ -149,11 +149,11 @@ public class Epic {
 		} catch (NullPointerException ex) {
 			ex.printStackTrace();
 
-        		for (String element : outArr) {
+			for (String element : outArr) {
 				System.err.println(element);
 			}
 
-			return new String[] { "Could not be retrieved!" };
+			return new String[]{"Could not be retrieved!"};
 		}
 
 		return outArr;
@@ -163,10 +163,60 @@ public class Epic {
          * A main method for testing this class
 	 */
 	public static void main(String[] args) {
-		if(args.length == 0) {
+		if (args.length != 0) {
 			System.err.println("Usage: java Epic");
 			System.exit(-1);
 		}
 		System.out.println(Arrays.toString(new Epic().getFormattedEpic(false, -1)));
 	} // EOF main
+
+	/**
+	 *
+	 * @author Christopher Lemire <christopher.lemire@gmail.com>
+	 */
+	public class EpicJson {
+
+		public int total;
+		public String result_type;
+		public List<EpicJsonItem> list;
+
+		/**
+		 *
+		 * @override
+		 */
+		public String toString() {
+			return "Total: " + Integer.toString(total) + " has result_type: " + result_type;
+		}
+
+		/**
+		 *
+		 * @author Christopher Lemire <christopher.lemire@gmail.com>
+		 */
+		public class EpicJsonItem {
+
+			public String definition;
+			public int thumbs_up;
+			public int thumbs_down;
+
+			public String getColorString() {
+				definition = definition.replaceAll("\\r|\\n", " ");
+				definition = definition.replaceAll("\\s++", " ");
+				String mystring
+					= MircColors.BOLD + MircColors.GREEN + "Thumbs:"
+					+ MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") "
+					+ MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:"
+					+ MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n";
+				return mystring;
+			}
+
+			public String toString() {
+				definition = definition.replaceAll("\\r|\\n", " ");
+				definition = definition.replaceAll("\\s++", " ");
+				return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
+
+			}
+		}
+
+	}
+
 } // EOF class
