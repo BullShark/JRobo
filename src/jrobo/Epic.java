@@ -337,18 +337,13 @@ promotions	{…}
 
 							/**
 							 *
-							 * @author Christopher
-							 * Lemire
+							 * @author Christopher Lemire
 							 * <goodbye300@aim.com>
 							 */
 							private class EpicTotalPriceJsonItem {
 
-								// Class object { ... }
-								// List<Class> object [ ... ]
-								private EpicTotalPriceJsonItem totalPrice;
-
 								public String toString() {
-									return "Catalog: " + Catalog;
+									return null;
 
 								}
 							}
@@ -356,9 +351,7 @@ promotions	{…}
 					}
 				}
 			}
-
 		}
-
 	}
 
 	/**
