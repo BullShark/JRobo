@@ -499,7 +499,8 @@ public class Weather {
 				private String icon;
 
 				private String getColorString() {
-					return this.toString();
+					String iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+					return this.toString() + "\n" + iconUrl;
 				}
 
 				public String toString() {
