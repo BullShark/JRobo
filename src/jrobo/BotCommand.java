@@ -504,7 +504,7 @@ public class BotCommand {
 
 //			System.out.println(Arrays.toString(new Epic().getFormattedEpicSummary(false, -1)));
 
-			connection.msgChannel(config.getChannel(), Arrays.toString(new Epic().getFormattedEpicSummary(false, -1)));
+			connection.msgChannel(config.getChannel(), Arrays.toString(new Epic().getFormattedEpicSummary(null, false, -1)));
 			
 		}
 	

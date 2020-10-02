@@ -64,7 +64,6 @@ public class Epic {
 		conn = null;
 
 		/* Miscelanous */
-
 		locale = "en-US";
 		countrycode = "TR";
 		json = "";
@@ -87,8 +86,7 @@ public class Epic {
 					+ "/freeGamesPromotions"
 					+ "?locale=" + locale
 					+ "&country=" + countrycode
-					+ "&allowCountries=" + countrycode
-				).replaceAll(" ", "%20")
+					+ "&allowCountries=" + countrycode).replaceAll(" ", "%20")
 			);
 
 			System.out.println("[+++] " + url);
@@ -118,7 +116,11 @@ public class Epic {
 		return json;
 	}
 
-	public String[] getFormattedEpicSummary(final boolean hasColors, final int limit) {
+	public String[] getFormattedEpicSummary(final String locale, final boolean hasColors, final int limit) {
+
+		if (locale != null && !locale.equals("")) {
+			this.locale = locale;
+		}
 
 		/*
 		 * TODO Add try/catch to handle
@@ -140,7 +142,7 @@ public class Epic {
 		/* Handles NullPointerException that occurs if the URL DNE */
 		try {
 			if (hasColors) {
-				for (EpicJson.EpicJsonItem eji : ej.list) {
+				for (EpicJson.EpicJsonItem eji : ej.data) {
 					if (index > 0) {
 						outArr[count++] = eji.getColorString();
 						index--;
@@ -149,7 +151,7 @@ public class Epic {
 					}
 				}
 			} else {
-				for (EpicJson.EpicJsonItem eji : ej.list) {
+				for (EpicJson.EpicJsonItem eji : ej.data) {
 					if (index > 0) {
 						outArr[count++] = eji.toString();
 						index--;
@@ -180,7 +182,7 @@ public class Epic {
 			System.exit(-1);
 		}
 
-		System.out.println(Arrays.toString(new Epic().getFormattedEpicSummary(false, -1)));
+		System.out.println(Arrays.toString(new Epic().getFormattedEpicSummary(null, false, 10)));
 	} // EOF main
 
 	/**
@@ -189,27 +191,30 @@ public class Epic {
 	 */
 	public class EpicJson {
 
-		public int total;
-		public String resultType;
-		public List<EpicJsonItem> list;
+		public List<EpicDataJsonItem> data;
+		//extensions
+
+		public String getColorString() {
+			String result = "";
+
+			return result;
+		}
 
 		/**
 		 *
 		 * @override
 		 */
 		public String toString() {
-			return "Total: " + Integer.toString(total) + " has resultType: " + resultType;
+			return "data: " + data + "unknown: " + null;
 		}
 
 		/**
 		 *
 		 * @author Christopher Lemire <christopher.lemire@gmail.com>
 		 */
-		public class EpicJsonItem {
+		public class EpicDataJsonItem {
 
-			public String definition;
-			public int thumbs_up;
-			public int thumbs_down;
+			public String Catalog;
 
 			public String getColorString() {
 				String result = "";
@@ -218,7 +223,50 @@ public class Epic {
 			}
 
 			public String toString() {
-				return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
+				return "Catalog: " + Catalog;
+
+			}
+
+			/**
+			 *
+			 * @author Christopher Lemire
+			 * <christopher.lemire@gmail.com>
+			 */
+			public class EpicCatalogJsonItem {
+
+				public String searchStore;
+
+				public String getColorString() {
+					String result = "";
+
+					return result;
+				}
+
+				public String toString() {
+					return "Catalog: " + Catalog;
+
+				}
+
+			/**
+			 *
+			 * @author Christopher Lemire
+			 * <christopher.lemire@gmail.com>
+			 */
+			public class EpicSearchStoreJsonItem {
+
+				public String elements;
+
+				public String getColorString() {
+					String result = "";
+
+					return result;
+				}
+
+				public String toString() {
+					return "Catalog: " + Catalog;
+
+				}
+			}
 
 			}
 		}
@@ -226,3 +274,4 @@ public class Epic {
 	}
 
 } // EOF class
+

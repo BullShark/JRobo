@@ -236,6 +236,7 @@ public class Weather {
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
+	 * @TODO Retrieve sunrise and sunset info
 	 */
 	private class WeatherJson {
 
