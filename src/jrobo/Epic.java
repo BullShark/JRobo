@@ -130,11 +130,11 @@ public class Epic {
 		 * TODO Add try/catch to handle
 		 * TODO The exception that no JSON is received
 		 */
-
 		EpicJson epicJson;
 
 		try {
-			Type EpicJsonT = new TypeToken<ArrayList<EpicJson>>(){}.getType();  
+			Type EpicJsonT = new TypeToken<ArrayList<EpicJson>>() {
+			}.getType();
 			System.out.println("[+++]\tEpicJson Type: " + EpicJsonT);
 
 			gson = new GsonBuilder().setPrettyPrinting().create();
@@ -142,9 +142,9 @@ public class Epic {
 
 		} catch (JsonSyntaxException | IllegalStateException ex) {
 			ex.printStackTrace();
-			return new String[] {"Unable to retrieve the weather"};
+			return new String[]{"Unable to retrieve the weather"};
 		}
-		
+
 		String[] outArr;
 		try {
 			outArr = new String[limit];
@@ -214,14 +214,12 @@ public class Epic {
 
 		/**
 		 * Example:
-		 * 
-		 * private WeatherCloudsJsonItem clouds;
-		 * private ArrayList<WeatherWeatherJsonItem> weather;
-		 * 
-		 * Class object { ... }
-		 * List<Class> object [ ... ]
+		 *
+		 * WeatherCloudsJsonItem clouds;
+		 * ArrayList<WeatherWeatherJsonItem> weather;
+		 *
+		 * Class object { ... }; List<Class> object [ ... ];
 		 */
-
 		private EpicDataJsonItem data;
 		private EpicExtensionsJsonItem extensions;
 
@@ -246,9 +244,6 @@ public class Epic {
 		 */
 		private class EpicDataJsonItem {
 
-			// Class object { ... }
-			// List<Class> object [ ... ]
-
 			private EpicCatalogJsonItem Catalog;
 
 			public String toString() {
@@ -259,12 +254,9 @@ public class Epic {
 			/**
 			 *
 			 * @author Christopher Lemire
-			 * <christopher.lemire@gmail.com>
+			 * <goodbye300@aim.com>
 			 */
 			private class EpicCatalogJsonItem {
-
-				// Class object { ... }
-				// List<Class> object [ ... ]
 
 				private EpicSearchStoreJsonItem searchStore;
 
@@ -279,9 +271,6 @@ public class Epic {
 				 * <goodbye300@aim.com>
 				 */
 				private class EpicSearchStoreJsonItem {
-
-					// Class object { ... }
-					// List<Class> object [ ... ]
 
 					private ArrayList<EpicElementsJsonItem> elements;
 
@@ -299,29 +288,30 @@ public class Epic {
 
 						/**
 						 * Example:
-						 * 
-						 * private WeatherCloudsJsonItem clouds;
-						 * private ArrayList<WeatherWeatherJsonItem> weather;
-						 * 
+						 *
+						 * private WeatherCloudsJsonItem
+						 * clouds; private
+						 * ArrayList<WeatherWeatherJsonItem>
+						 * weather;
+						 *
 						 * Class object { ... }
 						 * List<Class> object [ ... ]
 						 */
-
 						private String title;
 						private String id;
 						private String description;
 						private String effectiveDate;
-						//keyImages
-						//seller
+						//private EpicKeyImagesJsonItem keyImages;
+						//private EpickeySellerJsonItem seller;
 						private String productSlug;
 						private String urlSlug;
 						private String url;
-						//items
-						//customAttributes
-						//categories
-						//tags
-						//price
-						//promotions
+						//private ArrayList<EpicItemsJsonItem> items;
+						//private ArrayList<EpicCustomAttributesJsonItem> customAttributes;
+						//private ArrayList<EpicCategoriesJsonItem> categories;
+						//private ArrayList<EpicTagsJsonItem> tags;
+						private EpicPriceJsonItem price;
+						//private EpicPromotionsJsonItem promotions;
 
 						/*
 title	"ABZU"
@@ -349,53 +339,101 @@ promotions	{…}
 
 						public String toString() {
 							return "Catalog: " + Catalog;
+							/*
+								title;
+								id;
+								description;
+								effectiveDate;
+								keyImages;
+								seller;
+								productSlug;
+								urlSlug;
+								url;
+								items;
+								customAttributes;
+								categories;
+								tags;
+								price;
+								promotions;
+							 */
+						}
 
+						/**
+						 *
+						 * @author Christopher Lemire
+						 * <goodbye300@aim.com>
+						 */
+						private class EpicPriceJsonItem {
+
+							// Class object { ... }
+							// List<Class> object [ ... ]
+							private EpicTotalPriceJsonItem totalPrice;
+
+							public String toString() {
+								return "Catalog: " + Catalog;
+
+							}
+
+							/**
+							 *
+							 * @author Christopher
+							 * Lemire
+							 * <goodbye300@aim.com>
+							 */
+							private class EpicTotalPriceJsonItem {
+
+								// Class object { ... }
+								// List<Class> object [ ... ]
+								private EpicTotalPriceJsonItem totalPrice;
+
+								public String toString() {
+									return "Catalog: " + Catalog;
+
+								}
+							}
 						}
 					}
-
 				}
-
-			}
-		}
-
-		/**
-		 *
-		 * @author Christopher Lemire <christopher.lemire@gmail.com>
-		 */
-		private class EpicExtensionsJsonItem {
-
-			private EpicCacheControlJsonItem cacheControl;
-
-			/**
-			 *
-			 * @override
-			 */
-			public String toString() {
-				return "cacheControl " + cacheControl;
-			}
-
-			/**
-			 *
-			 * @author Christopher Lemire
-			 * <christopher.lemire@gmail.com>
-			 */
-			private class EpicCacheControlJsonItem {
-
-				private String version;
-				//private List<EpicHintsJsonItem> hints;
-
-				/**
-				 *
-				 * @override
-				 */
-				public String toString() {
-					return null;
-				}
-
 			}
 
 		}
 
 	}
 
+	/**
+	 *
+	 * @author Christopher Lemire
+	 * <goodbye300@aim.com>
+	 */
+	private class EpicExtensionsJsonItem {
+
+		private EpicCacheControlJsonItem cacheControl;
+
+		/**
+		 *
+		 * @override
+		 */
+		public String toString() {
+			return "cacheControl " + cacheControl;
+		}
+
+		/**
+		 *
+		 * @author Christopher Lemire
+		 * <goodbye300@aim.com>
+		 */
+		private class EpicCacheControlJsonItem {
+
+			private String version;
+			//private List<EpicHintsJsonItem> hints;
+
+			/**
+			 *
+			 * @override
+			 */
+			public String toString() {
+				return null;
+			}
+		}
+	}
 } // EOF class
