@@ -306,11 +306,17 @@ public class Weather {
 					wind.getColorString() +  ", " +
 					clouds.getColorString() +  " ";
 
+				for(WeatherWeatherJsonItem element : weather) {
+					result += element.getColorString() +  " ";
+				}
+
+/*
 				try { 
 					result += weather.get(0).getColorString() +  " ";
 				} catch (IndexOutOfBoundsException ex) {
 					ex.printStackTrace();
 				}
+*/
 
 //				result = weather.stream().map(element -> element.getColorString()).reduce(result, String::concat);
 
