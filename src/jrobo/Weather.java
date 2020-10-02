@@ -249,6 +249,7 @@ public class Weather {
 			String result =
 				MircColors.BOLD + 
 				"Result " + MircColors.GREEN + "1" + MircColors.NORMAL + MircColors.BOLD + " / " + MircColors.GREEN + count + MircColors.NORMAL + MircColors.BOLD + ": "; 
+			result += MircColors.NORMAL;
 
 				try { 
 					result += list.get(0).getColorString();
