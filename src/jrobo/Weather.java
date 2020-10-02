@@ -318,6 +318,11 @@ public class Weather {
 
 			public String getColorString() {
 
+				String weatherAllElementsColorString = "";
+				for(WeatherWeatherJsonItem element : weather) {
+					weatherAllElementsColorString += element.getColorString();
+				}
+
 				String result = 
 					MircColors.BOLD + "Weather for " +
 					MircColors.GREEN + name + ", " + sys +  MircColors.NORMAL + MircColors.BOLD +
@@ -326,7 +331,7 @@ public class Weather {
 					main.getColorString() +  ", " + MircColors.BOLD + 
 					wind.getColorString() +  ", " + 
 					clouds.getColorString() +  ", " + 
-					weather.get(0).getColorString()  + "\n" + 
+					weatherAllElementsColorString  + "\n" + 
 					"<embed> https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif </embed>";
 
 				if(rain != null) {
