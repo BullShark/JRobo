@@ -25,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -187,7 +188,7 @@ public class Weather {
 		WeatherJson weatherJson;
 
 		try {
-			java.lang.reflect.Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>(){}.getType();  
+			Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>(){}.getType();  
 			System.out.println("[+++]\tWeatherJson Type: " + WeatherJsonT);
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
