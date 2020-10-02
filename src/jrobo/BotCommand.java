@@ -21,6 +21,7 @@
  */
 package jrobo;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Timer;
@@ -501,7 +502,9 @@ public class BotCommand {
 
         		Epic epic = new Epic();
 
-			connection.msgChannel(config.getChannel(), epic.getFormattedEpicSummary(epic.getJson()));
+//			System.out.println(Arrays.toString(new Epic().getFormattedEpicSummary(false, -1)));
+
+			connection.msgChannel(config.getChannel(), Arrays.toString(new Epic().getFormattedEpicSummary(false, -1)));
 			
 		}
 	

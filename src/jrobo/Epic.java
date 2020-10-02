@@ -76,7 +76,7 @@ public class Epic {
 	 *
 	 * @return
 	 */
-	public String getJson() {
+	private String getJson() {
 		try {
 			/* Create a URL obj from strings */
 
@@ -115,7 +115,7 @@ public class Epic {
 		return json;
 	}
 
-	public String[] getFormattedEpic(final boolean hasColors, final int limit) {
+	public String[] getFormattedEpicSummary(final boolean hasColors, final int limit) {
 
 		/*
 		 * TODO Add try/catch to handle
@@ -170,7 +170,8 @@ public class Epic {
 			System.err.println("Usage: java Epic");
 			System.exit(-1);
 		}
-		System.out.println(Arrays.toString(new Epic().getFormattedEpic(false, -1)));
+
+		System.out.println(Arrays.toString(new Epic().getFormattedEpicSummary(false, -1)));
 	} // EOF main
 
 	/**
