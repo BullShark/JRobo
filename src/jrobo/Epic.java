@@ -331,7 +331,7 @@ promotions	{…}
 //								"customAttributes: " + customAttributes +
 //								"categories: " + categories +
 //								"tags: " + tags +
-								"price: " + price+
+								"price: " + price
 //								"promotions: " + promotions
 								;
 
