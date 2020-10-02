@@ -299,55 +299,24 @@ promotions	{…}
 						}
 
 						public String toString() {
-							/*
-								title;
-								id;
-								description;
-								effectiveDate;
-								keyImages;
-								seller;
-								productSlug;
-								urlSlug;
-								url;
-								items;
-								customAttributes;
-								categories;
-								tags;
-								price;
-								promotions;
-							 */
 
-							return "title: " + title +
-								"id: " + id + 
-								"description: " + description + 
-								"effectiveDate" + effectiveDate +
-//								"keyImages: " + keyImages +
-//								"seller: " + seller + 
-								"productSlug: " + productSlug +
-								"urlSlug: " + urlSlug +
-								"url: " + url +
-//								"items: " + items +
-								"url: " + url +
-//								"customAttributes: " + customAttributes +
-//								"categories: " + categories +
-//								"tags: " + tags +
-								"price: " + price
+							return "title: " + title + "\n" +
+								"id: " + id +  "\n" +
+								"description: " + description +  "\n" +
+								"effectiveDate" + effectiveDate + "\n" +
+//								"keyImages: " + keyImages + "\n" +
+//								"seller: " + seller +  "\n" +
+								"productSlug: " + productSlug + "\n" +
+								"urlSlug: " + urlSlug + "\n" +
+								"url: " + url + "\n" +
+//								"items: " + items + "\n" +
+								"url: " + url + "\n" +
+//								"customAttributes: " + customAttributes + "\n" +
+//								"categories: " + categories + "\n" +
+//								"tags: " + tags + "\n" +
+								"price: " + price + "\n"
 //								"promotions: " + promotions
 								;
-
-				return "id: " + id + "\n" +
-					"name: " + name + "\n" +
-					"coord: " + coord + "\n" +
-					"main: " + main + "\n" +
-					"dt: " + dt + "\n" +
-					"sys: " + sys + "\n" +
-					"wind: " + wind + "\n" +
-					"rain: " + rain + "\n" +
-					"snow: " + snow + "\n" +
-					"clouds: " + clouds + "\n" +
-					"weather " + weather + "\n";
-
-
 						}
 
 						/**
