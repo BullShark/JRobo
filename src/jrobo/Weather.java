@@ -310,16 +310,6 @@ public class Weather {
 					result += element.getColorString() +  " ";
 				}
 
-/*
-				try { 
-					result += weather.get(0).getColorString() +  " ";
-				} catch (IndexOutOfBoundsException ex) {
-					ex.printStackTrace();
-				}
-*/
-
-//				result = weather.stream().map(element -> element.getColorString()).reduce(result, String::concat);
-
 //				result = result + "\n" + 
 //					"https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif";
 
