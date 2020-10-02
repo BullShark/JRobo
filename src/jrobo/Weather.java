@@ -30,7 +30,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -242,7 +241,7 @@ public class Weather {
 		private String message;
 		private String cod;
 		private int count;
-		private List<WeatherListJsonItem> list;
+		private ArrayList<WeatherListJsonItem> list;
 
 		public String getColorString() {
 
@@ -290,7 +289,7 @@ public class Weather {
 			private Object rain;
 			private String snow;
 			private WeatherCloudsJsonItem clouds;
-			private List<WeatherWeatherJsonItem> weather;
+			private ArrayList<WeatherWeatherJsonItem> weather;
 
 			public String getColorString() {
 
