@@ -157,9 +157,33 @@ public class UrbanDict {
                 private int limit;
 
                 /** 
-                 *
+                 * 
+                 * The constructor overrides and defines Comparator<UrbanJsonItem>().compare(UrbanJsonItem, UrbanJsonItem) 
+                 * Used for sorting the ArrayList<UrbanJsonItem> by the number of thumbs_up
                  */
                 public UrbanJson() {
+                        
+                        List<UrbanJsonItem> movies = Arrays.asList(
+                                new UrbanJsonItem("Lord of the rings", 8.8, true),
+                                new UrbanJsonItem("Back to the future", 8.5, false),
+                                new UrbanJsonItem("Carlito's way", 7.9, true),
+                                new UrbanJsonItem("Pulp fiction", 8.9, false));
+
+                        movies.sort(new Comparator<UrbanJsonItem>() {
+
+                                @Override
+                                public int compare(UrbanJsonItem uji1, UrbanJsonItem uji2) {
+                                        if (uji1.getStarred() == uji2.getStarred()) {
+                                                return 0;
+                                        }
+                                        return uji1.getStarred() ? -1 : 1;
+                                }
+                        });
+                        ​
+                        uji.forEach(System.out::println);
+
+
+
                         
                 /*
                         List<Movie> movies = Arrays.asList(
@@ -208,7 +232,7 @@ public class UrbanDict {
                  * @override
                  */
                 public String toString() {
-                        return "Total: " + total + " has result_type: " + result_type();
+                        return "Total: " + total + " has result_type: " + result_type " with list: " + list;
                 }
 
                 /**
@@ -236,6 +260,7 @@ public class UrbanDict {
                          */
                         public int getThumbs_down() { return thumbs_down; }
 
+/*
                         public String getColorString() {
                                 setDefinition(getDefinition().replaceAll("\\r|\\n", " "));
                                 setDefinition(getDefinition().replaceAll("\\s++", " "));
@@ -248,11 +273,29 @@ public class UrbanDict {
                         }
 
                         public String toString() {
-                                setDefinition(getDefinition().replaceAll("\\r|\\n", " "));
-                                setDefinition(getDefinition().replaceAll("\\s++", " "));
-                                return "Thumbs: (+" + getThumbs_up() + " -" + getThumbs_down() + ") Definition: " + getDefinition() + "\n";
 
                         }
+*/
+
+                        public String getColorString() {
+                                definition = definition.replaceAll("\\r|\\n", " ");
+                                definition = definition.replaceAll("\\s++", " ");
+
+                                String result =
+                                        MircColors.BOLD + MircColors.GREEN + "Thumbs:" +
+                                        MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") " +
+                                        MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:" +
+                                        MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n"; 
+
+                                        return result;
+                                }
+
+                                public String toString() {
+                                        definition = definition.replaceAll("\\r|\\n", " ");
+                                        definition = definition.replaceAll("\\s++", " ");
+
+                                        return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
+                                }
                 }
         }
 } // EOF class
