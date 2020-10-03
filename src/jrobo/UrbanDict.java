@@ -48,9 +48,8 @@ public class UrbanDict {
 
         /* Miscelanous */
         private final String QUERY_URL = "https://api.urbandictionary.com";
-        private String def;
         private String json;
-        private String word;
+        private final String word;
 
         /* For the Gson/Json */
         private Gson gson;
@@ -75,41 +74,53 @@ public class UrbanDict {
          * @return json
          */
         public String getJson() {
-                try {
-                        /* Create a URL obj from strings */
-                        url = new URL(
-                                (QUERY_URL
-                                        + "/v0/define"
-                                        + "?term=" + word).replace(" ", "%20")
-                        );
 
-                        System.out.println("[+++]\t" + url);
+                /* Create a URL obj from strings */
+		
 
-                        conn = url.openConnection();
+		// Get the response
+                try(
+	                url = new URL(
+		                (QUERY_URL
+				+ "/v0/define"
+				+ "?term=" + word).replace(" ", "%20")
+			);
 
-                        // Get the response
-                        rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			conn = url.openConnection();
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		) {
+			System.out.println("[+++]\t" + url);
 
                         String line = "";
                         while ((line = rd.readLine()) != null) {
                                 json += line;
                         }
 
-                        rd.close();
-
                 } catch (MalformedURLException ex) {
                         ex.printStackTrace();
+			json = "{ \"list\": \"Unable to retrieve UrbanDict json data\" }";
+
                 } catch (IOException ex) {
                         ex.printStackTrace();
-                }
+			json = "{ \"list\": \"Unable to retrieve UrbanDict json data\" }";
 
-                //System.out.println("JSON: " + json);
-                return json;
+                } finally {
+			System.out.println("[+++]\t" + json);
+	                return json;
+
+		}
         }
 
-        public String getFormattedUrbanDef(final boolean hasColors, final int limit) {
+	/**
+	 *
+	 * @param hasColors
+	 * @param limit
+	 * @return
+	 */
+	public String getFormattedUrbanDef(final boolean hasColors, final int limit) {
 
                 UrbanJson urbanJson;
+		String result;
                 try {
                         Type UrbanJsonT = new TypeToken<ArrayList<UrbanJson>>() {
                         }.getType();
@@ -119,22 +130,32 @@ public class UrbanDict {
                         urbanJson = gson.fromJson(this.getJson(), UrbanJson.class);
 
 			urbanJson.sort();
+			
+                        System.out.println("[+++]\turbanJson.getListSize(): " + urbanJson.getListSize());
+
 			urbanJson.setLimit(limit);
 
+                        System.out.println("[+++]\turbanJson.getListSize(): " + urbanJson.getListSize());
+
 			if(hasColors) {
-                		return urbanJson.getColorString();
+                		result = urbanJson.getColorString();
 			} else {
-				return urbanJson.toString();
+				result = urbanJson.toString();
 			}
 
                 } catch (JsonSyntaxException | IllegalStateException | NullPointerException ex) {
-                        ex.printStackTrace();
-                        return "Unable to retrieve the weather";
-                }
+			Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
+			result = "{ \"list\": \"Unable to retrieve UrbanDict json data\" }";
+
+                } finally {
+			System.out.println("[+++]\t" + result);
+			return result;
+
+		}
         }
 
-        /*
-   * A main method for testing this class
+        /* 
+	 * A main method for testing this class
          */
         public static void main(String[] args) {
                 if (args.length == 0) {
@@ -152,7 +173,7 @@ public class UrbanDict {
 
                 private int total;
                 private String result_type;
-                public List<UrbanJsonItem> list;
+                public ArrayList<UrbanJsonItem> list;
 
                 /**
 		 * Not part of the Json 
@@ -170,10 +191,30 @@ public class UrbanDict {
 		}
 
 		/**
+		 * @return size of ArrayList<UrbanJsonItem> list
+		 */
+		public int getListSize() {
+			return list.size();
+		}
+
+		/**
 		 * @param limit the limit to set
 		 */
 		public void setLimit(int limit) {
-			this.limit = limit;
+			if(limit > 0 && limit < list.size() && !list.isEmpty() && list != null) {
+				this.limit = limit;
+				//sort(); // subList() should be given a sorted List
+				ArrayList<UrbanJsonItem> temp = list;
+				//list = temp.stream().limit( this.limit ).collect(Collectors.toList()); temp = null;
+				try {
+					list = (ArrayList<UrbanJsonItem>) (List) new ArrayList<>(temp.subList(0, this.limit));
+					temp = null;
+
+				} catch (IndexOutOfBoundsException ex) {
+					ex.printStackTrace();
+					if(temp != null) { list = temp; temp = null; }
+				}
+			}
 		}
 
                 /** 
@@ -190,8 +231,8 @@ public class UrbanDict {
 
                                 @Override
                                 public int compare(UrbanJsonItem uji1, UrbanJsonItem uji2) {
-                                        if (uji1.getThumbsDown() < uji2.getThumbsDown()) return -1; 
-                                        if (uji1.getThumbsDown() > uji2.getThumbsDown()) return 1; 
+                                        if (uji1.getThumbsUp() < uji2.getThumbsUp()) return -1; 
+                                        if (uji1.getThumbsUp() > uji2.getThumbsUp()) return 1; 
                                         else return 0; 
                                 }
                         });
