@@ -108,12 +108,10 @@ public class Epic {
 
 			rd.close();
 
-		} catch (MalformedURLException ex) {
-			ex.printStackTrace();
-		} catch (ConnectException ex) {
-			ex.printStackTrace();
 		} catch (IOException ex) {
 			ex.printStackTrace();
+		} finally {
+			//@TODO Close all i/o and streams here
 		}
 
 		System.out.println(json);
