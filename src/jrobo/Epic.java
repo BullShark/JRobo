@@ -92,7 +92,7 @@ public class Epic {
 					+ "&allowCountries=" + countrycode).replaceAll(" ", "%20")
 			);
 
-			System.out.println("[+++] " + url);
+			System.out.println("[+++]\t" + url);
 
 			conn = url.openConnection();
 
@@ -138,16 +138,13 @@ public class Epic {
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			epicJson = gson.fromJson(this.getJson(), EpicJson.class);
 
-		} catch (JsonSyntaxException | IllegalStateException ex) {
+			return epicJson.toString();
+//			return EpicJson.getColorString();
+
+		} catch (JsonSyntaxException | IllegalStateException | NullPointerException ex) {
 			ex.printStackTrace();
 			return "Unable to retrieve the weather";
 		}
-
-		/* Handles NullPointerException that occurs if the URL DNE */
-		//return new String[]{"Could not be retrieved!"};
-		return epicJson.toString();
-
-//		return EpicJson.getColorString();
 	}
 
 	/*
