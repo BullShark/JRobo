@@ -163,6 +163,7 @@ public class UrbanDict {
                  */
                 public UrbanJson() {
                         
+/*
                         List<UrbanJsonItem> movies = Arrays.asList(
                                 new UrbanJsonItem("Lord of the rings", 8.8, true),
                                 new UrbanJsonItem("Back to the future", 8.5, false),
@@ -181,6 +182,7 @@ public class UrbanDict {
                         });
                         ​
                         uji.forEach(System.out::println);
+*/
 
 
 
