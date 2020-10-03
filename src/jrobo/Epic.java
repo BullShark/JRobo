@@ -46,12 +46,14 @@ public class Epic {
 	private OutputStreamWriter wr;
 	private BufferedReader rd;
 
-	/* Miscelanous
+	/**
+	 * Miscellanous
 	 *
-	 * TODO Fix bug, if the url is not available, the bot will throw an exception and crash
+	 * @TODO Fix bug, if the url is not available, the bot will throw an exception and crash
 	 * Example: https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
 	 */
-	private static final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
+	private static final String QUERY_URL = "https://invalid.not.a.real.domain";
+	//private static final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
 	private String json;
 	private String locale;
 	private String countrycode;
