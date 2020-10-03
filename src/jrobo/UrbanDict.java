@@ -170,11 +170,11 @@ public class UrbanDict {
                                 new UrbanJsonItem("Carlito's way", 7.9, true),
                                 new UrbanJsonItem("Pulp fiction", 8.9, false));
 
-                        movies.sort(new Comparator<UrbanJsonItem>() {
+                        list.sort(new Comparator<UrbanJsonItem>() {
 
                                 @Override
                                 public int compare(UrbanJsonItem uji1, UrbanJsonItem uji2) {
-                                        if (uji1.getStarred() == uji2.getStarred()) {
+                                        if (uji1.getThumbs_up() == uji2.getStarred()) {
                                                 return 0;
                                         }
                                         return uji1.getStarred() ? -1 : 1;
@@ -255,29 +255,12 @@ public class UrbanDict {
                         /**
                          * @return the thumbs_up
                          */
-                        public int getThumbs_up() { return thumbs_up; }
+                        public int getThumbsUp() { return thumbs_up; }
 
                         /**
                          * @return the thumbs_down
                          */
-                        public int getThumbs_down() { return thumbs_down; }
-
-/*
-                        public String getColorString() {
-                                setDefinition(getDefinition().replaceAll("\\r|\\n", " "));
-                                setDefinition(getDefinition().replaceAll("\\s++", " "));
-                                String mystring
-                                        = MircColors.BOLD + MircColors.GREEN + "Thumbs:"
-                                        + MircColors.NORMAL + MircColors.BOLD + " (+" + getThumbs_up() + " -" + getThumbs_down() + ") "
-                                        + MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:"
-                                        + MircColors.NORMAL + MircColors.BOLD + " " + getDefinition() + "\n";
-                                return mystring;
-                        }
-
-                        public String toString() {
-
-                        }
-*/
+                        public int getThumbsDown() { return thumbs_down; }
 
                         public String getColorString() {
                                 definition = definition.replaceAll("\\r|\\n", " ");
@@ -290,13 +273,13 @@ public class UrbanDict {
                                         MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n"; 
 
                                         return result;
-                                }
+                        }
 
-                                public String toString() {
-                                        definition = definition.replaceAll("[\\r\\n\\s]++", " ");
+                        public String toString() {
+                                definition = definition.replaceAll("[\\r\\n\\s]++", " ");
 
-                                        return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
-                                }
-                }
-        }
-} // EOF class
+                                return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
+                        }
+                } // EOF UrbanJsonItem
+        } // EOF UrbanJson
+} // EOF UrbanDict
