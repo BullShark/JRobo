@@ -71,7 +71,7 @@ public class UrbanDict {
         }
 
         /**
-         *
+         * @TODO https://blog.api.rakuten.net/top-10-best-dictionary-apis-oxford-urban-wordnik/
          * @return json
          */
         public String getJson() {
