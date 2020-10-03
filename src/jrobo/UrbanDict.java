@@ -80,7 +80,7 @@ public class UrbanDict {
                         url = new URL(
                                 (QUERY_URL
                                         + "/v0/define"
-                                        + "?term=" + word).replace(" ", "%20") //FIXME String.replace() or String.replaceAll()
+                                        + "?term=" + word).replace(" ", "%20")
                         );
 
                         System.out.println("[+++]\t" + url);
