@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -164,30 +165,53 @@ public class UrbanDict {
                 public UrbanJson() {
                         
 /*
-                        List<UrbanJsonItem> movies = Arrays.asList(
+                        List<UrbanJsonItem> list = Arrays.asList(
                                 new UrbanJsonItem("Lord of the rings", 8.8, true),
                                 new UrbanJsonItem("Back to the future", 8.5, false),
                                 new UrbanJsonItem("Carlito's way", 7.9, true),
                                 new UrbanJsonItem("Pulp fiction", 8.9, false));
+*/
 
                         list.sort(new Comparator<UrbanJsonItem>() {
 
                                 @Override
                                 public int compare(UrbanJsonItem uji1, UrbanJsonItem uji2) {
-                                        if (uji1.getThumbs_up() == uji2.getStarred()) {
-                                                return 0;
-                                        }
-                                        return uji1.getStarred() ? -1 : 1;
+                                        if (uji1.getThumbsUp() < uji2.getThumbsUp()) return -1; 
+                                        if (uji1.getThumbsUp() > uji2.getThumbsUp()) return 1; 
+                                        else return 0; 
                                 }
                         });
                         ​
-                        uji.forEach(System.out::println);
+                        list.forEach(System.out::println); //XXX Check the output. Is it sorted?
+                        
+/*
+// Class to compare Movies by ratings 
+class RatingCompare implements Comparator<Movie> 
+{ 
+    public int compare(Movie m1, Movie m2) 
+    { 
+        if (m1.getRating() < m2.getRating()) return -1; 
+        if (m1.getRating() > m2.getRating()) return 1; 
+        else return 0; 
+    } 
+} 
+*/
+/*
+                        list.sort(new Comparator<UrbanJsonItem>() {
+
+                                @Override
+                                public int compare(UrbanJsonItem uji1, UrbanJsonItem uji2) {
+                                        if (uji1.getThumbsUp()  == uji2.getThumbsUp()) {
+                                                return 0;
+                                        }
+                                        return uji1.getThumbsUp() ? -1 : 1;
+                                }
+                        });
+                        ​
+                        uji.forEach(System.out::println); //XXX Check the output. Is it sorted?
 */
 
-
-
-                        
-                /*
+/*
                         List<Movie> movies = Arrays.asList(
                                 new Movie("Lord of the rings", 8.8, true),
                                 new Movie("Back to the future", 8.5, false),
@@ -206,14 +230,12 @@ public class UrbanDict {
                         });
                         ​
                         movies.forEach(System.out::println);
-                 */
-
-
+*/
                 }
 
                 /**
                  *
-                 * @param limit
+                 * @param limit Limits the number of results
                  */
                 public UrbanJson(final int limit) {
                         super();
