@@ -21,7 +21,7 @@ package jrobo;
 
 /**
  *
- * @author Christopher Lemire <christopher.lemire@gmail.com>
+ * @author Christopher Lemire <goodbye300@aim.com>
  */
 public class UrbanJsonItem {
   public String definition;
