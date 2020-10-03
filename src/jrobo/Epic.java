@@ -45,7 +45,7 @@ public class Epic {
 	private BufferedReader rd;
 
 	/**
-	 * Miscellanous
+	 * Miscellaneous
 	 *
 	 * @TODO Fix bug, if the url is not available, the bot will throw an exception and crash
 	 * Example: https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
