@@ -181,7 +181,7 @@ public class UrbanDict {
                                         else return 0; 
                                 }
                         });
-                        ​
+
                         list.forEach(System.out::println); //XXX Check the output. Is it sorted?
                         
 /*
