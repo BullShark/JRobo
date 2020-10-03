@@ -86,6 +86,8 @@ public class FileReader {
 		
 		/* Should only be null if this method has already been ran once or the constructor has never been called */
 		if(config != null) {
+			//Thread.dumpStack();
+			out.println("[+++]\tReusing Config because it's != null");
 			return config;
 		}
 
