@@ -42,11 +42,11 @@ public class BotCommand {
 	private String cmd;
 	private String cmdArgs;
 	private boolean hasArgs;
-	private ListColors lc;
+	private final ListColors lc;
 	private boolean threadCreated;
 	private boolean bombActive;
-	private boolean[] wire;
-	private Jokes joke;
+	private final boolean[] wire;
+	private final Jokes joke;
 
 	/**
 	 *
