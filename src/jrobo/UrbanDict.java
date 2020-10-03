@@ -83,7 +83,7 @@ public class UrbanDict {
                                         + "?term=" + word).replace(" ", "%20") //FIXME String.replace() or String.replaceAll()
                         );
 
-                        System.out.println("[+++]\tURL: " + url);
+                        System.out.println("[+++]\t" + url);
 
                         conn = url.openConnection();
 
@@ -109,10 +109,6 @@ public class UrbanDict {
 
         public String getFormattedUrbanDef(final boolean hasColors, final int limit) {
 
-                /*
-		 * TODO Add try/catch to handle
-		 * TODO The exception that no JSON is received
-                 */
                 UrbanJson urbanJson;
                 try {
                         Type UrbanJsonT = new TypeToken<ArrayList<UrbanJson>>() {
@@ -122,15 +118,19 @@ public class UrbanDict {
                         gson = new GsonBuilder().setPrettyPrinting().create();
                         urbanJson = gson.fromJson(this.getJson(), UrbanJson.class);
 
-                } catch (JsonSyntaxException | IllegalStateException ex) {
+			urbanJson.sort();
+			urbanJson.setLimit(limit);
+
+			if(hasColors) {
+                		return urbanJson.getColorString();
+			} else {
+				return urbanJson.toString();
+			}
+
+                } catch (JsonSyntaxException | IllegalStateException | NullPointerException ex) {
                         ex.printStackTrace();
                         return "Unable to retrieve the weather";
                 }
-
-                /* Handles NullPointerException that occurs if the URL DNE */
-//		return urbanJson.toString();
-                return urbanJson.getColorString();
-
         }
 
         /*

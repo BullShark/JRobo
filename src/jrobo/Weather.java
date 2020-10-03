@@ -155,7 +155,7 @@ public class Weather {
 				).replaceAll(" ", "%20")
 			);
 
-			System.out.println("[+++] " + url);
+                        System.out.println("[+++]\t" + url);
 
 			conn = url.openConnection();
 
