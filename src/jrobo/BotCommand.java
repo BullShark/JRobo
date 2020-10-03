@@ -311,162 +311,6 @@ public class BotCommand {
 	}
 
 	/**
-         * Starts timer for bomb, sets an active wire and prints explosion and kicks user holding at [20] seconds.
-	 */
-	public void bomb() {
-		bombHolder = user;
-		connection.msgChannel(config.getChannel(), MircColors.BOLD + bombHolder + MircColors.WHITE + " started the bomb!!!");
-		connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
-		connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
-		bombActive = true;
-		wire[0] = false;
-		wire[1] = false;
-		wire[2] = false;
-		wire[(int) (3.0 * Math.random())] = true;
-		final Timer timer;
-
-		timer = new Timer();
-
-		class BombTask extends TimerTask {
-
-			public void run() {
-				if (!bombActive) {
-					timer.cancel();
-				} else {
-					connection.msgChannel(config.getChannel(), MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       ");
-					connection.msgChannel(config.getChannel(), MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "   (" + MircColors.BROWN + "=:" + MircColors.YELLOW + "(" + MircColors.BROWN + ",=:~++" + MircColors.YELLOW + "=:" + MircColors.BROWN + "::~,:~:" + MircColors.YELLOW + "))" + MircColors.BROWN + "~~~." + MircColors.YELLOW + ")    ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~" + MircColors.YELLOW + ")" + MircColors.BROWN + ",$,I?" + MircColors.YELLOW + "))   ");
-					connection.msgChannel(config.getChannel(), MircColors.BROWN + "    ``  ```" + MircColors.YELLOW + "~~" + MircColors.BROWN + "?" + MircColors.YELLOW + "~=" + MircColors.BROWN + "$.~~~  ``     ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "             :" + MircColors.BROWN + "S" + MircColors.YELLOW + "Z=             ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "         .-~~" + MircColors.BROWN + "?=:=" + MircColors.YELLOW + "``~-_        ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "         `--=~=+~++=~`        ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "             ." + MircColors.BROWN + "~" + MircColors.YELLOW + ":" + MircColors.BROWN + "~             ");
-					connection.msgChannel(config.getChannel(), MircColors.BROWN + "         ((.(\\.!/.):?)        ");
-					connection.msgChannel(config.getChannel(), MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
-					connection.kickFromChannel(config.getChannel(), user + " KABOOM!!!");
-					bombActive = false;
-					timer.cancel();
-				}
-			}
-		}
-		timer.schedule(new BombTask(), 20000);
-	}
-
-	/**
-         * Simply passes the bomb to another user and returns it if they attempt to pass to JRobo.
-	 */
-	private void pass() {
-		String users = getUsers();
-		if (users.contains(cmdArgs) && !cmdArgs.equals("") && user.equals(bombHolder) && bombActive == true) {
-			bombHolder = cmdArgs;
-			connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
-			if (cmdArgs.equals(config.getName())) {
-				try {
-					Thread.sleep(2500);
-				} catch (Exception ex) { //Find out exactly what exceptions are thrown
-					//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-				}
-				connection.msgChannel(config.getChannel(), ">pass " + user);
-				bombHolder = user;
-				connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
-			}
-		} else {
-			connection.msgChannel(config.getChannel(), "Invalid.");
-		}
-	}
-
-	/**
-         * This function will return a wire for a given color and is only to be used within defuse.
-	 * @return 
-	 */
-	private boolean wire(final String color) {
-		switch (color) {
-			case "red":
-				return wire[0];
-			case "green":
-				return wire[1];
-			case "blue":
-				return wire[2];
-		}
-		return false;
-	}
-
-	/**
-         * This is the defuse method and refers to a global boolean array of wires and the active wire is set to true in bomb() function.
-	 */
-	public void defuse() {
-		if (bombActive && user.equals(bombHolder)) {
-			if (wire(cmdArgs) == true) {
-				connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
-				bombActive = false;
-			} else {
-				//TODO Will removing leading spaces break things, or should we do it?
-				connection.msgChannel(config.getChannel(),
-					MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          \n"
-					+ MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       \n"
-					+ MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     \n"
-					+ MircColors.YELLOW + "   (" + MircColors.BROWN + "=:" + MircColors.YELLOW + "(" + MircColors.BROWN + ",=:~++" + MircColors.YELLOW + "=:" + MircColors.BROWN + "::~,:~:" + MircColors.YELLOW + "))" + MircColors.BROWN + "~~~." + MircColors.YELLOW + ")    \n"
-					+ MircColors.YELLOW + "    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~" + MircColors.YELLOW + ")" + MircColors.BROWN + ",$,I?" + MircColors.YELLOW + "))   \n"
-					+ MircColors.BROWN + "    ``  ```" + MircColors.YELLOW + "~~" + MircColors.BROWN + "?" + MircColors.YELLOW + "~=" + MircColors.BROWN + "$.~~~  ``     \n"
-					+ MircColors.YELLOW + "             :" + MircColors.BROWN + "S" + MircColors.YELLOW + "Z=             \n"
-					+ MircColors.YELLOW + "         .-~~" + MircColors.BROWN + "?=:=" + MircColors.YELLOW + "``~-_        \n"
-					+ MircColors.YELLOW + "         `--=~=+~++=~`        \n"
-					+ MircColors.YELLOW + "             ." + MircColors.BROWN + "~" + MircColors.YELLOW + ":" + MircColors.BROWN + "~             \n"
-					+ MircColors.BROWN + "         ((.(\\.!/.):?)        \n"
-					+ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
-
-				connection.kickFromChannel(config.getChannel(), user + " KABOOM!!!");
-				bombActive = false;
-			}
-		} else {
-			connection.msgChannel(config.getChannel(), "Invalid.");
-		}
-	}
-
-	/**
-	 * Does a drive-by lol's parts and returns as well as try-sleeps in loop to avoid flooding.
-	 */
-	private void driveBy() {
-		if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#")) {
-			connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
-			return;
-		}
-		config.setBaseChan(config.getChannel()); // The channel JRobo will return to
-		connection.moveToChannel(config.getChannel(), cmdArgs);
-		for (int i = 0; i < 25; i++) {
-			connection.moveToChannel(config.getChannel(), cmdArgs);
-			for (int z = 0; z < 5; z++) {
-				connection.msgChannel(config.getChannel(), "lol");
-				try {
-					Thread.sleep(1000);
-					//FIXME Bad coding
-					if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
-						break;
-					}
-				} catch (Exception ex) { //Find out exactly what exceptions are thrown
-					//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-				}
-			}
-			connection.moveToChannel(cmdArgs, config.getBaseChan());
-			try {
-				Thread.sleep(2500);
-				//FIXME Bad coding
-				if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
-					break;
-				}
-			} catch (Exception ex) { //Find out exactly what exceptions are thrown
-				//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-		// If not in basechannel he will return to Basechannel
-		if (config.getChannel() != config.getBaseChan()) {
-			connection.moveToChannel(cmdArgs, config.getBaseChan());
-		}
-	}
-
-	/**
 	 * Puts together a String in the form http://lmgtfy.com/?q=test+a+b+c .
 	 */
 	private void googleHelper() {
@@ -859,4 +703,162 @@ public class BotCommand {
 	private void moveToChannelHelper() {
 		connection.moveToChannel(config.getChannel(), cmdArgs);
 	}
+
+	/**
+         * Starts timer for bomb, sets an active wire and prints explosion and kicks user holding at [20] seconds.
+	 */
+	public void bomb() {
+		bombHolder = user;
+		connection.msgChannel(config.getChannel(), MircColors.BOLD + bombHolder + MircColors.WHITE + " started the bomb!!!");
+		connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
+		connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
+		bombActive = true;
+		wire[0] = false;
+		wire[1] = false;
+		wire[2] = false;
+		wire[(int) (3.0 * Math.random())] = true;
+		final Timer timer;
+
+		timer = new Timer();
+
+		class BombTask extends TimerTask {
+
+			public void run() {
+				if (!bombActive) {
+					timer.cancel();
+				} else {
+					connection.msgChannel(config.getChannel(), MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          ");
+					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       ");
+					connection.msgChannel(config.getChannel(), MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     ");
+					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "   (" + MircColors.BROWN + "=:" + MircColors.YELLOW + "(" + MircColors.BROWN + ",=:~++" + MircColors.YELLOW + "=:" + MircColors.BROWN + "::~,:~:" + MircColors.YELLOW + "))" + MircColors.BROWN + "~~~." + MircColors.YELLOW + ")    ");
+					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~" + MircColors.YELLOW + ")" + MircColors.BROWN + ",$,I?" + MircColors.YELLOW + "))   ");
+					connection.msgChannel(config.getChannel(), MircColors.BROWN + "    ``  ```" + MircColors.YELLOW + "~~" + MircColors.BROWN + "?" + MircColors.YELLOW + "~=" + MircColors.BROWN + "$.~~~  ``     ");
+					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "             :" + MircColors.BROWN + "S" + MircColors.YELLOW + "Z=             ");
+					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "         .-~~" + MircColors.BROWN + "?=:=" + MircColors.YELLOW + "``~-_        ");
+					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "         `--=~=+~++=~`        ");
+					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "             ." + MircColors.BROWN + "~" + MircColors.YELLOW + ":" + MircColors.BROWN + "~             ");
+					connection.msgChannel(config.getChannel(), MircColors.BROWN + "         ((.(\\.!/.):?)        ");
+					connection.msgChannel(config.getChannel(), MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
+					connection.kickFromChannel(config.getChannel(), user + " KABOOM!!!");
+					bombActive = false;
+					timer.cancel();
+				}
+			}
+		}
+		timer.schedule(new BombTask(), 20000);
+	}
+
+	/**
+         * Simply passes the bomb to another user and returns it if they attempt to pass to JRobo.
+	 */
+	private void pass() {
+		String users = getUsers();
+		if (users.contains(cmdArgs) && !cmdArgs.equals("") && user.equals(bombHolder) && bombActive == true) {
+			bombHolder = cmdArgs;
+			connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
+			if (cmdArgs.equals(config.getName())) {
+				try {
+					Thread.sleep(2500);
+				} catch (Exception ex) { //Find out exactly what exceptions are thrown
+					//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+				}
+				connection.msgChannel(config.getChannel(), ">pass " + user);
+				bombHolder = user;
+				connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
+			}
+		} else {
+			connection.msgChannel(config.getChannel(), "Invalid.");
+		}
+	}
+
+	/**
+         * This function will return a wire for a given color and is only to be used within defuse.
+	 * @return 
+	 */
+	private boolean wire(final String color) {
+		switch (color) {
+			case "red":
+				return wire[0];
+			case "green":
+				return wire[1];
+			case "blue":
+				return wire[2];
+		}
+		return false;
+	}
+
+	/**
+         * This is the defuse method and refers to a global boolean array of wires and the active wire is set to true in bomb() function.
+	 */
+	public void defuse() {
+		if (bombActive && user.equals(bombHolder)) {
+			if (wire(cmdArgs) == true) {
+				connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
+				bombActive = false;
+			} else {
+				//TODO Will removing leading spaces break things, or should we do it?
+				connection.msgChannel(config.getChannel(),
+					MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          \n"
+					+ MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       \n"
+					+ MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     \n"
+					+ MircColors.YELLOW + "   (" + MircColors.BROWN + "=:" + MircColors.YELLOW + "(" + MircColors.BROWN + ",=:~++" + MircColors.YELLOW + "=:" + MircColors.BROWN + "::~,:~:" + MircColors.YELLOW + "))" + MircColors.BROWN + "~~~." + MircColors.YELLOW + ")    \n"
+					+ MircColors.YELLOW + "    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~" + MircColors.YELLOW + ")" + MircColors.BROWN + ",$,I?" + MircColors.YELLOW + "))   \n"
+					+ MircColors.BROWN + "    ``  ```" + MircColors.YELLOW + "~~" + MircColors.BROWN + "?" + MircColors.YELLOW + "~=" + MircColors.BROWN + "$.~~~  ``     \n"
+					+ MircColors.YELLOW + "             :" + MircColors.BROWN + "S" + MircColors.YELLOW + "Z=             \n"
+					+ MircColors.YELLOW + "         .-~~" + MircColors.BROWN + "?=:=" + MircColors.YELLOW + "``~-_        \n"
+					+ MircColors.YELLOW + "         `--=~=+~++=~`        \n"
+					+ MircColors.YELLOW + "             ." + MircColors.BROWN + "~" + MircColors.YELLOW + ":" + MircColors.BROWN + "~             \n"
+					+ MircColors.BROWN + "         ((.(\\.!/.):?)        \n"
+					+ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
+
+				connection.kickFromChannel(config.getChannel(), user + " KABOOM!!!");
+				bombActive = false;
+			}
+		} else {
+			connection.msgChannel(config.getChannel(), "Invalid.");
+		}
+	}
+
+	/**
+	 * Does a drive-by lol's parts and returns as well as try-sleeps in loop to avoid flooding.
+	 */
+	private void driveBy() {
+		if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#")) {
+			connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
+			return;
+		}
+		config.setBaseChan(config.getChannel()); // The channel JRobo will return to
+		connection.moveToChannel(config.getChannel(), cmdArgs);
+		for (int i = 0; i < 25; i++) {
+			connection.moveToChannel(config.getChannel(), cmdArgs);
+			for (int z = 0; z < 5; z++) {
+				connection.msgChannel(config.getChannel(), "lol");
+				try {
+					Thread.sleep(1000);
+					//FIXME Bad coding
+					if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
+						break;
+					}
+				} catch (Exception ex) { //Find out exactly what exceptions are thrown
+					//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+			connection.moveToChannel(cmdArgs, config.getBaseChan());
+			try {
+				Thread.sleep(2500);
+				//FIXME Bad coding
+				if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
+					break;
+				}
+			} catch (Exception ex) { //Find out exactly what exceptions are thrown
+				//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		// If not in basechannel he will return to Basechannel
+		if (config.getChannel() != config.getBaseChan()) {
+			connection.moveToChannel(cmdArgs, config.getBaseChan());
+		}
+	}
+
+
 } // EOF class
