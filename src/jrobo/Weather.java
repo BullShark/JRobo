@@ -183,7 +183,7 @@ public class Weather {
 	 * @param Json
 	 * @return Formatted Json
 	 */
-	public String getFormattedWeatherSummary(String json) {
+	public String getFormattedWeatherSummary(final String json) {
 
 		WeatherJson weatherJson;
 
@@ -530,6 +530,7 @@ public class Weather {
 				public String toString() {
 					return "id: " + id + ", main: " + main + ", description: " + description + ", icon: " + icon;
 				}
+
 			} // EOF WeatherWeatherJsonItem
 
 		} // EOF WeatherListJsonItem
