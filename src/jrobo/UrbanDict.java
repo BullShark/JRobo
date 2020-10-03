@@ -154,95 +154,59 @@ public class UrbanDict {
                 private String result_type;
                 public List<UrbanJsonItem> list;
 
-                /* Not part of the Json */
-                private int limit;
+                /**
+		 * Not part of the Json 
+		 * Used for limiting the number of results
+		 * A limit of zero means there's no limit
+		 * @since 2020-10-03
+		 */
+                private int limit = 0;
+
+		/**
+		 * @return the limit
+		 */
+		public int getLimit() {
+			return limit;
+		}
+
+		/**
+		 * @param limit the limit to set
+		 */
+		public void setLimit(int limit) {
+			this.limit = limit;
+		}
 
                 /** 
                  * 
                  * The constructor overrides and defines Comparator<UrbanJsonItem>().compare(UrbanJsonItem, UrbanJsonItem) 
                  * Used for sorting the ArrayList<UrbanJsonItem> by the number of thumbs_up
+                 *
+                 * @param limit Limits the number of results
                  */
-                public UrbanJson() {
-                        
-/*
-                        List<UrbanJsonItem> list = Arrays.asList(
-                                new UrbanJsonItem("Lord of the rings", 8.8, true),
-                                new UrbanJsonItem("Back to the future", 8.5, false),
-                                new UrbanJsonItem("Carlito's way", 7.9, true),
-                                new UrbanJsonItem("Pulp fiction", 8.9, false));
-*/
+
+                public void sort() {
 
                         list.sort(new Comparator<UrbanJsonItem>() {
 
                                 @Override
                                 public int compare(UrbanJsonItem uji1, UrbanJsonItem uji2) {
-                                        if (uji1.getThumbsUp() < uji2.getThumbsUp()) return -1; 
-                                        if (uji1.getThumbsUp() > uji2.getThumbsUp()) return 1; 
+                                        if (uji1.getThumbsDown() < uji2.getThumbsDown()) return -1; 
+                                        if (uji1.getThumbsDown() > uji2.getThumbsDown()) return 1; 
                                         else return 0; 
                                 }
                         });
 
-                        list.forEach(System.out::println); //XXX Check the output. Is it sorted?
-                        
-/*
-// Class to compare Movies by ratings 
-class RatingCompare implements Comparator<Movie> 
-{ 
-    public int compare(Movie m1, Movie m2) 
-    { 
-        if (m1.getRating() < m2.getRating()) return -1; 
-        if (m1.getRating() > m2.getRating()) return 1; 
-        else return 0; 
-    } 
-} 
-*/
-/*
-                        list.sort(new Comparator<UrbanJsonItem>() {
-
-                                @Override
-                                public int compare(UrbanJsonItem uji1, UrbanJsonItem uji2) {
-                                        if (uji1.getThumbsUp()  == uji2.getThumbsUp()) {
-                                                return 0;
-                                        }
-                                        return uji1.getThumbsUp() ? -1 : 1;
-                                }
-                        });
-                        ​
-                        uji.forEach(System.out::println); //XXX Check the output. Is it sorted?
-*/
-
-/*
-                        List<Movie> movies = Arrays.asList(
-                                new Movie("Lord of the rings", 8.8, true),
-                                new Movie("Back to the future", 8.5, false),
-                                new Movie("Carlito's way", 7.9, true),
-                                new Movie("Pulp fiction", 8.9, false));
-
-                        movies.sort(new Comparator<Movie>() {
-
-                                @Override
-                                public int compare(Movie m1, Movie m2) {
-                                        if (m1.getStarred() == m2.getStarred()) {
-                                                return 0;
-                                        }
-                                        return m1.getStarred() ? -1 : 1;
-                                }
-                        });
-                        ​
-                        movies.forEach(System.out::println);
-*/
-                }
-
-                /**
-                 *
-                 * @param limit Limits the number of results
-                 */
-                public UrbanJson(final int limit) {
-                        super();
-                        this.limit = limit;
-                }
-
+			/**
+			 * @TODO Check the output. Is it sorted?
+			 * @TODO Remove after testing
+			 */
+			Thread.dumpStack();
+                        list.forEach(System.out::println);
+		}
+	
                 public String getColorString() {
+
+			//this.sort();
                         String result = "";
                         for (UrbanJsonItem uji : list) {
                                 result += uji.getColorString() + " ";
@@ -256,6 +220,8 @@ class RatingCompare implements Comparator<Movie>
                  * @override
                  */
                 public String toString() {
+
+			//this.sort();
                         return "Total: " + total + " has result_type: " + result_type + " with list: " + list;
                 }
 
