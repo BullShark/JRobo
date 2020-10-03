@@ -16,7 +16,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package jrobo;
 
 import java.util.List;
@@ -26,15 +25,25 @@ import java.util.List;
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
 public class UrbanJson {
-  public int total;
-  public String result_type;
-  public List<UrbanJsonItem> list;
 
-/**
- *
- * @override
- */
-  public String toString() {
-    return "Total: " + Integer.toString(total) + " has result_type: " + result_type;
-  }
+        public int total;
+        public String result_type;
+        public List<UrbanJsonItem> list;
+
+        public String getColorString() {
+                String result = "";
+                for (UrbanJsonItem uji : list) {
+                        result += uji.getColorString() + " ";
+                }
+
+                return result;
+        }
+
+        /**
+         *
+         * @override
+         */
+        public String toString() {
+                return "Total: " + Integer.toString(total) + " has result_type: " + result_type;
+        }
 }
