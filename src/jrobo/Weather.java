@@ -161,19 +161,24 @@ public class Weather {
 			conn = url.openConnection();
 
 			// Get the response
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream())); //TODO Break this up into individual variables for var.close()
 
 			String line;
 			while ((line = rd.readLine()) != null) {
 				json += line;
 			}
 
-			rd.close();
 
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();
 		} catch (IOException ex) {
 			ex.printStackTrace();
+		} finally {
+			try {
+				if(rd != null) { rd.close(); }
+			} catch (IOException ex) {
+				Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
 
 		return json;
