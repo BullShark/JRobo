@@ -25,133 +25,141 @@ import java.util.Arrays;
  * @author BinaryStroke <binarystroke@null.net>
  * @author BullShark <goodbye300@aim.net>
  * @since 2013-02-18
- * 
+ *
  * @TODO Make this class, variables or methods static,
  * @TODO so the same data can be accessed from multiple classes
+ *
+ * <BullShark_> What is the best way to prevent a config file from being read
+ * twice? If I have 15 java files, do I need to pass around the reference to
+ * that config class to each java class file, so I won't be running new Config()
+ * to get another reference to it, or is there a better way?
+ * <Diablo-D3> That's... a really odd way of asking that question
+ * <Diablo-D3> Typically you'd load and parse your config file, you'd have a
+ * state object you'd pass to any method that needs it (either as an arg, or as
+ * part of the class variables, passed in to that instance via constructor arg)
  */
 public class Config {
 
-  private String name;
-  private String password;
-  private String[] masters;
-  private char command_symbol;
-  private String network;
-  private String channel;
-  private String openweathermap_apikey;
-  // Chan the bot originally was in before moving between channels
-  private String baseChan;
+	private String name;
+	private String password;
+	private String[] masters;
+	private char command_symbol;
+	private String network;
+	private String channel;
+	private String openweathermap_apikey;
+	// Chan the bot originally was in before moving between channels
+	private String baseChan;
 
-  public Config() {
-    baseChan = channel;
-  }
+	public Config() {
+		baseChan = channel;
+	}
 
-  /**
-   *
-   * @return The bot's name
-   * @since 2013-02-18
-   */
-  public String getName() {
-    return name;
-  }
+	/**
+	 *
+	 * @return The bot's name
+	 * @since 2013-02-18
+	 */
+	public String getName() {
+		return name;
+	}
 
-  /**
-   *
-   * @return The bot's password
-   * @since 2013-02-18
-   */
-  public String getPass() {
-    return password;
-  }
+	/**
+	 *
+	 * @return The bot's password
+	 * @since 2013-02-18
+	 */
+	public String getPass() {
+		return password;
+	}
 
-  /**
-   *
-   * @return The bot's masters nicknames in an array
-   * @since 2013-02-18
-   */
-  public String[] getMasters() {
-    return masters;
-  }
+	/**
+	 *
+	 * @return The bot's masters nicknames in an array
+	 * @since 2013-02-18
+	 */
+	public String[] getMasters() {
+		return masters;
+	}
 
-  /**
-   *
-   * @return The bot's command symbol
-   * @since 2013-02-18
-   */
-  public char getCmdSymb() {
-    return command_symbol;
-  }
+	/**
+	 *
+	 * @return The bot's command symbol
+	 * @since 2013-02-18
+	 */
+	public char getCmdSymb() {
+		return command_symbol;
+	}
 
-  /**
-   *
-   * @return The network to be connected
-   * @since 2013-02-18
-   */
-  public String getNetwork() {
-    return network;
-  }
+	/**
+	 *
+	 * @return The network to be connected
+	 * @since 2013-02-18
+	 */
+	public String getNetwork() {
+		return network;
+	}
 
-  /**
-   * Represents the current channel
-   *
-   * @return The channel to be joined
-   * @since 2013-02-18
-   */
-  public String getChannel() {
-    return channel;
-  }
+	/**
+	 * Represents the current channel
+	 *
+	 * @return The channel to be joined
+	 * @since 2013-02-18
+	 */
+	public String getChannel() {
+		return channel;
+	}
 
-  /**
-   * Represents the current channel
-   *
-   * @param chan
-   * @since 2013-08-12
-   */
-  public void setChannel(String chan) {
-    channel = chan;
-  }
+	/**
+	 * Represents the current channel
+	 *
+	 * @param chan
+	 * @since 2013-08-12
+	 */
+	public void setChannel(String chan) {
+		channel = chan;
+	}
 
-  /**
-   *
-   * @return The weatherUndergound API key
-   * @since 2013-02-18
-   */
-  public String getOpenWeatherMapKey() {
-    return openweathermap_apikey;
-  }
+	/**
+	 *
+	 * @return The weatherUndergound API key
+	 * @since 2013-02-18
+	 */
+	public String getOpenWeatherMapKey() {
+		return openweathermap_apikey;
+	}
 
-  /**
-   * Channel from where the bot began moving
-   *
-   * @return
-   */
-  public String getBaseChan() {
-    return baseChan;
-  }
+	/**
+	 * Channel from where the bot began moving
+	 *
+	 * @return
+	 */
+	public String getBaseChan() {
+		return baseChan;
+	}
 
-  /**
-   * Channel from where the bot began moving
-   *
-   * @param baseChan
-   */
-  public void setBaseChan(String baseChan) {
-    this.baseChan = baseChan;
-  }
+	/**
+	 * Channel from where the bot began moving
+	 *
+	 * @param baseChan
+	 */
+	public void setBaseChan(String baseChan) {
+		this.baseChan = baseChan;
+	}
 
-  /**
-   *
-   * @return The configured name
-   * @since 2013-02-18
-   * @TODO Move the "[+++]\t\t" to its own method
-   */
-  @Override
-  public String toString() {
-    return    "[+++]\t\tMy name is " + name + "\n"
-	    + "[+++]\t\tpassword is " + password.replaceAll(".", "*") + "\n"
-	    + "[+++]\t\tmasters are " + Arrays.toString(masters) + "\n"
-	    + "[+++]\t\tcommand_symbol is " + command_symbol + "\n"
-	    + "[+++]\t\tnetwork is " + network + "\n"
-	    + "[+++]\t\tchannel is " + channel + "\n"
-	    + "[+++]\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*") + "\n"
-	    + "[+++]\t\tbaseChan is " + baseChan + "\n";
-  }
+	/**
+	 *
+	 * @return The configured name
+	 * @since 2013-02-18
+	 */
+	@Override
+	public String toString() {
+		return ("My name is " + name
+			+ "\npassword is " + password.replaceAll("\\.", "*")
+			+ "\nmasters are " + Arrays.toString(masters)
+			+ "\ncommand_symbol is " + command_symbol
+			+ "\nnetwork is " + network
+			+ "\nchannel is " + channel
+			+ "\nopenweathermap_apikey is " + openweathermap_apikey.replaceAll("\\.", "*")
+			+ "\nbaseChan is " + baseChan).replaceAll("[\\n^]", "[+++]\t\t");
+	}
 }
