@@ -291,8 +291,7 @@ public class UrbanDict {
                                 }
 
                                 public String toString() {
-                                        definition = definition.replaceAll("\\r|\\n", " ");
-                                        definition = definition.replaceAll("\\s++", " ");
+                                        definition = definition.replaceAll("\\r|\\n|\\s++", " ");
 
                                         return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
                                 }
