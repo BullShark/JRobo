@@ -232,7 +232,7 @@ public class UrbanDict {
                  * @override
                  */
                 public String toString() {
-                        return "Total: " + total + " has result_type: " + result_type " with list: " + list;
+                        return "Total: " + total + " has result_type: " + result_type + " with list: " + list;
                 }
 
                 /**
