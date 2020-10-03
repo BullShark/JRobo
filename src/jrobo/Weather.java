@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author Chris Lemire <goodbye300@aim.com>
+ * @TODO Use try-with-resources instead
  */
 public class Weather {
 
@@ -268,10 +269,10 @@ public class Weather {
 		@Override
 		public String toString() {
 
-			return "message: " + message + "\n"
-				+ "cod: " + cod + "\n"
-				+ "count: " + count + "\n"
-				+ "list: " + list + "\n";
+			return "message: " + message + ", "
+				+ "cod: " + cod + ", "
+				+ "count: " + count + ", "
+				+ "list: " + list;
 		}
 
 		/**
@@ -338,17 +339,17 @@ public class Weather {
 
 			public String toString() {
 
-				return "id: " + id + "\n" +
-					"name: " + name + "\n" +
-					"coord: " + coord + "\n" +
-					"main: " + main + "\n" +
-					"dt: " + dt + "\n" +
-					"sys: " + sys + "\n" +
-					"wind: " + wind + "\n" +
-					"rain: " + rain + "\n" +
-					"snow: " + snow + "\n" +
-					"clouds: " + clouds + "\n" +
-					"weather " + weather + "\n";
+				return "id: " + id + ", " +
+					"name: " + name + ", " +
+					"coord: " + coord + ", " +
+					"main: " + main + ", " +
+					"dt: " + dt + ", " +
+					"sys: " + sys + ", " +
+					"wind: " + wind + ", " +
+					"rain: " + rain + ", " +
+					"snow: " + snow + ", " +
+					"clouds: " + clouds + ", " +
+					"weather " + weather;
 
 			}
 
