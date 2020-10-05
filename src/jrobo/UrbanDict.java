@@ -74,11 +74,8 @@ public class UrbanDict {
          * @return json
          */
         public String getJson() {
-
-                /* Create a URL obj from strings */
 		
-
-		// Get the response
+                /* Create a URL obj from strings and get the response */
                 try(
 	                url = new URL(
 		                (QUERY_URL
