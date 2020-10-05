@@ -39,8 +39,9 @@ public class Epic {
 	/**
 	 * Miscellaneous
 	 *
-	 * @TODO Fix bug, if the url is not available, the bot will throw an exception and crash
-	 * Example: https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
+	 * @TODO Fix bug, if the url is not available, the bot will throw an
+	 * exception and crash Example:
+	 * https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
 	 */
 	private static final String QUERY_URL = "https://invalid.not.a.real.domain";
 	//private static final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
@@ -67,18 +68,17 @@ public class Epic {
 	 * @return
 	 */
 	private String getJson() {
-                                    
+
 		String url = (QUERY_URL
-                                                               + "/freeGamesPromotions"
-                                                               + "?locale=" + locale
-                                                               + "&country=" + countrycode
-                                                               + "&allowCountries=" + countrycode
-                                                      ).replaceAll(" ", "%20");
+			+ "/freeGamesPromotions"
+			+ "?locale=" + locale
+			+ "&country=" + countrycode
+			+ "&allowCountries=" + countrycode).replaceAll(" ", "%20");
 		System.out.println("[+++]\t" + url);
 		String json = "";
 
 		/* Create a URL obj from strings */
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(
+		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
 			new URL(url).openStream()))) {
 
 			String line = "";
@@ -87,12 +87,12 @@ public class Epic {
 				json += line;
 			}
 		} catch (IOException ex) {
-                                                      json = ""; //XXX
+			json = ""; //XXX
 			//throw new RuntimeException(e);
 			ex.printStackTrace();
 		} finally {
 			//@TODO Close all i/o and streams here
-                                                      System.out.println("[+++]\t" + json);
+			System.out.println("[+++]\t" + json);
 			return json;
 		}
 	}
@@ -166,7 +166,7 @@ public class Epic {
 		 *
 		 * @override
 		 */
-                                    @Override
+		@Override
 		public String toString() {
 			return "data: " + data + "extensions: " + extensions;
 		}
@@ -180,7 +180,7 @@ public class Epic {
 
 			private EpicCatalogJsonItem Catalog;
 
-                                                      @Override
+			@Override
 			public String toString() {
 				return "Catalog: " + Catalog;
 
@@ -195,7 +195,7 @@ public class Epic {
 
 				private EpicSearchStoreJsonItem searchStore;
 
-                                                                        @Override
+				@Override
 				public String toString() {
 					return "searchStore: " + searchStore;
 
@@ -210,7 +210,7 @@ public class Epic {
 
 					private ArrayList<EpicElementsJsonItem> elements;
 
-                                                                                          @Override
+					@Override
 					public String toString() {
 						return "elements: " + elements;
 
@@ -256,7 +256,7 @@ public class Epic {
 							return result;
 						}
 
-                                                                                                            @Override
+						@Override
 						public String toString() {
 
 							return "title: " + title + "\n"
@@ -266,8 +266,7 @@ public class Epic {
 								+ "productSlug: " + productSlug + "\n"
 								+ "urlSlug: " + urlSlug + "\n"
 								+ "url: " + url + "\n"
-								+ "price: " + price + "\n"
-								;
+								+ "price: " + price + "\n";
 						}
 
 						/**
@@ -288,25 +287,25 @@ public class Epic {
 							//EpicCurrencyInfoJsonItem currencyInfo;
 							//EpicfmtPriceJsonItem fmtPrice;
 
-                                                                                                                              @Override
+							@Override
 							public String toString() {
 								return "totalPrice: " + totalPrice
 									+ "discountPrice: " + discountPrice + "\n"
 									+ "originalPrice: " + originalPrice + "\n"
 									+ "voucherDiscount: " + voucherDiscount + "\n"
 									+ "discount: " + discount + "\n"
-									+ "currencyCode: " + currencyCode + "\n"
-									;
+									+ "currencyCode: " + currencyCode + "\n";
 							}
 
 							/**
 							 *
-							 * @author Christopher Lemire
+							 * @author Christopher
+							 * Lemire
 							 * <goodbye300@aim.com>
 							 */
 							private class EpicTotalPriceJsonItem {
 
-                                                                                                                                                @Override
+								@Override
 								public String toString() {
 									return null;
 
@@ -332,7 +331,7 @@ public class Epic {
 		 *
 		 * @override
 		 */
-                                    @Override
+		@Override
 		public String toString() {
 			return "cacheControl " + cacheControl;
 		}
@@ -351,7 +350,7 @@ public class Epic {
 			 *
 			 * @override
 			 */
-                                                      @Override
+			@Override
 			public String toString() {
 				return null;
 			}
