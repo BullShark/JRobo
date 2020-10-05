@@ -42,25 +42,13 @@ import java.util.logging.Logger;
 public class Weather {
 
 	/*
-	 * For the HTTP Connection
-	 */
-	private URL url;
-	private URLConnection conn;
-	private BufferedReader rd;
-
-	/*
-	 * OpenWeatherMap
+	 * OpenWeatherMap API URL and URL Parameters
+	 *
 	 * Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
 	 * Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
-	 * FIXME What other Type's are there?
 	 */
 	private final String QUERY_URL = "https://api.openweathermap.org";
-	private String json;
 	private final Config config;
-
-	/*
-	 * API URL Parameters
-	 */
 	private String cityName;
 	private String stateCode;
 	private String countryCode;
@@ -69,30 +57,35 @@ public class Weather {
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
+	 * @TODO Remove this and do not use FileReader.getConfig() in the constructors
 	 */
 	public Weather() {
+		Weather(null);
+	}
 
-		/*
-		 * For the HTTP Connection
-		 */
-		url = null;
-		conn = null;
+	/**
+	 *
+	 * @author Chris Lemire <goodbye300@aim.com>
+	 */
+	public Weather(Config config) {
 
-		/*
-		 * Miscellaneous
-		 * TODO Exception handling needed: NullPointerException
-		 */
-		config = FileReader.getConfig();
-		json = "";
-
-		/*
-		 * API URL Parameters
-		 */
 		cityName = "San Antonio";
 		stateCode = "TX";
 		countryCode = "US";
-		apikey = getApiKey();
+		this.config = config;
+		try {
+			if(this.config == null) { 
+				this.config = FileReader.getConfig(); //@TODO Don't use this
+			}
 
+		} catch (NullPointerException ex) {
+			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+			System.err.println("[+++]\tNullPointerException: Unable to set config and cannot retrieve The OpenWeatherMap API Key");
+
+		} finally {
+			apikey = getApiKey(); //@FIXME Does this method some times throw an exception?
+
+		}
 	}
 
 	/**
@@ -100,23 +93,37 @@ public class Weather {
 	 * location string and returns the json for it if valid
 	 *
 	 * @TODO Should I use greedy, reluctant or possessive quantifiers?
-	 * @throws InvalidLocationException
-	 * @param location
-	 * @return BufferedReader
+	 * @throws InvalidLocationException for an invalid location
+	 * @param location as "city name", "city name, country code", or "city name, state code, country code" 
+	 * @return json weather data
 	 */
 	public String getJson(String location) throws InvalidLocationException {
 
+		//@TODO More than 3 should give the help message for the weather command
+		//@TODO Catch the InvalidLocationException from BotCommand and print the help message there
 		String locationArr[];
-
-		locationArr = location.split("\\s*,\\s*"); //@TODO More than 3 should give the help message for the weather command
+		location = "New Braunfels"; //@TODO Test to see what a location with no commas does
+		locationArr = location.split("\\s*,\\s*");
+		String result;
 
 		// There should be 0-2 commas and if locationArr is 0 then there's another problem
-		if (locationArr.length < 1 || locationArr.length > 3) {
-			throw new InvalidLocationException("Too many commas");
-		}
+		try {
+			if (locationArry == null || locationArr.length < 1 || locationArr.length > 3) {
+				throw new InvalidLocationException("Invalid Location: Too many commas or empty string");
+			}
+		} catch (InvalidLocationException ex) {
+			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+			System.err.println("[+++]\tInvalid Location: Using default location instead");
+//			return getJson(this.cityName, this.stateCode, this.countryCode);
+		} finally {
+			System.out.println("[+++]\tlocationArr: " + Arrays.toString(locationArr));
+			System.out.println("[+++]\tcityName: " + cityName);
+			System.out.println("[+++]\tstateCode: " + stateCode);
+			System.out.println("[+++]\tcountryCode: " + countryCode);
+			System.out.println("[+++]\tlocation: " + location);
 
-		//return getJson(cityName, stateCode.name().toLowerCase(), countryCode.name().toLowerCase());
-		return getJson(cityName, "", "");
+			return getJson(cityName, "", "");
+		}
 	}
 
 	/**
@@ -127,61 +134,81 @@ public class Weather {
 	 * @return String
 	 */
 	public String getJson(String cityName, String stateCode, String countryCode) {
+
+		/* Set the location parameter used by the api from the city name, state code, and country code */
+		String location;
 		try {
 			if (cityName == null || stateCode == null || countryCode == null) {
-				throw new NullPointerException();
+				throw new InvalidLocationException();
 			}
 
-			String location;
-
-			if (!cityName.equals("") && stateCode.equals("") && countryCode.equals("")) {
+			if ( (!cityName.equals("") && cityName != null) &&
+				(stateCode.equals("") || stateCode == null) &&
+				(countryCode.equals("") || countryCode == null) )
+			{
+				System.out.println("[+++]\tcityName is set, stateCode unset, countryCode unset");
 				location = cityName;
-			} else if (!cityName.equals("") && !stateCode.equals("") && countryCode.equals("")) {
+			} else if ( (!cityName.equals("") && cityName != null) 
+				&& (!stateCode.equals("") && stateCode != null)
+				&& (countryCode.equals("") || countryCode == null) )
+			{
+				System.out.println("[+++]\tcityName is set, stateCode set, countryCode unset");
 				location = cityName + "," + stateCode;
-			} else if (!cityName.equals("") && !stateCode.equals("") && !countryCode.equals("")) {
+			} else if ( (cityName.equals("") || cityName == null)
+				&& (stateCode.equals("") || stateCode == null)
+				&& (countryCode.equals("") || countryCode == null) ) 
+			{
+				System.out.println("[+++]\tcityName is unset, stateCode unset, countryCode unset");
 				location = cityName + "," + stateCode + "," + countryCode;
 			} else {
-				location = this.cityName + "," + this.stateCode + "," + this.countryCode;
+				throw new InvalidLocationException("Location is not valid");
 			}
-
-			url = new URL(
-				(QUERY_URL
-					+ "/data/2.5/" + "find" // Possible values: find, weather, forecast
-					+ "?q=" + location
-					+ "&units=" + "imperial"
-					+ "&type=" + "accurate"
-					+ "&mode=" + "json"
-					+ "&lang=" + "en"
-					+ "&appid=" + apikey).replaceAll(" ", "%20")
-			);
-
-			System.out.println("[+++]\t" + url);
-
-			conn = url.openConnection();
-
-			// Get the response
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream())); //TODO Break this up into individual variables for var.close()
-
-			String line;
-			while ((line = rd.readLine()) != null) {
-				json += line;
-			}
-
-		} catch (MalformedURLException ex) {
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} finally {
-			try {
-				if (rd != null) {
-					rd.close();
-				}
-			} catch (IOException ex) {
-				Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-			}
+			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (InvalidLocationException ex) {
+			// Use the default location that is set in the constructor
+			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+			System.out.println("[+++]\tUsing default location");
+			location = this.cityName + "," + this.stateCode + "," + this.countryCode;
+		} finally { 
+			System.out.println("[+++]\tcityName: " + cityName);
+			System.out.println("[+++]\tstateCode: " + stateCode);
+			System.out.println("[+++]\tcountryCode: " + countryCode);
+			System.out.println("[+++]\tlocation: " + location);
 		}
 
-		return json;
+		String url = (QUERY_URL
+				+ "/data/2.5/" + "find" // Possible values: find, weather, forecast
+				+ "?q=" + location
+				+ "&units=" + "imperial"
+				+ "&type=" + "accurate"
+				+ "&mode=" + "json"
+				+ "&lang=" + "en"
+				+ "&appid=" + apikey).replaceAll(" ", "%20");
+
+		System.out.println("[+++]\t" + url);
+
+		/* Create a URL obj from strings */
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(
+			new URL(url).openStream()))) {
+
+			String json = "";
+			String line = "";
+
+			while ((line = br.readLine()) != null) {
+				json += line;
+			}
+		} catch (IOException ex) {
+			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+			json = "{ \"data\": \"Unable to retrieve Weather json data\" }";
+			//throw new RuntimeException(e);
+		} catch (MalformedURLException ex) {
+			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+			json = "{ \"data\": \"Unable to retrieve Weather json data\" }";
+			//throw new RuntimeException(e);
+		} finally {
+			System.out.println("[+++]\t" + json);
+			return json;
+		}
 	}
 
 	/**
@@ -195,20 +222,23 @@ public class Weather {
 		WeatherJson weatherJson;
 
 		try {
-			Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>() {
-			}.getType();
+			Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>() {}.getType();
 			System.out.println("[+++]\tWeatherJson Type: " + WeatherJsonT);
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			weatherJson = gson.fromJson(json, WeatherJson.class);
 
 		} catch (JsonSyntaxException ex) {
-			ex.printStackTrace();
+			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+			System.err.println("[+++]\tInvalid Json: Does not match the Json code or wrong type");
 			return "Unable to retrieve the weather";
+		} finally {
+			//TODO Remove all the other returns and put return here, close streams
+			//TODO Use if/else here
+			return weatherJson.toString();
+			return weatherJson.getColorString();
 		}
 
-//		return weatherJson.toString();
-		return weatherJson.getColorString();
 
 	}
 
@@ -227,16 +257,16 @@ public class Weather {
 
 		Weather w = new Weather();
 		try {
-			System.out.println(w.getFormattedWeatherSummary(w.getJson("San Antonio, TX, US")));
+			System.out.println(w.getFormattedWeatherSummary(w.getJson(cityName, stateCode, countryCode)));
 		} catch (InvalidLocationException ex) {
-			System.out.println("Invalid Location, Try Again");
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+			System.err.println("[+++]\tInvalid Location: Try Again");
 		}
 	}
 
 	public static class InvalidLocationException extends Exception {
 
-		public InvalidLocationException(String not_supported_yet) {
+		public InvalidLocationException(String message) {
 		}
 	}
 
@@ -256,16 +286,19 @@ public class Weather {
 
 			String result
 				= MircColors.BOLD
-				+ "Result " + MircColors.GREEN + "1" + MircColors.NORMAL + MircColors.BOLD + " / " + MircColors.GREEN + count + MircColors.NORMAL + MircColors.BOLD + ": ";
-			result += MircColors.NORMAL;
+				+ "Result " + MircColors.GREEN + "1" + MircColors.NORMAL + MircColors.BOLD + " / "
+				+ MircColors.GREEN + count + MircColors.NORMAL + MircColors.BOLD + ": "
+				+ MircColors.NORMAL;
 
 			try {
 				result += list.get(0).getColorString();
-			} catch (IndexOutOfBoundsException ex) {
-				ex.printStackTrace();
-			}
 
-			return result;
+			} catch (IndexOutOfBoundsException ex) {
+				Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+				System.err.println("[+++]\tCould not get json for list at index 0");
+			} finally {
+				return result;
+			}
 		}
 
 		/**
