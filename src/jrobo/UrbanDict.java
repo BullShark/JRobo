@@ -40,72 +40,57 @@ import java.util.List;
  */
 public class UrbanDict {
 
-        /* For the HTTP Connection */
-        private URL url;
-        private URLConnection conn;
-        private OutputStreamWriter wr;
-        private BufferedReader rd;
-
         /* Miscelanous */
         private final String QUERY_URL = "https://api.urbandictionary.com";
-        private String json;
         private final String word;
-
-        /* For the Gson/Json */
-        private Gson gson;
+	private final int defaultLimit;
 
         public UrbanDict(String word) {
 
-                /* For the HTTP Connection */
-                url = null;
-                conn = null;
                 this.word = word;
-
-                /* Miscelanous */
-                json = "";
-
-                /* For the Gson/Json */
-                gson = new Gson();
-
+		defaultLimit = 5;
         }
 
         /**
          * @TODO https://blog.api.rakuten.net/top-10-best-dictionary-apis-oxford-urban-wordnik/
-         * @return json
+         * @return json weather data
          */
         public String getJson() {
-		
-                /* Create a URL obj from strings and get the response */
-                try(
-	                url = new URL(
-		                (QUERY_URL
+
+		String url = (QUERY_URL
 				+ "/v0/define"
-				+ "?term=" + word).replace(" ", "%20")
-			);
+				+ "?term=" + word).replace(" ", "%20"); // .replaceAll(" ", "%20");
+		System.out.println("[+++]\t" + url);
+			
+		/* Create a URL obj from strings */
+		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
+			new URL(url).openStream()))) {
 
-			conn = url.openConnection();
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		) {
-			System.out.println("[+++]\t" + url);
+			String json = "";
+			String line = "";
 
-                        String line = "";
-                        while ((line = rd.readLine()) != null) {
-                                json += line;
-                        }
-
+			while ((line = br.readLine()) != null) {
+				json += line;
+			}
+		} catch (IOException ex) {
+			Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
+			json = "{ \"data\": \"Unable to retrieve UrbanDict json data\" }";
                 } catch (MalformedURLException ex) {
-                        ex.printStackTrace();
+			Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
 			json = "{ \"list\": \"Unable to retrieve UrbanDict json data\" }";
-
-                } catch (IOException ex) {
-                        ex.printStackTrace();
-			json = "{ \"list\": \"Unable to retrieve UrbanDict json data\" }";
-
                 } finally {
 			System.out.println("[+++]\t" + json);
 	                return json;
 
 		}
+
+                /* Create a URL obj from strings and get the response */
+
+/*		if(hasColors) {
+			result = urbanJson.getColorString();
+		} else {
+			result = urbanJson.toString();
+		}*/
         }
 
 	/**
@@ -116,15 +101,14 @@ public class UrbanDict {
 	 */
 	public String getFormattedUrbanDef(final boolean hasColors, final int limit) {
 
-                UrbanJson urbanJson;
 		String result;
                 try {
                         Type UrbanJsonT = new TypeToken<ArrayList<UrbanJson>>() {
                         }.getType();
                         System.out.println("[+++]\tUrbanJson Type: " + UrbanJsonT);
 
-                        gson = new GsonBuilder().setPrettyPrinting().create();
-                        urbanJson = gson.fromJson(this.getJson(), UrbanJson.class);
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        UrbanJson urbanJson = gson.fromJson(this.getJson(), UrbanJson.class);
 
 			urbanJson.sort();
 			
