@@ -47,20 +47,14 @@ public class Epic {
 	//private static final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
 	private String locale;
 	private final String countrycode;
-
-	/* For the Gson/Json */
-	private Gson gson;
 //	private final int defaultLimit;
 
 	public Epic() {
 
-		/* Miscelanous */
+		/* Miscellaneous */
 		locale = "en-US";
 		countrycode = "TR";
 //		defaultLimit = 5;
-
-		/* For the Gson/Json */
-		gson = new Gson();
 	}
 
 	/**
@@ -75,53 +69,55 @@ public class Epic {
 			+ "&country=" + countrycode
 			+ "&allowCountries=" + countrycode).replaceAll(" ", "%20");
 		System.out.println("[+++]\t" + url);
-		String json = "";
 
 		/* Create a URL obj from strings */
 		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
 			new URL(url).openStream()))) {
 
+			String json = "";
 			String line = "";
 
 			while ((line = br.readLine()) != null) {
 				json += line;
 			}
 		} catch (IOException ex) {
-			json = ""; //XXX
-			//throw new RuntimeException(e);
-			ex.printStackTrace();
+			Logger.getLogger(Epic.class.getName()).log(Level.SEVERE, null, ex);
+			json = "{ \"data\": \"Unable to retrieve Epic json data\" }";
 		} finally {
-			//@TODO Close all i/o and streams here
 			System.out.println("[+++]\t" + json);
 			return json;
 		}
 	}
 
-	public String getFormattedEpicSummary(final String locale, final boolean hasColors, final int limit) {
-
-		if (locale != null && !locale.equals("")) {
-			this.locale = locale;
-		}
+	public String getFormattedEpicSummary(final boolean hasColors, final int limit) {
 
 		/*
 		 * TODO Add try/catch to handle
 		 * TODO The exception that no JSON is received
 		 */
-		EpicJson epicJson;
-		try {
-			Type EpicJsonT = new TypeToken<ArrayList<EpicJson>>() {
+		try
+		(
+			EpicJson epicJson = gson.fromJson(this.getJson(), EpicJson.class);
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		)
+		{
+			String result = "";
+			Type epicJsonT = new TypeToken<ArrayList<EpicJson>>() {
 			}.getType();
-			System.out.println("[+++]\tEpicJson Type: " + EpicJsonT);
+			System.out.println("[+++]\tepicJson Type: " + epicJsonT);
 
-			gson = new GsonBuilder().setPrettyPrinting().create();
-			epicJson = gson.fromJson(this.getJson(), EpicJson.class);
-
-			return epicJson.toString();
-//			return EpicJson.getColorString();
+			if(hasColors) {
+                		result = epicJson.getColorString();
+			} else {
+				result = epicJson.toString();
+			}
 
 		} catch (JsonSyntaxException | IllegalStateException | NullPointerException ex) {
-			ex.printStackTrace();
-			return "Unable to retrieve Epic json data";
+			Logger.getLogger(Epic.class.getName()).log(Level.SEVERE, null, ex);
+			result = "{ \"data\": \"Unable to retrieve Epic json data\" }";
+		} finally {
+			//TODO Close some streams and do something here
+			return result;
 		}
 	}
 
