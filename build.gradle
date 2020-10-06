@@ -1,31 +1,22 @@
 apply plugin: 'java'
-//apply plugin: 'jacoco'
-apply plugin: 'application'
-apply plugin: 'java-library-distribution'
-
-mainClassName = 'jrobo.JRobo'
-
+ 
 repositories {
-	jcenter()
+    mavenCentral()
 }
-
+ 
 dependencies {
-//  	testImplementation     'junit:junit:4.13'
-    	compile 'org.apache.commons:commons-lang3:3.3.2'
-}
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
 
-// Task "distZip" added by plugin "java-library-distribution":
-distZip.shouldRunAfter(build)
+}
 
 jar {
-    // Keep jar clean:
-    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
-    
     manifest {
-        attributes 'Main-Class': 'jrobo.JRobo',
-                   'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' ')
+        attributes "Main-Class": "com.baeldung.fatjar.Application"
     }
-    // How-to add class path:
-    //     http://stackoverflow.com/questions/22659463/add-classpath-in-manifest-using-gradle
-    //     https://gist.github.com/simon04/6865179
+ 
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
+
