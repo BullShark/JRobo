@@ -81,6 +81,8 @@ public class BotCommand {
 	/**
 	 * This is called when a bot command is received
 	 *
+	 * @param user
+	 * @param fullCmd
 	 * @user The user who sent the command
 	 * @fullCmd Includes the SYMB, command, and args
 	 * @TODO Accept raw irc commands from bot owner to be sent by the bot
@@ -218,11 +220,14 @@ public class BotCommand {
 	 * @return 
 	 */
 	private String getCmd(final String fullCmd) {
+
 		try {
 			return fullCmd.substring(1).replaceFirst("\\s.*+", "");
+
 		} catch (IndexOutOfBoundsException ex) {
-			ex.printStackTrace();
+			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 			return "";
+			
 		}
 	}
 
@@ -240,7 +245,8 @@ public class BotCommand {
 			int randIndex = (int) (Math.random() * usersList.length);
 			return usersList[randIndex];
 		} catch(NullPointerException | ArrayIndexOutOfBoundsException ex) {
-			ex.printStackTrace();
+
+			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 			return "ChanServ";
 		}
 	}
@@ -287,9 +293,9 @@ public class BotCommand {
 			tries--;
 		} while (tries > 0 && !first.contains("366"));
 
-		if (users.equals("")) {
-			connection.msgMasters("Could not get list of users!!!");
-		}
+			if (users.equals("")) {
+				connection.msgMasters("Could not get list of users!!!");
+			}
 
 		return users;
 	}
@@ -339,13 +345,11 @@ public class BotCommand {
 	private void epicHelper() {
 		if(hasArgs) {
 	        	helpWrapper(cmd);
-        	} else {
 
-        		//connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
+        	} else {
+        		//connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs); // Uncomment to see the command and args being used
 
         		Epic epic = new Epic();
-
-//			System.out.println(Arrays.toString(new Epic().getFormattedEpicSummary(null, false, -1)));
 
 			connection.msgChannel(config.getChannel(), new Epic().getFormattedEpicSummary(false, -1));
 			
@@ -360,13 +364,21 @@ public class BotCommand {
 
 		if(!hasArgs) {
 	        	helpWrapper(cmd);
+
         	} else {
-
         		//connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
+        		Weather w = new Weather(this.config);
 
-        		Weather w = new Weather();
+			try {
+				connection.msgChannel( config.getChannel(), w.getFormattedWeatherSummary(cmdArgs, true, 5) );
 
-			connection.msgChannel(config.getChannel(), w.getFormattedWeatherSummary(w.getJson(cmdArgs, "", "")));
+			} catch (Weather.InvalidLocationException ex) {
+				ex.setMessage("Invalid Location: Try Again");
+				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+
+				helpWrapper(cmd); //@TODO Show the correct syntax for the command and the location here
+
+			}
 			
 		}
 	}
@@ -424,8 +436,10 @@ public class BotCommand {
 					if (connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
 						//               this.jRobo. 
 					}
-				} catch (Exception ex) { //Find out exactly what exceptions are thrown
+
+				} catch (InterruptedException ex) {
 					Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 			}
 			for (int x = 0; x < numInvites; x++) {
@@ -439,8 +453,8 @@ public class BotCommand {
 	 */
 	private void inviteChannelHelper() {
 		String[] userArr;
-		if (!hasArgs) {
-		//TODO      helpWrapper(cmd);
+		if(!hasArgs) {
+		//@TODO      helpWrapper(cmd);
 			return;
 		}
 
@@ -487,27 +501,33 @@ public class BotCommand {
 		//Statement required for Build (currently is workaround)
 		final String[] user2Arr = userArr;
 
-		for (int i = 0; i < userArr.length; i++) {
-			System.out.println("userArray: " + userArr[i]);
+		for (String user : userArr) {
+			System.out.println("userArr: " + user);
 		}
 
 		// Checking if ChanServ has opped JRobo
 		String first, last, received;
 		for (int tries = 4;;) {
+
 			received = connection.recieveln();
 			try {
 				first = received.split(" :", 2)[0];
 				last = received.split(" :", 2)[1];
+
 			} catch (ArrayIndexOutOfBoundsException ex) {
 				first = "";
 				last = "";
+
 			}
 			if (first.equals("PING")) {
 				connection.sendln("PONG " + last);
+
 			} else if (received.equals(":ChanServ!ChanServ@services. MODE " + config.getChannel() + " +o " + config.getName())
 				|| tries < 0) {
 				break;
+
 			}
+
 			tries--;
 		}
 
@@ -523,10 +543,13 @@ public class BotCommand {
 					} catch (InterruptedException ex) {
 						Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 					}
+
 					connection.sendln("INVITE " + user + " " + config.getChannel());
 				}
 				threadCreated = false;
+
 			}
+
 		};
 		//Remove In a minute -projektile
 		inviteT.start();
@@ -759,7 +782,7 @@ public class BotCommand {
 			if (cmdArgs.equals(config.getName())) {
 				try {
 					Thread.sleep(2500);
-				} catch (Exception ex) { //Find out exactly what exceptions are thrown
+				} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
 					//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				}
 				connection.msgChannel(config.getChannel(), ">pass " + user);
@@ -850,12 +873,12 @@ public class BotCommand {
 				if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
 					break;
 				}
-			} catch (Exception ex) { //Find out exactly what exceptions are thrown
+			} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
 				//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
 		// If not in basechannel he will return to Basechannel
-		if (config.getChannel() != config.getBaseChan()) {
+		if (config.getChannel() == null ? config.getBaseChan() != null : !config.getChannel().equals(config.getBaseChan())) {
 			connection.moveToChannel(cmdArgs, config.getBaseChan());
 		}
 	}
