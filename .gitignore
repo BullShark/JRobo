@@ -1,6 +1,16 @@
-/nbproject/private/
-/build/
-/dist/
-/dist/JRobo.jar
-/src/jrobo/thepiratebay.php
-/src/jrobo/Config.json
+
+# Created by https://www.toptal.com/developers/gitignore/api/netbeans
+# Edit at https://www.toptal.com/developers/gitignore?templates=netbeans
+
+### NetBeans ###
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+src/main/java/jrobo/Config.java
+
+# End of https://www.toptal.com/developers/gitignore/api/netbeans
