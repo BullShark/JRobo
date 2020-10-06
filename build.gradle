@@ -1,14 +1,31 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'application'
-
+apply plugin: 'java-library-distribution'
 
 mainClassName = 'jrobo.JRobo'
 
 repositories {
-    jcenter()
+	jcenter()
 }
 
 dependencies {
-    testImplementation     'junit:junit:4.13'
+	testImplementation     'junit:junit:4.13'
+    	compile 'org.apache.commons:commons-lang3:3.3.2'
+}
+
+// Task "distZip" added by plugin "java-library-distribution":
+distZip.shouldRunAfter(build)
+
+jar {
+    // Keep jar clean:
+    exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
+    
+    manifest {
+        attributes 'Main-Class': 'jrobo.JRobo',
+                   'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' ')
+    }
+    // How-to add class path:
+    //     http://stackoverflow.com/questions/22659463/add-classpath-in-manifest-using-gradle
+    //     https://gist.github.com/simon04/6865179
 }
