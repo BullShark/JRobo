@@ -28,6 +28,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,10 +47,15 @@ public class Epic {
 	 */
 	private static final String QUERY_URL = "https://invalid.not.a.real.domain";
 	//private static final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
-	private String locale;
+	private final String locale;
 	private final String countrycode;
 //	private final int defaultLimit;
 
+	/**
+	 *
+	 * @author Chris Lemire <goodbye300@aim.com>
+	 * @TODO Use try-with-resources instead
+	 */
 	public Epic() {
 
 		/* Miscellaneous */
@@ -59,10 +66,11 @@ public class Epic {
 
 	/**
 	 *
-	 * @return
+	 * @return json from the epic api
 	 */
 	private String getJson() {
 
+		String json = "";
 		String url = (QUERY_URL
 			+ "/freeGamesPromotions"
 			+ "?locale=" + locale
@@ -74,8 +82,7 @@ public class Epic {
 		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
 			new URL(url).openStream()))) {
 
-			String json = "";
-			String line = "";
+			String line;
 
 			while ((line = br.readLine()) != null) {
 				json += line;
@@ -84,45 +91,41 @@ public class Epic {
 			Logger.getLogger(Epic.class.getName()).log(Level.SEVERE, null, ex);
 			json = "{ \"data\": \"Unable to retrieve Epic json data\" }";
 		} finally {
-			System.out.println("[+++]\t" + json);
+			System.err.println("[+++]\t" + json);
 			return json;
 		}
 	}
 
+	/**
+	 *
+	 * @param hasColors
+	 * @param limit
+	 * @return
+	 */
 	public String getFormattedEpicSummary(final boolean hasColors, final int limit) {
 
-		/*
-		 * TODO Add try/catch to handle
-		 * TODO The exception that no JSON is received
-		 */
-		try
-		(
-			EpicJson epicJson = gson.fromJson(this.getJson(), EpicJson.class);
+		String result;
+		try {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		)
-		{
-			String result = "";
+			EpicJson epicJson = gson.fromJson(this.getJson(), EpicJson.class);
 			Type epicJsonT = new TypeToken<ArrayList<EpicJson>>() {
 			}.getType();
 			System.out.println("[+++]\tepicJson Type: " + epicJsonT);
 
-			if(hasColors) {
-                		result = epicJson.getColorString();
-			} else {
-				result = epicJson.toString();
-			}
+			result = (hasColors) ? epicJson.getColorString() : epicJson.toString();
+
+			return result;
 
 		} catch (JsonSyntaxException | IllegalStateException | NullPointerException ex) {
 			Logger.getLogger(Epic.class.getName()).log(Level.SEVERE, null, ex);
 			result = "{ \"data\": \"Unable to retrieve Epic json data\" }";
-		} finally {
-			//TODO Close some streams and do something here
 			return result;
+
 		}
 	}
 
 	/*
-                   * A main method for testing this class
+         * A main method for testing this class
 	 */
 	public static void main(String[] args) {
 		if (args.length != 0) {
@@ -130,7 +133,7 @@ public class Epic {
 			System.exit(-1);
 		}
 
-		System.out.println(new Epic().getFormattedEpicSummary(null, false, 10));
+		System.out.println(new Epic().getFormattedEpicSummary(false, 5));
 
 	} // EOF main
 
@@ -295,8 +298,7 @@ public class Epic {
 
 							/**
 							 *
-							 * @author Christopher
-							 * Lemire
+							 * @author Christopher Lemire
 							 * <goodbye300@aim.com>
 							 */
 							private class EpicTotalPriceJsonItem {
@@ -323,10 +325,6 @@ public class Epic {
 
 		private EpicCacheControlJsonItem cacheControl;
 
-		/**
-		 *
-		 * @override
-		 */
 		@Override
 		public String toString() {
 			return "cacheControl " + cacheControl;
@@ -342,10 +340,6 @@ public class Epic {
 			private String version;
 			//private List<EpicHintsJsonItem> hints;
 
-			/**
-			 *
-			 * @override
-			 */
 			@Override
 			public String toString() {
 				return null;
