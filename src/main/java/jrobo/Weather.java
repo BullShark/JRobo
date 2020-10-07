@@ -48,24 +48,15 @@ public class Weather {
 	 */
 	private final String QUERY_URL = "https://api.openweathermap.org";
 	private final Config config;
-	private String cityName;
-	private String stateCode;
-	private String countryCode;
+	private final String cityName;
+	private final String stateCode;
+	private final String countryCode;
 	private final String apikey;
 
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
-	 * @TODO Remove this and do not use FileReader.getConfig() in the constructors
-	 */
-//	public Weather() {
-//		Weather(null);
-//	}
-
-	/**
-	 *
-	 * @author Chris Lemire <goodbye300@aim.com>
-	 * @param config
+	 * @param config Used to retrieve the api key
 	 */
 	public Weather(Config config) {
 
@@ -73,19 +64,11 @@ public class Weather {
 		stateCode = "TX";
 		countryCode = "US";
 
-		this.config = config;
-		try {
-			if(this.config == null) { 
-//				this.config = FileReader.getConfig(); //@TODO Don't use this
-			}
-
-		} catch (NullPointerException ex) {
-			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-			System.err.println("[+++]\tNullPointerException: Unable to set config and cannot retrieve The OpenWeatherMap API Key");
-
-		} finally {
+		if(config == null) { 
+			throw new NullPointerException("Config is not set and cannot retrieve The OpenWeatherMap API Key");
+		} else {
+			this.config = config;
 			apikey = getApiKey(); //@FIXME Does this method some times throw an exception?
-
 		}
 	}
 
@@ -95,7 +78,7 @@ public class Weather {
 	 *
 	 * @TODO Should I use greedy, reluctant or possessive quantifiers?
 	 * @throws InvalidLocationException for an invalid location
-	 * @param location as "city name", "city name, country code", or "city name, state code, country code" 
+	 * @param location "city name", "city name, "country code" or "city name, state code, country code" 
 	 * @return json weather data
 	 */
 	public String getJson(String location) throws InvalidLocationException {
@@ -104,8 +87,7 @@ public class Weather {
 		//@TODO Catch the InvalidLocationException from BotCommand and print the help message there
 		String locationArr[];
 		location = "New Braunfels"; //@TODO Test to see what a location with no commas does
-		locationArr = location.split("\\s*,\\s*");
-		String result;
+		locationArr = location.split("\\s*,\\s*"); //@TODO Test these to see if the quantifiers need changing
 
 		// There should be 0-2 commas and if locationArr is 0 then there's another problem
 		try {
@@ -113,54 +95,63 @@ public class Weather {
 				throw new InvalidLocationException("Invalid Location: Too many commas or empty string");
 			}
 
-			return getJson(cityName, "", "");
+			return getJson(cityName, "", ""); //@FIXME
+
 		} catch (InvalidLocationException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 			System.err.println("[+++]\tInvalid Location: Using default location instead");
-//			return getJson(this.cityName, this.stateCode, this.countryCode);
 
-			return getJson(cityName, "", "");
+//			return getJson(this.cityName, this.stateCode, this.countryCode);
+			return getJson(cityName, "", ""); //@FIXME
+
 		} finally {
 			System.out.println("[+++]\tlocationArr: " + Arrays.toString(locationArr));
 			System.out.println("[+++]\tcityName: " + cityName);
 			System.out.println("[+++]\tstateCode: " + stateCode);
 			System.out.println("[+++]\tcountryCode: " + countryCode);
 			System.out.println("[+++]\tlocation: " + location);
-
+			//@TODO Will the return statements still get executed or will they cause this block to be skipped?
+			
 		}
 	}
 
 	/**
-	 *
-	 * @param cityName
-	 * @param stateCode
-	 * @param countryCode
+	 * Called by its wrapper method when the cityName, stateCode, and countryCode are determined from the location
+	 * @param cityName The city's name
+	 * @param stateCode The two letter state's code
+	 * @param countryCode The two letter country's code
 	 * @return String
 	 */
-	public String getJson(String cityName, String stateCode, String countryCode) {
+	private String getJson(String cityName, String stateCode, String countryCode) {
 
 		/* Set the location parameter used by the api from the city name, state code, and country code */
-		String location;
+		String location = null;
 		try {
 			if (cityName == null || stateCode == null || countryCode == null) {
+
 				throw new InvalidLocationException("Received null for location");
 			}
 			if ( !cityName.equals("") && stateCode.equals("") && countryCode.equals("") ) {
 			
 				System.out.println("[+++]\tcityName is set, stateCode unset, countryCode unset");
 				location = cityName;
+
 			} else if ( !cityName.equals("") && !stateCode.equals("") && countryCode.equals("") )
 			{
 				System.out.println("[+++]\tcityName is set, stateCode set, countryCode unset");
 				location = cityName + "," + stateCode;
+
 			} else if ( cityName.equals("") && stateCode.equals("") && countryCode.equals("") ) 
 			{
 				System.out.println("[+++]\tcityName is unset, stateCode unset, countryCode unset");
 				location = cityName + "," + stateCode + "," + countryCode;
+
 			} else {
+
 				throw new InvalidLocationException("Location is not valid");
+
 			}
-			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
+
 		} catch (InvalidLocationException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 			// Use the default location that is set in the constructor
@@ -195,48 +186,50 @@ public class Weather {
 			while ((line = br.readLine()) != null) {
 				json += line;
 			}
-		}catch (IOException ex) {
+
+		} catch (IOException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 			json = "{ \"data\": \"Unable to retrieve Weather json data\" }";
-			//throw new RuntimeException(e);
-		}
-		 finally {
+
+		} finally {
 			System.out.println("[+++]\t" + json);
 			return json;
+
 		}
 	}
 
 	/**
-	 * Retrieve the data as a summary with irc color codes and formatting
+	 * Retrieve the data as a summary with irc color codes and formatting or just return the names and values from the json
 	 *
-	 * @param Json
-	 * @return Formatted Json
+	 * @param location
+	 * @param hasColors
+	 * @param limit Limit the number of definitions returned by this method
+	 * @return Formatted and colored Json if hasColor is true, else just the json information
+	 * @throws jrobo.Weather.InvalidLocationException Handle the exception in BotCommand where the help message for the weather command can be shown
 	 */
-	public String getFormattedWeatherSummary(final String json) {
+	public String getFormattedWeatherSummary(final String location, final boolean hasColors, final int limit) throws InvalidLocationException {
 
-		WeatherJson weatherJson;
+		String result;
 
 		try {
 			Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>() {}.getType();
 			System.out.println("[+++]\tWeatherJson Type: " + WeatherJsonT);
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			weatherJson = gson.fromJson(json, WeatherJson.class);
+			WeatherJson weatherJson = gson.fromJson(this.getJson(location), WeatherJson.class);
+
+			result = (hasColors) ? weatherJson.getColorString() : weatherJson.toString();
+			return result;
 
 		} catch (JsonSyntaxException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 			System.err.println("[+++]\tInvalid Json: Does not match the Json code or wrong type");
-			return "Unable to retrieve the weather";
+			result = "Unable to retrieve the weather";
+			return result;
+
 		} finally {
-			//TODO Remove all the other returns and put return here, close streams
-			if(hasColors) {
-				return weatherJson.getColorString();
-			} else {
-				return weatherJson.toString();
-			}
+
 		}
-
-
 	}
 
 	/**
@@ -254,7 +247,7 @@ public class Weather {
 
 		Weather w = new Weather(null);
 		try {
-			System.out.println(w.getFormattedWeatherSummary(w.getJson("San Antonio,TX,US")));
+			System.out.println(w.getFormattedWeatherSummary("San Antonio,TX,US", false, 3));
 		} catch (InvalidLocationException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 			System.err.println("[+++]\tInvalid Location: Try Again");
@@ -264,6 +257,10 @@ public class Weather {
 	public static class InvalidLocationException extends Exception {
 
 		public InvalidLocationException(String message) {
+		}
+
+		void setMessage(String invalid_Location_Try_Again) {
+			throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 		}
 	}
 
@@ -279,7 +276,7 @@ public class Weather {
 		private int count;
 		private ArrayList<WeatherListJsonItem> list;
 
-		public String getColorString() {
+		private String getColorString() {
 
 			String result
 				= MircColors.BOLD
@@ -289,12 +286,15 @@ public class Weather {
 
 			try {
 				result += list.get(0).getColorString();
+				return result;
 
 			} catch (IndexOutOfBoundsException ex) {
 				Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 				System.err.println("[+++]\tCould not get json for list at index 0");
-			} finally {
 				return result;
+
+			} finally {
+
 			}
 		}
 
@@ -330,7 +330,7 @@ public class Weather {
 			private WeatherCloudsJsonItem clouds;
 			private ArrayList<WeatherWeatherJsonItem> weather;
 
-			public String getColorString() {
+			private String getColorString() {
 
 				String result
 					= MircColors.BOLD
@@ -367,11 +367,14 @@ public class Weather {
 					result += element.getColorString() + " ";
 				}
 
+//				@TODO Figure out how to embed this into Matrix
 //				result = result + "\n" + 
 //					"https://s.w-x.co/staticmaps/wu/radsum/county_loc/sat/20200930/0500z.gif";
+
 				return result;
 			}
 
+			@Override
 			public String toString() {
 
 				return "id: " + id + ", "
@@ -397,7 +400,7 @@ public class Weather {
 				private float lat;
 				private float lon;
 
-				public String getColorString() {
+				private String getColorString() {
 
 					DecimalFormat fmt = new DecimalFormat("0.##");
 
@@ -412,6 +415,7 @@ public class Weather {
 					return result;
 				}
 
+				@Override
 				public String toString() {
 					return String.format("lat: %s lon: %s", lat, lon);
 				}
@@ -430,7 +434,7 @@ public class Weather {
 				private int pressure;
 				private String humidity;
 
-				public String getColorString() {
+				private String getColorString() {
 
 					String result
 						= MircColors.BOLD
@@ -450,6 +454,7 @@ public class Weather {
 
 				}
 
+				@Override
 				public String toString() {
 
 					return "temp: " + temp
@@ -471,7 +476,7 @@ public class Weather {
 				private float speed;
 				private int deg;
 
-				public String getColorString() {
+				private String getColorString() {
 
 					String result
 						= MircColors.BOLD
@@ -482,6 +487,7 @@ public class Weather {
 					return result;
 				}
 
+				@Override
 				public String toString() {
 					return "speed: " + speed + ", deg: " + deg;
 				}
@@ -495,7 +501,7 @@ public class Weather {
 
 				private String country;
 
-				public String getColorString() {
+				private String getColorString() {
 
 					String result;
 					if (country != null) {
@@ -511,8 +517,8 @@ public class Weather {
 					return result;
 				}
 
+				@Override
 				public String toString() {
-
 					return "country: " + country;
 				}
 			} // EOF WeatherSysJsonItem
@@ -525,7 +531,7 @@ public class Weather {
 
 				private int all;
 
-				public String getColorString() {
+				private String getColorString() {
 
 					String result
 						= MircColors.BOLD
@@ -535,6 +541,7 @@ public class Weather {
 					return result;
 				}
 
+				@Override
 				public String toString() {
 					return "all: " + all;
 				}
@@ -564,6 +571,7 @@ public class Weather {
 					return result;
 				}
 
+				@Override
 				public String toString() {
 					return "id: " + id + ", main: " + main + ", description: " + description + ", icon: " + icon;
 				}
