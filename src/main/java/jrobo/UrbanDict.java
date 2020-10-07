@@ -29,6 +29,7 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -154,7 +155,7 @@ public class UrbanDict {
 
                 private int total;
                 private String result_type;
-                public ArrayList<UrbanJsonItem> list;
+                public List<UrbanJsonItem> list;
 
                 /**
 		 * Not part of the Json 
@@ -187,10 +188,9 @@ public class UrbanDict {
                                 System.out.println("[+++]\tUrbanJson.limit: " + this.limit);
 
 				//sort(); // subList() should be given a sorted List
-				ArrayList<UrbanJsonItem> temp = list;
+				List<UrbanJsonItem> temp = list;
 
-//				list = temp.stream().limit( this.limit ).collect(Collectors.toList()); 
-				temp = null;
+				list = temp.stream().limit( this.limit ).collect(Collectors.toList()); temp = null;
                         }
 		}
 
