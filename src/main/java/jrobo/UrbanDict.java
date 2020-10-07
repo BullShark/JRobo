@@ -44,7 +44,7 @@ public class UrbanDict {
         private final String QUERY_URL = "https://api.urbandictionary.com";
         private final String WORD;
 	private final int LIMIT;
-	private static final int DEFAULT_LIMIT = 5;
+	private static final int DEFAULT_LIMIT = 3;
 
 	/**
 	 * Overloaded constructor that calls the other one with a default value 5 for LIMIT
