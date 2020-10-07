@@ -12,7 +12,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes "Main-Class": "o.expectusafterlunch.application.fatjar"
+        attributes "Main-Class": "jrobo.JRobo"
     }
  
     from {
