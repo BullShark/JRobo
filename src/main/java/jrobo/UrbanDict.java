@@ -204,8 +204,8 @@ public class UrbanDict {
 
                                 @Override
                                 public int compare(UrbanJsonItem uji1, UrbanJsonItem uji2) {
-                                        if (uji1.getThumbsUp() < uji2.getThumbsUp()) return -1; 
-                                        if (uji1.getThumbsUp() > uji2.getThumbsUp()) return 1; 
+                                        if (uji1.getThumbsUp() < uji2.getThumbsUp()) return 1; 
+                                        if (uji1.getThumbsUp() > uji2.getThumbsUp()) return -1; 
                                         else return 0; 
                                 }
                         });
