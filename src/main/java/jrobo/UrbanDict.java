@@ -26,11 +26,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,58 +39,73 @@ import java.util.List;
  */
 public class UrbanDict {
 
-        /* Miscelanous */
+        /* Miscellaneous */
         private final String QUERY_URL = "https://api.urbandictionary.com";
         private final String word;
-	private final int defaultLimit;
+	private final int limit;
+	private final int DEFAULT_LIMIT = 5;
 
-        public UrbanDict(String word) {
+	/**
+	 * Overloaded constructor that calls the other one with a default value 5 for limit
+	 * @param word The word used for retrieving the Urban Dictionary definition
+	 */
+	public UrbanDict(String word) {
+		// Default limit is used when no limit is given
+		this(word, DEFAULT_LIMIT);
+        }
 
+	/**
+	 * @param word The word used for retrieving the Urban Dictionary definition
+	 * @param limit Limit the results
+ 	 * @author Chris Lemire <goodbye300@aim.com>
+	 */
+	public UrbanDict(String word, final int limit) {
                 this.word = word;
-		defaultLimit = 5;
+		this.limit = (limit <= 0) ? limit : DEFAULT_LIMIT;
         }
 
         /**
          * @TODO https://blog.api.rakuten.net/top-10-best-dictionary-apis-oxford-urban-wordnik/
-         * @return json weather data
+         * @return Json weather data
          */
         public String getJson() {
 
+		String json = "";
 		String url = (QUERY_URL
 				+ "/v0/define"
-				+ "?term=" + word).replace(" ", "%20"); // .replaceAll(" ", "%20");
+				+ "?term=" + word).replace(" ", "%20");
 		System.out.println("[+++]\t" + url);
 			
 		/* Create a URL obj from strings */
 		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
 			new URL(url).openStream()))) {
 
-			String json = "";
-			String line = "";
+			String line;
 
 			while ((line = br.readLine()) != null) {
 				json += line;
 			}
+
 		} catch (IOException ex) {
 			Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
 			json = "{ \"data\": \"Unable to retrieve UrbanDict json data\" }";
-                } catch (MalformedURLException ex) {
-			Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
-			json = "{ \"list\": \"Unable to retrieve UrbanDict json data\" }";
+
                 } finally {
 			System.out.println("[+++]\t" + json);
 	                return json;
 
 		}
-
-                /* Create a URL obj from strings and get the response */
-
-/*		if(hasColors) {
-			result = urbanJson.getColorString();
-		} else {
-			result = urbanJson.toString();
-		}*/
         }
+
+	/**
+	 * Same as the other but uses the default limit that's set in the constructor
+	 * 
+	 * @param hasColors True for colors and formatting used for IRC; False for just names and values
+	 * @return
+	 */
+	public String getFormattedUrbaDef(final boolean hasColors) {
+		return getFormattedUrbanDef(hasColors, this.limit);
+	}
 
 	/**
 	 *
@@ -99,7 +115,7 @@ public class UrbanDict {
 	 */
 	public String getFormattedUrbanDef(final boolean hasColors, final int limit) {
 
-		String result;
+		String result = "";
                 try {
                         Type UrbanJsonT = new TypeToken<ArrayList<UrbanJson>>() {
                         }.getType();
@@ -116,11 +132,8 @@ public class UrbanDict {
 
                         System.out.println("[+++]\turbanJson.getListSize(): " + urbanJson.getListSize());
 
-			if(hasColors) {
-                		result = urbanJson.getColorString();
-			} else {
-				result = urbanJson.toString();
-			}
+			result = (hasColors) ? urbanJson.getColorString() : urbanJson.toString();
+			return result;
 
                 } catch (JsonSyntaxException | IllegalStateException | NullPointerException ex) {
 			Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,26 +197,30 @@ public class UrbanDict {
 				this.limit = limit;
 				//sort(); // subList() should be given a sorted List
 				ArrayList<UrbanJsonItem> temp = list;
-				//list = temp.stream().limit( this.limit ).collect(Collectors.toList()); temp = null;
+				//list = temp.stream().limit( this.limit ).collect(Collectors.toList()); temp = null; // Another way to do it
+
 				try {
 					list = (ArrayList<UrbanJsonItem>) (List) new ArrayList<>(temp.subList(0, this.limit));
 					temp = null;
 
 				} catch (IndexOutOfBoundsException ex) {
-					ex.printStackTrace();
+					Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
 					if(temp != null) { list = temp; temp = null; }
+
 				}
+			//@TODO limit is out of bounds but the list is not empty or null
+			} else if(UrbanDict.this.limit < list.size() && !list.isEmpty() && list != null) {
+				//@TODO Set the limit to 5-1 if list.size() <= 5 and limit.size > 0, else limit = list.size() - 1 and limit.size > 0 else ...
+			//@TODO list is empty or null, cannot continue
+			} else {
+
 			}
 		}
 
                 /** 
-                 * 
-                 * The constructor overrides and defines Comparator<UrbanJsonItem>().compare(UrbanJsonItem, UrbanJsonItem) 
+                 * Override and defines Comparator<UrbanJsonItem>().compare(UrbanJsonItem, UrbanJsonItem) 
                  * Used for sorting the ArrayList<UrbanJsonItem> by the number of thumbs_up
-                 *
-                 * @param limit Limits the number of results
                  */
-
                 public void sort() {
 
                         list.sort(new Comparator<UrbanJsonItem>() {
@@ -235,10 +252,7 @@ public class UrbanDict {
                         return result;
                 }
 
-                /**
-                 *
-                 * @override
-                 */
+		@Override
                 public String toString() {
 
 			//this.sort();
@@ -283,6 +297,7 @@ public class UrbanDict {
                                         return result;
                         }
 
+			@Override
                         public String toString() {
                                 definition = definition.replaceAll("[\\r\\n\\s]++", " ");
 
