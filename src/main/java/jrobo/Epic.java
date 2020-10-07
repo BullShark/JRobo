@@ -69,16 +69,16 @@ public class Epic {
 	private String getJson() {
 
 		String json = "";
-		String url = (QUERY_URL
+		final String URL = (QUERY_URL
 			+ "/freeGamesPromotions"
 			+ "?locale=" + locale
 			+ "&country=" + countrycode
 			+ "&allowCountries=" + countrycode).replaceAll(" ", "%20");
-		System.out.println("[+++]\t" + url);
+		System.out.println("[+++]\t" + URL);
 
 		/* Create a URL obj from strings */
 		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
-			new URL(url).openStream()))) {
+			new URL(URL).openStream()))) {
 
 			String line;
 
@@ -100,7 +100,7 @@ public class Epic {
 	 * @param limit
 	 * @return
 	 */
-	public String getFormattedEpicSummary(final boolean hasColors, final int limit) {
+	public String getFormattedEpicSummary(boolean hasColors, int limit) {
 
 		String result;
 		try {
@@ -281,8 +281,8 @@ public class Epic {
 							private int voucherDiscount;
 							private int discount;
 							private String currencyCode;
-							//EpicCurrencyInfoJsonItem currencyInfo;
-							//EpicfmtPriceJsonItem fmtPrice;
+							//private EpicCurrencyInfoJsonItem currencyInfo;
+							//private EpicfmtPriceJsonItem fmtPrice;
 
 							@Override
 							public String toString() {
@@ -345,3 +345,4 @@ public class Epic {
 		} // EOF EpicCacheControlJsonItem
 	} // EOF EpicExtensionsJsonItem
 } // EOF Epic
+
