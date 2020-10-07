@@ -122,6 +122,8 @@ public class UrbanDict {
 
                         System.out.println("[+++]\turbanJson.getListSize(): " + urbanJson.getListSize());
 
+			urbanJson.sort(); // Ascending order -> Decending order
+
 			result = (hasColors) ? urbanJson.getColorString() : urbanJson.toString();
 			return result;
 
@@ -151,11 +153,11 @@ public class UrbanDict {
          *
          * @author Christopher Lemire <christopher.lemire@gmail.com>
          */
-        public class UrbanJson {
+        private class UrbanJson {
 
                 private int total;
                 private String result_type;
-                public List<UrbanJsonItem> list;
+                private List<UrbanJsonItem> list;
 
                 /**
 		 * Not part of the Json 
@@ -168,21 +170,21 @@ public class UrbanDict {
 		/**
 		 * @return the limit
 		 */
-		public int getLimit() {
+		private int getLimit() {
 			return limit;
 		}
 
 		/**
 		 * @return size of ArrayList<UrbanJsonItem> list
 		 */
-		public int getListSize() {
+		private int getListSize() {
 			return list.size();
 		}
 
 		/**
 		 * @param limit the limit to set
 		 */
-		public void setLimit(int limit) {
+		private void setLimit(int limit) {
 			if(limit > 0 && !list.isEmpty() && list != null) {
 				this.limit = limit;
                                 System.out.println("[+++]\tUrbanJson.limit: " + this.limit);
@@ -198,7 +200,7 @@ public class UrbanDict {
                  * Override and defines Comparator\<UrbanJsonItem\>().compare(UrbanJsonItem, UrbanJsonItem) 
                  * Used for sorting the ArrayList\<UrbanJsonItem\> by the number of thumbs_up
                  */
-                public void sort() {
+                private void sort() {
 
                         list.sort(new Comparator<UrbanJsonItem>() {
 
@@ -218,7 +220,7 @@ public class UrbanDict {
                         list.forEach(System.out::println);
 		}
 	
-                public String getColorString() {
+                private String getColorString() {
 
 			//this.sort();
                         String result = "";
@@ -240,7 +242,7 @@ public class UrbanDict {
                  *
                  * @author Christopher Lemire <goodbye300@aim.com>
                  */
-                public class UrbanJsonItem {
+                private class UrbanJsonItem {
 
                         private String definition;
                         private int thumbs_up;
@@ -249,19 +251,19 @@ public class UrbanDict {
                         /**
                          * @return the definition
                          */
-                        public String getDefinition() { return definition; }
+                        private String getDefinition() { return definition; }
 
                         /**
                          * @return the thumbs_up
                          */
-                        public int getThumbsUp() { return thumbs_up; }
+                        private int getThumbsUp() { return thumbs_up; }
 
                         /**
                          * @return the thumbs_down
                          */
-                        public int getThumbsDown() { return thumbs_down; }
+                        private int getThumbsDown() { return thumbs_down; }
 
-                        public String getColorString() {
+                        private String getColorString() {
                                 definition = definition.replaceAll("\\r|\\n", " ");
                                 definition = definition.replaceAll("\\s++", " ");
 
