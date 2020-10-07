@@ -29,9 +29,9 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -41,27 +41,27 @@ public class UrbanDict {
 
         /* Miscellaneous */
         private final String QUERY_URL = "https://api.urbandictionary.com";
-        private final String word;
-	private final int limit;
-	private final int DEFAULT_LIMIT = 5;
+        private final String WORD;
+	private final int LIMIT;
+	private static final int DEFAULT_LIMIT = 5;
 
 	/**
-	 * Overloaded constructor that calls the other one with a default value 5 for limit
-	 * @param word The word used for retrieving the Urban Dictionary definition
+	 * Overloaded constructor that calls the other one with a default value 5 for LIMIT
+	 * @param word The WORD used for retrieving the Urban Dictionary definition
 	 */
-	public UrbanDict(String word) {
-		// Default limit is used when no limit is given
+	public UrbanDict(final String word) {
+		// Default LIMIT is used when no LIMIT is given
 		this(word, DEFAULT_LIMIT);
         }
 
 	/**
-	 * @param word The word used for retrieving the Urban Dictionary definition
-	 * @param limit Limit the results
+	 * @param word The WORD used for retrieving the Urban Dictionary definition
+	 * @param limit Limit the results -1 or limit <= 0 means unlimited results
  	 * @author Chris Lemire <goodbye300@aim.com>
 	 */
-	public UrbanDict(String word, final int limit) {
-                this.word = word;
-		this.limit = (limit <= 0) ? limit : DEFAULT_LIMIT;
+	public UrbanDict(final String word, final int limit) {
+                WORD = word;
+		LIMIT = (limit <= 0) ? DEFAULT_LIMIT : limit;
         }
 
         /**
@@ -71,14 +71,14 @@ public class UrbanDict {
         public String getJson() {
 
 		String json = "";
-		String url = (QUERY_URL
+		final String URL = (QUERY_URL
 				+ "/v0/define"
-				+ "?term=" + word).replace(" ", "%20");
-		System.out.println("[+++]\t" + url);
+				+ "?term=" + WORD).replace(" ", "%20");
+		System.out.println("[+++]\t" + URL);
 			
 		/* Create a URL obj from strings */
 		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
-			new URL(url).openStream()))) {
+			new URL(URL).openStream()))) {
 
 			String line;
 
@@ -98,22 +98,11 @@ public class UrbanDict {
         }
 
 	/**
-	 * Same as the other but uses the default limit that's set in the constructor
-	 * 
-	 * @param hasColors True for colors and formatting used for IRC; False for just names and values
-	 * @return
-	 */
-	public String getFormattedUrbaDef(final boolean hasColors) {
-		return getFormattedUrbanDef(hasColors, this.limit);
-	}
-
-	/**
 	 *
 	 * @param hasColors
-	 * @param limit
 	 * @return
 	 */
-	public String getFormattedUrbanDef(final boolean hasColors, final int limit) {
+	public String getFormattedUrbanDef(final boolean hasColors) {
 
 		String result = "";
                 try {
@@ -128,7 +117,7 @@ public class UrbanDict {
 			
                         System.out.println("[+++]\turbanJson.getListSize(): " + urbanJson.getListSize());
 
-			urbanJson.setLimit(limit);
+			urbanJson.setLimit(LIMIT);
 
                         System.out.println("[+++]\turbanJson.getListSize(): " + urbanJson.getListSize());
 
@@ -154,7 +143,7 @@ public class UrbanDict {
                         System.err.println("Usage: java UrbanDict <word>");
                         System.exit(-1);
                 }
-                System.out.println(new UrbanDict(args[0]).getFormattedUrbanDef(false, -1));
+                System.out.println(new UrbanDict(args[0]).getFormattedUrbanDef(false));
         } // EOF main
 
         /**
@@ -169,8 +158,8 @@ public class UrbanDict {
 
                 /**
 		 * Not part of the Json 
-		 * Used for limiting the number of results
-		 * A limit of zero means there's no limit
+                 * Used for limiting the number of results
+                 * A limit of zero means there's no limit
 		 * @since 2020-10-03
 		 */
                 private int limit = 0;
@@ -193,33 +182,21 @@ public class UrbanDict {
 		 * @param limit the limit to set
 		 */
 		public void setLimit(int limit) {
-			if(limit > 0 && limit < list.size() && !list.isEmpty() && list != null) {
+			if(limit > 0 && !list.isEmpty() && list != null) {
 				this.limit = limit;
+                                System.out.println("[+++]\tUrbanJson.limit: " + this.limit);
+
 				//sort(); // subList() should be given a sorted List
 				ArrayList<UrbanJsonItem> temp = list;
-				//list = temp.stream().limit( this.limit ).collect(Collectors.toList()); temp = null; // Another way to do it
 
-				try {
-					list = (ArrayList<UrbanJsonItem>) (List) new ArrayList<>(temp.subList(0, this.limit));
-					temp = null;
-
-				} catch (IndexOutOfBoundsException ex) {
-					Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
-					if(temp != null) { list = temp; temp = null; }
-
-				}
-			//@TODO limit is out of bounds but the list is not empty or null
-			} else if(UrbanDict.this.limit < list.size() && !list.isEmpty() && list != null) {
-				//@TODO Set the limit to 5-1 if list.size() <= 5 and limit.size > 0, else limit = list.size() - 1 and limit.size > 0 else ...
-			//@TODO list is empty or null, cannot continue
-			} else {
-
-			}
+//				list = temp.stream().limit( this.limit ).collect(Collectors.toList()); 
+				temp = null;
+                        }
 		}
 
                 /** 
-                 * Override and defines Comparator<UrbanJsonItem>().compare(UrbanJsonItem, UrbanJsonItem) 
-                 * Used for sorting the ArrayList<UrbanJsonItem> by the number of thumbs_up
+                 * Override and defines Comparator\<UrbanJsonItem\>().compare(UrbanJsonItem, UrbanJsonItem) 
+                 * Used for sorting the ArrayList\<UrbanJsonItem\> by the number of thumbs_up
                  */
                 public void sort() {
 
