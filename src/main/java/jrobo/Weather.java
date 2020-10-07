@@ -47,68 +47,68 @@ public class Weather {
 	 * Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
 	 */
 	private final String QUERY_URL = "https://api.openweathermap.org";
-	private final Config config;
-	private final String cityName;
-	private final String stateCode;
-	private final String countryCode;
-	private final String apikey;
+	private final Config CONFIG;
+	private final String CITYNAME;
+	private final String STATECODE;
+	private final String COUNTRYCODE;
+	private final String APIKEY;
 
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
 	 * @param config Used to retrieve the api key
 	 */
-	public Weather(Config config) {
+	public Weather(final Config config) throws NullPointerException {
 
-		cityName = "San Antonio";
-		stateCode = "TX";
-		countryCode = "US";
+		CITYNAME = "San Antonio";
+		STATECODE = "TX";
+		COUNTRYCODE = "US";
 
 		if(config == null) { 
 			throw new NullPointerException("Config is not set and cannot retrieve The OpenWeatherMap API Key");
 		} else {
-			this.config = config;
-			apikey = getApiKey(); //@FIXME Does this method some times throw an exception?
+			this.CONFIG = config;
+			APIKEY = getApiKey(); //@FIXME Does this method some times throw an exception?
 		}
 	}
 
 	/**
 	 * Tries to determine the city name, state code and country code from a
-	 * location string and returns the json for it if valid
+	 * Location string and returns the Json for it if valid
 	 *
 	 * @TODO Should I use greedy, reluctant or possessive quantifiers?
 	 * @throws InvalidLocationException for an invalid location
 	 * @param location "city name", "city name, "country code" or "city name, state code, country code" 
-	 * @return json weather data
+	 * @return Json weather data
 	 */
-	public String getJson(String location) throws InvalidLocationException {
+	public String getJson(final String location) throws InvalidLocationException {
 
 		//@TODO More than 3 should give the help message for the weather command
 		//@TODO Catch the InvalidLocationException from BotCommand and print the help message there
 		String locationArr[];
-		location = "New Braunfels"; //@TODO Test to see what a location with no commas does
 		locationArr = location.split("\\s*,\\s*"); //@TODO Test these to see if the quantifiers need changing
-
+		System.out.print( Arrays.toString( "New Braunfels".split("\\s*,\\s*")) ); //@TODO Test to see what a location with no commas does
+		
 		// There should be 0-2 commas and if locationArr is 0 then there's another problem
 		try {
 			if (locationArr == null || locationArr.length < 1 || locationArr.length > 3) {
-				throw new InvalidLocationException("Invalid Location: Too many commas or empty string");
+				throw new InvalidLocationException("Invalid OpenWeatherMap Location: Too many commas or empty string");
 			}
 
-			return getJson(cityName, "", ""); //@FIXME
+			return getJson(CITYNAME, "", ""); //@FIXME
 
 		} catch (InvalidLocationException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-			System.err.println("[+++]\tInvalid Location: Using default location instead");
+			System.err.println("[+++]\tInvalid OpenWeatherMap Location: Using default location instead");
 
-//			return getJson(this.cityName, this.stateCode, this.countryCode);
-			return getJson(cityName, "", ""); //@FIXME
+//			return getJson(this.CITYNAME, this.STATECODE, this.COUNTRYCODE);
+			return getJson(CITYNAME, "", ""); //@FIXME
 
 		} finally {
 			System.out.println("[+++]\tlocationArr: " + Arrays.toString(locationArr));
-			System.out.println("[+++]\tcityName: " + cityName);
-			System.out.println("[+++]\tstateCode: " + stateCode);
-			System.out.println("[+++]\tcountryCode: " + countryCode);
+			System.out.println("[+++]\tcityName: " + CITYNAME);
+			System.out.println("[+++]\tstateCode: " + STATECODE);
+			System.out.println("[+++]\tcountryCode: " + COUNTRYCODE);
 			System.out.println("[+++]\tlocation: " + location);
 			//@TODO Will the return statements still get executed or will they cause this block to be skipped?
 			
@@ -116,20 +116,20 @@ public class Weather {
 	}
 
 	/**
-	 * Called by its wrapper method when the cityName, stateCode, and countryCode are determined from the location
+	 * Called by its wrapper method when the CITYNAME, STATECODE, and COUNTRYCODE are determined from the location
 	 * @param cityName The city's name
 	 * @param stateCode The two letter state's code
 	 * @param countryCode The two letter country's code
 	 * @return String
 	 */
-	private String getJson(String cityName, String stateCode, String countryCode) {
+	private String getJson(final String cityName, final String stateCode, final String countryCode) {
 
 		/* Set the location parameter used by the api from the city name, state code, and country code */
 		String location = null;
 		try {
 			if (cityName == null || stateCode == null || countryCode == null) {
 
-				throw new InvalidLocationException("Received null for location");
+				throw new InvalidLocationException("Invalid OpenWeatherMap Location: Received null for location");
 			}
 			if ( !cityName.equals("") && stateCode.equals("") && countryCode.equals("") ) {
 			
@@ -148,7 +148,7 @@ public class Weather {
 
 			} else {
 
-				throw new InvalidLocationException("Location is not valid");
+				throw new InvalidLocationException("Invalid OpenWeatherMap Location");
 
 			}
 
@@ -156,7 +156,7 @@ public class Weather {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 			// Use the default location that is set in the constructor
 			System.out.println("[+++]\tUsing default location");
-			location = this.cityName + "," + this.stateCode + "," + this.countryCode;
+			location = this.CITYNAME + "," + this.STATECODE + "," + this.COUNTRYCODE;
 		} finally { 
 			System.out.println("[+++]\tcityName: " + cityName);
 			System.out.println("[+++]\tstateCode: " + stateCode);
@@ -164,22 +164,22 @@ public class Weather {
 			System.out.println("[+++]\tlocation: " + location);
 		}
 
-		String url = (QUERY_URL
+		/* Create a URL obj from strings */
+		final String URL = (QUERY_URL
 				+ "/data/2.5/" + "find" // Possible values: find, weather, forecast
 				+ "?q=" + location
 				+ "&units=" + "imperial"
 				+ "&type=" + "accurate"
 				+ "&mode=" + "json"
 				+ "&lang=" + "en"
-				+ "&appid=" + apikey).replaceAll(" ", "%20");
+				+ "&appid=" + APIKEY).replaceAll(" ", "%20");
 
-		System.out.println("[+++]\t" + url);
+		System.out.println("[+++]\t" + URL);
 
 		String json = "";
 
-		/* Create a URL obj from strings */
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(
-			new URL(url).openStream()))) {
+			new URL(URL).openStream()))) {
 
 			String line;
 
@@ -200,7 +200,6 @@ public class Weather {
 
 	/**
 	 * Retrieve the data as a summary with irc color codes and formatting or just return the names and values from the json
-	 *
 	 * @param location
 	 * @param hasColors
 	 * @param limit Limit the number of definitions returned by this method
@@ -237,7 +236,7 @@ public class Weather {
 	 * @return API Key for OpenWeatherMap retrieved from Config.json
 	 */
 	private String getApiKey() {
-		return config.getOpenWeatherMapKey();
+		return CONFIG.getOpenWeatherMapKey();
 	}
 
 	/*
@@ -254,13 +253,19 @@ public class Weather {
 		}
 	}
 
-	public static class InvalidLocationException extends Exception {
+	/**
+	 * Represents the situation in which the location input provided by the user
+	 * Does not represent a valid location and the api won't recognize it
+	 */
+	public static class InvalidLocationException extends RuntimeException {
 
-		public InvalidLocationException(String message) {
-		}
-
-		void setMessage(String invalid_Location_Try_Again) {
-			throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		/**
+		 * Sets up this exception with an appropriate message.
+		 * 
+		 * @param invalid User input for location that is invalid
+		 */
+		public InvalidLocationException(String invalid) {
+			super ("Invalid OpenWeatherMap Location: \"" + invalid + "\"");
 		}
 	}
 
