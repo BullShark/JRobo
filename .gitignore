@@ -6,11 +6,19 @@
 **/nbproject/private/
 **/nbproject/Makefile-*.mk
 **/nbproject/Package-*.bash
-build/
 nbbuild/
 dist/
 nbdist/
 .nb-gradle/
 src/main/java/jrobo/Config.java
+# Ignore this directory
+build/
+# But descend into directories
+!*/
+# Recursively allow files under build
+#!/build/**
+!build/libs/JRobo.jar
+# Allow this
+!.gitignore
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans
