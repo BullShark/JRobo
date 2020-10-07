@@ -49,12 +49,10 @@ public class Epic {
 	//private static final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
 	private final String locale;
 	private final String countrycode;
-//	private final int defaultLimit;
 
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
-	 * @TODO Use try-with-resources instead
 	 */
 	public Epic() {
 
@@ -66,7 +64,7 @@ public class Epic {
 
 	/**
 	 *
-	 * @return json from the epic api
+	 * @return Json data from the Epic api
 	 */
 	private String getJson() {
 
