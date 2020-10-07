@@ -34,19 +34,19 @@ import java.util.TimerTask;
  */
 public class BotCommand {
 
-	private final Networking connection;
-	private final Config config;
-	private final JRobo jRobo;
+	private final Networking CONNECTION;
+	private final Config CONFIG;
+	private final JRobo JROBO;
 	private String user;
 	private String bombHolder;
 	private String cmd;
 	private String cmdArgs;
 	private boolean hasArgs;
-	private final ListColors lc;
+	private final ListColors LC;
 	private boolean threadCreated;
 	private boolean bombActive;
-	private final boolean[] wire;
-	private final Jokes joke;
+	private final boolean[] WIRE;
+	private final Jokes JOKE;
 
 	/**
 	 *
@@ -57,10 +57,10 @@ public class BotCommand {
 	public BotCommand(final Networking connection, final Config config, final JRobo jRobo) {
 
 		/* Objects */
-		this.connection = connection;
-		this.config = config;
-		this.jRobo = jRobo;
-		joke = new Jokes(this.connection, this.config.getChannel());
+		this.CONNECTION = connection;
+		this.CONFIG = config;
+		this.JROBO = jRobo;
+		JOKE = new Jokes(this.CONNECTION, this.CONFIG.getChannel());
 
 		/* Cmds */
 		cmd = "";
@@ -68,11 +68,11 @@ public class BotCommand {
 		hasArgs = false;
 
 		/* Misc */
-		lc = new ListColors();
+		LC = new ListColors();
 		threadCreated = false;
 
 		/* Bomb game */
-		wire = new boolean[3];
+		WIRE = new boolean[3];
 		bombActive = false;
 		bombHolder = "nobody";
 
@@ -206,7 +206,7 @@ public class BotCommand {
 	private String getCmdArgs(final String fullCmd) {
 		
 		try {
-			return fullCmd.split("\\" + config.getCmdSymb() + "[a-zA-Z_0-9\\-]++", 2)[1].trim();
+			return fullCmd.split("\\" + CONFIG.getCmdSymb() + "[a-zA-Z_0-9\\-]++", 2)[1].trim();
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			/* Means no args!!! */
 			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
@@ -257,7 +257,7 @@ public class BotCommand {
 	 * @return Returns the list of users in the channel defined by Config.getChannel()
 	 */
 	private String getUsers() {
-		return getUsers(config.getChannel());
+		return getUsers(CONFIG.getChannel());
 	}
 
 	/**
@@ -271,9 +271,9 @@ public class BotCommand {
 		String first = "", last = "";
 		int tries = 8;
 
-		connection.sendln("NAMES " + chan);
+		CONNECTION.sendln("NAMES " + chan);
 		do {
-			received = connection.recieveln();
+			received = CONNECTION.recieveln();
 			try {
 				first = received.split(" :", 2)[0];
 				last = received.split(" :", 2)[1];
@@ -288,13 +288,13 @@ public class BotCommand {
 					Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			} else if (first.equals("PING")) {
-				connection.sendln("PONG " + last);
+				CONNECTION.sendln("PONG " + last);
 			}
 			tries--;
 		} while (tries > 0 && !first.contains("366"));
 
 			if (users.equals("")) {
-				connection.msgMasters("Could not get list of users!!!");
+				CONNECTION.msgMasters("Could not get list of users!!!");
 			}
 
 		return users;
@@ -310,9 +310,9 @@ public class BotCommand {
 		users = users.replace("[m]", "");
 
 		if (users != null) {
-			connection.msgChannel(config.getChannel(), users);
+			CONNECTION.msgChannel(CONFIG.getChannel(), users);
 		} else {
-			connection.msgChannel(config.getChannel(), "Failed to get a list of users; Try again or notify the developer!");
+			CONNECTION.msgChannel(CONFIG.getChannel(), "Failed to get a list of users; Try again or notify the developer!");
 		}
 	}
 
@@ -324,7 +324,7 @@ public class BotCommand {
 			helpWrapper(cmd);
 		} else {
 			String googleUrl = "http://lmgtfy.com/?q=".concat(getFormattedQuery(cmdArgs));
-			connection.msgChannel(config.getChannel(), googleUrl);
+			CONNECTION.msgChannel(CONFIG.getChannel(), googleUrl);
 		}
 	}
 
@@ -335,7 +335,7 @@ public class BotCommand {
 		if (!hasArgs) {
 			helpWrapper(cmd);
 		} else {
-			connection.msgChannel(config.getChannel(), new DownForEveryone().isUp(getFormattedQuery(cmdArgs), true));
+			CONNECTION.msgChannel(CONFIG.getChannel(), new DownForEveryone().isUp(getFormattedQuery(cmdArgs), true));
 		}
 	}
 
@@ -347,11 +347,11 @@ public class BotCommand {
 	        	helpWrapper(cmd);
 
         	} else {
-        		//connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs); // Uncomment to see the command and args being used
+        		//connection.msgChannel(CONFIG.getChannel(), CONFIG.getCmdSymb() + cmd + " " + cmdArgs); // Uncomment to see the command and args being used
 
         		Epic epic = new Epic();
 
-			connection.msgChannel(config.getChannel(), new Epic().getFormattedEpicSummary(false, -1));
+			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(false, -1));
 			
 		}
 	
@@ -366,20 +366,18 @@ public class BotCommand {
 	        	helpWrapper(cmd);
 
         	} else {
-        		//connection.msgChannel(config.getChannel(), config.getCmdSymb() + cmd + " " + cmdArgs);
-        		Weather w = new Weather(this.config);
+        		//connection.msgChannel(CONFIG.getChannel(), CONFIG.getCmdSymb() + cmd + " " + cmdArgs);
+        		Weather w = new Weather(this.CONFIG);
 
 			try {
-				connection.msgChannel( config.getChannel(), w.getFormattedWeatherSummary(cmdArgs, true, 5) );
+				CONNECTION.msgChannel(CONFIG.getChannel(), w.getFormattedWeatherSummary(cmdArgs, true, 5) );
 
 			} catch (Weather.InvalidLocationException ex) {
-				ex.setMessage("Invalid Location: Try Again");
 				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 
 				helpWrapper(cmd); //@TODO Show the correct syntax for the command and the location here
 
 			}
-			
 		}
 	}
 
@@ -389,15 +387,15 @@ public class BotCommand {
 	private void mumHelper() {
 		try {
 			if (!hasArgs) {
-				connection.msgChannel(config.getChannel(),
-					joke.getMommaJoke(getRandChanUser().replace("[m]", "")));
+				CONNECTION.msgChannel(CONFIG.getChannel(),
+					JOKE.getMommaJoke(getRandChanUser().replace("[m]", "")));
 			} else {
 				//TODO I don't remember why I wrote this. What does it do? Is it really needed?
 				int temp = cmdArgs.indexOf(' ');
 				if (temp != -1) {
-					connection.msgChannel(config.getChannel(), joke.getMommaJoke(cmdArgs.substring(0, temp)));
+					CONNECTION.msgChannel(CONFIG.getChannel(), JOKE.getMommaJoke(cmdArgs.substring(0, temp)));
 				} else {
-					connection.msgChannel(config.getChannel(), joke.getMommaJoke(cmdArgs));
+					CONNECTION.msgChannel(CONFIG.getChannel(), JOKE.getMommaJoke(cmdArgs));
 				}
 			}
 		} catch (NullPointerException | ArrayIndexOutOfBoundsException ex) {
@@ -409,7 +407,7 @@ public class BotCommand {
 	 * @TODO Write me
 	 */
 	private void nextHelper() {
-		connection.msgChannel(config.getChannel(), "Another satisfied customer, NEXT!!!");
+		CONNECTION.msgChannel(CONFIG.getChannel(), "Another satisfied customer, NEXT!!!");
 	}
 
 	/**
@@ -423,18 +421,18 @@ public class BotCommand {
 
 		if (!hasArgs || !(cmdArgs.split("\\s++").length > 0)) { // Min 1 Arg
 			
-			connection.msgChannel(config.getChannel(), "Usage: " + config.getCmdSymb() + "invite-nick {nick} [# of times]");
+			CONNECTION.msgChannel(CONFIG.getChannel(), "Usage: " + CONFIG.getCmdSymb() + "invite-nick {nick} [# of times]");
 		} else {
-			connection.msgChannel(config.getChannel(), "Roger that.");
+			CONNECTION.msgChannel(CONFIG.getChannel(), "Roger that.");
 			String cmdArgsArr[] = cmdArgs.split("\\s++");
 			int numInvites = 50; // Default value
 			if (cmdArgsArr.length < 1) {
 				try {
 					Thread.sleep(1500);
 					numInvites = Integer.getInteger(cmdArgsArr[1]);
-					//TODO replace with config.getMaster()
-					if (connection.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
-						//               this.jRobo. 
+					//TODO replace with CONFIG.getMaster()
+					if (CONNECTION.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
+						//               this.JROBO. 
 					}
 
 				} catch (InterruptedException ex) {
@@ -443,7 +441,7 @@ public class BotCommand {
 				}
 			}
 			for (int x = 0; x < numInvites; x++) {
-				connection.sendln("INVITE " + config.getChannel() + " " + cmdArgsArr[0]);
+				CONNECTION.sendln("INVITE " + CONFIG.getChannel() + " " + cmdArgsArr[0]);
 			}
 		}
 	}
@@ -459,7 +457,7 @@ public class BotCommand {
 		}
 
 		if (threadCreated) {
-			connection.msgChannel(config.getChannel(), "The invite thread is still active.");
+			CONNECTION.msgChannel(CONFIG.getChannel(), "The invite thread is still active.");
 			return;
 		}
 
@@ -469,33 +467,33 @@ public class BotCommand {
 			// Channel must begin with a # and be at least two characters long
 			for (int i = 0; i < chansArr.length; i++) {
 				if (chansArr[i].length() < 2 || !chansArr[i].startsWith("#")) {
-					connection.msgChannel(config.getChannel(), "Invalid channel: " + chansArr[i]);
+					CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid channel: " + chansArr[i]);
 					return;
 				}
 			}
 
-			config.setBaseChan(config.getChannel()); // The channel JRobo will return to
+			CONFIG.setBaseChan(CONFIG.getChannel()); // The channel JRobo will return to
 			String usersList = "";
 			for (int i = 0; i < chansArr.length; i++) {
-				connection.moveToChannel(config.getChannel(), chansArr[i]);
-				if (config.getChannel().equals(config.getBaseChan())) {
+				CONNECTION.moveToChannel(CONFIG.getChannel(), chansArr[i]);
+				if (CONFIG.getChannel().equals(CONFIG.getBaseChan())) {
 					break;
 				}
 				usersList += getUsers();
 			}
 			userArr = usersList.split("\\s");
-			connection.moveToChannel(chansArr[chansArr.length - 1], config.getBaseChan());
+			CONNECTION.moveToChannel(chansArr[chansArr.length - 1], CONFIG.getBaseChan());
 		} //The command does not contain more than one channel argument
 		else {
 			// Channel must begin with a # and be at least two characters long
 			if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#")) {
-				connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
+				CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid channel: " + cmdArgs);
 				return;
 			}
-			config.setBaseChan(config.getChannel()); // The channel JRobo will return to
-			connection.moveToChannel(config.getChannel(), cmdArgs);
+			CONFIG.setBaseChan(CONFIG.getChannel()); // The channel JRobo will return to
+			CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 			userArr = getUsers().split("\\s");
-			connection.moveToChannel(cmdArgs, config.getBaseChan());
+			CONNECTION.moveToChannel(cmdArgs, CONFIG.getBaseChan());
 
 		}
 		//Statement required for Build (currently is workaround)
@@ -509,7 +507,7 @@ public class BotCommand {
 		String first, last, received;
 		for (int tries = 4;;) {
 
-			received = connection.recieveln();
+			received = CONNECTION.recieveln();
 			try {
 				first = received.split(" :", 2)[0];
 				last = received.split(" :", 2)[1];
@@ -520,9 +518,9 @@ public class BotCommand {
 
 			}
 			if (first.equals("PING")) {
-				connection.sendln("PONG " + last);
+				CONNECTION.sendln("PONG " + last);
 
-			} else if (received.equals(":ChanServ!ChanServ@services. MODE " + config.getChannel() + " +o " + config.getName())
+			} else if (received.equals(":ChanServ!ChanServ@services. MODE " + CONFIG.getChannel() + " +o " + CONFIG.getName())
 				|| tries < 0) {
 				break;
 
@@ -544,7 +542,7 @@ public class BotCommand {
 						Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 					}
 
-					connection.sendln("INVITE " + user + " " + config.getChannel());
+					CONNECTION.sendln("INVITE " + user + " " + CONFIG.getChannel());
 				}
 				threadCreated = false;
 
@@ -556,7 +554,7 @@ public class BotCommand {
 
 		/*
 		 * TODO Implement and use FileReader.getNickAndHost() instead
-		 * FIXME check all masters for-each loop    if(jRobo.getFirst().startsWith(config.getMasters()[0]) && hasArgs ) {
+		 * FIXME check all masters for-each loop    if(JROBO.getFirst().startsWith(CONFIG.getMasters()[0]) && hasArgs ) {
 		 * Use for multiple channels, array    String[] channels = this.cmdArgs.split("\\s++");
 		 *    if(channels.length )
 		 */
@@ -567,14 +565,14 @@ public class BotCommand {
 	 * @FIXME Use Config.getMasters()
 	 */
 	private void rawHelper() {
-		if (jRobo.getFirst().startsWith(":BullShark!")) {
-			connection.sendln("PRIVMSG " + config.getChannel() + " :Yes Sir Chief!");
-			String rawStr = jRobo.getLast();
+		if (JROBO.getFirst().startsWith(":BullShark!")) {
+			CONNECTION.sendln("PRIVMSG " + CONFIG.getChannel() + " :Yes Sir Chief!");
+			String rawStr = JROBO.getLast();
 			rawStr = rawStr.substring(rawStr.indexOf(' '));
-			connection.sendln(rawStr);
+			CONNECTION.sendln(rawStr);
 			try {
 				Thread.sleep(500);
-				connection.msgChannel(config.getChannel(), connection.recieveln());
+				CONNECTION.msgChannel(CONFIG.getChannel(), CONNECTION.recieveln());
 
 			} catch (InterruptedException | NullPointerException ex) {
 				Logger.getLogger(BotCommand.class
@@ -587,14 +585,14 @@ public class BotCommand {
 	 * @TODO Write me
 	 */
 	private void urbanDictionaryHelper() {
-		connection.msgChannel(config.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true, 3), true, MircColors.BOLD);
+		CONNECTION.msgChannel(CONFIG.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true), true, MircColors.BOLD);
 	}
 
 	/**
 	 * @TODO Write me
 	 */
 	private void quitHelper() {
-		connection.msgChannel(config.getChannel(), "Detenation devices to nuclear reactors! (Zer0 is pressing the "
+		CONNECTION.msgChannel(CONFIG.getChannel(), "Detenation devices to nuclear reactors! (Zer0 is pressing the "
 			+ "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
 	}
 
@@ -608,7 +606,7 @@ public class BotCommand {
 	 * @TODO Write me
 	 */
 	private void pirateHelper() {
-		connection.msgChannel(config.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
+		CONNECTION.msgChannel(CONFIG.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
 	}
 
 	/**
@@ -626,51 +624,50 @@ public class BotCommand {
 		 * special characters = no bold, no color
 		 * such as [] <> , ...
 		 */
-		String colorStr = lc.attributesSynopsisLine(
-			lc.colorToken("Available commands: ", MircColors.BOLD)
-			+ lc.colorToken("google|lmgtfy|stfw ", MircColors.GREEN)
-			+ lc.colorToken("<search query>, ", MircColors.CYAN)
-			+ lc.colorToken("greet|g ", MircColors.GREEN)
-			+ lc.colorToken("[user], ", MircColors.CYAN)
-			+ lc.colorToken("wakeroom|wr, ", MircColors.GREEN)
-			+ lc.colorToken("weather|w ", MircColors.GREEN)
-			+ lc.colorToken("<location, zip, etc.>, ", MircColors.CYAN)
-			+ lc.colorToken("urbandict|ud ", MircColors.GREEN)
-			+ lc.colorToken("<search query>, ", MircColors.CYAN)
-			+ lc.colorToken("list|l, ", MircColors.GREEN)
-			+ lc.colorToken("raw|r ", MircColors.GREEN)
-			+ lc.colorToken("<raw irc line>, ", MircColors.CYAN)
-			+ lc.colorToken("help|h ", MircColors.GREEN)
-			+ lc.colorToken("[cmd], ", MircColors.CYAN)
-			+ lc.colorToken("next|n, ", MircColors.GREEN)
-			+ lc.colorToken("mum|m ", MircColors.GREEN)
-			+ lc.colorToken("[user], ", MircColors.CYAN)
-			+ lc.colorToken("invite-channel|ic ", MircColors.BOLD + MircColors.GREEN)
-			+ lc.colorToken("<channel>, ", MircColors.CYAN)
-			+ lc.colorToken("invite-nick|in ", MircColors.GREEN)
-			+ lc.colorToken("<nick> ", MircColors.CYAN)
-			+ lc.colorToken("[# of times], ", MircColors.CYAN)
-			+ lc.colorToken("pirate ", MircColors.GREEN)
-			+ lc.colorToken("[-s|-l|-d] ", MircColors.CYAN)
-			+ lc.colorToken("<search query>, ", MircColors.CYAN)
-			+ lc.colorToken("isup ", MircColors.GREEN)
-			+ lc.colorToken("<url>, ", MircColors.CYAN)
-			+ lc.colorToken("epic|e, ", MircColors.GREEN)
-			+ lc.colorToken("[country code], ", MircColors.CYAN)
-			+ lc.colorToken("version, ", MircColors.GREEN)
-			+ lc.colorToken("quit|q", MircColors.GREEN));
+		String colorStr = LC.attributesSynopsisLine(LC.colorToken("Available commands: ", MircColors.BOLD)
+			+ LC.colorToken("google|lmgtfy|stfw ", MircColors.GREEN)
+			+ LC.colorToken("<search query>, ", MircColors.CYAN)
+			+ LC.colorToken("greet|g ", MircColors.GREEN)
+			+ LC.colorToken("[user], ", MircColors.CYAN)
+			+ LC.colorToken("wakeroom|wr, ", MircColors.GREEN)
+			+ LC.colorToken("weather|w ", MircColors.GREEN)
+			+ LC.colorToken("<location, zip, etc.>, ", MircColors.CYAN)
+			+ LC.colorToken("urbandict|ud ", MircColors.GREEN)
+			+ LC.colorToken("<search query>, ", MircColors.CYAN)
+			+ LC.colorToken("list|l, ", MircColors.GREEN)
+			+ LC.colorToken("raw|r ", MircColors.GREEN)
+			+ LC.colorToken("<raw irc line>, ", MircColors.CYAN)
+			+ LC.colorToken("help|h ", MircColors.GREEN)
+			+ LC.colorToken("[cmd], ", MircColors.CYAN)
+			+ LC.colorToken("next|n, ", MircColors.GREEN)
+			+ LC.colorToken("mum|m ", MircColors.GREEN)
+			+ LC.colorToken("[user], ", MircColors.CYAN)
+			+ LC.colorToken("invite-channel|ic ", MircColors.BOLD + MircColors.GREEN)
+			+ LC.colorToken("<channel>, ", MircColors.CYAN)
+			+ LC.colorToken("invite-nick|in ", MircColors.GREEN)
+			+ LC.colorToken("<nick> ", MircColors.CYAN)
+			+ LC.colorToken("[# of times], ", MircColors.CYAN)
+			+ LC.colorToken("pirate ", MircColors.GREEN)
+			+ LC.colorToken("[-s|-l|-d] ", MircColors.CYAN)
+			+ LC.colorToken("<search query>, ", MircColors.CYAN)
+			+ LC.colorToken("isup ", MircColors.GREEN)
+			+ LC.colorToken("<url>, ", MircColors.CYAN)
+			+ LC.colorToken("epic|e, ", MircColors.GREEN)
+			+ LC.colorToken("[country code], ", MircColors.CYAN)
+			+ LC.colorToken("version, ", MircColors.GREEN)
+			+ LC.colorToken("quit|q", MircColors.GREEN));
 
 		String noColorStr = colorStr.replaceAll("(\\P{Print}|[0-9]{2})", "");
 		//System.out.println("String without colors: " + noColorStr);
 
-		connection.msgChannel(config.getChannel(), colorStr);
+		CONNECTION.msgChannel(CONFIG.getChannel(), colorStr);
 	}
 
 	/**
 	 * @TODO Write me
 	 */
 	private void unknownCmdHelper() {
-		connection.msgChannel(config.getChannel(), "Unknown command received: " + cmd);
+		CONNECTION.msgChannel(CONFIG.getChannel(), "Unknown command received: " + cmd);
 	}
 
 	/**
@@ -678,7 +675,7 @@ public class BotCommand {
 	 */
 	private void helpWrapper(String cmd) {
 		//TODO help string for each command
-		connection.msgChannel(config.getChannel(), "Invalid usage of command: " + cmd);
+		CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid usage of command: " + cmd);
 	}
 
 	/**
@@ -686,14 +683,14 @@ public class BotCommand {
 	 * @TODO man page style usage for help blah
 	 */
 	private void helpHelper() {
-		connection.msgChannel(config.getChannel(), "You implement it!");
+		CONNECTION.msgChannel(CONFIG.getChannel(), "You implement it!");
 	}
 
 	/**
 	 * @TODO Write me
 	 */
 	private void versionHelper() {
-		connection.msgChannel(config.getChannel(),
+		CONNECTION.msgChannel(CONFIG.getChannel(),
 			MircColors.BOLD + MircColors.CYAN + "JRobo"
 			+ MircColors.NORMAL + MircColors.BOLD + " - "
 			+ MircColors.GREEN + "https://github.com/BullShark/JRobo");
@@ -705,13 +702,13 @@ public class BotCommand {
 	private void greetHelper() {
 		try {
 			if (!hasArgs) {
-				connection.msgChannel(config.getChannel(), joke.getPhoneNumber(getRandChanUser()));
+				CONNECTION.msgChannel(CONFIG.getChannel(), JOKE.getPhoneNumber(getRandChanUser()));
 			} else {
 				int temp = cmdArgs.indexOf(' ');
 				if (temp != -1) {
-					connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs.substring(0, temp)));
+					CONNECTION.msgChannel(CONFIG.getChannel(), JOKE.getPhoneNumber(cmdArgs.substring(0, temp)));
 				} else {
-					connection.msgChannel(config.getChannel(), joke.getPhoneNumber(cmdArgs));
+					CONNECTION.msgChannel(CONFIG.getChannel(), JOKE.getPhoneNumber(cmdArgs));
 				}
 			}
 		} catch (NullPointerException | ArrayIndexOutOfBoundsException ex) {
@@ -724,22 +721,22 @@ public class BotCommand {
 	 * @TODO Only Masters
 	 */
 	private void moveToChannelHelper() {
-		connection.moveToChannel(config.getChannel(), cmdArgs);
+		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 	}
 
 	/**
-         * Starts timer for bomb, sets an active wire and prints explosion and kicks user holding at [20] seconds.
+         * Starts timer for bomb, sets an active WIRE and prints explosion and kicks user holding at [20] seconds.
 	 */
 	public void bomb() {
 		bombHolder = user;
-		connection.msgChannel(config.getChannel(), MircColors.BOLD + bombHolder + MircColors.WHITE + " started the bomb!!!");
-		connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
-		connection.msgChannel(config.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
+		CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BOLD + bombHolder + MircColors.WHITE + " started the bomb!!!");
+		CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
+		CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.WHITE + "You can attempt to defuse with >defuse [" + MircColors.RED + "R" + MircColors.GREEN + "G" + MircColors.BLUE + "B" + MircColors.WHITE + "-color].");
 		bombActive = true;
-		wire[0] = false;
-		wire[1] = false;
-		wire[2] = false;
-		wire[(int) (3.0 * Math.random())] = true;
+		WIRE[0] = false;
+		WIRE[1] = false;
+		WIRE[2] = false;
+		WIRE[(int) (3.0 * Math.random())] = true;
 		final Timer timer;
 
 		timer = new Timer();
@@ -750,19 +747,19 @@ public class BotCommand {
 				if (!bombActive) {
 					timer.cancel();
 				} else {
-					connection.msgChannel(config.getChannel(), MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       ");
-					connection.msgChannel(config.getChannel(), MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "   (" + MircColors.BROWN + "=:" + MircColors.YELLOW + "(" + MircColors.BROWN + ",=:~++" + MircColors.YELLOW + "=:" + MircColors.BROWN + "::~,:~:" + MircColors.YELLOW + "))" + MircColors.BROWN + "~~~." + MircColors.YELLOW + ")    ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~" + MircColors.YELLOW + ")" + MircColors.BROWN + ",$,I?" + MircColors.YELLOW + "))   ");
-					connection.msgChannel(config.getChannel(), MircColors.BROWN + "    ``  ```" + MircColors.YELLOW + "~~" + MircColors.BROWN + "?" + MircColors.YELLOW + "~=" + MircColors.BROWN + "$.~~~  ``     ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "             :" + MircColors.BROWN + "S" + MircColors.YELLOW + "Z=             ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "         .-~~" + MircColors.BROWN + "?=:=" + MircColors.YELLOW + "``~-_        ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "         `--=~=+~++=~`        ");
-					connection.msgChannel(config.getChannel(), MircColors.YELLOW + "             ." + MircColors.BROWN + "~" + MircColors.YELLOW + ":" + MircColors.BROWN + "~             ");
-					connection.msgChannel(config.getChannel(), MircColors.BROWN + "         ((.(\\.!/.):?)        ");
-					connection.msgChannel(config.getChannel(), MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
-					connection.kickFromChannel(config.getChannel(), user + " KABOOM!!!");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "   (" + MircColors.BROWN + "=:" + MircColors.YELLOW + "(" + MircColors.BROWN + ",=:~++" + MircColors.YELLOW + "=:" + MircColors.BROWN + "::~,:~:" + MircColors.YELLOW + "))" + MircColors.BROWN + "~~~." + MircColors.YELLOW + ")    ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~" + MircColors.YELLOW + ")" + MircColors.BROWN + ",$,I?" + MircColors.YELLOW + "))   ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "    ``  ```" + MircColors.YELLOW + "~~" + MircColors.BROWN + "?" + MircColors.YELLOW + "~=" + MircColors.BROWN + "$.~~~  ``     ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "             :" + MircColors.BROWN + "S" + MircColors.YELLOW + "Z=             ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "         .-~~" + MircColors.BROWN + "?=:=" + MircColors.YELLOW + "``~-_        ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "         `--=~=+~++=~`        ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "             ." + MircColors.BROWN + "~" + MircColors.YELLOW + ":" + MircColors.BROWN + "~             ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "         ((.(\\.!/.):?)        ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
+					CONNECTION.kickFromChannel(CONFIG.getChannel(), user + " KABOOM!!!");
 					bombActive = false;
 					timer.cancel();
 				}
@@ -778,49 +775,49 @@ public class BotCommand {
 		String users = getUsers();
 		if (users.contains(cmdArgs) && !cmdArgs.equals("") && user.equals(bombHolder) && bombActive == true) {
 			bombHolder = cmdArgs;
-			connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
-			if (cmdArgs.equals(config.getName())) {
+			CONNECTION.msgChannel(CONFIG.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
+			if (cmdArgs.equals(CONFIG.getName())) {
 				try {
 					Thread.sleep(2500);
 				} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
 					//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				}
-				connection.msgChannel(config.getChannel(), ">pass " + user);
+				CONNECTION.msgChannel(CONFIG.getChannel(), ">pass " + user);
 				bombHolder = user;
-				connection.msgChannel(config.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
+				CONNECTION.msgChannel(CONFIG.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
 			}
 		} else {
-			connection.msgChannel(config.getChannel(), "Invalid.");
+			CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid.");
 		}
 	}
 
 	/**
-         * This function will return a wire for a given color and is only to be used within defuse.
+         * This function will return a WIRE for a given color and is only to be used within defuse.
 	 * @return 
 	 */
 	private boolean wire(final String color) {
 		switch (color) {
 			case "red":
-				return wire[0];
+				return WIRE[0];
 			case "green":
-				return wire[1];
+				return WIRE[1];
 			case "blue":
-				return wire[2];
+				return WIRE[2];
 		}
 		return false;
 	}
 
 	/**
-         * This is the defuse method and refers to a global boolean array of wires and the active wire is set to true in bomb() function.
+         * This is the defuse method and refers to a global boolean array of wires and the active WIRE is set to true in bomb() function.
 	 */
 	public void defuse() {
 		if (bombActive && user.equals(bombHolder)) {
 			if (wire(cmdArgs) == true) {
-				connection.msgChannel(config.getChannel(), MircColors.WHITE + "Bomb defused.");
+				CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.WHITE + "Bomb defused.");
 				bombActive = false;
 			} else {
 				//TODO Will removing leading spaces break things, or should we do it?
-				connection.msgChannel(config.getChannel(),
+				CONNECTION.msgChannel(CONFIG.getChannel(),
 					MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          \n"
 					+ MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       \n"
 					+ MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     \n"
@@ -834,11 +831,11 @@ public class BotCommand {
 					+ MircColors.BROWN + "         ((.(\\.!/.):?)        \n"
 					+ MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
 
-				connection.kickFromChannel(config.getChannel(), user + " KABOOM!!!");
+				CONNECTION.kickFromChannel(CONFIG.getChannel(), user + " KABOOM!!!");
 				bombActive = false;
 			}
 		} else {
-			connection.msgChannel(config.getChannel(), "Invalid.");
+			CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid.");
 		}
 	}
 
@@ -847,30 +844,30 @@ public class BotCommand {
 	 */
 	private void driveBy() {
 		if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#")) {
-			connection.msgChannel(config.getChannel(), "Invalid channel: " + cmdArgs);
+			CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid channel: " + cmdArgs);
 			return;
 		}
-		config.setBaseChan(config.getChannel()); // The channel JRobo will return to
-		connection.moveToChannel(config.getChannel(), cmdArgs);
+		CONFIG.setBaseChan(CONFIG.getChannel()); // The channel JRobo will return to
+		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 		for (int i = 0; i < 25; i++) {
-			connection.moveToChannel(config.getChannel(), cmdArgs);
+			CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 			for (int z = 0; z < 5; z++) {
-				connection.msgChannel(config.getChannel(), "lol");
+				CONNECTION.msgChannel(CONFIG.getChannel(), "lol");
 				try {
 					Thread.sleep(1000);
 					//FIXME Bad coding
-					if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
+					if (CONNECTION.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
 						break;
 					}
 				} catch (Exception ex) { //Find out exactly what exceptions are thrown
 					//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
-			connection.moveToChannel(cmdArgs, config.getBaseChan());
+			CONNECTION.moveToChannel(cmdArgs, CONFIG.getBaseChan());
 			try {
 				Thread.sleep(2500);
 				//FIXME Bad coding
-				if (connection.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
+				if (CONNECTION.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
 					break;
 				}
 			} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
@@ -878,8 +875,8 @@ public class BotCommand {
 			}
 		}
 		// If not in basechannel he will return to Basechannel
-		if (config.getChannel() == null ? config.getBaseChan() != null : !config.getChannel().equals(config.getBaseChan())) {
-			connection.moveToChannel(cmdArgs, config.getBaseChan());
+		if (CONFIG.getChannel() == null ? CONFIG.getBaseChan() != null : !CONFIG.getChannel().equals(CONFIG.getBaseChan())) {
+			CONNECTION.moveToChannel(cmdArgs, CONFIG.getBaseChan());
 		}
 	}
 
