@@ -48,21 +48,21 @@ public class UrbanDict {
 
 	/**
 	 * Overloaded constructor that calls the other one with a default value 5 for LIMIT
-	 * @param word The WORD used for retrieving the Urban Dictionary definition
+	 * @param WORD The WORD used for retrieving the Urban Dictionary definition
 	 */
-	public UrbanDict(final String word) {
+	public UrbanDict(final String WORD) {
 		// Default LIMIT is used when no LIMIT is given
-		this(word, DEFAULT_LIMIT);
+		this(WORD, DEFAULT_LIMIT);
         }
 
 	/**
-	 * @param word The WORD used for retrieving the Urban Dictionary definition
-	 * @param limit Limit the results -1 or limit <= 0 means unlimited results
+	 * @param WORD The WORD used for retrieving the Urban Dictionary definition
+	 * @param LIMIT Limit the results -1 or LIMIT <= 0 means unlimited results
  	 * @author Chris Lemire <goodbye300@aim.com>
 	 */
-	public UrbanDict(final String word, final int limit) {
-                WORD = word;
-		LIMIT = (limit <= 0) ? DEFAULT_LIMIT : limit;
+	public UrbanDict(final String WORD, final int LIMIT) {
+                this.WORD = WORD;
+		this.LIMIT = (LIMIT <= 0) ? DEFAULT_LIMIT : LIMIT;
         }
 
         /**
@@ -100,10 +100,10 @@ public class UrbanDict {
 
 	/**
 	 *
-	 * @param hasColors
+	 * @param HASCOLORS
 	 * @return
 	 */
-	public String getFormattedUrbanDef(final boolean hasColors) {
+	public String getFormattedUrbanDef(final boolean HASCOLORS) {
 
 		String result = "";
                 try {
@@ -124,16 +124,16 @@ public class UrbanDict {
 
 			urbanJson.sort(); // Ascending order -> Decending order
 
-			result = (hasColors) ? urbanJson.getColorString() : urbanJson.toString();
+			result = (HASCOLORS) ? urbanJson.getColorString() : urbanJson.toString();
 			return result;
 
                 } catch (JsonSyntaxException | IllegalStateException | NullPointerException ex) {
 			Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
 			result = "{ \"list\": \"Unable to retrieve UrbanDict json data\" }";
+			return result;
 
                 } finally {
 			System.out.println("[+++]\t" + result);
-			return result;
 
 		}
         }
