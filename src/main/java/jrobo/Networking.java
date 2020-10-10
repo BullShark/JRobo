@@ -41,17 +41,17 @@ import java.util.logging.Logger;
 public class Networking {
 
 	private Socket sock = null;
-	private BufferedWriter bwriter = null;
-	private BufferedReader breader = null;
-	private Config config = null;
+	private BufferedWriter bwriter;
+	private BufferedReader breader;
+	private final Config CONFIG;
 	private String received = null;
 	private final int MAXCHARS = 450;
 
 	/* Some RFC says 510 max chars */
-	public Networking(Config config) {
+	public Networking(final Config CONFIG) {
 		super(); // Gets rid of java.lang.VerifyError
-		this.config = config;
-		String network = config.getNetwork();
+		this.CONFIG = CONFIG;
+		String network = CONFIG.getNetwork();
 		String[] server = network.split(":");
 		String hostname = server[0];
 		int port = Integer.parseInt(server[1]);
@@ -65,15 +65,12 @@ public class Networking {
 		} catch (UnknownHostException ex) {
 			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
 			err.println("Possible DNS resolution failure");
-			//@TODO close streams, connections, etc
 			System.exit(-1);
 
 		} catch (IOException ex) {
 			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
 			err.println("I/O Error, Check networking");
-			//@TODO close streams, connections, etc
 			System.exit(-1);
-
 		}
 	}
 
@@ -82,9 +79,8 @@ public class Networking {
 	 *
 	 * @param COMMAND The raw IRC line to send
 	 * @return Successful sending
-	 * @throws java.io.IOException
 	 */
-	protected boolean sendln(final String COMMAND) throws IOException {
+	protected boolean sendln(final String COMMAND) {
 		try {
 			bwriter.write(COMMAND);
 			bwriter.newLine();
@@ -97,9 +93,7 @@ public class Networking {
 			err.printf("Failed to send \"%s\"\n", COMMAND);
 			return false;
 
-		} finally {
-			if(bwriter != null) { bwriter.close(); }
-		}
+		} 
 	}
 
 	/**
@@ -107,7 +101,7 @@ public class Networking {
 	 *
 	 * @return Successful sending
 	 */
-	public String recieveln() {
+	protected String recieveln() {
 		try {
 			received = breader.readLine();
 			out.printf("[---]\t%s\n", received); //@TODO Color-code this opposite of colorcode for sent, "[-]" should be blue
@@ -121,41 +115,40 @@ public class Networking {
 	/**
 	 * The attribute codes can be lost some times on the messages After the
 	 * first one that were split.By giving a code(s), They will be
- prepended to the split messages after the first one
+	 * prepended to the split messages after the first one
 	 *
 	 * @param CHAN Channel to send the message
-	 * @param MSG Message to send to the channel
+	 * @param msg Message to send to the channel
 	 * @param COLORLINES If true, use color and attribute CODES
 	 * @param CODES Attribute CODES to use if the message is split. Use an
- empty string if none.
+	 * empty string if none.
 	 * @return Whether this method was successful
-	 * @throws java.io.IOException
 	 */
-	protected boolean msgChannel(final String CHAN, String MSG, final boolean COLORLINES, final String CODES) throws IOException {
+	protected boolean msgChannel(final String CHAN, String msg, final boolean COLORLINES, final String CODES) {
 		boolean success = true;
-		MSG = addNewLines(MSG);
-		String[] msgArr = MSG.split("\n");
+		msg = addNewLines(msg);
+		final String[] MSGARR = msg.split("\n");
 		char ch;
 
 		if (COLORLINES) {
-			for (int j = 0; j < msgArr.length; j++) {
+			for (int j = 0; MSGARR.length >= j; j++) {
 				/*
 				 * Meaning if one call to sendln returns false
 				 * This entire function will return false
 				 */
-				ch = msgArr[j].charAt(0);
+				ch = MSGARR[j].charAt(0);
 				if (j > 0 && !(ch == '\u0003' || ch == '\u000f' || ch == '\u0002' || ch == '\u001f' || ch == '\u0016')) {
-					if (!sendln("PRIVMSG " + CHAN + " :" + CODES + msgArr[j])) {
+					if (!sendln("PRIVMSG " + CHAN + " :" + CODES + MSGARR[j])) {
 						success = false;
 					}
 				} else {
-					if (!sendln("PRIVMSG " + CHAN + " :" + msgArr[j])) {
+					if (!sendln("PRIVMSG " + CHAN + " :" + MSGARR[j])) {
 						success = false;
 					}
 				}
 			}
 		} else {
-			for (String message : msgArr) {
+			for (String message : MSGARR) {
 				/*
 				 * Meaning if one call to sendln returns false
 				 * This entire function will return false
@@ -173,7 +166,7 @@ public class Networking {
 	 * It should probably be modified at some point to pass any desired irc command.
 	 * 
 	 */
-	//TODO msgArr commit moar than one word after " "
+	//TODO MSGARR commit moar than one word after " "
 	protected boolean kickFromChannel(final String CHAN, String msg) {
 		boolean success = true;
 		msg = addNewLines(msg);
@@ -281,7 +274,7 @@ public class Networking {
 			success = false;
 		}
 
-		config.setChannel(TOCHAN);
+		CONFIG.setChannel(TOCHAN);
 
 		return success;
 	}
@@ -324,7 +317,7 @@ public class Networking {
 		return result;
 	}
 
-	public static String[] wrapText(final String TEXT, final int LEN) {
+	protected static String[] wrapText(final String TEXT, final int LEN) {
 		if (TEXT == null) {
 			return new String[0];
 		}
@@ -346,7 +339,7 @@ public class Networking {
 			word.append(chars[i]);
 
 			if (chars[i] == ' ') {
-				if (line.length() + word.length() > len) {
+				if (line.length() + word.length() > LEN) {
 					lines.add(line.toString());
 					line.delete(0, line.length());
 				}
@@ -358,7 +351,7 @@ public class Networking {
 		}
 
 		if (word.length() > 0) {
-			if (line.length() + word.length() > len) {
+			if (line.length() + word.length() > LEN) {
 				lines.add(line.toString());
 				line.delete(0, line.length());
 			}
@@ -388,14 +381,14 @@ public class Networking {
 	 * @param S
 	 * @return
 	 */
-	public static int getUTFSize(final String S) {
+	protected static int getUTFSize(final String S) {
 
 		final int LEN = (S == null) ? 0 : S.length();
 
 		int l = 0;
 
-		for (int i = 0; i < len; i++) {
-			int c = s.charAt(i);
+		for (int i = 0; i < LEN; i++) {
+			int c = S.charAt(i);
 
 			if ((c >= 0x0001) && (c <= 0x007F)) {
 				l++;
@@ -415,10 +408,10 @@ public class Networking {
 	 * @param MSG Message to send to all masters
 	 * @since 2013-03-22
 	 */
-	public void msgMasters(final String MSG) {
-		for (String master : config.getMasters()) {
+	protected void msgMasters(final String MSG) {
+		for (String master : CONFIG.getMasters()) {
 
-			this.msgUser(master.split("@")[0], MSG);
+			this.msgUser(master, MSG);
 		}
 	}
 } //EOF class
