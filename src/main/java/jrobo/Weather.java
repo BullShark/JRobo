@@ -56,18 +56,18 @@ public class Weather {
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
-	 * @param config Used to retrieve the api key
+	 * @param CONFIG Used to retrieve the api key
 	 */
-	public Weather(final Config config) throws NullPointerException {
+	public Weather(final Config CONFIG) throws NullPointerException {
 
 		CITYNAME = "San Antonio";
 		STATECODE = "TX";
 		COUNTRYCODE = "US";
 
-		if(config == null) { 
+		if(CONFIG == null) { 
 			throw new NullPointerException("Config is not set and cannot retrieve The OpenWeatherMap API Key");
 		} else {
-			this.CONFIG = config;
+			this.CONFIG = CONFIG;
 			APIKEY = getApiKey(); //@FIXME Does this method some times throw an exception?
 		}
 	}
@@ -77,17 +77,17 @@ public class Weather {
 	 * Location string and returns the Json for it if valid
 	 *
 	 * @TODO Should I use greedy, reluctant or possessive quantifiers?
-	 * @throws InvalidLocationException for an invalid location
-	 * @param location "city name", "city name, "country code" or "city name, state code, country code" 
+	 * @throws InvalidLocationException for an invalid LOCATION
+	 * @param LOCATION "city name", "city name, "country code" or "city name, state code, country code" 
 	 * @return Json weather data
 	 */
-	public String getJson(final String location) throws InvalidLocationException {
+	protected String getJson(final String LOCATION) throws InvalidLocationException {
 
 		//@TODO More than 3 should give the help message for the weather command
 		//@TODO Catch the InvalidLocationException from BotCommand and print the help message there
 		String locationArr[];
-		locationArr = location.split("\\s*,\\s*"); //@TODO Test these to see if the quantifiers need changing
-		System.out.print( Arrays.toString( "New Braunfels".split("\\s*,\\s*")) ); //@TODO Test to see what a location with no commas does
+		locationArr = LOCATION.split("\\s*,\\s*"); //@TODO Test these to see if the quantifiers need changing
+		System.out.print( Arrays.toString( "New Braunfels".split("\\s*,\\s*") ) ); //@TODO Test to see what a LOCATION with no commas does
 		
 		// There should be 0-2 commas and if locationArr is 0 then there's another problem
 		try {
@@ -109,7 +109,7 @@ public class Weather {
 			System.out.println("[+++]\tcityName: " + CITYNAME);
 			System.out.println("[+++]\tstateCode: " + STATECODE);
 			System.out.println("[+++]\tcountryCode: " + COUNTRYCODE);
-			System.out.println("[+++]\tlocation: " + location);
+			System.out.println("[+++]\tlocation: " + LOCATION);
 			//@TODO Will the return statements still get executed or will they cause this block to be skipped?
 			
 		}
@@ -117,34 +117,34 @@ public class Weather {
 
 	/**
 	 * Called by its wrapper method when the CITYNAME, STATECODE, and COUNTRYCODE are determined from the location
-	 * @param cityName The city's name
-	 * @param stateCode The two letter state's code
-	 * @param countryCode The two letter country's code
+	 * @param CITYNAME The city's name
+	 * @param STATECODE The two letter state's code
+	 * @param COUNTRYCODE The two letter country's code
 	 * @return String
 	 */
-	private String getJson(final String cityName, final String stateCode, final String countryCode) {
+	protected String getJson(final String CITYNAME, final String STATECODE, final String COUNTRYCODE) {
 
 		/* Set the location parameter used by the api from the city name, state code, and country code */
 		String location = null;
 		try {
-			if (cityName == null || stateCode == null || countryCode == null) {
+			if (CITYNAME == null || STATECODE == null || COUNTRYCODE == null) {
 
 				throw new InvalidLocationException("Invalid OpenWeatherMap Location: Received null for location");
 			}
-			if ( !cityName.equals("") && stateCode.equals("") && countryCode.equals("") ) {
+			if ( !CITYNAME.equals("") && STATECODE.equals("") && COUNTRYCODE.equals("") ) {
 			
 				System.out.println("[+++]\tcityName is set, stateCode unset, countryCode unset");
-				location = cityName;
+				location = CITYNAME;
 
-			} else if ( !cityName.equals("") && !stateCode.equals("") && countryCode.equals("") )
+			} else if ( !CITYNAME.equals("") && !STATECODE.equals("") && COUNTRYCODE.equals("") )
 			{
 				System.out.println("[+++]\tcityName is set, stateCode set, countryCode unset");
-				location = cityName + "," + stateCode;
+				location = CITYNAME + "," + STATECODE;
 
-			} else if ( cityName.equals("") && stateCode.equals("") && countryCode.equals("") ) 
+			} else if ( CITYNAME.equals("") && STATECODE.equals("") && COUNTRYCODE.equals("") ) 
 			{
 				System.out.println("[+++]\tcityName is unset, stateCode unset, countryCode unset");
-				location = cityName + "," + stateCode + "," + countryCode;
+				location = CITYNAME + "," + STATECODE + "," + COUNTRYCODE;
 
 			} else {
 
@@ -158,9 +158,9 @@ public class Weather {
 			System.out.println("[+++]\tUsing default location");
 			location = this.CITYNAME + "," + this.STATECODE + "," + this.COUNTRYCODE;
 		} finally { 
-			System.out.println("[+++]\tcityName: " + cityName);
-			System.out.println("[+++]\tstateCode: " + stateCode);
-			System.out.println("[+++]\tcountryCode: " + countryCode);
+			System.out.println("[+++]\tcityName: " + CITYNAME);
+			System.out.println("[+++]\tstateCode: " + STATECODE);
+			System.out.println("[+++]\tcountryCode: " + COUNTRYCODE);
 			System.out.println("[+++]\tlocation: " + location);
 		}
 
@@ -200,13 +200,13 @@ public class Weather {
 
 	/**
 	 * Retrieve the data as a summary with irc color codes and formatting or just return the names and values from the json
-	 * @param location
-	 * @param hasColors
-	 * @param limit Limit the number of definitions returned by this method
+	 * @param LOCATION
+	 * @param HASCOLORS
+	 * @param LIMIT Limit the number of definitions returned by this method
 	 * @return Formatted and colored Json if hasColor is true, else just the json information
 	 * @throws jrobo.Weather.InvalidLocationException Handle the exception in BotCommand where the help message for the weather command can be shown
 	 */
-	public String getFormattedWeatherSummary(final String location, final boolean hasColors, final int limit) throws InvalidLocationException {
+	protected String getFormattedWeatherSummary(final String LOCATION, final boolean HASCOLORS, final int LIMIT) throws InvalidLocationException {
 
 		String result;
 
@@ -215,9 +215,9 @@ public class Weather {
 			System.out.println("[+++]\tWeatherJson Type: " + WeatherJsonT);
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			WeatherJson weatherJson = gson.fromJson(this.getJson(location), WeatherJson.class);
+			WeatherJson weatherJson = gson.fromJson(this.getJson(LOCATION), WeatherJson.class);
 
-			result = (hasColors) ? weatherJson.getColorString() : weatherJson.toString();
+			result = (HASCOLORS) ? weatherJson.getColorString() : weatherJson.toString();
 			return result;
 
 		} catch (JsonSyntaxException ex) {
@@ -257,15 +257,15 @@ public class Weather {
 	 * Represents the situation in which the location input provided by the user
 	 * Does not represent a valid location and the api won't recognize it
 	 */
-	public static class InvalidLocationException extends RuntimeException {
+	protected static class InvalidLocationException extends RuntimeException {
 
 		/**
 		 * Sets up this exception with an appropriate message.
 		 * 
-		 * @param invalid User input for location that is invalid
+		 * @param INVALID User input for location that is INVALID
 		 */
-		public InvalidLocationException(String invalid) {
-			super ("Invalid OpenWeatherMap Location: \"" + invalid + "\"");
+		protected InvalidLocationException(final String INVALID) {
+			super ("Invalid OpenWeatherMap Location: \"" + INVALID + "\"");
 		}
 	}
 
