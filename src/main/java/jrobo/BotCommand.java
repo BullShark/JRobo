@@ -50,16 +50,16 @@ public class BotCommand {
 
 	/**
 	 *
-	 * @param connection Takes the connection created by JRobo.
-	 * @param config
-	 * @param jRobo
+	 * @param CONNECTION Takes the CONNECTION created by JRobo.
+	 * @param CONFIG
+	 * @param JROBO
 	 */
-	public BotCommand(final Networking connection, final Config config, final JRobo jRobo) {
+	public BotCommand(final Networking CONNECTION, final Config CONFIG, final JRobo JROBO) {
 
 		/* Objects */
-		this.CONNECTION = connection;
-		this.CONFIG = config;
-		this.JROBO = jRobo;
+		this.CONNECTION = CONNECTION;
+		this.CONFIG = CONFIG;
+		this.JROBO = JROBO;
 		JOKE = new Jokes(this.CONNECTION, this.CONFIG.getChannel());
 
 		/* Cmds */
@@ -81,17 +81,17 @@ public class BotCommand {
 	/**
 	 * This is called when a bot command is received
 	 *
-	 * @param user
-	 * @param fullCmd
+	 * @param USER
+	 * @param FULLCMD
 	 * @user The user who sent the command
 	 * @fullCmd Includes the SYMB, command, and args
 	 * @TODO Accept raw irc commands from bot owner to be sent by the bot
 	 * @TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 	 */
-	public void bCommander(final String user, final String fullCmd) {
-		this.user = user;
-		cmd = getCmd(fullCmd);
-		cmdArgs = getCmdArgs(fullCmd);
+	public void bCommander(final String USER, final String FULLCMD) {
+		this.user = USER;
+		cmd = getCmd(FULLCMD);
+		cmdArgs = getCmdArgs(FULLCMD);
 		hasArgs = cmdArgs.isEmpty() ? false : true;
 
 		switch (cmd) {
@@ -193,8 +193,8 @@ public class BotCommand {
 	 *
 	 * @return Returns a new String from the String argument by removing all starting and ending whitespace, and then replacing all other whitespace, no matter the length of that whitespace, with one '+'.
 	 */
-	private String getFormattedQuery(final String str) {
-		return str.trim().replaceAll("\\s++", "+");
+	private String getFormattedQuery(final String STR) {
+		return STR.trim().replaceAll("\\s++", "+");
 	}
 
 	/**
@@ -203,10 +203,10 @@ public class BotCommand {
 	 * @param 
 	 * @return 
 	 */
-	private String getCmdArgs(final String fullCmd) {
+	private String getCmdArgs(final String FULLCMD) {
 		
 		try {
-			return fullCmd.split("\\" + CONFIG.getCmdSymb() + "[a-zA-Z_0-9\\-]++", 2)[1].trim();
+			return FULLCMD.split("\\" + CONFIG.getCmdSymb() + "[a-zA-Z_0-9\\-]++", 2)[1].trim();
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			/* Means no args!!! */
 			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,10 +219,10 @@ public class BotCommand {
 	 * @param 
 	 * @return 
 	 */
-	private String getCmd(final String fullCmd) {
+	private String getCmd(final String FULLCMD) {
 
 		try {
-			return fullCmd.substring(1).replaceFirst("\\s.*+", "");
+			return FULLCMD.substring(1).replaceFirst("\\s.*+", "");
 
 		} catch (IndexOutOfBoundsException ex) {
 			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
@@ -263,21 +263,22 @@ public class BotCommand {
 	/**
 	 *
 	 * @TODO This method needs testing. It might be broke.
-	 * @param chan
+	 * @param CHAN
 	 * @return
 	 */
-	private String getUsers(final String chan) {
+	private String getUsers(final String CHAN) {
 		String received = "", users = "";
 		String first = "", last = "";
 		int tries = 8;
 
-		CONNECTION.sendln("NAMES " + chan);
+		CONNECTION.sendln("NAMES " + CHAN);
 		do {
 			received = CONNECTION.recieveln();
 			try {
 				first = received.split(" :", 2)[0];
 				last = received.split(" :", 2)[1];
 			} catch (ArrayIndexOutOfBoundsException ex) {
+				//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				first = "";
 				last = "";
 			}
@@ -429,7 +430,7 @@ public class BotCommand {
 			if (cmdArgsArr.length < 1) {
 				try {
 					Thread.sleep(1500);
-					numInvites = Integer.getInteger(cmdArgsArr[1]);
+					//numInvites = Integer.getInteger(cmdArgsArr[1]);
 					//TODO replace with CONFIG.getMaster()
 					if (CONNECTION.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
 						//               this.JROBO. 
@@ -440,7 +441,7 @@ public class BotCommand {
 
 				}
 			}
-			for (int x = 0; x < numInvites; x++) {
+			for (int x = 0; numInvites >= x; x++) {
 				CONNECTION.sendln("INVITE " + CONFIG.getChannel() + " " + cmdArgsArr[0]);
 			}
 		}
@@ -463,26 +464,26 @@ public class BotCommand {
 
 		//TODO      exclude duplicates from useray
 		if (cmdArgs.contains(" ")) {
-			final String[] chansArr = cmdArgs.split("\\s++");
+			final String[] CHANSARR = cmdArgs.split("\\s++");
 			// Channel must begin with a # and be at least two characters long
-			for (int i = 0; i < chansArr.length; i++) {
-				if (chansArr[i].length() < 2 || !chansArr[i].startsWith("#")) {
-					CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid channel: " + chansArr[i]);
+			for (String chan : CHANSARR) {
+				if (chan.length() < 2 || !chan.startsWith("#")) {
+					CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid channel: " + chan);
 					return;
 				}
 			}
 
 			CONFIG.setBaseChan(CONFIG.getChannel()); // The channel JRobo will return to
 			String usersList = "";
-			for (int i = 0; i < chansArr.length; i++) {
-				CONNECTION.moveToChannel(CONFIG.getChannel(), chansArr[i]);
+			for (String chan : CHANSARR) {
+				CONNECTION.moveToChannel(CONFIG.getChannel(), chan);
 				if (CONFIG.getChannel().equals(CONFIG.getBaseChan())) {
 					break;
 				}
 				usersList += getUsers();
 			}
 			userArr = usersList.split("\\s");
-			CONNECTION.moveToChannel(chansArr[chansArr.length - 1], CONFIG.getBaseChan());
+			CONNECTION.moveToChannel(CHANSARR[CHANSARR.length - 1], CONFIG.getBaseChan());
 		} //The command does not contain more than one channel argument
 		else {
 			// Channel must begin with a # and be at least two characters long
@@ -530,6 +531,7 @@ public class BotCommand {
 		}
 
 		Thread inviteT = new Thread() {
+			@Override
 			public void run() {
 
 				// Prevent multiple threads from being created
@@ -673,9 +675,9 @@ public class BotCommand {
 	/**
 	 * Wrapper Help command messages
 	 */
-	private void helpWrapper(String cmd) {
+	private void helpWrapper(final String CMD) {
 		//TODO help string for each command
-		CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid usage of command: " + cmd);
+		CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid usage of command: " + CMD);
 	}
 
 	/**
@@ -725,7 +727,7 @@ public class BotCommand {
 	}
 
 	/**
-         * Starts timer for bomb, sets an active WIRE and prints explosion and kicks user holding at [20] seconds.
+         * Starts TIMER for bomb, sets an active WIRE and prints explosion and kicks user holding at [20] seconds.
 	 */
 	public void bomb() {
 		bombHolder = user;
@@ -737,15 +739,16 @@ public class BotCommand {
 		WIRE[1] = false;
 		WIRE[2] = false;
 		WIRE[(int) (3.0 * Math.random())] = true;
-		final Timer timer;
+		final Timer TIMER;
 
-		timer = new Timer();
+		TIMER = new Timer();
 
 		class BombTask extends TimerTask {
 
+			@Override
 			public void run() {
 				if (!bombActive) {
-					timer.cancel();
+					TIMER.cancel();
 				} else {
 					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          ");
 					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       ");
@@ -761,11 +764,11 @@ public class BotCommand {
 					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
 					CONNECTION.kickFromChannel(CONFIG.getChannel(), user + " KABOOM!!!");
 					bombActive = false;
-					timer.cancel();
+					TIMER.cancel();
 				}
 			}
 		}
-		timer.schedule(new BombTask(), 20000);
+		TIMER.schedule(new BombTask(), 20000);
 	}
 
 	/**
@@ -780,7 +783,7 @@ public class BotCommand {
 				try {
 					Thread.sleep(2500);
 				} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
-					//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				}
 				CONNECTION.msgChannel(CONFIG.getChannel(), ">pass " + user);
 				bombHolder = user;
@@ -792,11 +795,11 @@ public class BotCommand {
 	}
 
 	/**
-         * This function will return a WIRE for a given color and is only to be used within defuse.
+         * This function will return a WIRE for a given COLOR and is only to be used within defuse.
 	 * @return 
 	 */
-	private boolean wire(final String color) {
-		switch (color) {
+	private boolean wire(final String COLOR) {
+		switch (COLOR) {
 			case "red":
 				return WIRE[0];
 			case "green":
@@ -849,9 +852,9 @@ public class BotCommand {
 		}
 		CONFIG.setBaseChan(CONFIG.getChannel()); // The channel JRobo will return to
 		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
-		for (int i = 0; i < 25; i++) {
+		for (int i = 0; 25 >= i; i++) {
 			CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
-			for (int z = 0; z < 5; z++) {
+			for (int z = 0; 5 >= z; z++) {
 				CONNECTION.msgChannel(CONFIG.getChannel(), "lol");
 				try {
 					Thread.sleep(1000);
@@ -859,8 +862,8 @@ public class BotCommand {
 					if (CONNECTION.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
 						break;
 					}
-				} catch (Exception ex) { //Find out exactly what exceptions are thrown
-					//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+				} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
+					Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
 			CONNECTION.moveToChannel(cmdArgs, CONFIG.getBaseChan());
@@ -871,7 +874,7 @@ public class BotCommand {
 					break;
 				}
 			} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
-				//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
 		// If not in basechannel he will return to Basechannel
@@ -879,6 +882,4 @@ public class BotCommand {
 			CONNECTION.moveToChannel(cmdArgs, CONFIG.getBaseChan());
 		}
 	}
-
-
 } // EOF class
