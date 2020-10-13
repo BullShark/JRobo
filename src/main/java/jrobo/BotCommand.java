@@ -88,7 +88,7 @@ public class BotCommand {
 	 * @TODO Accept raw irc commands from bot owner to be sent by the bot
 	 * @TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 	 */
-	public void bCommander(final String USER, final String FULLCMD) {
+	protected void bCommander(final String USER, final String FULLCMD) {
 		this.user = USER;
 		cmd = getCmd(FULLCMD);
 		cmdArgs = getCmdArgs(FULLCMD);
@@ -244,10 +244,11 @@ public class BotCommand {
 			// Random array index
 			int randIndex = (int) (Math.random() * usersList.length);
 			return usersList[randIndex];
-		} catch(NullPointerException | ArrayIndexOutOfBoundsException ex) {
 
-			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+		} catch(NullPointerException | ArrayIndexOutOfBoundsException ex) {
+			Logger.getLogger( BotCommand.class.getName() ).log( Level.SEVERE, null, ex );
 			return "ChanServ";
+
 		}
 	}
 
@@ -292,7 +293,7 @@ public class BotCommand {
 				CONNECTION.sendln("PONG " + last);
 			}
 			tries--;
-		} while (tries > 0 && !first.contains("366"));
+		} while (!first.contains("366") && tries > 0);
 
 			if (users.equals("")) {
 				CONNECTION.msgMasters("Could not get list of users!!!");
@@ -349,8 +350,6 @@ public class BotCommand {
 
         	} else {
         		//connection.msgChannel(CONFIG.getChannel(), CONFIG.getCmdSymb() + cmd + " " + cmdArgs); // Uncomment to see the command and args being used
-
-        		Epic epic = new Epic();
 
 			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(false, -1));
 			
