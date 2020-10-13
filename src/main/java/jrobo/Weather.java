@@ -244,9 +244,8 @@ public class Weather {
 	 */
 	public static void main(String[] args) {
 
-		Weather w = new Weather(null);
 		try {
-			System.out.println(w.getFormattedWeatherSummary("San Antonio,TX,US", false, 3));
+			System.out.println(new Weather(null).getFormattedWeatherSummary("San Antonio,TX,US", false, 3));
 		} catch (InvalidLocationException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 			System.err.println("[+++]\tInvalid Location: Try Again");

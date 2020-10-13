@@ -10,14 +10,14 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-src/main/java/jrobo/Config.java
+src/main/java/jrobo/Config.json
 # Ignore this directory
 build/
 # But descend into directories
 !*/
 # Recursively allow files under build
 #!/build/**
-!build/libs/JRobo.jar
+build/libs/JRobo.jar
 # Allow this
 !.gitignore
 

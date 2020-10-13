@@ -45,10 +45,10 @@ public class Epic {
 	 * exception and crash Example:
 	 * https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
 	 */
-	private static final String QUERY_URL = "https://invalid.not.a.real.domain";
-	//private static final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
-	private final String locale;
-	private final String countrycode;
+	private final String QUERY_URL = "https://invalid.not.a.real.domain";
+	//private final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
+	private final String LOCALE;
+	private final String COUNTRYCODE;
 
 	/**
 	 *
@@ -57,8 +57,8 @@ public class Epic {
 	public Epic() {
 
 		/* Miscellaneous */
-		locale = "en-US";
-		countrycode = "TR";
+		LOCALE = "en-US";
+		COUNTRYCODE = "TR";
 //		defaultLimit = 5;
 	}
 
@@ -71,9 +71,9 @@ public class Epic {
 		String json = "";
 		final String URL = (QUERY_URL
 			+ "/freeGamesPromotions"
-			+ "?locale=" + locale
-			+ "&country=" + countrycode
-			+ "&allowCountries=" + countrycode).replaceAll(" ", "%20");
+			+ "?locale=" + LOCALE
+			+ "&country=" + COUNTRYCODE
+			+ "&allowCountries=" + COUNTRYCODE).replaceAll(" ", "%20");
 		System.out.println("[+++]\t" + URL);
 
 		/* Create a URL obj from strings */
@@ -85,22 +85,25 @@ public class Epic {
 			while ((line = br.readLine()) != null) {
 				json += line;
 			}
+
 		} catch (IOException ex) {
 			Logger.getLogger(Epic.class.getName()).log(Level.SEVERE, null, ex);
 			json = "{ \"data\": \"Unable to retrieve Epic json data\" }";
+
 		} finally {
 			System.err.println("[+++]\t" + json);
 			return json;
+
 		}
 	}
 
 	/**
 	 *
-	 * @param hasColors
-	 * @param limit
+	 * @param HASCOLORS
+	 * @param LIMIT
 	 * @return
 	 */
-	public String getFormattedEpicSummary(boolean hasColors, int limit) {
+	protected String getFormattedEpicSummary(final boolean HASCOLORS, final int LIMIT) {
 
 		String result;
 		try {
@@ -110,7 +113,7 @@ public class Epic {
 			}.getType();
 			System.out.println("[+++]\tepicJson Type: " + epicJsonT);
 
-			result = (hasColors) ? epicJson.getColorString() : epicJson.toString();
+			result = (HASCOLORS) ? epicJson.getColorString() : epicJson.toString();
 
 			return result;
 

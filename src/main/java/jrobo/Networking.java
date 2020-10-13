@@ -131,7 +131,7 @@ public class Networking {
 		char ch;
 
 		if (COLORLINES) {
-			for (int j = 0; MSGARR.length >= j; j++) {
+			for (int j = 0; j < MSGARR.length; j++) {
 				/*
 				 * Meaning if one call to sendln returns false
 				 * This entire function will return false

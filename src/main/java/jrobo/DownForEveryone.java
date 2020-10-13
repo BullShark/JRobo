@@ -16,112 +16,114 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package jrobo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Christopher Lemire <christopher.lemire@gmail.com>
  */
 public class DownForEveryone {
-  /* For the HTTP Connection */
-  private URL url;
-  private URLConnection conn;
-  private OutputStreamWriter wr;
-  private BufferedReader rd;
 
-  /* Miscelanous */
-  private static final String QUERY_URL = "https://www.downforeveryoneorjustme.com/";
-  private boolean isup;
+	/* For the HTTP Connection */
+	private URL url;
+	private URLConnection conn;
+	private BufferedReader rd;
 
-  public DownForEveryone() {
-    /* For the HTTP Connection */
-    url = null;
-    conn = null;
-    rd = null;
+	/* Miscellaneous */
+	private final String QUERY_URL = "https://www.downforeveryoneorjustme.com/";
+	private boolean isup;
 
-    /* Miscelanous */
-    isup = false;
-  }
+	public DownForEveryone() {
+		/* For the HTTP Connection */
+		url = null;
+		conn = null;
+		rd = null;
 
-  /**
-   * Checks if the URL is up
-   * @param testUrl URL to check
-   * @param colors Whether to use IRC colors for result returned
-   * @return Message for if URL is up or down
-   */
-  public String isUp(String testUrl, boolean colors) {
-    try {
-      /* Create a URL obj from strings */
-      url =  new URL((QUERY_URL.concat(testUrl)).replace(" ", "%20"));
+		/* Miscellaneous */
+		isup = false;
+	}
 
-      /* Debug */
-      System.out.println("URL: " + url);
+	/**
+	 * Checks if the URL is up
+	 *
+	 * @param TESTURL URL to check
+	 * @param COLORS Whether to use IRC COLORS for result returned
+	 * @return Message for if URL is up or down
+	 */
+	protected String isUp(final String TESTURL, final boolean COLORS) {
+		try {
+			/* Create a URL obj from strings */
+			url = new URL((QUERY_URL.concat(TESTURL)).replace(" ", "%20"));
 
-      conn = url.openConnection();
-      conn.addRequestProperty("User-Agent", "Mozilla/4.0"); // Resolves the 403 error
+			/* Debug */
+			System.out.println("URL: " + url);
 
-      // Get the response
-      rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			conn = url.openConnection();
+			conn.addRequestProperty("User-Agent", "Mozilla/4.0"); // Resolves the 403 error
 
-      String line = "";
-      while ((line = rd.readLine()) != null) {
+			// Get the response
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			String line;
+			while ((line = rd.readLine()) != null) {
 //        It's just you.  <a href="http://google.com" class="domain">http://google.com</a></span> is up.
-        if(line.contains("It's just you.  ") && line.contains(" is up.")) {
-          isup = true;
+				if (line.contains("It's just you.  ") && line.contains(" is up.")) {
+					isup = true;
 //      It's not just you!  <a href="http://ggggggasdfgle.com" class="domain">http://ggggggasdfgle.com</a> looks down from here.
-        } else if(line.contains("It's not just you!  ") && line.contains(" looks down from here.")) {
-          isup = false;
-        }
-      }
+				} else if (line.contains("It's not just you!  ") && line.contains(" looks down from here.")) {
+					isup = false;
+				}
+			}
 
-      rd.close();
+			rd.close();
 
-    } catch (MalformedURLException ex) {
-      ex.printStackTrace();
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
+		} catch (MalformedURLException ex) {
+			Logger.getLogger(DownForEveryone.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException ex) {
+			Logger.getLogger(DownForEveryone.class.getName()).log(Level.SEVERE, null, ex);
+		}
 
-    String result = "";
+		String result;
 
-    if(isup) {
-      if(colors) {
-        result = 
-          MircColors.BOLD + MircColors.GREEN + testUrl + 
-          MircColors.CYAN + " IS UP!";
-      } else {
-        result = testUrl + " IS UP!";
-      }
-    } else {
-      if(colors) {
-        result = 
-          MircColors.BOLD + MircColors.GREEN + testUrl + 
-          MircColors.CYAN + " IS DOWN!";
-      } else {
-        result = testUrl + " IS DOWN!";
-      }
-    }
-    return result;
-  }
+		if (isup) {
+			if (COLORS) {
+				result
+					= MircColors.BOLD + MircColors.GREEN + TESTURL
+					+ MircColors.CYAN + " IS UP!";
+			} else {
+				result = TESTURL + " IS UP!";
+			}
+		} else {
+			if (COLORS) {
+				result
+					= MircColors.BOLD + MircColors.GREEN + TESTURL
+					+ MircColors.CYAN + " IS DOWN!";
+			} else {
+				result = TESTURL + " IS DOWN!";
+			}
+		}
+		return result;
+	}
 
-  /**
-   * A main method for testing this class
-   */
-  public static void main(String[] args) {
-    if(args.length == 0) {
-      System.err.println("Usage: java DownForEveryone <url>");
-      System.exit(-1);
-    }
-    DownForEveryone w = new DownForEveryone();
-    System.out.println(new DownForEveryone().isUp(args[0], false));
-  }
+	/**
+	 * A main method for testing this class
+	 *
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		if (args.length == 0) {
+			System.err.println("Usage: java DownForEveryone <url>");
+			System.exit(-1);
+		}
+		System.out.println(new DownForEveryone().isUp(args[0], false));
+	}
 }

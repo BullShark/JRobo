@@ -28,6 +28,8 @@ import static java.lang.System.err;
 import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,7 +38,7 @@ import java.util.Collections;
 public class FileReader {
 
 	/* Standard Java API Classes */
-	private static String configFile;
+	private static String CONFIGFILE;
 
 	/* User-defined Classes */
 	private static Config config;
@@ -45,7 +47,7 @@ public class FileReader {
 	private static boolean ranOnce = false;
 
 	public FileReader() {
-		configFile = "Config.json";
+		CONFIGFILE = "Config.json";
 		config = null;
 	}
 
@@ -53,27 +55,29 @@ public class FileReader {
 	 * Opens a resource file inside the package and fills the passed
 	 * ArrayList
 	 *
-	 * @param fileName The file name inside the package to be opened
-	 * @param listArr The array list to store the file lines to
+	 * @param FILENAME The file name inside the package to be opened
+	 * @param LISTARR The array list to store the file lines to
 	 * @return A true on success and false on failure
 	 */
-	public boolean fileToArrayList(final String fileName, ArrayList<String> listArr) {
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(fileName)));) {
+	protected boolean fileToArrayList(final String FILENAME, final ArrayList<String> LISTARR) {
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(FILENAME)));) {
 			Thread.dumpStack();
 
-			if(fileName.equals(configFile)) { ranOnce = true; }
-			out.println("[+++]\tReading File (" + fileName + ")");
+			if(FILENAME.equals(CONFIGFILE)) { ranOnce = true; }
+			out.println("[+++]\tReading File (" + FILENAME + ")");
 
 			String line;
 
 			while ((line = br.readLine()) != null) {
-				listArr.add(line);
+				LISTARR.add(line);
 			}
+
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
+
 		}
 
-		Collections.shuffle(listArr);
+		Collections.shuffle(LISTARR);
 
 		return true;
 	}
@@ -84,7 +88,7 @@ public class FileReader {
 	 * @return Returns a Config object, with the settings from Config.json
 	 * @since 2013-02-18
 	 */
-	public static Config getConfig() {
+	protected static Config getConfig() {
 
 		/* 
 		 * Should only be null if this method has not already been ran once 
@@ -92,20 +96,20 @@ public class FileReader {
 		 */
 		if (config != null || ranOnce) {
 			//Thread.dumpStack();
-			out.println("[+++]\tReusing Config because it's != null or " + configFile + " has already been read once");
+			out.println("[+++]\tReusing Config because it's != null or " + CONFIGFILE + " has already been read once");
 			return config;
 		}
 
-		out.println("[+++]\tReading Configuration File (" + configFile + ")");
+		out.println("[+++]\tReading Configuration File (" + CONFIGFILE + ")");
 		try (
-			InputStream fileStream = FileReader.class.getResourceAsStream(configFile);
+			InputStream fileStream = FileReader.class.getResourceAsStream(CONFIGFILE);
 			InputStreamReader fileStreamReader = new InputStreamReader(fileStream);
 			BufferedReader br = new BufferedReader(fileStreamReader);
 		) {
 			Thread.dumpStack();
 
 			if (fileStream == null) {
-				err.println("[+++]\tError: " + configFile + " was not found");
+				err.println("[+++]\tError: " + CONFIGFILE + " was not found");
 				System.exit(1);
 			}
 
@@ -123,7 +127,7 @@ public class FileReader {
 			ranOnce = true;
 
 		} catch (IOException | JsonSyntaxException ex) {
-			ex.printStackTrace();
+			Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
 			System.exit(1);
 		}
 
