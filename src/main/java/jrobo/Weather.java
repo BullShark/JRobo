@@ -29,7 +29,6 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,9 +47,6 @@ public class Weather {
 	 */
 	private final String QUERY_URL = "https://api.openweathermap.org";
 	private final Config CONFIG;
-	private final String CITYNAME;
-	private final String STATECODE;
-	private final String COUNTRYCODE;
 	private final String APIKEY;
 
 	/**
@@ -60,10 +56,6 @@ public class Weather {
 	 */
 	public Weather(final Config CONFIG) throws NullPointerException {
 
-		CITYNAME = "San Antonio";
-		STATECODE = "TX";
-		COUNTRYCODE = "US";
-
 		if(CONFIG == null) { 
 			throw new NullPointerException("Config is not set and cannot retrieve The OpenWeatherMap API Key");
 		} else {
@@ -71,103 +63,18 @@ public class Weather {
 			APIKEY = getApiKey(); //@FIXME Does this method some times throw an exception?
 		}
 	}
-
+        
 	/**
-	 * Tries to determine the city name, state code and country code from a
-	 * Location string and returns the Json for it if valid
-	 *
-	 * @TODO Should I use greedy, reluctant or possessive quantifiers?
-	 * @throws InvalidLocationException for an invalid LOCATION
-	 * @param LOCATION "city name", "city name, "country code" or "city name, state code, country code" 
-	 * @return Json weather data
-	 */
-	protected String getJson(final String LOCATION) throws InvalidLocationException {
-
-		//@TODO More than 3 should give the help message for the weather command
-		//@TODO Catch the InvalidLocationException from BotCommand and print the help message there
-		String locationArr[];
-		locationArr = LOCATION.split("\\s*,\\s*"); //@TODO Test these to see if the quantifiers need changing
-		System.out.print( Arrays.toString( "New Braunfels".split("\\s*,\\s*") ) ); //@TODO Test to see what a LOCATION with no commas does
-		
-		// There should be 0-2 commas and if locationArr is 0 then there's another problem
-		try {
-			if (locationArr == null || locationArr.length < 1 || locationArr.length > 3) {
-				throw new InvalidLocationException("Invalid OpenWeatherMap Location: Too many commas or empty string");
-			}
-
-			return getJson(CITYNAME, "", ""); //@FIXME
-
-		} catch (InvalidLocationException ex) {
-			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-			System.err.println("[+++]\tInvalid OpenWeatherMap Location: Using default location instead");
-
-//			return getJson(this.CITYNAME, this.STATECODE, this.COUNTRYCODE);
-			return getJson(CITYNAME, "", ""); //@FIXME
-
-		} finally {
-			System.out.println("[+++]\tlocationArr: " + Arrays.toString(locationArr));
-			System.out.println("[+++]\tcityName: " + CITYNAME);
-			System.out.println("[+++]\tstateCode: " + STATECODE);
-			System.out.println("[+++]\tcountryCode: " + COUNTRYCODE);
-			System.out.println("[+++]\tlocation: " + LOCATION);
-			//@TODO Will the return statements still get executed or will they cause this block to be skipped?
-			
-		}
-	}
-
-	/**
-	 * Called by its wrapper method when the CITYNAME, STATECODE, and COUNTRYCODE are determined from the location
-	 * @param CITYNAME The city's name
-	 * @param STATECODE The two letter state's code
-	 * @param COUNTRYCODE The two letter country's code
+	 * Called by its wrapper method
+	 * @param LOCATION the location for the weather query
 	 * @return String
 	 */
-	protected String getJson(final String CITYNAME, final String STATECODE, final String COUNTRYCODE) {
-
-		/* Set the location parameter used by the api from the city name, state code, and country code */
-		String location = null;
-		try {
-			if (CITYNAME == null || STATECODE == null || COUNTRYCODE == null) {
-
-				throw new InvalidLocationException("Invalid OpenWeatherMap Location: Received null for location");
-			}
-			if ( !CITYNAME.equals("") && STATECODE.equals("") && COUNTRYCODE.equals("") ) {
-			
-				System.out.println("[+++]\tcityName is set, stateCode unset, countryCode unset");
-				location = CITYNAME;
-
-			} else if ( !CITYNAME.equals("") && !STATECODE.equals("") && COUNTRYCODE.equals("") )
-			{
-				System.out.println("[+++]\tcityName is set, stateCode set, countryCode unset");
-				location = CITYNAME + "," + STATECODE;
-
-			} else if ( CITYNAME.equals("") && STATECODE.equals("") && COUNTRYCODE.equals("") ) 
-			{
-				System.out.println("[+++]\tcityName is unset, stateCode unset, countryCode unset");
-				location = CITYNAME + "," + STATECODE + "," + COUNTRYCODE;
-
-			} else {
-
-				throw new InvalidLocationException("Invalid OpenWeatherMap Location");
-
-			}
-
-		} catch (InvalidLocationException ex) {
-			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-			// Use the default location that is set in the constructor
-			System.out.println("[+++]\tUsing default location");
-			location = this.CITYNAME + "," + this.STATECODE + "," + this.COUNTRYCODE;
-		} finally { 
-			System.out.println("[+++]\tcityName: " + CITYNAME);
-			System.out.println("[+++]\tstateCode: " + STATECODE);
-			System.out.println("[+++]\tcountryCode: " + COUNTRYCODE);
-			System.out.println("[+++]\tlocation: " + location);
-		}
+	protected String getJson(final String LOCATION) {
 
 		/* Create a URL obj from strings */
 		final String URL = (QUERY_URL
 				+ "/data/2.5/" + "find" // Possible values: find, weather, forecast
-				+ "?q=" + location
+				+ "?q=" + LOCATION
 				+ "&units=" + "imperial"
 				+ "&type=" + "accurate"
 				+ "&mode=" + "json"
@@ -244,12 +151,7 @@ public class Weather {
 	 */
 	public static void main(String[] args) {
 
-		try {
-			System.out.println(new Weather(null).getFormattedWeatherSummary("San Antonio,TX,US", false, 3));
-		} catch (InvalidLocationException ex) {
-			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-			System.err.println("[+++]\tInvalid Location: Try Again");
-		}
+            System.out.println(new Weather(null).getFormattedWeatherSummary("Texarkana,TX,US", false, 3));
 	}
 
 	/**
