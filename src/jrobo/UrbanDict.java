@@ -268,7 +268,7 @@ public class UrbanDict {
                                 definition = definition.replaceAll("\\s++", " ");
 
                                 String result =
-                                        MircColors.BOLD + MircColors.GREEN + "Thumbs:" +
+                                        MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:" +
                                         MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") " +
                                         MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:" +
                                         MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n"; 

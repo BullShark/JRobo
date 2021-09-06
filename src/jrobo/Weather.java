@@ -74,7 +74,7 @@ public class Weather {
 		/* Create a URL obj from strings */
 		final String URL = (QUERY_URL
 				+ "/data/2.5/" + "find" // Possible values: find, weather, forecast
-				+ "?q=" + LOCATION
+				+ "?q=" + LOCATION.replaceAll(" ", "%20")
 				+ "&units=" + "imperial"
 				+ "&type=" + "accurate"
 				+ "&mode=" + "json"
