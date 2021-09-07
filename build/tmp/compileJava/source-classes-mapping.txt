@@ -8,8 +8,10 @@ jrobo/UrbanDict.java
  jrobo.UrbanDict$UrbanJson
  jrobo.UrbanDict$UrbanJson$1
  jrobo.UrbanDict$UrbanJson$UrbanJsonItem
-jrobo/MircColors.java
- jrobo.MircColors
+jrobo/BotCommand.java
+ jrobo.BotCommand
+ jrobo.BotCommand$1
+ jrobo.BotCommand$1BombTask
 jrobo/Config.java
  jrobo.Config
 jrobo/PirateBay.java
@@ -49,13 +51,11 @@ jrobo/Weather.java
  jrobo.Weather$WeatherJson$WeatherListJsonItem$WeatherWindJsonItem
 jrobo/Jokes.java
  jrobo.Jokes
-jrobo/Networking.java
- jrobo.Networking
 jrobo/JRobo.java
  jrobo.JRobo
-jrobo/BotCommand.java
- jrobo.BotCommand
- jrobo.BotCommand$1
- jrobo.BotCommand$1BombTask
 jrobo/IRCTester.java
  jrobo.IRCTester
+jrobo/MircColors.java
+ jrobo.MircColors
+jrobo/Networking.java
+ jrobo.Networking
