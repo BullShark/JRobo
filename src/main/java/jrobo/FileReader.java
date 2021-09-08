@@ -123,7 +123,7 @@ public class FileReader {
             Scanner myReader = new Scanner(file);
                 
 
-            Thread.dumpStack();
+//            Thread.dumpStack();
 
             String line, json;
 
