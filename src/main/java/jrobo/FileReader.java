@@ -129,8 +129,8 @@ public class FileReader {
 
             json = "";
 
-            while ( ( line = myReader.nextLine() ) != null) {
-                json += line;
+            while ( myReader.hasNextLine() ) {
+                json += myReader.nextLine();
             }
             
             myReader.close();
