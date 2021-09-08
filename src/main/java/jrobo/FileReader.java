@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,6 +30,7 @@ import static java.lang.System.err;
 import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -106,33 +108,43 @@ public class FileReader {
 
         out.println("[+++]\tReading Configuration File (" + CONFIGFILE + ")");
         
-        out.println("[+++]\t" + new File(CONFIGFILE).getAbsolutePath());
-        out.println("[+++]\t" + System.getProperty("user.dir"));
+        out.println("[+++]\tAbsolute path: " + new File(CONFIGFILE).getAbsolutePath());
+        out.println("[+++]\tSystem user directory: " + System.getProperty("user.dir"));
         
+        /*
         try (
                 InputStream fileStream = FileReader.class.getResourceAsStream(CONFIGFILE);
                 InputStreamReader fileStreamReader = new InputStreamReader(fileStream);
                 BufferedReader br = new BufferedReader(fileStreamReader);
         ) {
-            
+        */
+        try {
+            File file = new File(CONFIGFILE);
+            Scanner myReader = new Scanner(file);
+                
+
             Thread.dumpStack();
 
             String line, json;
 
             json = "";
 
-            while ((line = br.readLine()) != null) {
+            while ( ( line = myReader.nextLine() ) != null) {
                 json += line;
             }
-
+            
+            myReader.close();
+            
             Gson gson = new Gson();
             config = gson.fromJson(json, Config.class);
 
             ranOnce = true;
 
-        } catch (IOException | JsonSyntaxException | NullPointerException ex) {
+        } catch (JsonSyntaxException | NullPointerException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // Verifiying important settings for connection
