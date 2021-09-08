@@ -27,11 +27,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import static java.lang.System.err;
 import static java.lang.System.out;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
@@ -111,16 +106,16 @@ public class FileReader {
 
         out.println("[+++]\tReading Configuration File (" + CONFIGFILE + ")");
         
-        System.out.println("[+++]\t" + new File(CONFIGFILE).getAbsolutePath());
+        out.println("[+++]\t" + new File(CONFIGFILE).getAbsolutePath());
+        out.println("[+++]\t" + System.getProperty("user.dir"));
         
         try (
-                 InputStream fileStream = FileReader.class.getResourceAsStream(CONFIGFILE);  InputStreamReader fileStreamReader = new InputStreamReader(fileStream);  BufferedReader br = new BufferedReader(fileStreamReader);) {
+                InputStream fileStream = FileReader.class.getResourceAsStream(CONFIGFILE);
+                InputStreamReader fileStreamReader = new InputStreamReader(fileStream);
+                BufferedReader br = new BufferedReader(fileStreamReader);
+        ) {
+            
             Thread.dumpStack();
-
-            if (fileStream == null) {
-                err.println("[+++]\tError: " + CONFIGFILE + " was not found");
-                System.exit(1);
-            }
 
             String line, json;
 
@@ -135,7 +130,7 @@ public class FileReader {
 
             ranOnce = true;
 
-        } catch (IOException | JsonSyntaxException ex) {
+        } catch (IOException | JsonSyntaxException | NullPointerException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
         }
