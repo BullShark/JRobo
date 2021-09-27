@@ -62,8 +62,8 @@ public class FileReader {
      * @return A true on success and false on failure
      */
     protected boolean fileToArrayList(final String FILENAME, final ArrayList<String> LISTARR) {
-        out.println("[+++]\tReading Configuration File (" + CONFIGFILE + ")");
-        out.println("[+++]\tAbsolute path: " + new File(CONFIGFILE).getAbsolutePath());
+        out.println("[+++]\tReading Configuration File (" + FILENAME + ")");
+        out.println("[+++]\tAbsolute path: " + new File(FILENAME).getAbsolutePath());
         out.println("[+++]\tSystem user directory: " + System.getProperty("user.dir"));
         
         out.println("[+++]\tReading File (" + FILENAME + ")");
