@@ -41,7 +41,7 @@ public class Jokes {
     this.channel = channel;
 
     //@FIXME TODO This is causing the FileReader constructor to be called twice, then Config.json is read twice
-    Thread.dumpStack();
+//    Thread.dumpStack();
     reader = new FileReader(); 
     
     mommaJokes = new ArrayList<>(50);

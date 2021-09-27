@@ -62,10 +62,10 @@ public class FileReader {
      * @return A true on success and false on failure
      */
     protected boolean fileToArrayList(final String FILENAME, final ArrayList<String> LISTARR) {
-        
-        try ( BufferedReader br = new BufferedReader(new InputStreamReader(FileReader.class.getResourceAsStream(FILENAME)));) {
-            Thread.dumpStack();
-
+        try {
+            File file = new File(FILENAME);
+            Scanner myReader = new Scanner(file);
+            
             if (FILENAME.equals(CONFIGFILE)) {
                 ranOnce = true;
             }
@@ -73,10 +73,11 @@ public class FileReader {
             out.println("[+++]\tReading File (" + FILENAME + ")");
 
             String line;
-
-            while ((line = br.readLine()) != null) {
-                LISTARR.add(line);
+            while ( myReader.hasNextLine() ) {
+                LISTARR.add(myReader.nextLine());
             }
+            
+            myReader.close();
 
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
