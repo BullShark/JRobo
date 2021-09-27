@@ -62,6 +62,11 @@ public class FileReader {
      * @return A true on success and false on failure
      */
     protected boolean fileToArrayList(final String FILENAME, final ArrayList<String> LISTARR) {
+        out.println("[+++]\tReading Configuration File (" + CONFIGFILE + ")");
+        out.println("[+++]\tAbsolute path: " + new File(CONFIGFILE).getAbsolutePath());
+        out.println("[+++]\tSystem user directory: " + System.getProperty("user.dir"));
+        
+        out.println("[+++]\tReading File (" + FILENAME + ")");
         try {
             File file = new File(FILENAME);
             Scanner myReader = new Scanner(file);
@@ -69,8 +74,6 @@ public class FileReader {
             if (FILENAME.equals(CONFIGFILE)) {
                 ranOnce = true;
             }
-
-            out.println("[+++]\tReading File (" + FILENAME + ")");
 
             String line;
             while ( myReader.hasNextLine() ) {
@@ -108,7 +111,6 @@ public class FileReader {
         }
 
         out.println("[+++]\tReading Configuration File (" + CONFIGFILE + ")");
-        
         out.println("[+++]\tAbsolute path: " + new File(CONFIGFILE).getAbsolutePath());
         out.println("[+++]\tSystem user directory: " + System.getProperty("user.dir"));
         
