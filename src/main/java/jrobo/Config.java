@@ -154,13 +154,13 @@ public class Config {
 	 */
 	@Override
 	public String toString() {
-		return ("My name is " + name
-			+ "\npassword is " + password.replaceAll(".", "*")
-			+ "\nmasters are " + Arrays.toString(masters)
-			+ "\ncommand_symbol is " + command_symbol
-			+ "\nnetwork is " + network
-			+ "\nchannel is " + channel
-			+ "\nopenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*")
-			+ "\nbaseChan is " + baseChan).replaceAll("[\\n^]", "\\0[+++]\t\t");
+		return ("[+++]\t\tMy name is " + name
+			+ "\n[+++]\t\tpassword is " + password.replaceAll(".", "*")
+			+ "\n[+++]\t\tmasters are " + Arrays.toString(masters)
+			+ "\n[+++]\t\tcommand_symbol is " + command_symbol
+			+ "\n[+++]\t\tnetwork is " + network
+			+ "\n[+++]\t\tchannel is " + channel
+			+ "\n[+++]\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*")
+			+ "\n[+++]\t\tbaseChan is " + baseChan);
 	}
 }
