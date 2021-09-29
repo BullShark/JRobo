@@ -161,6 +161,7 @@ public class Config {
 			+ "\n[+++]\t\tnetwork is " + network
 			+ "\n[+++]\t\tchannel is " + channel
 			+ "\n[+++]\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*")
-			+ "\n[+++]\t\tbaseChan is " + baseChan);
+			+ "\n[+++]\t\tbaseChan is " + baseChan
+			+ "\n");
 	}
 }
