@@ -45,8 +45,8 @@ public class Epic {
 	 * exception and crash Example:
 	 * https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
 	 */
-	private final String QUERY_URL = "https://invalid.not.a.real.domain";
-	//private final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
+	//private final String QUERY_URL = "https://invalid.not.a.real.domain";
+	private final String QUERY_URL = "https://store-site-backend-static.ak.epicgames.com";
 	private final String LOCALE;
 	private final String COUNTRYCODE;
 
