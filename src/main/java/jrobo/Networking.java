@@ -335,7 +335,7 @@ public class Networking {
 		StringBuilder line = new StringBuilder();
 		StringBuffer word = new StringBuffer();
 
-		for (int i = 0; chars.length >= i; i++) {
+		for (int i = 0; i < chars.length; i++) {
 			word.append(chars[i]);
 
 			if (chars[i] == ' ') {
