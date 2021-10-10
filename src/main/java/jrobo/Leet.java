@@ -47,7 +47,7 @@ public class Leet {
      *
      * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
      */
-    private static final String BASE_URL="https://1337x.to/search/"
+    private static final String BASE_URL="https://1337x.to/search/";
     private String def;
     private String json;
     private final int MAX_RESULTS = 5;	
@@ -107,9 +107,9 @@ public class Leet {
 		gson = new Gson();
 		 /* Divide search into category and query */
 		 try {
-			category = search.split("\\s+", 2)[0]
-			query = search.split("\\s+", 2)[1]
-		catch(ArrayIndexOutOfBoundsException ex) {
+			category = search.split("\\s+", 2)[0];
+			query = search.split("\\s+", 2)[1];
+		 } catch(ArrayIndexOutOfBoundsException ex) {
 			ex.printStackTrace();
 			// There is no category. Search all.
 			category = "";
