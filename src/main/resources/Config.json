@@ -8,6 +8,7 @@
     "command_symbol":".",
     "network":"irc.acc.umu.se:6667",
     "channel":"#blackhats",
-    "openweathermap_apikey":"0dcf84bfef65b293b5e3b444246ad6b2"
+    "openweathermap_apikey":"0dcf84bfef65b293b5e3b444246ad6b2",
+    "torrent_apikey":"oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy"
 }
 
