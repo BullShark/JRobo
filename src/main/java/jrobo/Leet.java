@@ -191,8 +191,7 @@ public class Leet {
 			System.out.println("[***]\t" + TORRENT_API_URL.toString());
 
 			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
-				.uri(TORRENT_API_URL.toURI())
-			);
+				.uri(TORRENT_API_URL.toURI());
 
 			REQUESTBUILDER.header("API_KEY", API_KEY);
 
