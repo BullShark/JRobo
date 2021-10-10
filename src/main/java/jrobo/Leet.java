@@ -233,7 +233,8 @@ public class Leet {
 	}
 
 	/**
-	 *
+	 * Use toString() on All JSON Items to make some formatted colored or no colors output
+	 * 
 	 * @author Christopher Lemire <goodbye300@aim.com>
 	 * @return Formatted JSON data optionally with colors
 	 */
