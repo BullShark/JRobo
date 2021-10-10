@@ -45,7 +45,7 @@ public class Weather {
 	 * Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
 	 * Example: https://api.openweathermap.org/data/2.5/find?q=Palo+Alto&units=imperial&type=accurate&mode=xml&APPID=api-key
 	 */
-	private final String QUERY_URL = "https://api.openweathermap.org";
+	private final String BASE_URL = "https://api.openweathermap.org";
 	private final Config CONFIG;
 	private final String APIKEY;
 
@@ -72,7 +72,7 @@ public class Weather {
 	protected String getJson(final String LOCATION) {
 
 		/* Create a URL obj from strings */
-		final String URL = (QUERY_URL
+		final String URL = (BASE_URL
 				+ "/data/2.5/" + "find" // Possible values: find, weather, forecast
 				+ "?q=" + LOCATION.replaceAll(" ", "%20")
 				+ "&units=" + "imperial"
