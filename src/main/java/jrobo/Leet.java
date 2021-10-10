@@ -48,10 +48,11 @@ public class Leet {
      * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
      */
     private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/"
-    private String def;
     private String json;
     private final int MAX_RESULTS = 5;	
     private String query;
+    private final String API_KEY;
+    private final Config CONFIG;
 
 	/*
 		We can also filter by categories:
@@ -96,7 +97,15 @@ public class Leet {
 	 * @author Chris Lemire <goodbye300@aim.com>
 	 * @param search Is the category and search query
 	 */
-	public Leet(String search) {
+	public Leet(String search) throws NullPointerException {
+
+		if(CONFIG == null) { 
+			throw new NullPointerException("Config is not set and cannot retrieve The Torrent API Key");
+		} else {
+			this.CONFIG = CONFIG;
+			APIKEY = getApiKey(); //@FIXME Does this method some times throw an exception?
+		}
+
 		/* For the HTTP Connection */
 		url = null;
 		conn = null;
@@ -133,6 +142,7 @@ public class Leet {
 	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
 	 */
 	public String getJson() {
+
 		try {
 			/* Create a URL obj from strings */
 			if(!category.equals("")) {
@@ -200,10 +210,21 @@ public class Leet {
 		return output;
 	}
 
+	/**
+	 *
+	 * @return API Key for Torrent API retrieved from Config.json
+	 */
+	private String getApiKey() {
+
+		return CONFIG.getTorrentKey();
+	}
+
+
 	/*
  	 * A main method for testing this class
 	 */
 	public static void main(String[] args) {
+
 		System.out.println(new Leet("Movies matrix reloaded").getFormattedResult(false));
 	}
 
