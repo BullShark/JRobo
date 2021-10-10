@@ -103,7 +103,7 @@ public class Leet {
 			throw new NullPointerException("Config is not set and cannot retrieve The Torrent API Key");
 		} else {
 			this.CONFIG = CONFIG;
-			APIKEY = getApiKey(); //@FIXME Does this method some times throw an exception?
+			API_KEY = getApiKey(); //@FIXME Does this method some times throw an exception?
 		}
 
 		/* For the HTTP Connection */
