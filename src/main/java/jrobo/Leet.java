@@ -200,14 +200,20 @@ public class Leet {
 			JSON = RESPONSE.body();
 
 		} catch (MalformedURLException ex) {
-			JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+			if(JSON.equals("") || JSON == null) {
+				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+			}
 			ex.printStackTrace();
 		} catch (ConnectException ex) {
-			JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+			if(JSON.equals("") || JSON == null) {
+				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+			}
 			ex.printStackTrace();
 		} catch (IOException ex) {
+			if(JSON.equals("") || JSON == null) {
+				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+			}
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
-			JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			ex.printStackTrace();
 		}
 
