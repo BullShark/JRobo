@@ -132,6 +132,11 @@ public class BotCommand {
 			case "ic":
 				inviteChannelHelper();
 				break;
+			case "leet":
+			case "leetx":
+			case "l":
+				leetHelper();
+				break;
 			case "raw":
 			case "r":
 				rawHelper();
