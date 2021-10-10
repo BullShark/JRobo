@@ -36,12 +36,6 @@ import java.util.logging.Logger;
 
 public class Leet {
 
-	/* For the HTTP Connection */
-	private URL url;
-//	private URLConnection conn;
-//	private final OutputStreamWriter WR;
-//	private final BufferedReader RD;
-
 	/* Miscellaneous
 	 *@TODO Fix bug:
 	 *	if url is not available,
@@ -53,6 +47,7 @@ public class Leet {
 	 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
+	private URL url;
 	private String fullUrl;
 	private String json;
 	private final int MAX_RESULTS = 3;
@@ -78,7 +73,7 @@ public class Leet {
 	if request.headers.get("API_KEY") != app.config["API_KEY"]:
 	 */
 
- /*
+	/*
 	 * Test this API with curl:
 	 *
 	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<QUERY>/<PAGENUM>/<CATEGORY>
@@ -124,7 +119,6 @@ public class Leet {
 		 * Do not set some of these because they are constants.
 		 */
 		url = null;
-//		conn = null;
 		fullUrl = null;
 
 		/* Miscelanous */
@@ -182,7 +176,7 @@ public class Leet {
 			if(url != null) {
 				System.out.println("[***]\turl:" + url.toString());
 			} else {
-				System.out.println("[***]\turl:" + "null");
+				System.out.println("[***]\turl:" + null);
 			}
 			System.out.println("[***]\tfullUrl:" + fullUrl);
 
@@ -194,7 +188,6 @@ public class Leet {
 			 *
 			 * Example: URL url = new URL("http://example.com/hello%20world");
 			 */
-//			url = new URL(fullUrl);
 
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
@@ -213,6 +206,7 @@ public class Leet {
 
 		} catch (InterruptedException ex) {
 			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (json == null) {
 				json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
@@ -264,6 +258,7 @@ public class Leet {
 				}
 			}
 		}
+
 		return output;
 	}
 
