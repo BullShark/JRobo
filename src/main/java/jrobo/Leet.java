@@ -25,11 +25,11 @@ import java.io.IOException;
 //import java.io.InputStreamReader;
 //import java.io.OutputStreamWriter;
 import java.util.Arrays;
-import java.net.MalformedURLException;
 import java.net.URL;
 //import java.net.URLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 //import java.net.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
@@ -37,6 +37,7 @@ import java.net.http.HttpRequest;
 //import org.apache.http.impl.client.CloseableHttpClient;
 //import org.apache.http.impl.client.HttpClients;
 import java.net.http.HttpClient;
+import java.nio.charset.StandardCharsets;
 
 public class Leet {
 
@@ -56,11 +57,11 @@ public class Leet {
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() )
 	 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
-	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x/search/";
+	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x/search";
 	private String fullUrl;
 	private String json;
 	private final int MAX_RESULTS = 5;
-	private String query;
+	private final String QUERY;
 	private final String API_KEY;
 	private final Config CONFIG;
 	private final String PAGENUM = "1";
@@ -106,6 +107,7 @@ public class Leet {
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
 	 * @param SEARCH Is the CATEGORY and search QUERY
+	 * @param CONFIG Object representing the configuration for JRobo, used to retrieve API_KEY
 	 */
 	public Leet(final Config CONFIG, final String SEARCH) throws NullPointerException {
 
@@ -139,18 +141,18 @@ public class Leet {
 		/* Divide SEARCH into CATEGORY and QUERY */
 		try {
 			category = SEARCH.split("\\s+", 2)[0];
-			query = SEARCH.split("\\s+", 2)[1];
+			QUERY = SEARCH.split("\\s+", 2)[1];
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			// There is no CATEGORY. Search ALL.
 			category = "";
-			query = SEARCH;
+			QUERY = SEARCH;
 			ex.printStackTrace();
 		}
 
-		/*
+		/**
 		  * Set to empty String for ALL.
 		  * Search ALL if CATEGORY is not valid.
-		 */
+		  */
 		final String[] CATEGORIES = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
 
 		if (category.equalsIgnoreCase("All")
@@ -176,17 +178,19 @@ public class Leet {
 				/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
 	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 				 */
-				fullUrl = String.format(BASE_URL + "/{%s}/{%s}/{%s}", query, PAGENUM, category);
+				fullUrl = URLEncoder.encode(String.format(BASE_URL + "/%s/%s/%s", QUERY, PAGENUM, category), 
+					StandardCharsets.UTF_8.toString());
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = String.format(BASE_URL + "/{%s}/{%s}/", query, PAGENUM);
+				fullUrl = URLEncoder.encode(String.format(BASE_URL + "/%s/%s/", QUERY, PAGENUM), 
+					StandardCharsets.UTF_8.toString());
 			}
 
 			/*
 			 * String.replaceAll(" ", "%20");
 			 * toURI() and URI.toURL().
 			 *
-			 * 
+			 * java.net.URISyntaxException: Illegal character in path at index 46: http://expectusafterlun.ch:5000/1337x/search//{matrix reloaded}/{1}/{Movies}
 			 */
 			url = new URI(fullUrl).toURL();
 
@@ -237,6 +241,7 @@ public class Leet {
 	 * Use toString() on All json Items to make some formatted colored or no colors output
 	 * 
 	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @param HAS_COLORS True for IRC colors, false otherwise
 	 * @return Formatted json data optionally with colors
 	 */
 	public String getFormattedResult(final boolean HAS_COLORS) {
@@ -281,6 +286,7 @@ public class Leet {
 	 * A main method for testing this class
 	 *
 	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @param args Command line args
 	 */
 	public static void main(String[] args) {
 
@@ -327,6 +333,7 @@ public class Leet {
 		 * @author Christopher Lemire <goodbye300@aim.com>
 		 * @return A summary without colors of UrbanJsonItem
 		 */
+		@Override
 		public String toString() {
 			final String MYSTRING = name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
 			return MYSTRING;
