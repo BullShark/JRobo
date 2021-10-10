@@ -38,6 +38,8 @@ import java.net.http.HttpRequest;
 //import org.apache.http.impl.client.HttpClients;
 import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 public class Leet {
 
@@ -197,6 +199,7 @@ public class Leet {
 			/* Debug */
 			System.out.println("[***]\t" + url.toString());
 
+/*
 			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
 				.uri(url.toURI());
 
@@ -209,6 +212,11 @@ public class Leet {
 
 			final HttpResponse<String> RESPONSE
 				= CLIENT.send(REQUEST, BodyHandlers.ofString());
+*/
+			DefaultHttpClient httpclient = new DefaultHttpClient();
+			HttpGet request = new HttpGet(fullUrl);
+			request.addHeader("API_KEY", API_KEY);
+			final HttpResponse RESPONSE = (HttpResponse) httpclient.execute(request);
 
 //			CONN = url.openConnection();
 //			CONN.setRequestMethod("GET");
