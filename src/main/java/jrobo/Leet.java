@@ -57,6 +57,7 @@ public class Leet {
 	 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x/search/";
+	private final String FULL_URL;
 	private final String JSON;
 	private final int MAX_RESULTS = 5;
 	private final String QUERY;
@@ -125,12 +126,12 @@ public class Leet {
 		 * For the HTTP Connection
 		 * Do not set some of these because they are constants.
 		 */
-		TORRENT_API_URL = null;
+//		TORRENT_API_URL = null;
 //		CONN = null;
-//		FULL_URL = "";
+//		FULL_URL = null;
 
 		/* Miscelanous */
-//		JSON = "";
+//		JSON = null;
 
 		/* For the Gson/Json */
 //		GSON = null;
