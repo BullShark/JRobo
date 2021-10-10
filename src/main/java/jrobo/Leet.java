@@ -77,7 +77,7 @@ public class Leet {
 	/*
 	 * Test this API with curl:
 	 *
-	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<query>/<page>/<category>
+	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<QUERY>/<PAGE>/<CATEGORY>
 	 *
 	 * Example:
 	 *
@@ -102,7 +102,8 @@ public class Leet {
 	public Leet(final Config CONFIG, final String SEARCH) throws NullPointerException {
 
 		if(CONFIG == null) { 
-			throw new NullPointerException("Config is not set and cannot retrieve The Torrent API_KEY");
+			API_KEY = "";
+			throw new NullPointerException("Config is not set and cannot retrieve the Torrent API_KEY");
 		} else {
 			this.CONFIG = CONFIG;
 			API_KEY = getApiKey(); //@FIXME Does this method some times throw an exception?
@@ -125,7 +126,7 @@ public class Leet {
 			QUERY = SEARCH.split("\\s+", 2)[1];
 		 } catch(ArrayIndexOutOfBoundsException ex) {
 			ex.printStackTrace();
-			// There is no category. Search all.
+			// There is no CATEGORY. Search ALL.
 			CATEGORY = "";
 			QUERY = SEARCH;
 		}
@@ -153,7 +154,7 @@ public class Leet {
 	public String getJson() {
 
 		try {
-			/* Create a URL obj from strings */
+			/* Create a URL obj from String */
 			if(!CATEGORY.equals("")) {
 
 	 			/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
