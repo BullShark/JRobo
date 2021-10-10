@@ -35,6 +35,8 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
 //import org.apache.http.HttpRequest;
 import java.net.http.HttpRequest;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Leet {
 
@@ -224,8 +226,8 @@ public class Leet {
 				.uri(URI.create(fullUrl))
 				.build();
 
-			HttpResponse<?> response;
-			response = client.send(request, BodyHandlers.toString());
+			HttpResponse<String> response;
+			response = client.send(request, BodyHandlers.ofString(StandardCharsets.UTF_8));
 			json = response.body();
 			
 //			conn = url.openConnection();
@@ -245,6 +247,8 @@ public class Leet {
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
 			ex.printStackTrace();
 
+		} catch (InterruptedException ex) {
+			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (json == null) {
 				json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
