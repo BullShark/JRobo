@@ -26,7 +26,6 @@ import java.io.IOException;
 //import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.net.MalformedURLException;
-import java.net.ConnectException;
 import java.net.URL;
 //import java.net.URLConnection;
 import java.net.URI;
@@ -215,11 +214,11 @@ public class Leet {
 
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();
-		} catch (ConnectException ex) {
-			ex.printStackTrace();
+
 		} catch (IOException ex) {
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
 			ex.printStackTrace();
+
 		} finally {
 			if (json.equals("") || json == null) {
 				json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
