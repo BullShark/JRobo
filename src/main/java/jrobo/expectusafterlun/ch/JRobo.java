@@ -55,10 +55,10 @@ public class JRobo {
 
 	/**
 	 * @TODO Write me
-	 * @param proxy
-	 * @param port
+	 * @param PROXY
+	 * @param PORT
 	 */
-	public JRobo(final String proxy, final int port) {
+	public JRobo(final String PROXY, final int PORT) {
 		READER = new FileReader();
 		CONFIG = FileReader.getConfig();
 		CONN = new Networking(CONFIG);
