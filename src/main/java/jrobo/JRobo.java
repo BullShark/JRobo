@@ -28,11 +28,11 @@ import java.util.logging.Logger;
 public class JRobo {
 
 	/* Defined Objects */
-	private final Networking connection;
-	private final FileReader reader;
-	private final Config config;
-	private final Jokes jokes;
-	private final BotCommand bCmd;
+	private final Networking CONN;
+	private final FileReader READER;
+	private final Config CONFIG;
+	private final Jokes JOKES;
+	private final BotCommand BCMD;
 
 	/* Networking */
 	private String first = null;
@@ -43,14 +43,14 @@ public class JRobo {
 	private String user = null;
 
 	/**
-	 * @TODO Write me
+	 * Set the Reader, Config, Connection, Jokes and BotCommand
 	 */
 	public JRobo() {
-		reader = new FileReader();
-		config = FileReader.getConfig();
-		connection = new Networking(config);
-		jokes = new Jokes(connection, config.getChannel());
-		bCmd = new BotCommand(connection, config, this);
+		READER = new FileReader();
+		CONFIG = FileReader.getConfig();
+		CONN = new Networking(CONFIG);
+		JOKES = new Jokes(CONN, CONFIG.getChannel());
+		BCMD = new BotCommand(CONN, CONFIG, this);
 	}
 
 	/**
@@ -59,43 +59,43 @@ public class JRobo {
 	 * @param port
 	 */
 	public JRobo(final String proxy, final int port) {
-		reader = new FileReader();
-		config = FileReader.getConfig();
-		connection = new Networking(config);
-		jokes = new Jokes(connection, config.getChannel());
-		bCmd = new BotCommand(connection, config, this);
+		READER = new FileReader();
+		CONFIG = FileReader.getConfig();
+		CONN = new Networking(CONFIG);
+		JOKES = new Jokes(CONN, CONFIG.getChannel());
+		BCMD = new BotCommand(CONN, CONFIG, this);
 	}
 
 	/**
 	 * @TODO Write me
 	 */
 	private void initiate() {
-		System.out.print("[+++]\tUsing configuration: \n" + config.toString());
+		System.out.print("[+++]\tUsing configuration: \n" + CONFIG.toString());
 
 		//TODO: Use TermColors.java instead
 		System.out.println("\u001b[1;44m *** INITIATED *** \u001b[m");
 
 		/* Identify to server */
-		connection.sendln("NICK " + config.getName());
-		connection.sendln("PASS " + config.getPass().replaceAll(".", "*"));
-		connection.sendln("USER JRobo 0 * :Microsoft Exterminator!");
+		CONN.sendln("NICK " + CONFIG.getName());
+		CONN.sendln("PASS " + CONFIG.getPass().replaceAll(".", "*"));
+		CONN.sendln("USER JRobo 0 * :Microsoft Exterminator!");
 		/*
                  * Wait for server message:
                  * 001 JRobo :Welcome to the IRC Network
                  * Before attempting to join a channel
 		 */
-		while ((received = connection.recieveln()) != null) {
+		while ((received = CONN.recieveln()) != null) {
 			this.divideTwo();
 
 			if (first.equals("PING")) {
-				connection.sendln("PONG " + last);
+				CONN.sendln("PONG " + last);
 			}
 
 			if (first.contains("001")) {
 				break;
 			}
 		}
-		connection.sendln("JOIN " + config.getChannel());
+		CONN.sendln("JOIN " + CONFIG.getChannel());
 
 		/*
    		 * Conditional checks happen in order
@@ -106,34 +106,34 @@ public class JRobo {
    		 * It will result in less conditional checks
    		 * Being made
 		 */
-		while ((received = connection.recieveln()) != null) {
+		while ((received = CONN.recieveln()) != null) {
 			this.divideTwo();
 
 			/*
                          * A PING was received from the IRC server
 			 */
 			if (first.equals("PING")) {
-				connection.sendln("PONG " + last);
+				CONN.sendln("PONG " + last);
                         /*
                          * A message was sent either to the channel
                          * Or to the bot; Could be a command
 			 */
 			} else if (first.contains("PRIVMSG")) {
 				try {
-					if (last.charAt(0) == config.getCmdSymb()) {
+					if (last.charAt(0) == CONFIG.getCmdSymb()) {
 						String user = first.substring(1, first.indexOf('!'));
 						String fullCmd = last;
-						bCmd.bCommander(user, fullCmd);
+						BCMD.bCommander(user, fullCmd);
 					} else {
 
 						/*
-                                                 * Match JRobo in any case
-                                                 * Typed by another user
+			                                                       * Match JRobo in any case
+			                                                       * Typed by another user
 						 */
 						if (last.matches("(?i).*JR[0o]b[0o].*")) {
 							try {
 								user = first.substring(1, first.indexOf('!'));
-								connection.msgChannel(config.getChannel(), jokes.getPhoneNumber(user));
+								CONN.msgChannel(CONFIG.getChannel(), JOKES.getPhoneNumber(user));
 							} catch (StringIndexOutOfBoundsException ex) {
 								Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
 							}
@@ -142,17 +142,17 @@ public class JRobo {
 				} catch (StringIndexOutOfBoundsException ex) {
 					Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
 				}
-			/*
-                         * A user has joined the channel
-                         * Excluding the bot joining
-			 */
-			} else if (first.contains("JOIN") && last.equals(config.getChannel()) && !first.contains(config.getName())) {
+				/*
+		                                     * A user has joined the channel
+		                                     * Excluding the bot joining
+				 */
+			} else if (first.contains("JOIN") && last.equals(CONFIG.getChannel()) && !first.contains(CONFIG.getName())) {
 				user = first.substring(1, first.indexOf('!'));
 
 				// Inform masters in PM
-				connection.msgMasters(user + " joined " + config.getChannel());
-			} else if (received.matches("^:\\S+ KICK " + config.getChannel() + " " + config.getName() + " :.*")) {
-				connection.sendln("JOIN " + config.getChannel());
+				CONN.msgMasters(user + " joined " + CONFIG.getChannel());
+			} else if (received.matches("^:\\S+ KICK " + CONFIG.getChannel() + " " + CONFIG.getName() + " :.*")) {
+				CONN.sendln("JOIN " + CONFIG.getChannel());
 				user = first.substring(1, first.indexOf('!'));
 			} // EOF if-else-if-else...
 		} // EOF while
@@ -162,7 +162,7 @@ public class JRobo {
 	}
 
 	/**
-	 * @TODO Write me
+	 * Parse the input into two, first and last
 	 */
 	private void divideTwo() {
 		try {
@@ -175,16 +175,14 @@ public class JRobo {
 	}
 
 	/**
-	 * @TODO Write me
-	 * @return 
+	 * @return the first half of the divided server input
 	 */
 	public String getFirst() {
 		return first;
 	}
 
 	/**
-	 * @TODO Write me
-	 * @return 
+	 * @return the last half of the divided server input
 	 */
 	public String getLast() {
 		return last;
