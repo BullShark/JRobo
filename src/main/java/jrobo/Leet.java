@@ -118,7 +118,6 @@ public class Leet {
 		 * For the HTTP Connection
 		 * Do not set some of these because they are constants.
 		 */
-		url = null;
 		fullUrl = null;
 
 		/* Miscellaneous */
@@ -173,11 +172,6 @@ public class Leet {
 			}
 
 			/* Debug */
-			if(url != null) {
-				System.out.println("[***]\turl:" + url.toString());
-			} else {
-				System.out.println("[***]\turl:" + null);
-			}
 			System.out.println("[***]\tfullUrl:" + fullUrl);
 
 			/*

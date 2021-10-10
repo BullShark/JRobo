@@ -19,6 +19,9 @@ jrobo/PirateBay.java
  jrobo.PirateBay$PirateBayJsonItem
 jrobo/FileReader.java
  jrobo.FileReader
+jrobo/Leet.java
+ jrobo.Leet
+ jrobo.Leet$LeetJsonItem
 jrobo/Epic.java
  jrobo.Epic
  jrobo.Epic$1
