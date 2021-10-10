@@ -341,7 +341,8 @@ public class Leet {
 		public String getColorString() {
 			final String MYSTRING
 				= MircColors.BOLD + name + " "
-				+ MircColors.GREEN + "<" + tinyurl + ">"
+//				+ MircColors.GREEN + "<" + tinyurl + ">"
+				+ MircColors.GREEN + "<" + href + ">"
 				+ MircColors.NORMAL + MircColors.BOLD + " (" + size
 				+ MircColors.GREEN + " S:" + seeds
 				+ MircColors.CYAN + " L:" + leeches
@@ -358,7 +359,8 @@ public class Leet {
 		 */
 		@Override
 		public String toString() {
-			final String MYSTRING = name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
+//			final String MYSTRING = name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
+			final String MYSTRING = name + " <" + href + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
 			return MYSTRING;
 		}
 	}
