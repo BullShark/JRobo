@@ -102,7 +102,7 @@ public class Leet {
 	private final String CATEGORY;
 
 	/* For the Gson/Json */
-	private final Gson GSON;
+	private Gson gson;
 
 	/**
 	 *
@@ -136,7 +136,7 @@ public class Leet {
 		json = null;
 
 		/* For the Gson/Json */
-//		GSON = null;
+		gson = null;
 
 		/* Divide SEARCH into CATEGORY and QUERY */
 		try {
@@ -244,8 +244,8 @@ public class Leet {
 
 		try {
 
-			GSON = new GsonBuilder().setPrettyPrinting().create();
-			RESULTS = GSON.fromJson(this.getJson(), LeetJsonItem[].class);
+			gson = new GsonBuilder().setPrettyPrinting().create();
+			RESULTS = gson.fromJson(this.getJson(), LeetJsonItem[].class);
 
 		} catch (IllegalStateException | NullPointerException ex) {
 			ex.printStackTrace();
