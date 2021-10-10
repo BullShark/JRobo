@@ -129,6 +129,16 @@ public class Config {
 	}
 
 	/**
+	 *
+	 * @return The Torrent API key
+	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @since 2021-10-21
+	 */
+	protected String getTorrentKey() {
+		return torrent_apikey;
+	}
+
+	/**
 	 * Channel from where the bot began moving
 	 *
 	 * @return
