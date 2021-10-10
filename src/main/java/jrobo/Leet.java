@@ -121,7 +121,7 @@ public class Leet {
 		url = null;
 		fullUrl = null;
 
-		/* Miscelanous */
+		/* Miscellaneous */
 		json = null;
 
 		/* For the Gson/Json */
