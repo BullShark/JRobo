@@ -32,13 +32,10 @@ import java.net.URL;
 import java.net.URI;
 //import java.net.HttpRequest;
 import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandler;
+import java.net.http.HttpResponse.BodyHandlers;
 import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequest.Builder;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.client.methods.RequestBuilder;
 
 public class Leet {
 
@@ -62,7 +59,7 @@ public class Leet {
 	private String fullUrl;
 	private String json;
 	private final int MAX_RESULTS = 5;
-	private final String QUERY;
+	private String query;
 	private final String API_KEY;
 	private final Config CONFIG;
 	private final String PAGENUM = "1";
@@ -99,7 +96,7 @@ public class Leet {
 	 *
 	 * Omit CATEGORY to search ALL.
 	 */
-	private final String CATEGORY;
+	private String category;
 
 	/* For the Gson/Json */
 	private Gson gson;
@@ -140,13 +137,13 @@ public class Leet {
 
 		/* Divide SEARCH into CATEGORY and QUERY */
 		try {
-			CATEGORY = SEARCH.split("\\s+", 2)[0];
-			QUERY = SEARCH.split("\\s+", 2)[1];
+			category = SEARCH.split("\\s+", 2)[0];
+			query = SEARCH.split("\\s+", 2)[1];
 		} catch (ArrayIndexOutOfBoundsException ex) {
-			ex.printStackTrace();
 			// There is no CATEGORY. Search ALL.
-			CATEGORY = "";
-			QUERY = SEARCH;
+			category = "";
+			query = SEARCH;
+			ex.printStackTrace();
 		}
 
 		/*
@@ -155,10 +152,10 @@ public class Leet {
 		 */
 		final String[] CATEGORIES = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
 
-		if (CATEGORY.equalsIgnoreCase("All")
-			|| !(Arrays.asList(CATEGORIES)).contains(CATEGORY)) {
+		if (category.equalsIgnoreCase("All")
+			|| !(Arrays.asList(CATEGORIES)).contains(category)) {
 
-			CATEGORY = "";
+			category = "";
 		}
 	}
 
@@ -173,15 +170,15 @@ public class Leet {
 
 		try {
 			/* Create a URL obj from String */
-			if (!CATEGORY.equals("")) {
+			if (!category.equals("")) {
 
 				/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
 	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 				 */
-				fullUrl = String.format(BASE_URL + "/{%s}/{%s}/{%s}", QUERY, PAGENUM, CATEGORY);
+				fullUrl = String.format(BASE_URL + "/{%s}/{%s}/{%s}", query, PAGENUM, category);
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = String.format(BASE_URL + "/{%s}/{%s}/", QUERY, PAGENUM);
+				fullUrl = String.format(BASE_URL + "/{%s}/{%s}/", query, PAGENUM);
 			}
 
 			/*
