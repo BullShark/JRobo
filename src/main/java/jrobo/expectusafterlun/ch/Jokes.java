@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 /**
  * This class is the new home for the joke functions from FileReader
- * @author BinaryStroke <binarystroke@null.net>
+ * @author BinaryStroke {@literal <binarystroke@null.net>}
  * @since 2013-02-23
  */
 public class Jokes {

@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 /**
  *
- * @author Chris Lemire <goodbye300@aim.com>
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class UrbanDict {
 
@@ -58,7 +58,7 @@ public class UrbanDict {
 	/**
 	 * @param WORD The WORD used for retrieving the Urban Dictionary definition
 	 * @param LIMIT Limit the results -1 or LIMIT <= 0 means unlimited results
- 	 * @author Chris Lemire <goodbye300@aim.com>
+ 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public UrbanDict(final String WORD, final int LIMIT) {
                 this.WORD = WORD;
@@ -151,7 +151,7 @@ public class UrbanDict {
 
         /**
          *
-         * @author Christopher Lemire <christopher.lemire@gmail.com>
+         * @author Christopher Lemire {@literal <christopher.lemire@gmail.com>}
          */
         private class UrbanJson {
 
@@ -232,15 +232,15 @@ public class UrbanDict {
                 }
 
 		@Override
-                public String toString() {
+		public String toString() {
 
 			//this.sort();
-                        return "Total: " + total + " has result_type: " + result_type + " with list: " + list;
-                }
+			return "Total: " + total + " has result_type: " + result_type + " with list: " + list;
+		}
 
-                /**
-                 *
-                 * @author Christopher Lemire <goodbye300@aim.com>
+		/**
+		 *
+		 * @author Christopher Lemire <goodbye300@aim.com>
                  */
                 private class UrbanJsonItem {
 
@@ -268,20 +268,20 @@ public class UrbanDict {
                                 definition = definition.replaceAll("\\s++", " ");
 
                                 String result =
-                                        MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:" +
-                                        MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") " +
-                                        MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:" +
-                                        MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n"; 
+                                        MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
+					+ MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") "
+					+ MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:"
+					+ MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n";
 
-                                        return result;
-                        }
+				return result;
+			}
 
 			@Override
-                        public String toString() {
-                                definition = definition.replaceAll("[\\r\\n\\s]++", " ");
+			public String toString() {
+				definition = definition.replaceAll("[\\r\\n\\s]++", " ");
 
-                                return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
-                        }
-                } // EOF UrbanJsonItem
-        } // EOF UrbanJson
+				return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
+			}
+		} // EOF UrbanJsonItem
+	} // EOF UrbanJson
 } // EOF UrbanDict
