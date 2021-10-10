@@ -226,6 +226,8 @@ public class Leet {
 				.uri(URI.create(fullUrl))
 				.build();
 
+			request.addHeader("API_KEY", API_KEY);
+
 			HttpResponse<String> response;
 			response = client.send(request, BodyHandlers.ofString(StandardCharsets.UTF_8));
 			json = response.body();
