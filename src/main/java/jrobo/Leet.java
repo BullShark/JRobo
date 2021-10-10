@@ -18,20 +18,25 @@
  */
 package jrobo;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.io.BufferedReader;
+import com.google.gson.Gson; import com.google.gson.GsonBuilder; //import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+//import java.io.InputStreamReader;
+//import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.net.MalformedURLException;
 import java.net.ConnectException;
 import java.net.URL;
-import java.net.URLConnection;
+//import java.net.URLConnection;
 import java.net.URI;
 import java.net.HttpRequest;
-import java.util.Arrays;
+import java.net.http.HttpClient; 
+import java.net.http.HttpHeaders;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandler;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequest.Builder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.client.methods.RequestBuilder;
 
 public class Leet {
 
@@ -42,11 +47,13 @@ public class Leet {
 //	private final BufferedReader RD;
 
 	/* Miscelanous
-	 *@TODO Fix bug, if TORRENT_API_URL is not available, the bot will throw an Exception and crash
+	 *@TODO Fix bug:
+	 *	if TORRENT_API_URL is not available,
+	 * 	the bot will throw an Exception and crash
 	 *
 	 * CATEGORY can be omitted for the SEARCH
 	 *
-	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() ) ???
+	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() )
 	 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x/search/";
@@ -72,10 +79,9 @@ public class Leet {
 	@app.route('/1337x/<query>/<page>/<category>', methods=['GET'])
 	def api_1337x(query, page=1, category=None):
 	if request.headers.get("API_KEY") != app.config["API_KEY"]:
-
 	 */
 
- /*
+ 	/*
 	 * Test this API with curl:
 	 *
 	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<QUERY>/<PAGENUM>/<CATEGORY>
@@ -111,10 +117,14 @@ public class Leet {
 				API_KEY = getApiKey() ;
 			} else {
 				API_KEY = ""; // Key could not be retrieved
+				throw new NullPointerException("The API_KEY could not be retrieved from CONFIG");
 			}
 		}
 
-		/* For the HTTP Connection */
+		/* 
+		 * For the HTTP Connection
+		 * Do not set some of these because they are constants.
+		 */
 		URL = null;
 //		CONN = null;
 //		FULL_URL = "";
@@ -202,6 +212,7 @@ public class Leet {
 //				json = json.concat(line);
 //			}
 //			RD.close();
+
 			JSON = RESPONSE.body();
 
 		} catch (MalformedURLException ex) {
