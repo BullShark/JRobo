@@ -185,6 +185,8 @@ public class Leet {
 			/*
 			 * String.replaceAll(" ", "%20");
 			 * toURI() and URI.toURL().
+			 *
+			 * 
 			 */
 			url = new URI(fullUrl).toURL();
 
@@ -305,6 +307,7 @@ public class Leet {
 		 * A colored for IRC String representation of LeetJsonItem
 		 *
 		 * @author Christopher Lemire <goodbye300@aim.com>
+		 * @return Colored for IRC String representing LeetJsonItem
 		 */
 		public String getColorString() {
 			final String MYSTRING
@@ -322,6 +325,7 @@ public class Leet {
 		 * A String representation of LeetJsonItem
 		 *
 		 * @author Christopher Lemire <goodbye300@aim.com>
+		 * @return A summary without colors of UrbanJsonItem
 		 */
 		public String toString() {
 			final String MYSTRING = name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
