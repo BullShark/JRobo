@@ -145,7 +145,7 @@ public class Leet {
 			// There is no CATEGORY. Search ALL.
 			category = "";
 			query = SEARCH;
-			ex.printStackTrace();
+			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 		/**
