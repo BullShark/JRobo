@@ -47,6 +47,7 @@ public class Config {
 	private String network;
 	private String channel;
 	private String openweathermap_apikey;
+	private String torrent_apikey;
 	// Chan the bot originally was in before moving between channels
 	private String baseChan;
 
