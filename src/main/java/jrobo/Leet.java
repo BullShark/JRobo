@@ -54,7 +54,7 @@ public class Leet {
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private String fullUrl;
 	private String json;
-	private final int MAX_RESULTS = 5;
+	private final int MAX_RESULTS = 3;
 	private String query;
 	private final String API_KEY;
 	private final Config CONFIG;
@@ -295,9 +295,9 @@ public class Leet {
 
 		public String date;
 		public String href;
-		public String leeches;
+		public int leeches;
 		public String name;
-		public String seeds;
+		public int seeds;
 		public String size;
 		public String user;
 //		public String tinyurl = "https://not.implemented.yet";
