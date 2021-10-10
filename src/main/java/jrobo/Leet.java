@@ -26,9 +26,10 @@ import java.io.IOException;
 //import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.net.URL;
-//import java.net.URLConnection;
+import java.net.URLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 //import java.net.HttpRequest;
 import java.net.http.HttpResponse;
@@ -45,7 +46,7 @@ public class Leet {
 
 	/* For the HTTP Connection */
 	private URL url;
-//	private final URLConnection CONN;
+//	private URLConnection conn;
 //	private final OutputStreamWriter WR;
 //	private final BufferedReader RD;
 
@@ -62,7 +63,7 @@ public class Leet {
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x/search";
 	private String fullUrl;
 	private String json;
-	private final int MAX_RESULTS = 5;
+	private final int MAX_RESULTS = 5; //@TODO Use me
 	private String query;
 	private final String API_KEY;
 	private final Config CONFIG;
@@ -131,7 +132,7 @@ public class Leet {
 		 * Do not set some of these because they are constants.
 		 */
 		url = null;
-//		CONN = null;
+//		conn = null;
 		fullUrl = null;
 
 		/* Miscelanous */
@@ -188,17 +189,20 @@ public class Leet {
 					StandardCharsets.UTF_8.toString());
 			}
 
+			/* Debug */
+			if(url != null) {
+				System.out.println("[***]\turl:" + url.toString());
+			}
+			System.out.println("[***]\tfullUrl:" + fullUrl);
+
 			/*
 			 * String.replaceAll(" ", "%20");
 			 * toURI() and URI.toURL().
 			 *
 			 * java.net.URISyntaxException: Illegal character in path at index 46: http://expectusafterlun.ch:5000/1337x/search//{matrix reloaded}/{1}/{Movies}
 			 */
-			url = new URI(fullUrl).toURL();
-
-			/* Debug */
-			System.out.println("[***]\t" + url.toString());
-
+			//URL url = new URL("http://example.com/hello%20world");
+			url = new URL(fullUrl);
 /*
 			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
 				.uri(url.toURI());
@@ -213,15 +217,17 @@ public class Leet {
 			final HttpResponse<String> RESPONSE
 				= CLIENT.send(REQUEST, BodyHandlers.ofString());
 */
-			DefaultHttpClient httpclient = new DefaultHttpClient();
-			HttpGet request = new HttpGet(fullUrl);
-			request.addHeader("API_KEY", API_KEY);
-			final HttpResponse RESPONSE = (HttpResponse) httpclient.execute(request);
+			final DefaultHttpClient HTTPCLIENT = new DefaultHttpClient();
+			final HttpGet REQUEST = new HttpGet(fullUrl);
+			REQUEST.addHeader("API_KEY", API_KEY);
+			final HttpResponse RESPONSE = (HttpResponse) HTTPCLIENT.execute(REQUEST);
 
-//			CONN = url.openConnection();
-//			CONN.setRequestMethod("GET");
+//			conn = url.openConnection();
+//			conn.setRequestMethod("GET");
+//			conn.setHeader("API_KEY", API_KEY);
+								
 			// Get the RESPONSE
-//			RD = new BufferedReader(new InputStreamReader(CONN.getInputStream()));
+//			RD = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 //			String line = "";
 //			while ((line = RD.readLine()) != null) {
 //				json = json.concat(line);
@@ -231,9 +237,6 @@ public class Leet {
 
 		} catch (IOException ex) {
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
-			ex.printStackTrace();
-
-		} catch(URISyntaxException ex) {
 			ex.printStackTrace();
 
 		} finally {
