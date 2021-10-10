@@ -16,16 +16,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package jrobo;
+package jrobo.expectusafterlun.ch;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import static java.lang.System.err;
 import static java.lang.System.out;
 import java.util.ArrayList;

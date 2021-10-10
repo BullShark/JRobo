@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package jrobo;
+package jrobo.expectusafterlun.ch;
 
 /**
  * Helper class for coloring the output of the list command

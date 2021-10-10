@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package jrobo;
+package jrobo.expectusafterlun.ch;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -18,7 +18,7 @@
  *
  */
 
-package jrobo;
+package jrobo.expectusafterlun.ch;
 
 /**
  *
