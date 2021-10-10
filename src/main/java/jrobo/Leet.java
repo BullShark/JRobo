@@ -193,6 +193,8 @@ public class Leet {
 			/* Debug */
 			System.out.println("[***]\t" + url.toString());
 
+			HttpRequest.
+
 			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
 				.uri(url.toURI());
 
