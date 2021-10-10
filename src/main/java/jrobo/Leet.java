@@ -29,11 +29,6 @@ import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
 
-/*
- * Test this API with curl:
- *
- * curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<query>/<page>/<category>
- */
 public class Leet {
 
     /* For the HTTP Connection */
@@ -46,14 +41,17 @@ public class Leet {
     /*
      * Miscelanous
      *@TODO Fix bug, if the url is not available, the bot will throw an exception and crash
+     *
+     * category can be omitted for the search
+     * @TODO Use String.format("url %s %s %s") ???
+     *
+     * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
      */
-    private static final String QUERY_URL = "https://expectusafterlun.ch/1337x.to/search/{query}/{category}/{page}/";
+    private static final String BASE_URL="https://1337x.to/search/"
     private String def;
     private String json;
-    private String s_name="blackhats";
-    private String s_switch="s";
     private final int MAX_RESULTS = 5;	
-
+    private String query;
 
 	/*
 		We can also filter by categories:
@@ -71,13 +69,24 @@ public class Leet {
 		def api_1337x(query, page=1, category=None):
 		if request.headers.get("API_KEY") != app.config["API_KEY"]:
 
-	Search example: https://1337x.to/search/example+search/1/
-
-	http://152.89.107.76:5000/thepiratebay/movies/1
-    
-	http://152.89.107.76:5000/1337x/query/page/category
 	*/
-	private final String BASE_URL="https://1337x.to/search/"
+
+	/*
+	 * Test this API with curl:
+	 *
+	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<query>/<page>/<category>
+	 *
+	 * example:
+	 *
+	 *	curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://152.89.107.76:5000/1337x/matrix/1/Movies
+	 *
+	 * Valid categories (case sensitive):
+	 *
+	 * 	Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX
+	 *
+	 * Omit category to search all.
+	 */
+	private String category;
 
 	/* For the Gson/Json */
 	private Gson gson;
@@ -96,19 +105,36 @@ public class Leet {
 		json = "";
 		/* For the Gson/Json */
 		gson = new Gson();
+		 /* Divide search into category and query */
+		 try {
+			category = search.split("\\s+", 2)[0]
+			query = search.split("\\s+", 2)[1]
+		catch(ArrayIndexOutOfBoundsException ex) {
+			ex.printStackTrace();
+			// There is no category. Search all.
+			category = "";
+			query = search;
+		}
 	}
 
 	/*
-	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://152.89.107.76:5000/1337x/matrix/1/Movies
+	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
 	 */
 	public String getJson() {
 		try {
 			/* Create a URL obj from strings */
-			fullUrl
-				= (QUERY_URL
-					+ "?name=" + s_name
-					+ "&orderby=" + s_switch
-					+ "&limit=" + MAX_RESULTS).replaceAll(" ", "%20");
+			if(!category.equals("")) {
+				fullUrl
+					= (BASE_URL
+						+ query
+						+ "/1/"
+						+ category).replaceAll(" ", "%20");
+			} else {
+				fullUrl
+					= (BASE_URL
+						+ query
+						+ "/1").replaceAll(" ", "%20");
+			}
 
 			url = new URL(fullUrl);
 
@@ -136,7 +162,7 @@ public class Leet {
 
 	public String getFormattedResult(boolean hasColors) {
 
-		PirateBayJsonItem[] results;
+		LeetJsonItem[] results;
 
 		try {
 
@@ -151,11 +177,11 @@ public class Leet {
 		String output = "";
 
 		if (hasColors) {
-			for (PirateBayJsonItem result : results) {
+			for (LeetJsonItem result : results) {
 				output += result.getColorString();
 			}
 		} else {
-			for (PirateBayJsonItem result : results) {
+			for (LeetJsonItem result : results) {
 				output += result.toString();
 			}
 		}
@@ -183,19 +209,20 @@ public class Leet {
 		public int seeds;
 		public String size;
 		public String user;
+		public String tinyurl = "https://not.implemented.yet"
 
-	public String getColorString() {
- 		String mystring=
-			MircColors.BOLD + name + " " +
-			MircColors.GREEN + "<" + tinyurl + ">" +
-			MircColors.NORMAL + MircColors.BOLD + " (" + Size + 
-			MircColors.GREEN + " S:" + seeders +
-			MircColors.CYAN + " L:" + leechers + 
-			MircColors.NORMAL + MircColors.BOLD + ")\n";
+		public String getColorString() {
+ 			String mystring=
+				MircColors.BOLD + name + " " +
+				MircColors.GREEN + "<" + tinyurl + ">" +
+				MircColors.NORMAL + MircColors.BOLD + " (" + size + 
+				MircColors.GREEN + " S:" + seeds +
+				MircColors.CYAN + " L:" + leeches + 
+				MircColors.NORMAL + MircColors.BOLD + ")\n";
              
-		return mystring;
-}
-    }
+			return mystring;
+		}
+	}
 }
 
 
