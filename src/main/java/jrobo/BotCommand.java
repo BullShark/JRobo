@@ -613,6 +613,13 @@ public class BotCommand {
 	/**
 	 * @TODO Write me
 	 */
+	private void leetHelper() {
+		CONNECTION.msgChannel(CONFIG.getChannel(), new Leet(cmdArgs).getFormattedResult(true));
+	}
+
+	/**
+	 * @TODO Write me
+	 */
 	private void listHelper() {
 
 		/*
