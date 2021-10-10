@@ -189,7 +189,7 @@ public class Leet {
 		try {
 
 			gson = new GsonBuilder().setPrettyPrinting().create();
-			results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
+			results = gson.fromJson(this.getJson(), LeetBayJsonItem[].class);
 
 		} catch (IllegalStateException | NullPointerException ex) {
 			ex.printStackTrace();
