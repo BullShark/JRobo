@@ -29,7 +29,6 @@ import java.util.TimerTask;
 /**
  *
  * @author Chris Lemire <goodbye300@aim.com>
- * @TODO JavaDoc all
  * @TODO http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
  */
 public class BotCommand {
