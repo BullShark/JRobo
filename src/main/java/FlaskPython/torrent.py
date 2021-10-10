@@ -63,6 +63,7 @@ def api_1337x(query, page=1, category=None):
         item["seeds"]   = tr.find("td", attrs={"class":"coll-2 seeds"}).getText()
         item["leeches"] = tr.find("td", attrs={"class":"coll-3 leeches"}).getText()
         item["date"]    = tr.find("td", attrs={"class":"coll-date"}).getText()
+        item["tinyurl"] = make_tiny(f"https://1337x.to{link['href']}")
 
         size = tr.find("td", attrs={"class":"coll-4 size mob-user"})
         size = size if size is not None else tr.find("td", attrs={"class":"coll-4 size mob-vip"})
