@@ -18,7 +18,9 @@
  */
 package jrobo;
 
-import com.google.gson.Gson; import com.google.gson.GsonBuilder; //import java.io.BufferedReader;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+//import java.io.BufferedReader;
 import java.io.IOException;
 //import java.io.InputStreamReader;
 //import java.io.OutputStreamWriter;
@@ -29,7 +31,7 @@ import java.net.URL;
 //import java.net.URLConnection;
 import java.net.URI;
 //import java.net.HttpRequest;
-import java.net.http.HttpClient; 
+import java.net.http.HttpClient;
 import java.net.http.HttpHeaders;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandler;
@@ -46,7 +48,7 @@ public class Leet {
 //	private final OutputStreamWriter WR;
 //	private final BufferedReader RD;
 
-	/* Miscelanous
+	/* Miscellaneous
 	 *@TODO Fix bug:
 	 *	if TORRENT_API_URL is not available,
 	 * 	the bot will throw an Exception and crash
@@ -82,7 +84,7 @@ public class Leet {
 	if request.headers.get("API_KEY") != app.config["API_KEY"]:
 	 */
 
- 	/*
+ /*
 	 * Test this API with curl:
 	 *
 	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<QUERY>/<PAGENUM>/<CATEGORY>
@@ -114,8 +116,8 @@ public class Leet {
 			throw new NullPointerException("CONFIG is not set and cannot retrieve the Torrent API_KEY");
 		} else {
 			this.CONFIG = CONFIG;
-			if(getApiKey() != null) {
-				API_KEY = getApiKey() ;
+			if (getApiKey() != null) {
+				API_KEY = getApiKey();
 			} else {
 				API_KEY = ""; // Key could not be retrieved
 				throw new NullPointerException("The API_KEY could not be retrieved from CONFIG");
@@ -212,25 +214,19 @@ public class Leet {
 //				json = json.concat(line);
 //			}
 //			RD.close();
-
 			JSON = RESPONSE.body();
 
 		} catch (MalformedURLException ex) {
-			if (JSON.equals("") || JSON == null) {
-				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
-			}
 			ex.printStackTrace();
 		} catch (ConnectException ex) {
-			if (JSON.equals("") || JSON == null) {
-				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
-			}
 			ex.printStackTrace();
 		} catch (IOException ex) {
+			System.err.println("Did you include the API_KEY in the HTTP Header?");
+			ex.printStackTrace();
+		} finally {
 			if (JSON.equals("") || JSON == null) {
 				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			}
-			System.err.println("Did you include the API_KEY in the HTTP Header?");
-			ex.printStackTrace();
 		}
 
 		return JSON;
