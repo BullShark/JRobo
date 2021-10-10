@@ -223,10 +223,10 @@ public class Leet {
 			// 4th attempt
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
+				.headers("Content-Type", "application/json")
+				.setHeader("API_KEY", API_KEY)
 				.uri(URI.create(fullUrl))
 				.build();
-
-			request.addHeader("API_KEY", API_KEY);
 
 			HttpResponse<String> response;
 			response = client.send(request, BodyHandlers.ofString(StandardCharsets.UTF_8));
