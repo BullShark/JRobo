@@ -28,6 +28,8 @@ import java.net.MalformedURLException;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URI;
+import java.net.HttpRequest;
 import java.util.Arrays;
 
 public class Leet {
@@ -45,7 +47,7 @@ public class Leet {
 	 *
 	 * CATEGORY can be omitted for the SEARCH
 	 *
-	 * @TODO Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() ) ???
+	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() ) ???
 	 * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
 	 */
 	private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/search/";
@@ -54,7 +56,7 @@ public class Leet {
 	private final String QUERY;
 	private final String API_KEY;
 	private final Config CONFIG;
-	private final String PAGENUM = 1;
+	private final String PAGENUM = "1";
 
 	/*
 	We can also filter by categories:
@@ -173,16 +175,16 @@ public class Leet {
 			TORRENT_API_URL = new URI(FULL_URL).toURL();
 
 			/* Debug */
-			System.out.println("[***]\t" + FULL_URL);
+			System.out.println("[***]\t" + TORRENT_API_URL.toString() );
 
 			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
-				.uri(URI.create(FULL_URL));
+				.uri(TORRENT_API_URL.toURI()));
 
 			REQUESTBUILDER.header("API_KEY", getApiKey());
 
 			final HttpClient CLIENT = HttpClients.custom().setDefaultHeaders(REQUESTBUILDER.getFirstHeader("API_KEY")).build();
 
-			final HttpRequest REQUEST = requestBuilder.build();
+			final HttpRequest REQUEST = REQUESTBUILDER.build();
 
 			final HttpResponse<String> RESPONSE =
 				CLIENT.send(REQUEST, BodyHandlers.ofString());
