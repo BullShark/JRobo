@@ -43,7 +43,7 @@ public class Leet {
 	 * Miscelanous
 	 *@TODO Fix bug, if TORRENT_API_URL is not available, the bot will throw an exception and crash
 	 *
-	 * category can be omitted for the search
+	 * CATEGORY can be omitted for the SEARCH
 	 *
 	 * @TODO Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() ) ???
 	 * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
@@ -54,6 +54,7 @@ public class Leet {
 	private final String QUERY;
 	private final String API_KEY;
 	private final Config CONFIG;
+	private final String PAGENUM = 1;
 
 	/*
 	We can also filter by categories:
@@ -78,15 +79,15 @@ public class Leet {
 	 *
 	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<query>/<page>/<category>
 	 *
-	 * example:
+	 * Example:
 	 *
 	 *	curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://152.89.107.76:5000/1337x/matrix/1/Movies
 	 *
-	 * Valid categories (case sensitive):
+	 * Valid CATEGORIES (case sensitive):
 	 *
 	 * 	Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX
 	 *
-	 * Omit category to search all.
+	 * Omit CATEGORY to search ALL.
 	 */
 	private final String CATEGORY;
 
@@ -96,7 +97,7 @@ public class Leet {
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
-	 * @param search Is the CATEGORY and search query
+	 * @param SEARCH Is the CATEGORY and search query
 	 */
 	public Leet(final Config CONFIG, final String SEARCH) throws NullPointerException {
 
@@ -158,10 +159,10 @@ public class Leet {
 	 			/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
 	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
 				 */
-				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/{%s}",QUERY ,"1" ,CATEGORY);
+				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/{%s}", QUERY, PAGENUM, CATEGORY);
 			} else {
 				// Exclude CATEGORY to search ALL
-				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/",QUERY ,"1");
+				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/", QUERY, PAGENUM);
 			}
 
 			/* 
@@ -242,11 +243,11 @@ public class Leet {
 		String output = "";
 
 		if (HAS_COLORS) {
-			for (LeetJsonItem result : results) {
+			for (LeetJsonItem result : RESULTS) {
 				output += result.getColorString();
 			}
 		} else {
-			for (LeetJsonItem result : results) {
+			for (LeetJsonItem result : RESULTS) {
 				output += result.toString();
 			}
 		}
