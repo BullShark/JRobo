@@ -146,17 +146,18 @@ public class Weather {
 		return CONFIG.getOpenWeatherMapKey();
 	}
 
-	/*
+	/**
 	 * A main method for testing this class
+	 * @param args Command line args
 	 */
 	public static void main(String[] args) {
 
-            System.out.println(new Weather(null).getFormattedWeatherSummary("Texarkana,TX,US", false, 3));
+		System.out.println(new Weather(null).getFormattedWeatherSummary("Texarkana,TX,US", false, 3));
 	}
 
 	/**
 	 * Represents the situation in which the location input provided by the user
-	 * Does not represent a valid location and the api won't recognize it
+	 * Does not represent a valid location and the API won't recognize it
 	 */
 	protected static class InvalidLocationException extends RuntimeException {
 
