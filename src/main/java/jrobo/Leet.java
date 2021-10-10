@@ -116,7 +116,7 @@ public class Leet {
 //		JSON = "";
 
 		/* For the Gson/Json */
-		GSON = new Gson();
+//		GSON = null;
 
 		 /* Divide search into category and query */
 		 try {
