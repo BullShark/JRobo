@@ -47,7 +47,7 @@ public class Leet {
      *
      * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
      */
-    private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/"
+    private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/";
     private String json;
     private final int MAX_RESULTS = 5;	
     private String query;
