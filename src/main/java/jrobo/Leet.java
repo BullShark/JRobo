@@ -31,6 +31,7 @@ import java.net.URLConnection;
 import java.net.URI;
 import java.net.HttpRequest;
 import java.util.Arrays;
+import org.apache.http.impl.client.HttpClients;
 
 public class Leet {
 
@@ -43,12 +44,12 @@ public class Leet {
 
 	/*
 	 * Miscelanous
-	 *@TODO Fix bug, if TORRENT_API_URL is not available, the bot will throw an exception and crash
+	 *@TODO Fix bug, if TORRENT_API_URL is not available, the bot will throw an Exception and crash
 	 *
 	 * CATEGORY can be omitted for the SEARCH
 	 *
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() ) ???
-	 * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
+	 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
 	private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/search/";
 	private final String JSON;
@@ -79,7 +80,7 @@ public class Leet {
 	/*
 	 * Test this API with curl:
 	 *
-	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<QUERY>/<PAGE>/<CATEGORY>
+	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<QUERY>/<PAGENUM>/<CATEGORY>
 	 *
 	 * Example:
 	 *
@@ -146,8 +147,6 @@ public class Leet {
 		 }
 	}
 
-	/*
-	 */
 	/**
 	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
 	 * @author Christopher Lemire <goodbye300@aim.com>
@@ -160,7 +159,7 @@ public class Leet {
 			if(!CATEGORY.equals("")) {
 
 	 			/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
-	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
+	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 				 */
 				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/{%s}", QUERY, PAGENUM, CATEGORY);
 			} else {
@@ -180,7 +179,7 @@ public class Leet {
 			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
 				.uri(TORRENT_API_URL.toURI()));
 
-			REQUESTBUILDER.header("API_KEY", getApiKey());
+			REQUESTBUILDER.header("API_KEY", API_KEY);
 
 			final HttpClient CLIENT = HttpClients.custom().setDefaultHeaders(REQUESTBUILDER.getFirstHeader("API_KEY")).build();
 
@@ -193,7 +192,7 @@ public class Leet {
 
 //			CONN.setRequestMethod("GET");
 
-			// Get the response
+			// Get the RESPONSE
 //			RD = new BufferedReader(new InputStreamReader(CONN.getInputStream()));
 //			String line = "";
 //			while ((line = RD.readLine()) != null) {
