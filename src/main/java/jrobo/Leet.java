@@ -60,7 +60,7 @@ public class Leet {
 	 */
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x/search/";
 	private String fullUrl;
-	private final String JSON;
+	private String json;
 	private final int MAX_RESULTS = 5;
 	private final String QUERY;
 	private final String API_KEY;
@@ -133,7 +133,7 @@ public class Leet {
 		fullUrl = null;
 
 		/* Miscelanous */
-//		JSON = null;
+		json = null;
 
 		/* For the Gson/Json */
 //		GSON = null;
@@ -167,7 +167,7 @@ public class Leet {
 	 * http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
 	 *
 	 * @author Christopher Lemire <goodbye300@aim.com>
-	 * @return JSON retrieved from the URL
+	 * @return json retrieved from the url
 	 */
 	public String getJson() {
 
@@ -214,7 +214,7 @@ public class Leet {
 //				json = json.concat(line);
 //			}
 //			RD.close();
-			JSON = RESPONSE.body();
+			json = RESPONSE.body();
 
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();
@@ -224,19 +224,19 @@ public class Leet {
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
 			ex.printStackTrace();
 		} finally {
-			if (JSON.equals("") || JSON == null) {
-				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+			if (json.equals("") || json == null) {
+				json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			}
 		}
 
-		return JSON;
+		return json;
 	}
 
 	/**
-	 * Use toString() on All JSON Items to make some formatted colored or no colors output
+	 * Use toString() on All json Items to make some formatted colored or no colors output
 	 * 
 	 * @author Christopher Lemire <goodbye300@aim.com>
-	 * @return Formatted JSON data optionally with colors
+	 * @return Formatted json data optionally with colors
 	 */
 	public String getFormattedResult(final boolean HAS_COLORS) {
 
@@ -287,7 +287,7 @@ public class Leet {
 	}
 
 	/**
-	 * Strings and ints representing JSON data
+	 * Strings and ints representing json data
 	 *
 	 * @author Christopher Lemire <goodbye300@aim.com>
 	 */
