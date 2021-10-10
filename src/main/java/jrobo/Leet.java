@@ -47,7 +47,7 @@ public class Leet {
      *
      * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
      */
-    private static final String BASE_URL="https://1337x.to/search/";
+    private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/"
     private String def;
     private String json;
     private final int MAX_RESULTS = 5;	
@@ -115,6 +115,18 @@ public class Leet {
 			category = "";
 			query = search;
 		}
+
+		 /*
+		  * Set to empty string for all.
+		  * Search all if category is not valid.
+		  */
+		 String[] categories = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
+
+		 if(category.equalsIgnoreCase("All") ||
+			!(Arrays.asList(categories)).contains(category) ) {
+			
+			 category = "";
+		 }
 	}
 
 	/*
@@ -223,58 +235,4 @@ public class Leet {
 			return mystring;
 		}
 	}
-}
-
-
-
-
-
-
-
-package jrobo;
-
-
-
-public class PirateBay {
-
-
-
-    public PirateBay(String command) {
-        String[] splitArray = command.split("\\s+");
-        String argument="";
-        if (splitArray.length > 0) {
-            switch (splitArray[0]) {
-                case "-s":
-                    argument=splitArray[0];
-                    s_switch = "s";
-                    break;
-                case "-l":
-                    argument=splitArray[0];
-                    s_switch = "l";
-                    break;
-                case "-d":
-                    argument=splitArray[0];
-                    s_switch = "d";
-                    break;
-                case "-n":
-                    argument=splitArray[0];
-                    s_switch = "n";
-                default:
-                    s_switch = "s";
-                    break;
-            }
-            command=command.replace(argument, "");
-        }
-        if(command.length()>0){
-        s_name=command;}
-
-    }
-
-
-
- 
-
-
-
-
 }
