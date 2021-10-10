@@ -185,8 +185,7 @@ public class Leet {
 					StandardCharsets.UTF_8.toString());
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = URLEncoder.encode(String.format(BASE_URL + "/%s/%s/", query, PAGENUM), 
-					StandardCharsets.UTF_8.toString());
+				fullUrl = String.format(BASE_URL + "/%s/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM);
 			}
 
 			/* Debug */
