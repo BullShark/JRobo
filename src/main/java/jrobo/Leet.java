@@ -29,6 +29,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 //import java.net.URLConnection;
 import java.net.URI;
+import java.net.URISyntaxException;
 //import java.net.HttpRequest;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
@@ -165,7 +166,7 @@ public class Leet {
 	 * @author Christopher Lemire <goodbye300@aim.com>
 	 * @return json retrieved from the url
 	 */
-	public String getJson() {
+	public String getJson() throws URISyntaxException {
 
 		try {
 			/* Create a URL obj from String */
