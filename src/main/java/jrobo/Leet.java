@@ -22,16 +22,19 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 //import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URI;
 //import java.io.InputStreamReader;
 //import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.http.HttpClient;
 //import java.net.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+//import org.apache.http.HttpRequest;
+import java.net.http.HttpRequest;
 
 public class Leet {
 
@@ -166,12 +169,11 @@ public class Leet {
 	public String getJson() {
 
 		try {
-			/* Create a URL obj from String */
+			/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
+ 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
+			 */
 			if (!category.equals("")) {
 
-				/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
-	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
-				 */
 				fullUrl = String.format(BASE_URL + "/%s/%s/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM, category);
 			} else {
 				// Exclude CATEGORY to search ALL
@@ -181,10 +183,14 @@ public class Leet {
 			/* Debug */
 			if(url != null) {
 				System.out.println("[***]\turl:" + url.toString());
+			} else {
+				System.out.println("[***]\turl:" + "null");
 			}
 			System.out.println("[***]\tfullUrl:" + fullUrl);
 
 			/*
+			 * Create a URL obj from String
+			 *
 			 * String.replaceAll(" ", "%20");
 			 * toURI() and URI.toURL().
 			 *
@@ -205,11 +211,23 @@ public class Leet {
 			final HttpResponse<String> RESPONSE
 				= CLIENT.send(REQUEST, BodyHandlers.ofString());
 */
-			final DefaultHttpClient HTTPCLIENT = new DefaultHttpClient();
+/*
+			final HttpClient HTTPCLIENT = new HttpClient();
 			final HttpGet REQUEST = new HttpGet(fullUrl);
 			REQUEST.addHeader("API_KEY", API_KEY);
-			final HttpResponse RESPONSE = (HttpResponse) HTTPCLIENT.execute(null, REQUEST);
+			final HttpResponse RESPONSE;                   //.execute(null, REQUEST);
+			RESPONSE = (HttpResponse) HTTPCLIENT.send(REQUEST, BodyHandlers.toString());
+*/
+			// 4th attempt
+			HttpClient client = HttpClient.newHttpClient();
+			HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(fullUrl))
+				.build();
 
+			HttpResponse<?> response;
+			response = client.send(request, BodyHandlers.toString());
+			json = response.body();
+			
 //			conn = url.openConnection();
 //			conn.setRequestMethod("GET");
 //			conn.setHeader("API_KEY", API_KEY);
