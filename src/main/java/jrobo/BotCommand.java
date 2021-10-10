@@ -614,7 +614,7 @@ public class BotCommand {
 	 * @TODO Write me
 	 */
 	private void leetHelper() {
-		CONNECTION.msgChannel(CONFIG.getChannel(), new Leet(cmdArgs).getFormattedResult(true));
+		CONNECTION.msgChannel(CONFIG.getChannel(), new Leet(CONFIG, cmdArgs).getFormattedResult(true));
 	}
 
 	/**
