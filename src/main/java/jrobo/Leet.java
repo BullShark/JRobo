@@ -238,7 +238,7 @@ public class Leet {
 			RESULTS = gson.fromJson(this.getJson(), LeetJsonItem[].class);
 
 		} catch (IllegalStateException | NullPointerException ex) {
-			ex.printStackTrace();
+			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
 			return "";
 		}
 
