@@ -40,10 +40,8 @@ public class Leet {
 //	private final URLConnection CONN;
 //	private final OutputStreamWriter WR;
 //	private final BufferedReader RD;
-	private final String FULL_URL;
 
-	/*
-	 * Miscelanous
+	/* Miscelanous
 	 *@TODO Fix bug, if TORRENT_API_URL is not available, the bot will throw an Exception and crash
 	 *
 	 * CATEGORY can be omitted for the SEARCH
@@ -51,9 +49,9 @@ public class Leet {
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() ) ???
 	 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
-	private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/search/";
+	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x/search/";
 	private final String JSON;
-	private final int MAX_RESULTS = 5;	
+	private final int MAX_RESULTS = 5;
 	private final String QUERY;
 	private final String API_KEY;
 	private final Config CONFIG;
@@ -75,9 +73,9 @@ public class Leet {
 	def api_1337x(query, page=1, category=None):
 	if request.headers.get("API_KEY") != app.config["API_KEY"]:
 
-	*/
+	 */
 
-	/*
+ /*
 	 * Test this API with curl:
 	 *
 	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<QUERY>/<PAGENUM>/<CATEGORY>
@@ -104,12 +102,16 @@ public class Leet {
 	 */
 	public Leet(final Config CONFIG, final String SEARCH) throws NullPointerException {
 
-		if(CONFIG == null) { 
+		if (CONFIG == null) {
 			API_KEY = "";
-			throw new NullPointerException("Config is not set and cannot retrieve the Torrent API_KEY");
+			throw new NullPointerException("CONFIG is not set and cannot retrieve the Torrent API_KEY");
 		} else {
 			this.CONFIG = CONFIG;
-			API_KEY = getApiKey(); //@FIXME Does this method some times throw an exception?
+			if(getApiKey() != null) {
+				API_KEY = getApiKey() ;
+			} else {
+				API_KEY = ""; // Key could not be retrieved
+			}
 		}
 
 		/* For the HTTP Connection */
@@ -123,32 +125,34 @@ public class Leet {
 		/* For the Gson/Json */
 //		GSON = null;
 
-		 /* Divide SEARCH into CATEGORY and QUERY */
-		 try {
+		/* Divide SEARCH into CATEGORY and QUERY */
+		try {
 			CATEGORY = SEARCH.split("\\s+", 2)[0];
 			QUERY = SEARCH.split("\\s+", 2)[1];
-		 } catch(ArrayIndexOutOfBoundsException ex) {
+		} catch (ArrayIndexOutOfBoundsException ex) {
 			ex.printStackTrace();
 			// There is no CATEGORY. Search ALL.
 			CATEGORY = "";
 			QUERY = SEARCH;
 		}
 
-		 /*
+		/*
 		  * Set to empty String for ALL.
 		  * Search ALL if CATEGORY is not valid.
-		  */
-		 final String[] CATEGORIES = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
+		 */
+		final String[] CATEGORIES = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
 
-		 if(CATEGORY.equalsIgnoreCase("All") ||
-			!(Arrays.asList(CATEGORIES)).contains(CATEGORY) ) {
-			
-			 CATEGORY = "";
-		 }
+		if (CATEGORY.equalsIgnoreCase("All")
+			|| !(Arrays.asList(CATEGORIES)).contains(CATEGORY)) {
+
+			CATEGORY = "";
+		}
 	}
 
 	/**
-	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
+	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy"
+	 * http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
+	 *
 	 * @author Christopher Lemire <goodbye300@aim.com>
 	 * @return JSON retrieved from the URL
 	 */
@@ -156,9 +160,9 @@ public class Leet {
 
 		try {
 			/* Create a URL obj from String */
-			if(!CATEGORY.equals("")) {
+			if (!CATEGORY.equals("")) {
 
-	 			/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
+				/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
 	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 				 */
 				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/{%s}", QUERY, PAGENUM, CATEGORY);
@@ -167,17 +171,18 @@ public class Leet {
 				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/", QUERY, PAGENUM);
 			}
 
-			/* 
+			/*
 			 * String.replaceAll(" ", "%20");
 			 * toURI() and URI.toURL().
 			 */
 			TORRENT_API_URL = new URI(FULL_URL).toURL();
 
 			/* Debug */
-			System.out.println("[***]\t" + TORRENT_API_URL.toString() );
+			System.out.println("[***]\t" + TORRENT_API_URL.toString());
 
 			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
-				.uri(TORRENT_API_URL.toURI()));
+				.uri(TORRENT_API_URL.toURI())
+			);
 
 			REQUESTBUILDER.header("API_KEY", API_KEY);
 
@@ -185,13 +190,11 @@ public class Leet {
 
 			final HttpRequest REQUEST = REQUESTBUILDER.build();
 
-			final HttpResponse<String> RESPONSE =
-				CLIENT.send(REQUEST, BodyHandlers.ofString());
+			final HttpResponse<String> RESPONSE
+				= CLIENT.send(REQUEST, BodyHandlers.ofString());
 
 //			CONN = TORRENT_API_URL.openConnection();
-
 //			CONN.setRequestMethod("GET");
-
 			// Get the RESPONSE
 //			RD = new BufferedReader(new InputStreamReader(CONN.getInputStream()));
 //			String line = "";
@@ -199,21 +202,20 @@ public class Leet {
 //				json = json.concat(line);
 //			}
 //			RD.close();
-
 			JSON = RESPONSE.body();
 
 		} catch (MalformedURLException ex) {
-			if(JSON.equals("") || JSON == null) {
+			if (JSON.equals("") || JSON == null) {
 				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			}
 			ex.printStackTrace();
 		} catch (ConnectException ex) {
-			if(JSON.equals("") || JSON == null) {
+			if (JSON.equals("") || JSON == null) {
 				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			}
 			ex.printStackTrace();
 		} catch (IOException ex) {
-			if(JSON.equals("") || JSON == null) {
+			if (JSON.equals("") || JSON == null) {
 				JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			}
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
@@ -266,9 +268,9 @@ public class Leet {
 		return CONFIG.getTorrentKey();
 	}
 
-
 	/**
- 	 * A main method for testing this class
+	 * A main method for testing this class
+	 *
 	 * @author Christopher Lemire <goodbye300@aim.com>
 	 */
 	public static void main(String[] args) {
@@ -278,11 +280,12 @@ public class Leet {
 
 	/**
 	 * Strings and ints representing JSON data
+	 *
 	 * @author Christopher Lemire <goodbye300@aim.com>
 	 */
 	public class LeetJsonItem {
 
- 		public String date;
+		public String date;
 		public String href;
 		public int leeches;
 		public String name;
@@ -293,26 +296,28 @@ public class Leet {
 
 		/**
 		 * A colored for IRC String representation of LeetJsonItem
+		 *
 		 * @author Christopher Lemire <goodbye300@aim.com>
 		 */
 		public String getColorString() {
- 			final String MYSTRING =
-				MircColors.BOLD + name + " " +
-				MircColors.GREEN + "<" + tinyurl + ">" +
-				MircColors.NORMAL + MircColors.BOLD + " (" + size + 
-				MircColors.GREEN + " S:" + seeds +
-				MircColors.CYAN + " L:" + leeches + 
-				MircColors.NORMAL + MircColors.BOLD + ")\n";
-             
+			final String MYSTRING
+				= MircColors.BOLD + name + " "
+				+ MircColors.GREEN + "<" + tinyurl + ">"
+				+ MircColors.NORMAL + MircColors.BOLD + " (" + size
+				+ MircColors.GREEN + " S:" + seeds
+				+ MircColors.CYAN + " L:" + leeches
+				+ MircColors.NORMAL + MircColors.BOLD + ")\n";
+
 			return MYSTRING;
 		}
 
 		/**
 		 * A String representation of LeetJsonItem
+		 *
 		 * @author Christopher Lemire <goodbye300@aim.com>
 		 */
 		public String toString() {
-			final String MYSTRING= name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
+			final String MYSTRING = name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
 			return MYSTRING;
 		}
 	}
