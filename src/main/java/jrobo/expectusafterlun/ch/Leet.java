@@ -43,7 +43,7 @@ public class Leet {
 	 * CATEGORY can be omitted for the SEARCH
 	 *
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() )
-	 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
+	 * "https://expectusafterlun.ch/1337x/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private String fullUrl;
@@ -93,7 +93,7 @@ public class Leet {
 
 	/**
 	 *
-	 * @author Chris Lemire <goodbye300@aim.com>
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param SEARCH Is the CATEGORY and search QUERY
 	 * @param CONFIG Object representing the configuration for JRobo, used to retrieve API_KEY
 	 */
@@ -152,7 +152,7 @@ public class Leet {
 	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy"
 	 * http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
 	 *
-	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 * @return json retrieved from the url
 	 */
 	public String getJson() {
@@ -211,7 +211,7 @@ public class Leet {
 	/**
 	 * Use toString() on All json Items to make some formatted colored or no colors output
 	 * 
-	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 * @param HAS_COLORS True for IRC colors, false otherwise
 	 * @return Formatted json data optionally with colors
 	 */
@@ -256,7 +256,7 @@ public class Leet {
 
 	/**
 	 *
-	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 * @return API Key for Torrent API retrieved from Config.json
 	 */
 	private String getApiKey() {
@@ -267,7 +267,7 @@ public class Leet {
 	/**
 	 * A main method for testing this class
 	 *
-	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 * @param args Command line args
 	 */
 	public static void main(String[] args) {
@@ -278,7 +278,7 @@ public class Leet {
 	/**
 	 * Strings and ints representing json data
 	 *
-	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public class LeetJsonItem {
 
@@ -294,7 +294,7 @@ public class Leet {
 		/**
 		 * A colored for IRC String representation of LeetJsonItem
 		 *
-		 * @author Christopher Lemire <goodbye300@aim.com>
+		 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 		 * @return Colored for IRC String representing LeetJsonItem
 		 */
 		public String getColorString() {
@@ -313,7 +313,7 @@ public class Leet {
 		/**
 		 * A String representation of LeetJsonItem
 		 *
-		 * @author Christopher Lemire <goodbye300@aim.com>
+		 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 		 * @return A summary without colors of UrbanJsonItem
 		 */
 		@Override
