@@ -29,6 +29,11 @@ import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
 
+/*
+ * Test this API with curl:
+ *
+ * curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<query>/<page>/<category>
+ */
 public class Leet {
 
     /* For the HTTP Connection */
@@ -42,7 +47,7 @@ public class Leet {
      * Miscelanous
      *@TODO Fix bug, if the url is not available, the bot will throw an exception and crash
      */
-    private static final String QUERY_URL = "http://odin.root.sx/thepiratebay.php";
+    private static final String QUERY_URL = "https://expectusafterlun.ch/1337x.to/search/{query}/{category}/{page}/";
     private String def;
     private String json;
     private String s_name="blackhats";
@@ -77,7 +82,12 @@ public class Leet {
 	/* For the Gson/Json */
 	private Gson gson;
 
-	public Leet() {
+	/**
+	 *
+	 * @author Chris Lemire <goodbye300@aim.com>
+	 * @param search Is the category and search query
+	 */
+	public Leet(String search) {
 		/* For the HTTP Connection */
 		url = null;
 		conn = null;
@@ -88,6 +98,9 @@ public class Leet {
 		gson = new Gson();
 	}
 
+	/*
+	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://152.89.107.76:5000/1337x/matrix/1/Movies
+	 */
 	public String getJson() {
 		try {
 			/* Create a URL obj from strings */
@@ -158,8 +171,31 @@ public class Leet {
  	 * A main method for testing this class
 	 */
 	public static void main(String[] args) {
-		System.out.println(new Leet("-s matrix reloaded").getFormattedResult(false));
+		System.out.println(new Leet("Movies matrix reloaded").getFormattedResult(false));
 	}
+
+	public class LeetJsonItem {
+
+ 		public String date;
+		public String href;
+		public int leeches;
+		public String name;
+		public int seeds;
+		public String size;
+		public String user;
+
+	public String getColorString() {
+ 		String mystring=
+			MircColors.BOLD + name + " " +
+			MircColors.GREEN + "<" + tinyurl + ">" +
+			MircColors.NORMAL + MircColors.BOLD + " (" + Size + 
+			MircColors.GREEN + " S:" + seeders +
+			MircColors.CYAN + " L:" + leechers + 
+			MircColors.NORMAL + MircColors.BOLD + ")\n";
+             
+		return mystring;
+}
+    }
 }
 
 
@@ -213,30 +249,5 @@ public class PirateBay {
 
 
 
-    public class PirateBayJsonItem {
 
-        public String type;
-        public String name;
-        public String url;
-        public String tinyurl;
-        public String Uploaded;
-        public String Size;
-        public String ULed;
-        public String seeders;
-        public String leechers;
-
-        public String getColorString() {
-            String mystring=
-              MircColors.BOLD + name + " " +
-              MircColors.GREEN + "<" + tinyurl + ">" +
-              MircColors.NORMAL + MircColors.BOLD + " (" + Size + 
-              MircColors.GREEN + " S:" + seeders +
-              MircColors.CYAN + " L:" + leechers + 
-              MircColors.NORMAL + MircColors.BOLD + ")\n";
-             
-            return mystring;
-        }
-
-
-    }
 }
