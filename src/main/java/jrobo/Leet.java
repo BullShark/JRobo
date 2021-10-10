@@ -208,7 +208,7 @@ public class Leet {
 			final DefaultHttpClient HTTPCLIENT = new DefaultHttpClient();
 			final HttpGet REQUEST = new HttpGet(fullUrl);
 			REQUEST.addHeader("API_KEY", API_KEY);
-			final HttpResponse RESPONSE = (HttpResponse) HTTPCLIENT.execute(REQUEST);
+			final HttpResponse RESPONSE = (HttpResponse) HTTPCLIENT.execute(null, REQUEST);
 
 //			conn = url.openConnection();
 //			conn.setRequestMethod("GET");
