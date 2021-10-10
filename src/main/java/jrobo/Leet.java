@@ -20,20 +20,16 @@ package jrobo;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-//import java.io.BufferedReader;
+import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.net.URI;
-//import java.io.InputStreamReader;
-//import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
-//import java.net.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.StandardCharsets;
-//import org.apache.http.HttpRequest;
 import java.net.http.HttpRequest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,7 +55,7 @@ public class Leet {
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private String fullUrl;
 	private String json;
-	private final int MAX_RESULTS = 5; //@TODO Use me
+	private final int MAX_RESULTS = 3;
 	private String query;
 	private final String API_KEY;
 	private final Config CONFIG;
@@ -145,7 +141,7 @@ public class Leet {
 			// There is no CATEGORY. Search ALL.
 			category = "";
 			query = SEARCH;
-			ex.printStackTrace();
+			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 		/**
@@ -242,20 +238,30 @@ public class Leet {
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			RESULTS = gson.fromJson(this.getJson(), LeetJsonItem[].class);
 
-		} catch (IllegalStateException | NullPointerException ex) {
-			ex.printStackTrace();
-			return "";
+		} catch (IllegalStateException | NullPointerException | JsonSyntaxException ex) {
+			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
+			json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+			return json;
 		}
 
 		String output = "";
+		int count = 0;
 
 		if (HAS_COLORS) {
 			for (LeetJsonItem result : RESULTS) {
 				output += result.getColorString();
+				count++;
+				if(MAX_RESULTS <= count) {
+					break;
+				}
 			}
 		} else {
 			for (LeetJsonItem result : RESULTS) {
 				output += result.toString();
+				count++;
+				if(MAX_RESULTS <= count) {
+					break;
+				}
 			}
 		}
 		return output;
@@ -291,9 +297,9 @@ public class Leet {
 
 		public String date;
 		public String href;
-		public String leeches;
+		public int leeches;
 		public String name;
-		public String seeds;
+		public int seeds;
 		public String size;
 		public String user;
 //		public String tinyurl = "https://not.implemented.yet";
