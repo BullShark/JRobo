@@ -43,7 +43,7 @@ import org.apache.http.client.methods.RequestBuilder;
 public class Leet {
 
 	/* For the HTTP Connection */
-	private final URL url;
+	private URL url;
 //	private final URLConnection CONN;
 //	private final OutputStreamWriter WR;
 //	private final BufferedReader RD;
