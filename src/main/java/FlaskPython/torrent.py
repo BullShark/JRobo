@@ -1,3 +1,5 @@
+from __future__ import with_statement                                                        
+
 import flask
 import requests
 import random
@@ -5,8 +7,6 @@ import string
 from flask import request, jsonify
 from bs4 import BeautifulSoup
 
-from __future__ import with_statement                                                        
-  
 import contextlib
   
 try:
