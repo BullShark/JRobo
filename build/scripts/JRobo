@@ -80,7 +80,7 @@ case "`uname`" in
     ;;
 esac
 
-CLASSPATH=$APP_HOME/lib/JRobo.jar:$APP_HOME/lib/gson-2.8.8.jar:$APP_HOME/lib/httpclient-4.5.9.jar:$APP_HOME/lib/httpcore-4.4.11.jar:$APP_HOME/lib/commons-logging-1.2.jar:$APP_HOME/lib/commons-codec-1.11.jar
+CLASSPATH=$APP_HOME/lib/JRobo.jar:$APP_HOME/lib/gson-2.8.8.jar
 
 
 # Determine the Java command to use to start the JVM.
@@ -180,6 +180,6 @@ save () {
 APP_ARGS=`save "$@"`
 
 # Collect all arguments for the java command, following the shell quoting and substitution rules
-eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $J_ROBO_OPTS -classpath "\"$CLASSPATH\"" jrobo.JRobo "$APP_ARGS"
+eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $J_ROBO_OPTS -classpath "\"$CLASSPATH\"" jrobo.expectusafterlun.ch.JRobo "$APP_ARGS"
 
 exec "$JAVACMD" "$@"

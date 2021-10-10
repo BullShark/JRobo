@@ -1,64 +1,64 @@
-jrobo/TermColors.java
- jrobo.TermColors
- jrobo.TermColors$Attribute
- jrobo.TermColors$Color
-jrobo/UrbanDict.java
- jrobo.UrbanDict
- jrobo.UrbanDict$1
- jrobo.UrbanDict$UrbanJson
- jrobo.UrbanDict$UrbanJson$1
- jrobo.UrbanDict$UrbanJson$UrbanJsonItem
-jrobo/BotCommand.java
- jrobo.BotCommand
- jrobo.BotCommand$1
- jrobo.BotCommand$1BombTask
-jrobo/Config.java
- jrobo.Config
-jrobo/PirateBay.java
- jrobo.PirateBay
- jrobo.PirateBay$PirateBayJsonItem
-jrobo/FileReader.java
- jrobo.FileReader
-jrobo/Leet.java
- jrobo.Leet
- jrobo.Leet$LeetJsonItem
-jrobo/Epic.java
- jrobo.Epic
- jrobo.Epic$1
- jrobo.Epic$EpicExtensionsJsonItem
- jrobo.Epic$EpicExtensionsJsonItem$EpicCacheControlJsonItem
- jrobo.Epic$EpicJson
- jrobo.Epic$EpicJson$EpicDataJsonItem
- jrobo.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem
- jrobo.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem
- jrobo.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem
- jrobo.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem$EpicPriceJsonItem
- jrobo.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem$EpicPriceJsonItem$EpicTotalPriceJsonItem
-jrobo/ListColors.java
- jrobo.ListColors
-jrobo/WireColor.java
- jrobo.WireColor
-jrobo/DownForEveryone.java
- jrobo.DownForEveryone
-jrobo/Weather.java
- jrobo.Weather
- jrobo.Weather$1
- jrobo.Weather$InvalidLocationException
- jrobo.Weather$WeatherJson
- jrobo.Weather$WeatherJson$WeatherListJsonItem
- jrobo.Weather$WeatherJson$WeatherListJsonItem$WeatherCloudsJsonItem
- jrobo.Weather$WeatherJson$WeatherListJsonItem$WeatherCoordJsonItem
- jrobo.Weather$WeatherJson$WeatherListJsonItem$WeatherMainJsonItem
- jrobo.Weather$WeatherJson$WeatherListJsonItem$WeatherSysJsonItem
- jrobo.Weather$WeatherJson$WeatherListJsonItem$WeatherWeatherJsonItem
- jrobo.Weather$WeatherJson$WeatherListJsonItem$WeatherWindJsonItem
-jrobo/Jokes.java
- jrobo.Jokes
-jrobo/JRobo.java
- jrobo.JRobo
-jrobo/IRCTester.java
- jrobo.IRCTester
-jrobo/MircColors.java
- jrobo.MircColors
-jrobo/Networking.java
- jrobo.Networking
+jrobo/expectusafterlun/ch/TermColors.java
+ jrobo.expectusafterlun.ch.TermColors
+ jrobo.expectusafterlun.ch.TermColors$Attribute
+ jrobo.expectusafterlun.ch.TermColors$Color
+jrobo/expectusafterlun/ch/FileReader.java
+ jrobo.expectusafterlun.ch.FileReader
+jrobo/expectusafterlun/ch/Weather.java
+ jrobo.expectusafterlun.ch.Weather
+ jrobo.expectusafterlun.ch.Weather$1
+ jrobo.expectusafterlun.ch.Weather$InvalidLocationException
+ jrobo.expectusafterlun.ch.Weather$WeatherJson
+ jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem
+ jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherCloudsJsonItem
+ jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherCoordJsonItem
+ jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherMainJsonItem
+ jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherSysJsonItem
+ jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherWeatherJsonItem
+ jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherWindJsonItem
+jrobo/expectusafterlun/ch/UrbanDict.java
+ jrobo.expectusafterlun.ch.UrbanDict
+ jrobo.expectusafterlun.ch.UrbanDict$1
+ jrobo.expectusafterlun.ch.UrbanDict$UrbanJson
+ jrobo.expectusafterlun.ch.UrbanDict$UrbanJson$1
+ jrobo.expectusafterlun.ch.UrbanDict$UrbanJson$UrbanJsonItem
+jrobo/expectusafterlun/ch/DownForEveryone.java
+ jrobo.expectusafterlun.ch.DownForEveryone
+jrobo/expectusafterlun/ch/Jokes.java
+ jrobo.expectusafterlun.ch.Jokes
+jrobo/expectusafterlun/ch/Config.java
+ jrobo.expectusafterlun.ch.Config
+jrobo/expectusafterlun/ch/BotCommand.java
+ jrobo.expectusafterlun.ch.BotCommand
+ jrobo.expectusafterlun.ch.BotCommand$1
+ jrobo.expectusafterlun.ch.BotCommand$1BombTask
+jrobo/expectusafterlun/ch/JRobo.java
+ jrobo.expectusafterlun.ch.JRobo
+jrobo/expectusafterlun/ch/ListColors.java
+ jrobo.expectusafterlun.ch.ListColors
+jrobo/expectusafterlun/ch/IRCTester.java
+ jrobo.expectusafterlun.ch.IRCTester
+jrobo/expectusafterlun/ch/Leet.java
+ jrobo.expectusafterlun.ch.Leet
+ jrobo.expectusafterlun.ch.Leet$LeetJsonItem
+jrobo/expectusafterlun/ch/WireColor.java
+ jrobo.expectusafterlun.ch.WireColor
+jrobo/expectusafterlun/ch/MircColors.java
+ jrobo.expectusafterlun.ch.MircColors
+jrobo/expectusafterlun/ch/Networking.java
+ jrobo.expectusafterlun.ch.Networking
+jrobo/expectusafterlun/ch/Epic.java
+ jrobo.expectusafterlun.ch.Epic
+ jrobo.expectusafterlun.ch.Epic$1
+ jrobo.expectusafterlun.ch.Epic$EpicExtensionsJsonItem
+ jrobo.expectusafterlun.ch.Epic$EpicExtensionsJsonItem$EpicCacheControlJsonItem
+ jrobo.expectusafterlun.ch.Epic$EpicJson
+ jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem
+ jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem
+ jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem
+ jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem
+ jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem$EpicPriceJsonItem
+ jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem$EpicPriceJsonItem$EpicTotalPriceJsonItem
+jrobo/expectusafterlun/ch/PirateBay.java
+ jrobo.expectusafterlun.ch.PirateBay
+ jrobo.expectusafterlun.ch.PirateBay$PirateBayJsonItem

@@ -67,11 +67,11 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\JRobo.jar;%APP_HOME%\lib\gson-2.8.8.jar;%APP_HOME%\lib\httpclient-4.5.9.jar;%APP_HOME%\lib\httpcore-4.4.11.jar;%APP_HOME%\lib\commons-logging-1.2.jar;%APP_HOME%\lib\commons-codec-1.11.jar
+set CLASSPATH=%APP_HOME%\lib\JRobo.jar;%APP_HOME%\lib\gson-2.8.8.jar
 
 
 @rem Execute JRobo
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %J_ROBO_OPTS%  -classpath "%CLASSPATH%" jrobo.JRobo %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %J_ROBO_OPTS%  -classpath "%CLASSPATH%" jrobo.expectusafterlun.ch.JRobo %*
 
 :end
 @rem End local scope for the variables with windows NT shell
