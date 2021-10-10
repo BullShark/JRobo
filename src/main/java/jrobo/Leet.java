@@ -110,7 +110,7 @@ public class Leet {
 		/* For the HTTP Connection */
 		URL = null;
 //		CONN = null;
-		FULL_URL = "";
+//		FULL_URL = "";
 
 		/* Miscelanous */
 //		JSON = "";
@@ -130,8 +130,8 @@ public class Leet {
 		}
 
 		 /*
-		  * Set to empty string for all.
-		  * Search all if category is not valid.
+		  * Set to empty String for ALL.
+		  * Search ALL if CATEGORY is not valid.
 		  */
 		 final String[] CATEGORIES = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
 
@@ -143,7 +143,11 @@ public class Leet {
 	}
 
 	/*
+	 */
+	/**
 	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
+	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @return JSON retrieved from the URL
 	 */
 	public String getJson() {
 
@@ -174,7 +178,7 @@ public class Leet {
 
 			REQUESTBUILDER.header("API_KEY", getApiKey());
 
-			final HttpClient CLIENT = HttpClients.custom().setDefaultHeaders(headers).build();
+			final HttpClient CLIENT = HttpClients.custom().setDefaultHeaders(REQUESTBUILDER.getFirstHeader("API_KEY")).build();
 
 			final HttpRequest REQUEST = requestBuilder.build();
 
@@ -188,7 +192,7 @@ public class Leet {
 			// Get the response
 //			RD = new BufferedReader(new InputStreamReader(CONN.getInputStream()));
 //			String line = "";
-//			while ((line = rd.readLine()) != null) {
+//			while ((line = RD.readLine()) != null) {
 //				json = json.concat(line);
 //			}
 //			RD.close();
@@ -210,6 +214,11 @@ public class Leet {
 		return JSON;
 	}
 
+	/**
+	 *
+	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @return Formatted JSON data optionally with colors
+	 */
 	public String getFormattedResult(final boolean HAS_COLORS) {
 
 		final LeetJsonItem[] RESULTS;
@@ -250,9 +259,8 @@ public class Leet {
 
 
 	/**
-	 * 
-	 * @author Christopher Lemire <goodbye300@aim.com>
  	 * A main method for testing this class
+	 * @author Christopher Lemire <goodbye300@aim.com>
 	 */
 	public static void main(String[] args) {
 
@@ -260,8 +268,8 @@ public class Leet {
 	}
 
 	/**
-	 * @author Christopher Lemire <goodbye300@aim.com>
 	 * Strings and ints representing JSON data
+	 * @author Christopher Lemire <goodbye300@aim.com>
 	 */
 	public class LeetJsonItem {
 
@@ -274,8 +282,12 @@ public class Leet {
 		public String user;
 		public String tinyurl = "https://not.implemented.yet";
 
+		/**
+		 * A colored for IRC String representation of LeetJsonItem
+		 * @author Christopher Lemire <goodbye300@aim.com>
+		 */
 		public String getColorString() {
- 			String mystring=
+ 			final String MYSTRING =
 				MircColors.BOLD + name + " " +
 				MircColors.GREEN + "<" + tinyurl + ">" +
 				MircColors.NORMAL + MircColors.BOLD + " (" + size + 
@@ -283,12 +295,16 @@ public class Leet {
 				MircColors.CYAN + " L:" + leeches + 
 				MircColors.NORMAL + MircColors.BOLD + ")\n";
              
-			return mystring;
+			return MYSTRING;
 		}
 
+		/**
+		 * A String representation of LeetJsonItem
+		 * @author Christopher Lemire <goodbye300@aim.com>
+		 */
 		public String toString() {
-			String mystring= name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
-			return mystring;
+			final String MYSTRING= name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
+			return MYSTRING;
 		}
 	}
 }
