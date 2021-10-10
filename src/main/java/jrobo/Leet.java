@@ -247,7 +247,7 @@ public class Leet {
 
 		} catch (IOException ex) {
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
-			ex.printStackTrace();
+			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
 
 		} catch (InterruptedException ex) {
 			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
@@ -325,12 +325,12 @@ public class Leet {
 
 		public String date;
 		public String href;
-		public int leeches;
+		public String leeches;
 		public String name;
-		public int seeds;
+		public String seeds;
 		public String size;
 		public String user;
-		public String tinyurl = "https://not.implemented.yet";
+//		public String tinyurl = "https://not.implemented.yet";
 
 		/**
 		 * A colored for IRC String representation of LeetJsonItem
