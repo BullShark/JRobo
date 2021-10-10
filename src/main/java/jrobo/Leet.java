@@ -241,7 +241,7 @@ public class Leet {
 //				json = json.concat(line);
 //			}
 //			RD.close();
-			json = (String) RESPONSE.body();
+//			json = (String) RESPONSE.body();
 
 		} catch (IOException ex) {
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
