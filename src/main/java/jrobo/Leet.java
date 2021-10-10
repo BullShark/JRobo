@@ -26,18 +26,9 @@ import java.io.IOException;
 //import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.net.URL;
-import java.net.URLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLConnection;
 import java.net.URLEncoder;
 //import java.net.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.net.http.HttpRequest;
-//import org.apache.http.impl.client.CloseableHttpClient;
-//import org.apache.http.impl.client.HttpClients;
-import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -197,9 +188,8 @@ public class Leet {
 			 * String.replaceAll(" ", "%20");
 			 * toURI() and URI.toURL().
 			 *
-			 * java.net.URISyntaxException: Illegal character in path at index 46: http://expectusafterlun.ch:5000/1337x/search//{matrix reloaded}/{1}/{Movies}
+			 * Example: URL url = new URL("http://example.com/hello%20world");
 			 */
-			//URL url = new URL("http://example.com/hello%20world");
 			url = new URL(fullUrl);
 /*
 			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
