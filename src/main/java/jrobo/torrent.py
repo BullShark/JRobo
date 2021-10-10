@@ -83,6 +83,10 @@ def api_1337x(query, page=1, category=None):
         
 
     return jsonify(results)
+    def make_tiny(url):
+        request_url = ('http://tinyurl.com/api-create.php?' + urlencode({'url':url}))
+        with contextlib.closing(urlopen(request_url)) as response:
+            return response.read().decode('utf-8 ')
 
 print("[*] API_KEY: {}".format(app.config["API_KEY"]))
 app.run()
