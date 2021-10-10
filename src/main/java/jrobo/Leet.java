@@ -24,7 +24,6 @@ import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
