@@ -5,7 +5,7 @@ apply plugin: 'application'
 
 description = 'Advanced IRC Robot'
 
-mainClassName = 'jrobo.JRobo'
+mainClassName = 'jrobo.expectusafterlun.ch.JRobo'
 
 repositories {
     mavenCentral()
