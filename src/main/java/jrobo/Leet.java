@@ -28,7 +28,7 @@ import java.net.ConnectException;
 import java.net.URL;
 //import java.net.URLConnection;
 import java.net.URI;
-import java.net.HttpRequest;
+//import java.net.HttpRequest;
 import java.net.http.HttpClient; 
 import java.net.http.HttpHeaders;
 import java.net.http.HttpResponse;
@@ -125,7 +125,7 @@ public class Leet {
 		 * For the HTTP Connection
 		 * Do not set some of these because they are constants.
 		 */
-		URL = null;
+		TORRENT_API_URL = null;
 //		CONN = null;
 //		FULL_URL = "";
 
