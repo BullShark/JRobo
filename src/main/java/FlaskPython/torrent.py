@@ -4,6 +4,11 @@ import random
 import string
 from flask import request, jsonify
 from bs4 import BeautifulSoup
+try:
+    from urllib.parse import urlencode          
+  
+except ImportError:
+    from urllib import urlencode
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -63,7 +68,7 @@ def api_1337x(query, page=1, category=None):
         item["seeds"]   = tr.find("td", attrs={"class":"coll-2 seeds"}).getText()
         item["leeches"] = tr.find("td", attrs={"class":"coll-3 leeches"}).getText()
         item["date"]    = tr.find("td", attrs={"class":"coll-date"}).getText()
-#        item["tinyurl"] = make_tiny(f"https://1337x.to{link['href']}")
+        item["tinyurl"] = make_tiny(f"https://1337x.to{link['href']}")
 
         size = tr.find("td", attrs={"class":"coll-4 size mob-user"})
         size = size if size is not None else tr.find("td", attrs={"class":"coll-4 size mob-vip"})
@@ -84,10 +89,10 @@ def api_1337x(query, page=1, category=None):
         
 
     return jsonify(results)
-    def make_tiny(url):
-        request_url = ('http://tinyurl.com/api-create.php?' + urlencode({'url':url}))
-        with contextlib.closing(urlopen(request_url)) as response:
-            return response.read().decode('utf-8 ')
+def make_tiny(url):
+    request_url = ('http://tinyurl.com/api-create.php?' + urlencode({'url':url}))
+    with contextlib.closing(urlopen(request_url)) as response:
+        return response.read().decode('utf-8 ')
 
 print("[*] API_KEY: {}".format(app.config["API_KEY"]))
 app.run()
