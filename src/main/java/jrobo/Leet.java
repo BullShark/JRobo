@@ -56,7 +56,7 @@ public class Leet {
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() )
 	 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
-	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x/search";
+	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private String fullUrl;
 	private String json;
 	private final int MAX_RESULTS = 5; //@TODO Use me
