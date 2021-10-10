@@ -43,14 +43,14 @@ import org.apache.http.client.methods.RequestBuilder;
 public class Leet {
 
 	/* For the HTTP Connection */
-	private final URL TORRENT_API_URL;
+	private final URL url;
 //	private final URLConnection CONN;
 //	private final OutputStreamWriter WR;
 //	private final BufferedReader RD;
 
 	/* Miscellaneous
 	 *@TODO Fix bug:
-	 *	if TORRENT_API_URL is not available,
+	 *	if url is not available,
 	 * 	the bot will throw an Exception and crash
 	 *
 	 * CATEGORY can be omitted for the SEARCH
@@ -59,7 +59,7 @@ public class Leet {
 	 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x/search/";
-	private final String FULL_URL;
+	private String fullUrl;
 	private final String JSON;
 	private final int MAX_RESULTS = 5;
 	private final String QUERY;
@@ -128,9 +128,9 @@ public class Leet {
 		 * For the HTTP Connection
 		 * Do not set some of these because they are constants.
 		 */
-//		TORRENT_API_URL = null;
+		url = null;
 //		CONN = null;
-//		FULL_URL = null;
+		fullUrl = null;
 
 		/* Miscelanous */
 //		JSON = null;
@@ -178,23 +178,23 @@ public class Leet {
 				/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
 	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 				 */
-				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/{%s}", QUERY, PAGENUM, CATEGORY);
+				fullUrl = String.format(BASE_URL + "/{%s}/{%s}/{%s}", QUERY, PAGENUM, CATEGORY);
 			} else {
 				// Exclude CATEGORY to search ALL
-				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/", QUERY, PAGENUM);
+				fullUrl = String.format(BASE_URL + "/{%s}/{%s}/", QUERY, PAGENUM);
 			}
 
 			/*
 			 * String.replaceAll(" ", "%20");
 			 * toURI() and URI.toURL().
 			 */
-			TORRENT_API_URL = new URI(FULL_URL).toURL();
+			url = new URI(fullUrl).toURL();
 
 			/* Debug */
-			System.out.println("[***]\t" + TORRENT_API_URL.toString());
+			System.out.println("[***]\t" + url.toString());
 
 			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
-				.uri(TORRENT_API_URL.toURI());
+				.uri(url.toURI());
 
 			REQUESTBUILDER.header("API_KEY", API_KEY);
 
@@ -205,7 +205,7 @@ public class Leet {
 			final HttpResponse<String> RESPONSE
 				= CLIENT.send(REQUEST, BodyHandlers.ofString());
 
-//			CONN = TORRENT_API_URL.openConnection();
+//			CONN = url.openConnection();
 //			CONN.setRequestMethod("GET");
 			// Get the RESPONSE
 //			RD = new BufferedReader(new InputStreamReader(CONN.getInputStream()));
