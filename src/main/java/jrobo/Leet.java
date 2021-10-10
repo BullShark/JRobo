@@ -20,6 +20,7 @@ package jrobo;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
@@ -237,9 +238,10 @@ public class Leet {
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			RESULTS = gson.fromJson(this.getJson(), LeetJsonItem[].class);
 
-		} catch (IllegalStateException | NullPointerException ex) {
+		} catch (IllegalStateException | NullPointerException | JsonSyntaxException ex) {
 			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
-			return "";
+			json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+			return json;
 		}
 
 		String output = "";
