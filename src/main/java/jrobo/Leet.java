@@ -61,7 +61,7 @@ public class Leet {
 	private String fullUrl;
 	private String json;
 	private final int MAX_RESULTS = 5;
-	private final String QUERY;
+	private String query;
 	private final String API_KEY;
 	private final Config CONFIG;
 	private final String PAGENUM = "1";
@@ -141,11 +141,11 @@ public class Leet {
 		/* Divide SEARCH into CATEGORY and QUERY */
 		try {
 			category = SEARCH.split("\\s+", 2)[0];
-			QUERY = SEARCH.split("\\s+", 2)[1];
+			query = SEARCH.split("\\s+", 2)[1];
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			// There is no CATEGORY. Search ALL.
 			category = "";
-			QUERY = SEARCH;
+			query = SEARCH;
 			ex.printStackTrace();
 		}
 
@@ -178,11 +178,11 @@ public class Leet {
 				/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
 	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 				 */
-				fullUrl = URLEncoder.encode(String.format(BASE_URL + "/%s/%s/%s", QUERY, PAGENUM, category), 
+				fullUrl = URLEncoder.encode(String.format(BASE_URL + "/%s/%s/%s", query, PAGENUM, category), 
 					StandardCharsets.UTF_8.toString());
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = URLEncoder.encode(String.format(BASE_URL + "/%s/%s/", QUERY, PAGENUM), 
+				fullUrl = URLEncoder.encode(String.format(BASE_URL + "/%s/%s/", query, PAGENUM), 
 					StandardCharsets.UTF_8.toString());
 			}
 
