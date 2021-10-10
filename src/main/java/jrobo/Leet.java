@@ -246,7 +246,7 @@ public class Leet {
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			RESULTS = gson.fromJson(this.getJson(), LeetJsonItem[].class);
 
-		} catch (IllegalStateException | NullPointerException | URISyntaxException ex) {
+		} catch (IllegalStateException | NullPointerException ex) {
 			ex.printStackTrace();
 			return "";
 		}
