@@ -161,7 +161,7 @@ public class Config {
 	 *
 	 * @return The configured name
 	 * @since 2013-02-18
-	 * @FIXME The regex back reference is not working
+	 * @author Christopher Lemire <goodbye300@aim.com>
 	 */
 	@Override
 	public String toString() {
