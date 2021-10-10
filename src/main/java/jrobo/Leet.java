@@ -34,7 +34,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import org.apache.http.HttpRequest;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.Builder;
 import org.apache.http.impl.client.HttpClients;
 
 public class Leet {
