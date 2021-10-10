@@ -226,7 +226,7 @@ public class Leet {
 	 */
 	public static void main(String[] args) {
 
-		System.out.println(new Leet("Movies matrix reloaded").getFormattedResult(false));
+		System.out.println(new Leet(new Config(), "Movies matrix reloaded").getFormattedResult(false));
 	}
 
 	public class LeetJsonItem {
