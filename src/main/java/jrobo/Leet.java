@@ -34,9 +34,9 @@ public class Leet {
 
 	/* For the HTTP Connection */
 	private final URL TORRENT_API_URL;
-//	private URLConnection conn;
-//	private OutputStreamWriter wr;
-//	private BufferedReader rd;
+//	private final URLConnection CONN;
+//	private final OutputStreamWriter WR;
+//	private final BufferedReader RD;
 	private final String FULL_URL;
 
 	/*
@@ -44,11 +44,11 @@ public class Leet {
 	 *@TODO Fix bug, if TORRENT_API_URL is not available, the bot will throw an exception and crash
 	 *
 	 * category can be omitted for the search
-	 * @TODO Use String.format("TORRENT_API_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() ) ???
 	 *
+	 * @TODO Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() ) ???
 	 * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
 	 */
-	private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/";
+	private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/search/";
 	private final String JSON;
 	private final int MAX_RESULTS = 5;	
 	private final String QUERY;
@@ -91,14 +91,14 @@ public class Leet {
 	private final String CATEGORY;
 
 	/* For the Gson/Json */
-	private Gson gson;
+	private final Gson GSON;
 
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
 	 * @param search Is the CATEGORY and search query
 	 */
-	public Leet(final Config CONFIG, String search) throws NullPointerException {
+	public Leet(final Config CONFIG, final String SEARCH) throws NullPointerException {
 
 		if(CONFIG == null) { 
 			throw new NullPointerException("Config is not set and cannot retrieve The Torrent API Key");
@@ -109,24 +109,24 @@ public class Leet {
 
 		/* For the HTTP Connection */
 		URL = null;
-		conn = null;
+//		CONN = null;
 		FULL_URL = "";
 
 		/* Miscelanous */
 //		JSON = "";
 
 		/* For the Gson/Json */
-		gson = new Gson();
+		GSON = new Gson();
 
 		 /* Divide search into category and query */
 		 try {
-			CATEGORY = search.split("\\s+", 2)[0];
-			QUERY = search.split("\\s+", 2)[1];
+			CATEGORY = SEARCH.split("\\s+", 2)[0];
+			QUERY = SEARCH.split("\\s+", 2)[1];
 		 } catch(ArrayIndexOutOfBoundsException ex) {
 			ex.printStackTrace();
 			// There is no category. Search all.
 			CATEGORY = "";
-			QUERY = search;
+			QUERY = SEARCH;
 		}
 
 		 /*
@@ -150,19 +150,21 @@ public class Leet {
 		try {
 			/* Create a URL obj from strings */
 			if(!CATEGORY.equals("")) {
-				FULL_URL
-					= (BASE_URL
-						+ QUERY
-						+ "/1/"
-						+ CATEGORY).replaceAll(" ", "%20");
+
+	 			/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
+	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
+				 */
+				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/{%s}",QUERY ,"1" ,CATEGORY);
 			} else {
-				FULL_URL
-					= (BASE_URL
-						+ QUERY
-						+ "/1").replaceAll(" ", "%20");
+				// Exclude CATEGORY to search ALL
+				FULL_URL = String.format(BASE_URL + "/{%s}/{%s}/",QUERY ,"1");
 			}
 
-			TORRENT_API_URL = new URL(FULL_URL);
+			/* 
+			 * String.replaceAll(" ", "%20");
+			 * toURI() and URI.toURL().
+			 */
+			TORRENT_API_URL = new URI(FULL_URL).toURL();
 
 			/* Debug */
 			System.out.println("[***]\t" + FULL_URL);
@@ -172,22 +174,24 @@ public class Leet {
 
 			REQUESTBUILDER.header("API_KEY", getApiKey());
 
+			final HttpClient CLIENT = HttpClients.custom().setDefaultHeaders(headers).build();
+
 			final HttpRequest REQUEST = requestBuilder.build();
 
 			final HttpResponse<String> RESPONSE =
-			client.send(REQUEST, BodyHandlers.ofString());
+				CLIENT.send(REQUEST, BodyHandlers.ofString());
 
-//			conn = url.openConnection();
+//			CONN = TORRENT_API_URL.openConnection();
 
-//			conn.setRequestMethod("GET");
+//			CONN.setRequestMethod("GET");
 
 			// Get the response
-//			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//			RD = new BufferedReader(new InputStreamReader(CONN.getInputStream()));
 //			String line = "";
 //			while ((line = rd.readLine()) != null) {
 //				json = json.concat(line);
 //			}
-//			rd.close();
+//			RD.close();
 
 			JSON = RESPONSE.body();
 
@@ -208,12 +212,12 @@ public class Leet {
 
 	public String getFormattedResult(final boolean HAS_COLORS) {
 
-		LeetJsonItem[] results;
+		final LeetJsonItem[] RESULTS;
 
 		try {
 
-			gson = new GsonBuilder().setPrettyPrinting().create();
-			results = gson.fromJson(this.getJson(), LeetJsonItem[].class);
+			GSON = new GsonBuilder().setPrettyPrinting().create();
+			RESULTS = GSON.fromJson(this.getJson(), LeetJsonItem[].class);
 
 		} catch (IllegalStateException | NullPointerException ex) {
 			ex.printStackTrace();
@@ -236,6 +240,7 @@ public class Leet {
 
 	/**
 	 *
+	 * @author Christopher Lemire <goodbye300@aim.com>
 	 * @return API Key for Torrent API retrieved from Config.json
 	 */
 	private String getApiKey() {
@@ -244,7 +249,9 @@ public class Leet {
 	}
 
 
-	/*
+	/**
+	 * 
+	 * @author Christopher Lemire <goodbye300@aim.com>
  	 * A main method for testing this class
 	 */
 	public static void main(String[] args) {
@@ -252,6 +259,10 @@ public class Leet {
 		System.out.println(new Leet(new Config(), "Movies matrix reloaded").getFormattedResult(false));
 	}
 
+	/**
+	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * Strings and ints representing JSON data
+	 */
 	public class LeetJsonItem {
 
  		public String date;
