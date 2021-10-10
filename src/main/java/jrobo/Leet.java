@@ -172,7 +172,7 @@ public class Leet {
 
 		try {
 			/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
- 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
+ 	 		 * "https://expectusafterlun.ch/1337x.to/{QUERY}/{PAGENUM}/{CATEGORY}/"
 			 */
 			if (!category.equals("")) {
 
@@ -198,29 +198,8 @@ public class Leet {
 			 *
 			 * Example: URL url = new URL("http://example.com/hello%20world");
 			 */
-			url = new URL(fullUrl);
-/*
-			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
-				.uri(url.toURI());
+//			url = new URL(fullUrl);
 
-			REQUESTBUILDER.header("API_KEY", API_KEY);
-
-			final HttpClient CLIENT;
-			CLIENT = HttpClient.newBuilder().build();
-
-			final HttpRequest REQUEST = REQUESTBUILDER.build();
-
-			final HttpResponse<String> RESPONSE
-				= CLIENT.send(REQUEST, BodyHandlers.ofString());
-*/
-/*
-			final HttpClient HTTPCLIENT = new HttpClient();
-			final HttpGet REQUEST = new HttpGet(fullUrl);
-			REQUEST.addHeader("API_KEY", API_KEY);
-			final HttpResponse RESPONSE;                   //.execute(null, REQUEST);
-			RESPONSE = (HttpResponse) HTTPCLIENT.send(REQUEST, BodyHandlers.toString());
-*/
-			// 4th attempt
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
 				.headers("Content-Type", "application/json")
@@ -232,19 +211,6 @@ public class Leet {
 			response = client.send(request, BodyHandlers.ofString(StandardCharsets.UTF_8));
 			json = response.body();
 			
-//			conn = url.openConnection();
-//			conn.setRequestMethod("GET");
-//			conn.setHeader("API_KEY", API_KEY);
-								
-			// Get the RESPONSE
-//			RD = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//			String line = "";
-//			while ((line = RD.readLine()) != null) {
-//				json = json.concat(line);
-//			}
-//			RD.close();
-//			json = (String) RESPONSE.body();
-
 		} catch (IOException ex) {
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
 			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
