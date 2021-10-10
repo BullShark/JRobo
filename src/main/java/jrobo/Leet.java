@@ -98,7 +98,7 @@ public class Leet {
 	 * @author Chris Lemire <goodbye300@aim.com>
 	 * @param search Is the category and search query
 	 */
-	public Leet(String search) throws NullPointerException {
+	public Leet(final Config CONFIG, String search) throws NullPointerException {
 
 		if(CONFIG == null) { 
 			throw new NullPointerException("Config is not set and cannot retrieve The Torrent API Key");
