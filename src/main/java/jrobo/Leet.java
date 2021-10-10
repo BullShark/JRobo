@@ -34,8 +34,9 @@ import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.net.http.HttpRequest;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+//import org.apache.http.impl.client.CloseableHttpClient;
+//import org.apache.http.impl.client.HttpClients;
+import java.net.http.HttpClient;
 
 public class Leet {
 
@@ -195,8 +196,8 @@ public class Leet {
 
 			REQUESTBUILDER.header("API_KEY", API_KEY);
 
-			final CloseableHttpClient CLIENT;
-			CLIENT = HttpClients.custom().build();
+			final HttpClient CLIENT;
+			CLIENT = HttpClient.newBuilder().build();
 
 			final HttpRequest REQUEST = REQUESTBUILDER.build();
 
@@ -219,6 +220,9 @@ public class Leet {
 
 		} catch (IOException ex) {
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
+			ex.printStackTrace();
+
+		} catch(InterruptedException ex) {
 			ex.printStackTrace();
 
 		} finally {
