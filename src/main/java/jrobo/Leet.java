@@ -31,11 +31,10 @@ import java.net.URL;
 import java.net.URI;
 import java.net.URISyntaxException;
 //import java.net.HttpRequest;
-import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.Builder;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 public class Leet {
@@ -196,7 +195,8 @@ public class Leet {
 
 			REQUESTBUILDER.header("API_KEY", API_KEY);
 
-			final HttpClient CLIENT = HttpClients.custom().setDefaultHeaders(REQUESTBUILDER.getFirstHeader("API_KEY")).build();
+			final CloseableHttpClient CLIENT;
+			CLIENT = HttpClients.custom().build();
 
 			final HttpRequest REQUEST = REQUESTBUILDER.build();
 
