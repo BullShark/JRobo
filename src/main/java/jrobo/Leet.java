@@ -204,7 +204,7 @@ public class Leet {
 		public int seeds;
 		public String size;
 		public String user;
-		public String tinyurl = "https://not.implemented.yet"
+		public String tinyurl = "https://not.implemented.yet";
 
 		public String getColorString() {
  			String mystring=
