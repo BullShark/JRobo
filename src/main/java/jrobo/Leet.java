@@ -181,8 +181,7 @@ public class Leet {
 				/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
 	 	 		 * "https://expectusafterlun.ch/1337x.to/search/{QUERY}/{PAGENUM}/{CATEGORY}/"
 				 */
-				fullUrl = URLEncoder.encode(String.format(BASE_URL + "/%s/%s/%s", query, PAGENUM, category), 
-					StandardCharsets.UTF_8.toString());
+				fullUrl = String.format(BASE_URL + "/%s/%s/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM, category);
 			} else {
 				// Exclude CATEGORY to search ALL
 				fullUrl = String.format(BASE_URL + "/%s/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM);
