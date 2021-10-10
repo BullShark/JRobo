@@ -97,12 +97,12 @@ public class Leet {
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
-	 * @param SEARCH Is the CATEGORY and search query
+	 * @param SEARCH Is the CATEGORY and search QUERY
 	 */
 	public Leet(final Config CONFIG, final String SEARCH) throws NullPointerException {
 
 		if(CONFIG == null) { 
-			throw new NullPointerException("Config is not set and cannot retrieve The Torrent API Key");
+			throw new NullPointerException("Config is not set and cannot retrieve The Torrent API_KEY");
 		} else {
 			this.CONFIG = CONFIG;
 			API_KEY = getApiKey(); //@FIXME Does this method some times throw an exception?
@@ -119,7 +119,7 @@ public class Leet {
 		/* For the Gson/Json */
 //		GSON = null;
 
-		 /* Divide search into category and query */
+		 /* Divide SEARCH into CATEGORY and QUERY */
 		 try {
 			CATEGORY = SEARCH.split("\\s+", 2)[0];
 			QUERY = SEARCH.split("\\s+", 2)[1];
