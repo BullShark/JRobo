@@ -188,11 +188,6 @@ public class Leet {
 		return output;
 	}
 
-	public String toString() {
-		String mystring= name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
-		return mystring;
-	}
-
 	/*
  	 * A main method for testing this class
 	 */
@@ -220,6 +215,11 @@ public class Leet {
 				MircColors.CYAN + " L:" + leeches + 
 				MircColors.NORMAL + MircColors.BOLD + ")\n";
              
+			return mystring;
+		}
+
+		public String toString() {
+			String mystring= name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
 			return mystring;
 		}
 	}
