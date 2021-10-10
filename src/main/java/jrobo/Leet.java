@@ -32,44 +32,44 @@ import java.util.Arrays;
 
 public class Leet {
 
-    /* For the HTTP Connection */
-    private URL url;
-    private URLConnection conn;
-    private OutputStreamWriter wr;
-    private BufferedReader rd;
-    private String fullUrl;
-
-    /*
-     * Miscelanous
-     *@TODO Fix bug, if the url is not available, the bot will throw an exception and crash
-     *
-     * category can be omitted for the search
-     * @TODO Use String.format("url %s %s %s") ???
-     *
-     * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
-     */
-    private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/";
-    private String json;
-    private final int MAX_RESULTS = 5;	
-    private String query;
-    private final String API_KEY;
-    private final Config CONFIG;
+	/* For the HTTP Connection */
+	private final URL TORRENT_API_URL;
+//	private URLConnection conn;
+//	private OutputStreamWriter wr;
+//	private BufferedReader rd;
+	private final String FULL_URL;
 
 	/*
-		We can also filter by categories:
-			<option value="/category-search/test/Movies/1/">
-			<option value="/category-search/test/TV/1/">
-			<option value="/category-search/test/Games/1/">
-			<option value="/category-search/test/Music/1/">
-			<option value="/category-search/test/Apps/1/">
-			<option value="/category-search/test/Documentaries/1/">
-			<option value="/category-search/test/Anime/1/">
-			<option value="/category-search/test/Other/1/">
-			<option value="/category-search/test/XXX/1/">
+	 * Miscelanous
+	 *@TODO Fix bug, if TORRENT_API_URL is not available, the bot will throw an exception and crash
+	 *
+	 * category can be omitted for the search
+	 * @TODO Use String.format("TORRENT_API_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() ) ???
+	 *
+	 * "https://expectusafterlun.ch/1337x.to/search/{query}/{page}/{category}/"
+	 */
+	private static final String BASE_URL="http://expectusafterlun.ch:5000/1337x/";
+	private final String JSON;
+	private final int MAX_RESULTS = 5;	
+	private final String QUERY;
+	private final String API_KEY;
+	private final Config CONFIG;
 
-		@app.route('/1337x/<query>/<page>/<category>', methods=['GET'])
-		def api_1337x(query, page=1, category=None):
-		if request.headers.get("API_KEY") != app.config["API_KEY"]:
+	/*
+	We can also filter by categories:
+		<option value="/category-search/test/Movies/1/">
+		<option value="/category-search/test/TV/1/">
+		<option value="/category-search/test/Games/1/">
+		<option value="/category-search/test/Music/1/">
+		<option value="/category-search/test/Apps/1/">
+		<option value="/category-search/test/Documentaries/1/">
+		<option value="/category-search/test/Anime/1/">
+		<option value="/category-search/test/Other/1/">
+		<option value="/category-search/test/XXX/1/">
+
+	@app.route('/1337x/<query>/<page>/<category>', methods=['GET'])
+	def api_1337x(query, page=1, category=None):
+	if request.headers.get("API_KEY") != app.config["API_KEY"]:
 
 	*/
 
@@ -88,7 +88,7 @@ public class Leet {
 	 *
 	 * Omit category to search all.
 	 */
-	private String category;
+	private final String CATEGORY;
 
 	/* For the Gson/Json */
 	private Gson gson;
@@ -96,7 +96,7 @@ public class Leet {
 	/**
 	 *
 	 * @author Chris Lemire <goodbye300@aim.com>
-	 * @param search Is the category and search query
+	 * @param search Is the CATEGORY and search query
 	 */
 	public Leet(final Config CONFIG, String search) throws NullPointerException {
 
@@ -108,34 +108,37 @@ public class Leet {
 		}
 
 		/* For the HTTP Connection */
-		url = null;
+		URL = null;
 		conn = null;
-		fullUrl = "";
+		FULL_URL = "";
+
 		/* Miscelanous */
-		json = "";
+//		JSON = "";
+
 		/* For the Gson/Json */
 		gson = new Gson();
+
 		 /* Divide search into category and query */
 		 try {
-			category = search.split("\\s+", 2)[0];
-			query = search.split("\\s+", 2)[1];
+			CATEGORY = search.split("\\s+", 2)[0];
+			QUERY = search.split("\\s+", 2)[1];
 		 } catch(ArrayIndexOutOfBoundsException ex) {
 			ex.printStackTrace();
 			// There is no category. Search all.
-			category = "";
-			query = search;
+			CATEGORY = "";
+			QUERY = search;
 		}
 
 		 /*
 		  * Set to empty string for all.
 		  * Search all if category is not valid.
 		  */
-		 String[] categories = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
+		 final String[] CATEGORIES = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
 
-		 if(category.equalsIgnoreCase("All") ||
-			!(Arrays.asList(categories)).contains(category) ) {
+		 if(CATEGORY.equalsIgnoreCase("All") ||
+			!(Arrays.asList(CATEGORIES)).contains(CATEGORY) ) {
 			
-			 category = "";
+			 CATEGORY = "";
 		 }
 	}
 
@@ -146,44 +149,64 @@ public class Leet {
 
 		try {
 			/* Create a URL obj from strings */
-			if(!category.equals("")) {
-				fullUrl
+			if(!CATEGORY.equals("")) {
+				FULL_URL
 					= (BASE_URL
-						+ query
+						+ QUERY
 						+ "/1/"
-						+ category).replaceAll(" ", "%20");
+						+ CATEGORY).replaceAll(" ", "%20");
 			} else {
-				fullUrl
+				FULL_URL
 					= (BASE_URL
-						+ query
+						+ QUERY
 						+ "/1").replaceAll(" ", "%20");
 			}
 
-			url = new URL(fullUrl);
+			TORRENT_API_URL = new URL(FULL_URL);
 
 			/* Debug */
-			System.out.println(fullUrl);
+			System.out.println("[***]\t" + FULL_URL);
 
-			conn = url.openConnection();
+			final HttpRequest.Builder REQUESTBUILDER = HttpRequest.newBuilder()
+				.uri(URI.create(FULL_URL));
+
+			REQUESTBUILDER.header("API_KEY", getApiKey());
+
+			final HttpRequest REQUEST = requestBuilder.build();
+
+			final HttpResponse<String> RESPONSE =
+			client.send(REQUEST, BodyHandlers.ofString());
+
+//			conn = url.openConnection();
+
+//			conn.setRequestMethod("GET");
+
 			// Get the response
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line = "";
-			while ((line = rd.readLine()) != null) {
-				json = json.concat(line);
-			}
-			rd.close();
+//			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//			String line = "";
+//			while ((line = rd.readLine()) != null) {
+//				json = json.concat(line);
+//			}
+//			rd.close();
+
+			JSON = RESPONSE.body();
+
 		} catch (MalformedURLException ex) {
+			JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			ex.printStackTrace();
 		} catch (ConnectException ex) {
+			JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			ex.printStackTrace();
 		} catch (IOException ex) {
+			System.err.println("Did you include the API_KEY in the HTTP Header?");
+			JSON = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			ex.printStackTrace();
 		}
 
-		return json;
+		return JSON;
 	}
 
-	public String getFormattedResult(boolean hasColors) {
+	public String getFormattedResult(final boolean HAS_COLORS) {
 
 		LeetJsonItem[] results;
 
@@ -199,7 +222,7 @@ public class Leet {
 
 		String output = "";
 
-		if (hasColors) {
+		if (HAS_COLORS) {
 			for (LeetJsonItem result : results) {
 				output += result.getColorString();
 			}
