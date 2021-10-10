@@ -95,4 +95,4 @@ def make_tiny(url):
         return response.read().decode('utf-8 ')
 
 print("[*] API_KEY: {}".format(app.config["API_KEY"]))
-app.run()
+app.run(host="0.0.0.0")
