@@ -167,7 +167,7 @@ public class Leet {
 	 * @author Christopher Lemire <goodbye300@aim.com>
 	 * @return json retrieved from the url
 	 */
-	public String getJson() throws URISyntaxException {
+	public String getJson() {
 
 		try {
 			/* Create a URL obj from String */
@@ -215,14 +215,11 @@ public class Leet {
 //			RD.close();
 			json = RESPONSE.body();
 
-		} catch (MalformedURLException ex) {
-			ex.printStackTrace();
-
 		} catch (IOException ex) {
 			System.err.println("Did you include the API_KEY in the HTTP Header?");
 			ex.printStackTrace();
 
-		} catch(InterruptedException ex) {
+		} catch(InterruptedException | URISyntaxException ex) {
 			ex.printStackTrace();
 
 		} finally {
@@ -249,7 +246,7 @@ public class Leet {
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			RESULTS = gson.fromJson(this.getJson(), LeetJsonItem[].class);
 
-		} catch (IllegalStateException | NullPointerException ex) {
+		} catch (IllegalStateException | NullPointerException | URISyntaxException ex) {
 			ex.printStackTrace();
 			return "";
 		}
