@@ -54,7 +54,7 @@ public class Leet {
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private String fullUrl;
 	private String json;
-	private final int MAX_RESULTS = 5; //@TODO Use me
+	private final int MAX_RESULTS = 5;
 	private String query;
 	private final String API_KEY;
 	private final Config CONFIG;
@@ -243,14 +243,23 @@ public class Leet {
 		}
 
 		String output = "";
+		int count = 0;
 
 		if (HAS_COLORS) {
 			for (LeetJsonItem result : RESULTS) {
 				output += result.getColorString();
+				count++;
+				if(MAX_RESULTS <= count) {
+					break;
+				}
 			}
 		} else {
 			for (LeetJsonItem result : RESULTS) {
 				output += result.toString();
+				count++;
+				if(MAX_RESULTS <= count) {
+					break;
+				}
 			}
 		}
 		return output;
