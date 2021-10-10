@@ -134,7 +134,6 @@ public class BotCommand {
 				break;
 			case "leet":
 			case "leetx":
-			case "l":
 				leetHelper();
 				break;
 			case "raw":
