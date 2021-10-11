@@ -29,26 +29,26 @@ public class Jokes {
     
   /* Standard Java API Classes */
   private ArrayList<String> pickUpJokes = null, mommaJokes = null;
-  private String channel ;
+  private final String CHANNEL ;
     
    /* User-defined Classes */
-  private Networking connection;
-  private FileReader reader;
+  private final Networking CONN;
+  private final FileReader READER;
   
-  public Jokes (Networking connection,String channel) {
+  public Jokes (final Networking CONN, final String CHANNEL) {
     
-    this.connection = connection;
-    this.channel = channel;
+    this.CONN = CONN;
+    this.CHANNEL = CHANNEL;
 
     //@FIXME TODO This is causing the FileReader constructor to be called twice, then Config.json is read twice
 //    Thread.dumpStack();
-    reader = new FileReader(); 
+    READER = new FileReader(); 
     
     mommaJokes = new ArrayList<>(50);
     pickUpJokes = new ArrayList<>(50);
     
-    reader.fileToArrayList("MomJokes.txt", mommaJokes);
-    reader.fileToArrayList("FunnyJokes.txt", pickUpJokes);
+    READER.fileToArrayList("MomJokes.txt", mommaJokes);
+    READER.fileToArrayList("FunnyJokes.txt", pickUpJokes);
     
   }
   
@@ -58,27 +58,27 @@ public class Jokes {
    * Pass null in as String to not precede message
    * With "User: "
    * Be sure to check for null return when calling this
-   * @param user direct the pickup joke at the user
+   * @param USER direct the pickup joke at the USER
    * @return a pickup Joke or null
    */
-  public String getPhoneNumber(String user) {
+  public String getPhoneNumber(final String USER) {
     if(pickUpJokes.isEmpty()) {
 
-      connection.msgMasters("OUT OF PHONE NUMBERS!!!");
+      CONN.msgMasters("OUT OF PHONE NUMBERS!!!");
 
-      //Inform channel
-      connection.noticeChan(this.channel, "[***]RELOADING AMMUNITION");
+      //Inform CHANNEL
+      CONN.noticeChan(this.CHANNEL, "[***]RELOADING AMMUNITION");
 
       //Reload the jokes
-      reader.fileToArrayList("FunnyJokes.txt", pickUpJokes);
+      READER.fileToArrayList("FunnyJokes.txt", pickUpJokes);
     }
-    if(user == null) {
+    if(USER == null) {
   
       /* Random at 0 because the List was already shuffled */
       return pickUpJokes.remove(0);
     } else {
 
-      return user + ", " + pickUpJokes.remove(0);
+      return USER + ", " + pickUpJokes.remove(0);
     }
   }
   
@@ -86,27 +86,27 @@ public class Jokes {
    * Replaces "Yo momma" with "User's momma"
    * Pass null in as String to not use replacement
    * Be sure to check for null return when calling this
-   * @param user  direct the momma joke at the user
+   * @param USER  direct the momma joke at the USER
    * @return a momma Joke or null
    */
-  public String getMommaJoke(String user) {
+  public String getMommaJoke(final String USER) {
     if(mommaJokes.isEmpty()) {
   
-      connection.msgMasters("OUT OF MOM JOKES!!!");
+      CONN.msgMasters("OUT OF MOM JOKES!!!");
    
-      //Inform channel
-      connection.noticeChan(this.channel, "[***]RELOADING AMMUNITION");
+      //Inform CHANNEL
+      CONN.noticeChan(this.CHANNEL, "[***]RELOADING AMMUNITION");
 
       //Reload the jokes
-      reader.fileToArrayList("MomJokes.txt", mommaJokes);
+      READER.fileToArrayList("MomJokes.txt", mommaJokes);
     }
-    if(user == null) {
+    if(USER == null) {
   
       /* Random at 0 because the List was already shuffled */
       return mommaJokes.remove(0);
     } else {
   
-      return mommaJokes.remove(0).replaceFirst("Yo", user + "'s");
+      return mommaJokes.remove(0).replaceFirst("Yo", USER + "'s");
     }
   } // EOF method
 }
