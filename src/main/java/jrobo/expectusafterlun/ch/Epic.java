@@ -98,6 +98,7 @@ public class Epic {
 	}
 
 	/**
+	 * Retrieve the data as a summary with irc color codes and formatting if HASCOLORS or just return the names and values from the json
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param HASCOLORS Should the formatted output use colors

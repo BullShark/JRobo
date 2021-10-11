@@ -193,13 +193,13 @@ public class Leet {
 	}
 
 	/**
-	 * Use toString() on All json Items to make some formatted colored or no colors output
+	 * The formatted search results from Leetx json api with colors and formatting if HASCOLORS
 	 * 
 	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
-	 * @param HAS_COLORS True for IRC colors, false otherwise
+	 * @param HASCOLORS True for IRC colors, false otherwise
 	 * @return Formatted json data optionally with colors
 	 */
-	public String getFormattedResult(final boolean HAS_COLORS) {
+	public String getFormattedResult(final boolean HASCOLORS) {
 
 		final LeetJsonItem[] RESULTS;
 
@@ -217,7 +217,7 @@ public class Leet {
 		String output = "";
 		int count = 0;
 
-		if (HAS_COLORS) {
+		if (HASCOLORS) {
 			for (LeetJsonItem result : RESULTS) {
 				output += result.getColorString();
 				count++;

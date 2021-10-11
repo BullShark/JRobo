@@ -51,8 +51,8 @@ public class Weather {
 
 	/**
 	 *
-	 * @author Chris Lemire <goodbye300@aim.com>
-	 * @param CONFIG Used to retrieve the api key
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @param CONFIG Used to retrieve the API Key
 	 */
 	public Weather(final Config CONFIG) throws NullPointerException {
 
@@ -67,7 +67,7 @@ public class Weather {
 	/**
 	 * Called by its wrapper method
 	 * @param LOCATION the location for the weather query
-	 * @return String
+	 * @return String The json weather results for the LOCATION
 	 */
 	protected String getJson(final String LOCATION) {
 
@@ -111,7 +111,7 @@ public class Weather {
 	 * @param HASCOLORS
 	 * @param LIMIT Limit the number of definitions returned by this method
 	 * @return Formatted and colored Json if hasColor is true, else just the json information
-	 * @throws jrobo.Weather.InvalidLocationException Handle the exception in BotCommand where the help message for the weather command can be shown
+	 * @throws expectusafterlun.ch.jrobo.Weather.InvalidLocationException Handle the exception in BotCommand where the help message for the weather command can be shown
 	 */
 	protected String getFormattedWeatherSummary(final String LOCATION, final boolean HASCOLORS, final int LIMIT) throws InvalidLocationException {
 

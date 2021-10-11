@@ -29,6 +29,8 @@ import java.net.MalformedURLException;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PirateBay {
 
@@ -41,7 +43,7 @@ public class PirateBay {
 
     /*
      * Miscelanous
-     *@TODO Fix bug, if the url is not available, the bot will throw an exception and crash
+     * TODO Fix bug, if the url is not available, the bot will throw an exception and crash
      */
     private static final String QUERY_URL = "http://odin.root.sx/thepiratebay.php";
     private String def;
@@ -114,12 +116,10 @@ public class PirateBay {
                 json = json.concat(line);
             }
             rd.close();
-        } catch (MalformedURLException ex) {
-            ex.printStackTrace();
-        } catch (ConnectException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (MalformedURLException | ConnectException ex) {
+            Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(IOException ex) {
+            Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return json;
@@ -153,12 +153,18 @@ public class PirateBay {
         return output;
     }
 
-    /*
+    /**
      *A main method for testing this class
+     * No args, searches matrix reloaded for you sorted by seeds
+     * @param args The search query for thepiratebay.org used by the API
      */
     public static void main(String[] args) {
 
-       System.out.println(new PirateBay("-s matrix reloaded").getFormattedResult(false));
+        if(args.length == 0) {
+            System.out.println(new PirateBay("-s matrix reloaded").getFormattedResult(false));
+        } else {
+            System.out.println(new PirateBay(Arrays.toString(args)).getFormattedResult(false));
+        }
 
     } // EOF main
 

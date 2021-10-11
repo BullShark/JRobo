@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 public class UrbanDict {
 
 	/* Miscellaneous */
-	private final String QUERY_URL = "https://api.urbandictionary.com";
+	private final String BASE_URL = "https://api.urbandictionary.com";
 	private final String WORD;
 	private final int LIMIT;
 	private static final int DEFAULT_LIMIT = 3;
@@ -56,8 +56,9 @@ public class UrbanDict {
 	}
 
 	/**
+	 * Initialize UrbanDict with the WORD to define and a LIMIT to the number of results
 	 * @param WORD The WORD used for retrieving the Urban Dictionary definition
-	 * @param LIMIT Limit the results -1 or LIMIT <= 0 means unlimited results
+	 * @param LIMIT Limit the results -1 or LIMIT {@literal <= 0} means unlimited results
  	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public UrbanDict(final String WORD, final int LIMIT) {
@@ -66,13 +67,13 @@ public class UrbanDict {
 	}
 
 	/**
-	 * @TODO https://blog.api.rakuten.net/top-10-best-dictionary-apis-oxford-urban-wordnik/
+	 * Retrieves json dictionary results from urbandictionary.com
 	 * @return Json weather data
 	 */
 	public String getJson() {
 
 		String json = "";
-		final String URL = (QUERY_URL
+		final String URL = (BASE_URL
 				+ "/v0/define"
 				+ "?term=" + WORD).replace(" ", "%20");
 		System.out.println("[+++]\t" + URL);
@@ -98,9 +99,10 @@ public class UrbanDict {
 	}
 
 	/**
-	 *
-	 * @param HASCOLORS
-	 * @return
+	 * Retrieves the Urban Dictionary results formatted from the json results
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @param HASCOLORS Should the formatted output use colors
+	 * @return The formatted summary result
 	 */
 	public String getFormattedUrbanDef(final boolean HASCOLORS) {
 
@@ -139,7 +141,12 @@ public class UrbanDict {
 	}
 
 	/* 
+	 */
+
+	/**
 	 * A main method for testing this class
+	 *
+	 * @param args The word for defining by Urban Dictionary
 	 */
 	public static void main(String[] args) {
 	

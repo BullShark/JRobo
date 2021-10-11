@@ -21,9 +21,7 @@
 package jrobo.expectusafterlun.ch;
 
 /**
- *
- * @author bullshark
- * @author DrChaos
+ * Makes color formatting the console output more user-friendly
  */
 public class TermColors {
     static StringBuilder sbuilder;
