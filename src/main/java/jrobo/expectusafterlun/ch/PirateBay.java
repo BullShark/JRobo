@@ -24,11 +24,11 @@ import com.google.gson.GsonBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -133,7 +133,7 @@ public class PirateBay {
           results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
 
         } catch(IllegalStateException | NullPointerException ex) {
-          ex.printStackTrace();
+          Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
           return "";
         }
 
@@ -152,7 +152,7 @@ public class PirateBay {
     }
 
     /**
-     *A main method for testing this class
+     * A main method for testing this class
      * No args, searches matrix reloaded for you sorted by seeds
      * @param args The search query for thepiratebay.org used by the API
      */
@@ -179,7 +179,7 @@ public class PirateBay {
         public String leechers;
 
         public String getColorString() {
-            String mystring=
+            final String MYSTRING=
               MircColors.BOLD + name + " " +
               MircColors.GREEN + "<" + tinyurl + ">" +
               MircColors.NORMAL + MircColors.BOLD + " (" + Size + 
@@ -187,12 +187,13 @@ public class PirateBay {
               MircColors.CYAN + " L:" + leechers + 
               MircColors.NORMAL + MircColors.BOLD + ")\n";
              
-            return mystring;
+            return MYSTRING;
         }
 
+        @Override
         public String toString() {
-            String mystring= name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
-            return mystring;
+            final String MYSTRING= name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
+            return MYSTRING;
         }
     }
 }
