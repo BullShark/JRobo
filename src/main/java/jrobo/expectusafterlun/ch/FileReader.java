@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Chris Lemire <goodbye300@aim.com>
+ * @author Christopher Lemire {@literal <goodbye300@aim.com>}
  */
 public class FileReader {
 
@@ -51,6 +51,7 @@ public class FileReader {
 
     public FileReader() {
         CONFIGFILE = "Config.json";
+        config = null;
     }
 
     /**
@@ -97,8 +98,8 @@ public class FileReader {
     protected static Config getConfig() {
 
         /* 
-		 * Should only be null if this method has not already been ran once 
-		 * Or the constructor has never been called
+         * Should only be null if this method has not already been ran once 
+         * Or the constructor has never been called
          */
         if (config != null || ranOnce) {
             //Thread.dumpStack();
@@ -119,31 +120,24 @@ public class FileReader {
         */
         try {
             File file = new File(CONFIGFILE);
-            Scanner myReader = new Scanner(file);
-                
-
+            String json;
 //            Thread.dumpStack();
-
-            String line, json;
-
-            json = "";
-
-            while ( myReader.hasNextLine() ) {
-                json += myReader.nextLine();
-            }
-            
-            myReader.close();
+            try (Scanner myReader = new Scanner(file)) {
+                json = "";
+			
+                while ( myReader.hasNextLine() ) {
+                    json += myReader.nextLine();
+                }
+        }
             
             Gson gson = new Gson();
             config = gson.fromJson(json, Config.class);
 
             ranOnce = true;
 
-        } catch (JsonSyntaxException | NullPointerException ex) {
+        } catch (JsonSyntaxException | NullPointerException | FileNotFoundException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // Verifiying important settings for connection
