@@ -39,7 +39,7 @@ public class DownForEveryone {
 	private BufferedReader rd;
 
 	/* Miscellaneous */
-	private final String QUERY_URL = "https://isitup.org";
+	private final String BASE_URL = "https://isitup.org/";
 	private boolean isup;
 
 	public DownForEveryone() {
@@ -53,17 +53,17 @@ public class DownForEveryone {
 	}
 
 	/**
-	 * Checks if the URL is up
+	 * Checks if the url is up
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-	 * @param TESTURL URL to check
+	 * @param TESTURL url to check
 	 * @param COLORS Whether to use IRC COLORS for result returned
-	 * @return Message for if URL is up or down
+	 * @return Message for if url is up or down
 	 */
 	protected String isUp(final String TESTURL, final boolean COLORS) {
 		try {
-			/* Create a URL obj from strings */
-			url = new URL((QUERY_URL.concat(TESTURL)).replace(" ", "%20"));
+			/* Create a url obj from strings */
+			url = new URL((BASE_URL.concat(TESTURL)).replace(" ", "%20"));
 
 			/* Debug */
 			System.out.println("URL: " + url);
@@ -76,11 +76,9 @@ public class DownForEveryone {
 
 			String line;
 			while ((line = rd.readLine()) != null) {
-//        It's just you.  <a href="http://google.com" class="domain">http://google.com</a></span> is up.
-				if (line.contains("It's just you.  ") && line.contains(" is up.")) {
+				if (line.contains(" is up.")) {
 					isup = true;
-//      It's not just you!  <a href="http://ggggggasdfgle.com" class="domain">http://ggggggasdfgle.com</a> looks down from here.
-				} else if (line.contains("It's not just you!  ") && line.contains(" looks down from here.")) {
+				} else if (line.contains("seems to be down")) {
 					isup = false;
 				}
 			}
@@ -118,7 +116,8 @@ public class DownForEveryone {
 	/**
 	 * A main method for testing this class
 	 *
-	 * @param args
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @param args Command line args
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {
