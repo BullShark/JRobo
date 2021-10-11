@@ -57,7 +57,7 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
 # Linux
 
 Requirements
- * Java Apache Ant (Recommended but optional)
+ * Gradle
  * OpenJDK or Oracle/Sun JDK version 7 or newer
  * Git of course
 
@@ -67,12 +67,11 @@ Requirements
     $ cd JRobo
     $ mv src/jrobo/Config.json-example src/JRobo/Config.json
     $ nano src/jrobo/Config.json
-    $ ant clean
-    $ ant jar
-    $ ant run
-    $ ant <tab><tab> for a full listing (Useful if you want to develop for JRobo)
+    $ ./gradlew build
+    $ ./gradlew run
     $ # Or build and run without ant
     $ cd src
+    $ # Download gson jar
     $ javac -classpath ../lib/gson-2.8.6.jar:. jrobo/JRobo.java
     $ java -classpath ../lib/gson-2.8.6.jar:. jrobo.JRobo
 
