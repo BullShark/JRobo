@@ -634,7 +634,7 @@ public class BotCommand {
 		 * special characters = no bold, no color
 		 * such as [] <> , ...
 		 */
-		String colorStr = LC.attributesSynopsisLine(LC.colorToken("Available commands: ", MircColors.BOLD)
+		String colorStr1 = LC.attributesSynopsisLine(LC.colorToken("Available commands: ", MircColors.BOLD)
 			+ LC.colorToken("google|lmgtfy|stfw ", MircColors.GREEN)
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
 			+ LC.colorToken("greet|g ", MircColors.GREEN)
@@ -646,8 +646,10 @@ public class BotCommand {
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
 			+ LC.colorToken("list|l, ", MircColors.GREEN)
 			+ LC.colorToken("leet|leetx ", MircColors.GREEN)
-			+ LC.colorToken("<catgegory> <search query>, ", MircColors.CYAN)
-			+ LC.colorToken("(Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX), ", MircColors.GREEN)
+			+ LC.colorToken("<catgegory> <search query>, ", MircColors.CYAN));
+
+		String colorStr2 = LC.attributesSynopsisLine(
+			LC.colorToken("(Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX), ", MircColors.GREEN)
 			+ LC.colorToken("raw|r ", MircColors.GREEN)
 			+ LC.colorToken("<raw irc line>, ", MircColors.CYAN)
 			+ LC.colorToken("help|h ", MircColors.GREEN)
@@ -670,10 +672,11 @@ public class BotCommand {
 			+ LC.colorToken("version, ", MircColors.GREEN)
 			+ LC.colorToken("quit|q", MircColors.GREEN));
 
-		String noColorStr = colorStr.replaceAll("(\\P{Print}|[0-9]{2})", "");
+		String noColorStr = (colorStr1 +colorStr2).replaceAll("(\\P{Print}|[0-9]{2})", "");
 		//System.out.println("String without colors: " + noColorStr);
 
-		CONNECTION.msgChannel(CONFIG.getChannel(), colorStr);
+		CONNECTION.msgChannel(CONFIG.getChannel(), colorStr1);
+		CONNECTION.msgChannel(CONFIG.getChannel(), colorStr2);
 	}
 
 	/**
