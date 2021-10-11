@@ -55,6 +55,7 @@ public class DownForEveryone {
 	/**
 	 * Checks if the URL is up
 	 *
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param TESTURL URL to check
 	 * @param COLORS Whether to use IRC COLORS for result returned
 	 * @return Message for if URL is up or down
