@@ -645,6 +645,8 @@ public class BotCommand {
 			+ LC.colorToken("urbandict|ud ", MircColors.GREEN)
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
 			+ LC.colorToken("list|l, ", MircColors.GREEN)
+			+ LC.colorToken("leet|leetx ", MircColors.GREEN)
+			+ LC.colorToken("<catgegory> <search query>, ", MircColors.CYAN)
 			+ LC.colorToken("raw|r ", MircColors.GREEN)
 			+ LC.colorToken("<raw irc line>, ", MircColors.CYAN)
 			+ LC.colorToken("help|h ", MircColors.GREEN)
@@ -662,7 +664,7 @@ public class BotCommand {
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
 			+ LC.colorToken("isup ", MircColors.GREEN)
 			+ LC.colorToken("<url>, ", MircColors.CYAN)
-			+ LC.colorToken("epic|e, ", MircColors.GREEN)
+			+ LC.colorToken("epic|e ", MircColors.GREEN)
 			+ LC.colorToken("[country code], ", MircColors.CYAN)
 			+ LC.colorToken("version, ", MircColors.GREEN)
 			+ LC.colorToken("quit|q", MircColors.GREEN));
