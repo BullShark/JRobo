@@ -37,7 +37,6 @@ public class PirateBay {
     /* For the HTTP Connection */
     private URL url;
     private URLConnection conn;
-    private OutputStreamWriter wr;
     private BufferedReader rd;
     private String fullUrl;
 
@@ -46,7 +45,6 @@ public class PirateBay {
      * TODO Fix bug, if the url is not available, the bot will throw an exception and crash
      */
     private static final String QUERY_URL = "http://odin.root.sx/thepiratebay.php";
-    private String def;
     private String json;
     private String s_name="blackhats";
     private String s_switch="s";
