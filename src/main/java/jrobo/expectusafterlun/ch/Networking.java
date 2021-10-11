@@ -47,7 +47,12 @@ public class Networking {
 	private String received = null;
 	private final int MAXCHARS = 450;
 
-	/* Some RFC says 510 max chars */
+	/**
+	 * Networking takes care of the connection, reads from the Config file, and handles the MAXCHARS a message can have
+	 * Some RFC says 510 max chars
+ 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @param CONFIG The configuration to be read such as which irc network to join
+	 */
 	public Networking(final Config CONFIG) {
 		super(); // Gets rid of java.lang.VerifyError
 		this.CONFIG = CONFIG;
@@ -161,12 +166,13 @@ public class Networking {
 		return success;
 	}
 
-	/*
-	 * The following function is only used to kick members from a channel.
-	 * It should probably be modified at some point to pass any desired irc command.
-	 * 
+	/**
+	 * The following function is only used to kick members from a channel.It should probably be modified at some point to pass any desired irc command.
+	 * TODO MSGARR commit more than one word after " "
+	 * @param CHAN The channel JRobo is in and the user to be kicked
+	 * @param msg The kick message, reason for kicking
+	 * @return Whether the kicking succeeded or not
 	 */
-	//TODO MSGARR commit moar than one word after " "
 	protected boolean kickFromChannel(final String CHAN, String msg) {
 		boolean success = true;
 		msg = addNewLines(msg);
@@ -280,10 +286,10 @@ public class Networking {
 	}
 
 	/**
-	 *
-	 * @param USER
-	 * @param MSG
-	 * @return
+	 * Sends a notice message to the user
+	 * @param USER The user that receives the notice message
+	 * @param MSG The message to be sent as a notice to the user
+	 * @return Whether it succeeded or not
 	 */
 	protected boolean noticeUser(final String USER, final String MSG) {
 		boolean success = true;
@@ -299,9 +305,9 @@ public class Networking {
 		return success;
 	}
 
-	/*
+	/**
 	 * Useful for the other methods that split messages into several where
-	 * Newlines occure
+	 * Newlines occur
 	 * This is used to prevent a message being truncated by IRC because
 	 * It exceeds MAXCHARS
 	 * 
@@ -317,6 +323,12 @@ public class Networking {
 		return result;
 	}
 
+	/**
+	 * Splits a message into multiple messages that is too long
+	 * @param TEXT The message TEXT to be split
+	 * @param LEN The length each new split message should be
+	 * @return The split message as an Array of String
+	 */
 	protected static String[] wrapText(final String TEXT, final int LEN) {
 		if (TEXT == null) {
 			return new String[0];
@@ -369,37 +381,6 @@ public class Networking {
 		}
 
 		return ret;
-	}
-
-	/* Method below uses this */
-	private static final byte[] HEXBYTES = {(byte) '0', (byte) '1', (byte) '2', (byte) '3',
-		(byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8', (byte) '9', (byte) 'a',
-		(byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e', (byte) 'f'};
-
-	/**
-	 *
-	 * @param S
-	 * @return
-	 */
-	protected static int getUTFSize(final String S) {
-
-		final int LEN = (S == null) ? 0 : S.length();
-
-		int l = 0;
-
-		for (int i = 0; i < LEN; i++) {
-			int c = S.charAt(i);
-
-			if ((c >= 0x0001) && (c <= 0x007F)) {
-				l++;
-			} else if (c > 0x07FF) {
-				l += 3;
-			} else {
-				l += 2;
-			}
-		}
-
-		return l;
 	}
 
 	/**
