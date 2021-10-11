@@ -40,7 +40,10 @@ import java.util.logging.Logger;
  */
 public class Leet {
 
-	/*
+	/* Example to test this class:
+	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy"
+	 * http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
+	 *
 	 * CATEGORY can be omitted for the SEARCH
 	 *
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() )
@@ -77,7 +80,7 @@ public class Leet {
 	private Gson gson;
 
 	/**
-	 *
+	 * Constructor that expects a Config and Search made up of a category and query used to contact the API
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param SEARCH Is the CATEGORY and search QUERY
 	 * @param CONFIG Object representing the configuration for JRobo, used to retrieve API_KEY
@@ -133,8 +136,7 @@ public class Leet {
 	}
 
 	/**
-	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy"
-	 * http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
+	 * Gets json data for a search query to the Leetx Python Flask API
 	 *
 	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 * @return json retrieved from the url
@@ -297,7 +299,7 @@ public class Leet {
 		 * A String representation of LeetJsonItem
 		 *
 		 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
-		 * @return A summary without colors of UrbanJsonItem
+		 * @return A summary without colors and formatting of LeetJsonItem
 		 */
 		@Override
 		public String toString() {
