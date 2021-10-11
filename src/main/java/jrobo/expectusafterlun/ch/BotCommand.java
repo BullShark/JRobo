@@ -647,6 +647,7 @@ public class BotCommand {
 			+ LC.colorToken("list|l, ", MircColors.GREEN)
 			+ LC.colorToken("leet|leetx ", MircColors.GREEN)
 			+ LC.colorToken("<catgegory> <search query>, ", MircColors.CYAN)
+			+ LC.colorToken("(Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX), ", MircColors.GREEN)
 			+ LC.colorToken("raw|r ", MircColors.GREEN)
 			+ LC.colorToken("<raw irc line>, ", MircColors.CYAN)
 			+ LC.colorToken("help|h ", MircColors.GREEN)
