@@ -40,6 +40,9 @@ public class FileReader {
     /* Standard Java API Classes */
     private static String CONFIGFILE;
 
+    /* Path to resources */
+    private final String PATH = "src/main/resources";
+
     /* User-defined Classes */
     private static Config config;
 
