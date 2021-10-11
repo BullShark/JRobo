@@ -199,7 +199,7 @@ public class Networking {
 	/**
 	 * Overridden and wrapper method
 	 *
-	 * @param CHAN
+	 * @param CHAN The IRC channel for the message to be sent to
 	 * @param MSGARR An array of messages, each message sent on its own line
 	 * in IRC
 	 * @param COLORLINES If true, use color and attribute codes
@@ -243,10 +243,10 @@ public class Networking {
 	} // EOF method
 
 	/**
-	 *
-	 * @param CHAN
-	 * @param MSG
-	 * @return
+	 * Sends a notice message to the channel
+	 * @param CHAN The IRC channel for the notice to be sent to
+	 * @param MSG The message as a notice to be sent to the channel
+	 * @return If succeeded or not
 	 */
 	protected boolean noticeChan(final String CHAN, final String MSG) {
 		boolean success = true;
@@ -262,10 +262,10 @@ public class Networking {
 	}
 
 	/**
-	 *
-	 * @param FROMCHAN
-	 * @param TOCHAN
-	 * @return
+	 * Moves JRobo from one channel to another
+	 * @param FROMCHAN The channel to move from
+	 * @param TOCHAN The channel to move to
+	 * @return If succeeded or not
 	 */
 	protected boolean moveToChannel(final String FROMCHAN, final String TOCHAN) {
 		boolean success = true;

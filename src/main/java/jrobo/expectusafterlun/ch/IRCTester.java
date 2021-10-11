@@ -23,8 +23,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author bullshark
+ * A tester bot to help learn the IRC protcol and test commands sent to the server
+ * @author Christopher Lemire {@literal <goodbye300@aim.com>}
  */
 public class IRCTester {
 

@@ -11,7 +11,7 @@ import java.util.Random;
 
 /**
  *
- * @author Christopher Lemire <christopher.lemire@gmail.com>
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
  * TODO Change to class and move code here
  */
 public enum WireColor {
