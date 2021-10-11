@@ -48,6 +48,9 @@ public class IRCTester {
   private int randomBoolean;
   private final FileReader fReader;
 
+  /**
+   * Initializes the FileReasder, config, connection, jokes, bot name, bot pass, bot channel, and a random boolean used to make the jokes random
+   */
   public IRCTester() {
     this.fReader = new FileReader();
     this.config = this.fReader.getConfig();
