@@ -16,6 +16,9 @@ import java.util.Random;
  */
 public enum WireColor {
 
+  /**
+   * RED, GREEN, and BLUE
+   */
   RED, GREEN, BLUE;
 
   private static final List<WireColor> VALUES =
@@ -23,6 +26,9 @@ public enum WireColor {
   private static final int SIZE = VALUES.size();
   private static final Random RANDOM = new Random();
 
+  /**
+   * @return A random wire color
+   */
   public static WireColor randomColor() {
     return VALUES.get(RANDOM.nextInt(SIZE));
   }
