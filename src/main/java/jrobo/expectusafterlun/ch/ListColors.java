@@ -20,10 +20,12 @@ package jrobo.expectusafterlun.ch;
 
 /**
  * Helper class for coloring the output of the list command
- * @author Christopher Lemire <goodbye300@aim.com>
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class ListColors extends MircColors {
-  /* Get all inherited members */
+  /**
+   * Get all inherited members
+   */
   public ListColors() {
     super(); // Comment this out if you get a compile error java.lang.VerifyError
   }
@@ -31,8 +33,8 @@ public class ListColors extends MircColors {
   /**
    * Removes colors and bold from special characters to have similar output
    * as the man pages viewed with most pager.
-   * @param line A line in the form: command|cmdalias [option] <required>, ...
-   * @return
+   * @param line A line in the form: command|cmdalias [option] {@literal <required>}, ...
+   * @return The line with colors and formatting stripped away
    */
   public String attributesSynopsisLine(String line) {
 

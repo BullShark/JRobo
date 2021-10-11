@@ -34,8 +34,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Chris Lemire <goodbye300@aim.com>
- * @TODO Use try-with-resources instead
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
+ * TODO Use try-with-resources instead
  */
 public class Weather {
 
@@ -158,6 +158,7 @@ public class Weather {
 	/**
 	 * Represents the situation in which the location input provided by the user
 	 * Does not represent a valid location and the API won't recognize it
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected static class InvalidLocationException extends RuntimeException {
 
@@ -173,7 +174,7 @@ public class Weather {
 
 	/**
 	 *
-	 * @author Chris Lemire <goodbye300@aim.com>
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @TODO Retrieve sunrise and sunset info
 	 */
 	private class WeatherJson {
@@ -193,20 +194,19 @@ public class Weather {
 
 			try {
 				result += list.get(0).getColorString();
-				return result;
 
 			} catch (IndexOutOfBoundsException ex) {
 				Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 				System.err.println("[+++]\tCould not get json for list at index 0");
-				return result;
 
 			} finally {
-
+				return result;
 			}
 		}
 
 		/**
 		 *
+	 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 		 * @override
 		 */
 		@Override
@@ -221,7 +221,7 @@ public class Weather {
 		/**
 		 *
 		 * @author Chris Lemire <goodbye300@aim.com>
-		 * @TODO Make rain a String
+	 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 		 */
 		private class WeatherListJsonItem {
 
@@ -300,7 +300,7 @@ public class Weather {
 
 			/**
 			 *
-			 * @author Chris Lemire <goodbye300@aim.com>
+		 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 			 */
 			private class WeatherCoordJsonItem {
 
@@ -330,7 +330,7 @@ public class Weather {
 
 			/**
 			 *
-			 * @author Chris Lemire <goodbye300@aim.com>
+		 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 			 */
 			private class WeatherMainJsonItem {
 
@@ -376,7 +376,7 @@ public class Weather {
 
 			/**
 			 *
-			 * @author Chris Lemire <goodbye300@aim.com>
+		 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 			 */
 			private class WeatherWindJsonItem {
 
@@ -402,7 +402,7 @@ public class Weather {
 
 			/**
 			 *
-			 * @author Chris Lemire <goodbye300@aim.com>
+		 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 			 */
 			private class WeatherSysJsonItem {
 
@@ -432,7 +432,7 @@ public class Weather {
 
 			/**
 			 *
-			 * @author Chris Lemire <goodbye300@aim.com>
+		 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 			 */
 			private class WeatherCloudsJsonItem {
 
@@ -456,8 +456,8 @@ public class Weather {
 
 			/**
 			 *
-			 * @author Chris Lemire <goodbye300@aim.com>
-			 * @TODO Icons can be found here:
+		 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+			 * TODO Icons can be found here:
 			 * https://openweathermap.org/weather-conditions
 			 */
 			private class WeatherWeatherJsonItem {

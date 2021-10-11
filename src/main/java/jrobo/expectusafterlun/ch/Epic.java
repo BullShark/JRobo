@@ -33,8 +33,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Christopher Lemire
- * <goodbye300@aim.com>
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
+ * @since 10-11-21
  */
 public class Epic {
 
@@ -52,7 +52,7 @@ public class Epic {
 
 	/**
 	 *
-	 * @author Chris Lemire <goodbye300@aim.com>
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public Epic() {
 
@@ -99,9 +99,10 @@ public class Epic {
 
 	/**
 	 *
-	 * @param HASCOLORS
-	 * @param LIMIT
-	 * @return
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @param HASCOLORS Should the formatted output use colors
+	 * @param LIMIT The LIMIT to how many results we should obtain
+	 * @return The formatted summary result
 	 */
 	protected String getFormattedEpicSummary(final boolean HASCOLORS, final int LIMIT) {
 
@@ -125,8 +126,9 @@ public class Epic {
 		}
 	}
 
-	/*
-         * A main method for testing this class
+	/**
+	 * A main method for testing this class
+	 * @param args The command line args are expected to not be any
 	 */
 	public static void main(String[] args) {
 		if (args.length != 0) {

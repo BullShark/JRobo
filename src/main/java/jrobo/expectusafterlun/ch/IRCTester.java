@@ -63,6 +63,9 @@ public class IRCTester {
     randomBoolean = 0;
   }
 
+  /**
+   * The beginning of JRobo's execution starts here
+   */
   public void initiate() {
     System.out.println("\u001b[1;44m *** INITIATED *** \u001b[m");
 
@@ -127,6 +130,9 @@ public class IRCTester {
     System.out.println("\u001b[1;44m *** TERMINATED *** \u001b[m");
   }
 
+  /**
+   * Parse the input into two, first and last
+   */
   public void divideTwo() {
     try {
       first = received.split(" :", 2)[0];
@@ -137,7 +143,11 @@ public class IRCTester {
       last = "";
     }
 
-  } //@TODO Get List of Users
+  } //TODO Get List of Users
+
+  /**
+   * Retrieves a random Yo momma joke and sends it to the channel
+   */
   public void getMumJoke() {
     /* Code to Test JRobo */
     try {
@@ -156,7 +166,7 @@ public class IRCTester {
   }
 
   /**
-   * @param args the command line arguments
+   * @param args the command line arguments and none are expected
    */
   public static void main(String[] args) {
     new IRCTester().initiate();

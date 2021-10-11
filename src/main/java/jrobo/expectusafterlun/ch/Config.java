@@ -22,19 +22,19 @@ import java.util.Arrays;
 
 /**
  *
- * @author Chris Lemire <goodbye300@aim.com>
- * @author BinaryStroke <binarystroke@null.net>
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
+ * @author BinaryStroke {@literal <binarystroke@null.net>}
  * @since 2013-02-18
  *
- * @TODO Make this class, variables or methods static,
- * @TODO so the same data can be accessed from multiple classes
+ * TODO Make this class, variables or methods static,
+ * TODO so the same data can be accessed from multiple classes
  *
- * <BullShark_> What is the best way to prevent a config file from being read
+ * BullShark: What is the best way to prevent a config file from being read
  * twice? If I have 15 java files, do I need to pass around the reference to
  * that config class to each java class file, so I won't be running new Config()
  * to get another reference to it, or is there a better way?
- * <Diablo-D3> That's... a really odd way of asking that question
- * <Diablo-D3> Typically you'd load and parse your config file, you'd have a
+ * Diablo-D3: That's... a really odd way of asking that question
+ * Diablo-D3: Typically you'd load and parse your config file, you'd have a
  * state object you'd pass to any method that needs it (either as an arg, or as
  * part of the class variables, passed in to that instance via constructor arg)
  */
@@ -51,8 +51,10 @@ public class Config {
 	// Chan the bot originally was in before moving between channels
 	private String baseChan;
 
+	/**
+	 * Just a placeholder for this object, doesn't execute any code
+	 */
 	protected Config() {
-		baseChan = channel;
 	}
 
 	/**
@@ -112,11 +114,14 @@ public class Config {
 
 	/**
 	 * Represents the current channel
+	 * Also sets the last channel as baseChan
 	 *
-	 * @param chan
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @param chan The channel JRobo currently is in or is joining
 	 * @since 2013-08-12
 	 */
 	protected void setChannel(String chan) {
+		baseChan = chan;
 		channel = chan;
 	}
 
@@ -132,7 +137,7 @@ public class Config {
 	/**
 	 *
 	 * @return The Torrent API key
-	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @since 2021-10-21
 	 */
 	protected String getTorrentKey() {
@@ -142,7 +147,7 @@ public class Config {
 	/**
 	 * Channel from where the bot began moving
 	 *
-	 * @return
+	 * @return baseChan is the previous channel
 	 */
 	protected String getBaseChan() {
 		return baseChan;
@@ -151,7 +156,8 @@ public class Config {
 	/**
 	 * Channel from where the bot began moving
 	 *
-	 * @param baseChan
+	 * @param baseChan The first channel JRobo goes to before moving to any other channel
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected void setBaseChan(String baseChan) {
 		this.baseChan = baseChan;
@@ -161,7 +167,7 @@ public class Config {
 	 *
 	 * @return The configured name
 	 * @since 2013-02-18
-	 * @author Christopher Lemire <goodbye300@aim.com>
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	@Override
 	public String toString() {

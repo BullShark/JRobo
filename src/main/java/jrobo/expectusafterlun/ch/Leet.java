@@ -33,6 +33,11 @@ import java.net.http.HttpRequest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Leet retrieves json results from a Leetx.to python flask api as json, formats the results, and sends them to irc
+ * 
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
+ */
 public class Leet {
 
 	/*

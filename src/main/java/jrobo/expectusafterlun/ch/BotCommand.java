@@ -28,8 +28,8 @@ import java.util.TimerTask;
 
 /**
  *
- * @author Chris Lemire <goodbye300@aim.com>
- * @TODO http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
+ * TODO http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
  */
 public class BotCommand {
 
@@ -50,8 +50,8 @@ public class BotCommand {
 	/**
 	 *
 	 * @param CONNECTION Takes the CONNECTION created by JRobo.
-	 * @param CONFIG
-	 * @param JROBO
+	 * @param CONFIG A Config object represents the bots configuration read in from Config.json
+	 * @param JROBO Class containing the main method for this bot
 	 */
 	public BotCommand(final Networking CONNECTION, final Config CONFIG, final JRobo JROBO) {
 
@@ -80,12 +80,10 @@ public class BotCommand {
 	/**
 	 * This is called when a bot command is received
 	 *
-	 * @param USER
-	 * @param FULLCMD
-	 * @user The user who sent the command
-	 * @fullCmd Includes the SYMB, command, and args
-	 * @TODO Accept raw irc commands from bot owner to be sent by the bot
-	 * @TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
+	 * @param USER The user mentioned by a command given to JRobo
+	 * @param FULLCMD The full command not split into segments
+	 * TODO Accept raw irc commands from bot owner to be sent by the bot
+	 * TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 	 */
 	protected void bCommander(final String USER, final String FULLCMD) {
 		this.user = USER;
@@ -565,8 +563,8 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Write me
-	 * @FIXME Use Config.getMasters()
+	 * TODO Write me
+	 * FIXME Use Config.getMasters()
 	 */
 	private void rawHelper() {
 		if (JROBO.getFirst().startsWith(":BullShark!")) {
@@ -586,14 +584,14 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Write me
+	 * TODO Write me
 	 */
 	private void urbanDictionaryHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true), true, MircColors.BOLD);
 	}
 
 	/**
-	 * @TODO Write me
+	 * Gabe's quit message for this bot
 	 */
 	private void quitHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Detenation devices to nuclear reactors! (Zer0 is pressing the "
@@ -601,27 +599,28 @@ public class BotCommand {
 	}
 
 	/**
-         * Does nothing at all.
+	 * Does nothing at all, just a placeholder
 	 */
 	private void doNothingHelper() {
 	}
 
 	/**
-	 * @TODO Write me
+	 * TODO Write me
 	 */
 	private void pirateHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
 	}
 
 	/**
-	 * @TODO Write me
+	 * TODO Write me
 	 */
 	private void leetHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), new Leet(CONFIG, cmdArgs).getFormattedResult(true));
 	}
 
 	/**
-	 * @TODO Write me
+	 * A helper executed when the list bot command is received by JRobo
+	 * Lists the bot commands syntax in a help message
 	 */
 	private void listHelper() {
 

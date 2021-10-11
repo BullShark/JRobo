@@ -36,7 +36,7 @@ import java.util.logging.Logger;
  * Handles all the networking done by the IRC protocol including many helpful
  * methods to make coding JRobo easier
  *
- * @author Christopher Lemire <goodbye300@aim.com>
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class Networking {
 

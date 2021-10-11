@@ -29,7 +29,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Christopher Lemire <christopher.lemire@gmail.com>
+ * @since 2021-10-11
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class DownForEveryone {
 
@@ -42,6 +43,12 @@ public class DownForEveryone {
 	private final String BASE_URL = "https://isitup.org/";
 	private boolean isup;
 
+	/**
+	 * Initalizes the global variables used for by DownForEveryone,
+	 * url, conn, rd, and isup
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 */
 	public DownForEveryone() {
 		/* For the HTTP Connection */
 		url = null;

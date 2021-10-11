@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Christopher Lemire <goodbye300@aim.com>
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class JRobo {
 
@@ -54,9 +54,9 @@ public class JRobo {
 	}
 
 	/**
-	 * @TODO Write me
-	 * @param PROXY
-	 * @param PORT
+	 * TODO Implement PROXY and PORT
+	 * @param PROXY A PROXY to use for JRobo's connection
+	 * @param PORT The PROXY PORT to connect to
 	 */
 	public JRobo(final String PROXY, final int PORT) {
 		READER = new FileReader();
@@ -67,7 +67,7 @@ public class JRobo {
 	}
 
 	/**
-	 * @TODO Write me
+	 * The beginning of JRobo's execution starts here
 	 */
 	private void initiate() {
 		System.out.print("[+++]\tUsing configuration: \n" + CONFIG.toString());
@@ -80,9 +80,9 @@ public class JRobo {
 		CONN.sendln("PASS " + CONFIG.getPass().replaceAll(".", "*"));
 		CONN.sendln("USER JRobo 0 * :Microsoft Exterminator!");
 		/*
-                 * Wait for server message:
-                 * 001 JRobo :Welcome to the IRC Network
-                 * Before attempting to join a channel
+		 * Wait for server message:
+		 * 001 JRobo :Welcome to the IRC Network
+		 * Before attempting to join a channel
 		 */
 		while ((received = CONN.recieveln()) != null) {
 			this.divideTwo();
@@ -110,13 +110,13 @@ public class JRobo {
 			this.divideTwo();
 
 			/*
-                         * A PING was received from the IRC server
+			 * A PING was received from the IRC server
 			 */
 			if (first.equals("PING")) {
 				CONN.sendln("PONG " + last);
-                        /*
-                         * A message was sent either to the channel
-                         * Or to the bot; Could be a command
+			/*
+			 * A message was sent either to the channel
+			 * Or to the bot; Could be a command
 			 */
 			} else if (first.contains("PRIVMSG")) {
 				try {
@@ -157,7 +157,7 @@ public class JRobo {
 			} // EOF if-else-if-else...
 		} // EOF while
 
-		//@TODO Implement a Networking.killConnection() and call it here
+		//TODO Implement a Networking.killConnection() and call it here
 		System.out.println("\u001b[1;44m *** TERMINATED *** \u001b[m");
 	}
 
@@ -189,7 +189,7 @@ public class JRobo {
 	}
 
 	/**
-	 * @param args The command line arguments
+	 * @param args The command line arguments, expects none
 	 */
 	public static void main(String[] args) {
 		new JRobo().initiate();

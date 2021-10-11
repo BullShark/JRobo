@@ -18,7 +18,7 @@
  */
 package jrobo.expectusafterlun.ch;
 
-/*
+/**
  * This class will define constants and methods for sending colors to channels
  * That have /mode +c allowed in the channel
  *

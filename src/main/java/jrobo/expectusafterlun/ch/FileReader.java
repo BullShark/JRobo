@@ -49,6 +49,11 @@ public class FileReader {
     /* Miscellaneous */
     private static boolean ranOnce = false;
 
+    /**
+     * Set the filename for CONFIGFILE and initialize config to null
+     * 
+     * @author Chris Lemire {@literal <goodbye300@aim.com>}
+     */
     public FileReader() {
         CONFIGFILE = "Config.json";
         config = null;
