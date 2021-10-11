@@ -41,9 +41,10 @@ public class Epic {
 	/**
 	 * Miscellaneous
 	 *
-	 * @TODO Fix bug, if the url is not available, the bot will throw an
-	 * exception and crash Example:
-	 * https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
+	 * TODO Fix bug, if the url is not available, the bot will throw an
+	 * Exception and crash
+	 * Example:
+	 * 	https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
 	 */
 	//private final String BASE_URL = "https://invalid.not.a.real.domain";
 	private final String BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
