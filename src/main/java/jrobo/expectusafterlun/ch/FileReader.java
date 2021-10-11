@@ -51,7 +51,6 @@ public class FileReader {
 
     public FileReader() {
         CONFIGFILE = "Config.json";
-        config = null;
     }
 
     /**
