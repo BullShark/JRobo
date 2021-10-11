@@ -57,6 +57,7 @@ public class FileReader {
     /**
      * Opens a resource file inside the package and fills the passed ArrayList
      *
+     * @author Chris Lemire {@literal <goodbye300@aim.com>}
      * @param FILENAME The file name inside the package to be opened
      * @param LISTARR The array list to store the file lines to
      * @return A true on success and false on failure
@@ -111,13 +112,6 @@ public class FileReader {
         out.println("[+++]\tAbsolute path: " + new File(CONFIGFILE).getAbsolutePath());
         out.println("[+++]\tSystem user directory: " + System.getProperty("user.dir"));
         
-        /*
-        try (
-                InputStream fileStream = FileReader.class.getResourceAsStream(CONFIGFILE);
-                InputStreamReader fileStreamReader = new InputStreamReader(fileStream);
-                BufferedReader br = new BufferedReader(fileStreamReader);
-        ) {
-        */
         try {
             File file = new File(CONFIGFILE);
             String json;
