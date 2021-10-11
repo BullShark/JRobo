@@ -35,17 +35,14 @@ import java.util.logging.Logger;
 
 public class Leet {
 
-	/* Miscellaneous
-	 *@TODO Fix bug:
-	 *	if url is not available,
-	 * 	the bot will throw an Exception and crash
-	 *
+	/*
 	 * CATEGORY can be omitted for the SEARCH
 	 *
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() )
 	 * "https://expectusafterlun.ch/1337x/{QUERY}/{PAGENUM}/{CATEGORY}/"
 	 */
-	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
+//	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
+	private static final String BASE_URL = "http://invalid.domain:5000/1337x"; //TODO Bug testing
 	private String fullUrl;
 	private String json;
 	private final int MAX_RESULTS = 3;
@@ -53,23 +50,6 @@ public class Leet {
 	private final String API_KEY;
 	private final Config CONFIG;
 	private final String PAGENUM = "1";
-
-	/*
-	We can also filter by categories:
-		<option value="/category-search/test/Movies/1/">
-		<option value="/category-search/test/TV/1/">
-		<option value="/category-search/test/Games/1/">
-		<option value="/category-search/test/Music/1/">
-		<option value="/category-search/test/Apps/1/">
-		<option value="/category-search/test/Documentaries/1/">
-		<option value="/category-search/test/Anime/1/">
-		<option value="/category-search/test/Other/1/">
-		<option value="/category-search/test/XXX/1/">
-
-	@app.route('/1337x/<query>/<page>/<category>', methods=['GET'])
-	def api_1337x(query, page=1, category=None):
-	if request.headers.get("API_KEY") != app.config["API_KEY"]:
-	 */
 
 	/*
 	 * Test this API with curl:
@@ -114,7 +94,6 @@ public class Leet {
 
 		/* 
 		 * For the HTTP Connection
-		 * Do not set some of these because they are constants.
 		 */
 		fullUrl = null;
 
@@ -301,7 +280,6 @@ public class Leet {
 			final String MYSTRING
 				= MircColors.BOLD + name + " "
 				+ MircColors.GREEN + "<" + tinyurl + ">"
-//				+ MircColors.GREEN + "<" + href + ">"
 				+ MircColors.NORMAL + MircColors.BOLD + " (" + size
 				+ MircColors.GREEN + " S:" + seeds
 				+ MircColors.CYAN + " L:" + leeches
@@ -319,7 +297,6 @@ public class Leet {
 		@Override
 		public String toString() {
 			final String MYSTRING = name + " <" + tinyurl + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
-//			final String MYSTRING = name + " <" + href + "> (" + size + " S:" + seeds + " L:" + leeches + ") \n";
 			return MYSTRING;
 		}
 	}
