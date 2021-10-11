@@ -28,7 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * DownForEveryone uses an internet site to let you know if a ddos is working to take down a web server.
  * @since 2021-10-11
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */

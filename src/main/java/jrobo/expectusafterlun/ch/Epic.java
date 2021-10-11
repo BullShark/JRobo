@@ -176,8 +176,7 @@ public class Epic {
 
 		/**
 		 *
-		 * @author Christopher Lemire
-		 * <goodbye300@aim.com>
+	 	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 		 */
 		private class EpicDataJsonItem {
 

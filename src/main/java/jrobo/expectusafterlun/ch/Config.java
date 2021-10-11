@@ -21,6 +21,7 @@ package jrobo.expectusafterlun.ch;
 import java.util.Arrays;
 
 /**
+ * Config provides getters and setters to all of the configuration settings.
  *
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  * @author BinaryStroke {@literal <binarystroke@null.net>}

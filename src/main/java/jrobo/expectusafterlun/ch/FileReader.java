@@ -32,7 +32,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * FileReader is used to supply the Config class with configuration read in from Config.json. It also reads in Jokes JRobo uses and shuffles them in random order.
+ * 
  * @author Christopher Lemire {@literal <goodbye300@aim.com>}
  */
 public class FileReader {
