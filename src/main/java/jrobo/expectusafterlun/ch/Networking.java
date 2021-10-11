@@ -229,8 +229,8 @@ public class Networking {
 	 */
 	protected boolean msgUser(final String USER, final String MSG) {
 		boolean success = true;
-		String[] msgArr = MSG.split("\n");
-		for (String msg : msgArr) {
+		final String[] MSGARR = MSG.split("\n");
+		for (String msg : MSGARR) {
 			/*
 			 * Meaning if one call to sendln returns false
 			 * This entire function will return false
