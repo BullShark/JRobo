@@ -41,18 +41,22 @@ public class PirateBay {
     private String fullUrl;
 
     /*
-     * Miscelanous
+     * Miscellaneous
      * TODO Fix bug, if the url is not available, the bot will throw an exception and crash
      */
-    private static final String QUERY_URL = "http://odin.root.sx/thepiratebay.php";
+    private static final String BASE_URL = "http://odin.root.sx/thepiratebay.php";
     private String json;
-    private String s_name="blackhats";
+    private final String s_name;
     private String s_switch="s";
     private final int MAX_RESULTS = 5;
 
     /* For the Gson/Json */
     private Gson gson;
 
+    /**
+     * Get the switch used for sorting the results, the query to be searched and set up the connection to the PirateBay API
+     * @param command Made up of the sort type and search query, sort by seeds, peers, date, or name
+     */
     public PirateBay(String command) {
         String[] splitArray = command.split("\\s+");
         String argument="";
@@ -79,11 +83,15 @@ public class PirateBay {
             }
             command=command.replace(argument, "");
         }
-        if(command.length()>0){
-        s_name=command;}
+        if(command.length()>0) {
+            s_name =command;
+        } else {
+            s_name ="blackhats";
+        }
         /* For the HTTP Connection */
         url = null;
-        conn = null;
+//        conn = null;
+        rd = null;
         fullUrl = "";
         /* Miscelanous */
         json = "";
@@ -95,7 +103,7 @@ public class PirateBay {
         try {
             /* Create a URL obj from strings */
             fullUrl =
-		    (QUERY_URL + 
+		    (BASE_URL + 
 			    "?name=" + s_name + 
 			    "&orderby=" + s_switch + 
 			    "&limit=" + MAX_RESULTS
@@ -109,7 +117,7 @@ public class PirateBay {
             conn = url.openConnection();
             // Get the response
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = "";
+            String line;
             while ((line = rd.readLine()) != null) {
                 json = json.concat(line);
             }
@@ -123,7 +131,14 @@ public class PirateBay {
         return json;
     }
 
-    public String getFormattedResult(boolean hasColors) {
+    /**
+     * The formatted search results from ThePirateBay Json API with colors and formatting if HASCOLORS
+     * 
+     * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+     * @param HASCOLORS True for IRC colors, false otherwise
+     * @return Formatted json data optionally with colors
+     */
+    public String getFormattedResult(final boolean HASCOLORS) {
 
 	PirateBayJsonItem[] results;
 
@@ -139,7 +154,7 @@ public class PirateBay {
 
         String output = "";
 
-        if(hasColors) {
+        if(HASCOLORS) {
           for (PirateBayJsonItem result : results) {
             output += result.getColorString();
           }
@@ -166,8 +181,12 @@ public class PirateBay {
 
     } // EOF main
 
+    /**
+     * Strings and ints representing json data
+     *
+     * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+     */
     public class PirateBayJsonItem {
-
         public String type;
         public String name;
         public String url;
