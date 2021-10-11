@@ -107,11 +107,10 @@ public class Weather {
 
 	/**
 	 * Retrieve the data as a summary with irc color codes and formatting or just return the names and values from the json
-	 * @param LOCATION
-	 * @param HASCOLORS
+	 * @param LOCATION The LOCATION for the weather summary
+	 * @param HASCOLORS Whether there is IRC colors and formatting
 	 * @param LIMIT Limit the number of definitions returned by this method
 	 * @return Formatted and colored Json if hasColor is true, else just the json information
-	 * @throws expectusafterlun.ch.jrobo.Weather.InvalidLocationException Handle the exception in BotCommand where the help message for the weather command can be shown
 	 */
 	protected String getFormattedWeatherSummary(final String LOCATION, final boolean HASCOLORS, final int LIMIT) throws InvalidLocationException {
 
@@ -220,7 +219,6 @@ public class Weather {
 
 		/**
 		 *
-		 * @author Chris Lemire <goodbye300@aim.com>
 	 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 		 */
 		private class WeatherListJsonItem {
