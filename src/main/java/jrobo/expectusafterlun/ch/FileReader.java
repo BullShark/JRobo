@@ -69,18 +69,14 @@ public class FileReader {
         out.println("[+++]\tReading File (" + FILENAME + ")");
         try {
             File file = new File(FILENAME);
-            Scanner myReader = new Scanner(file);
-            
-            if (FILENAME.equals(CONFIGFILE)) {
-                ranOnce = true;
-            }
-
-            String line;
-            while ( myReader.hasNextLine() ) {
-                LISTARR.add(myReader.nextLine());
-            }
-            
-            myReader.close();
+		try (Scanner myReader = new Scanner(file)) {
+			if (FILENAME.equals(CONFIGFILE)) {
+				ranOnce = true;
+			}
+			
+			while ( myReader.hasNextLine() ) {
+				LISTARR.add(myReader.nextLine());
+			}	}
 
         } catch (IOException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
