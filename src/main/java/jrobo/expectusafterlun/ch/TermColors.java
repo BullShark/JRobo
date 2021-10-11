@@ -26,6 +26,9 @@ package jrobo.expectusafterlun.ch;
 public class TermColors {
     static StringBuilder sbuilder;
    
+    /**
+     * The Color enumerated type
+     */
     public static enum Color {
         BLACK(0), RED(1), GREEN(2),
         YELLOW(3), BLUE(4), MAGENTA(5),
@@ -33,10 +36,17 @@ public class TermColors {
 
         private int value;    
 
+        /**
+         * Constructor Color with initial VALUE
+         * @param value Color or formatting attribute to initialize Color with
+         */
         private Color(int value) {
             this.value = value;
         }
 
+        /**
+         * @return Sets the color or formatting attribute
+         */
         public int getValue() {
             return value;
         }
@@ -46,17 +56,32 @@ public class TermColors {
         RESET(0), BRIGHT(1), DIM(2),
         UNDERLINE(3), BLINK(4),
         REVERSE(7), HIDDEN(8);
-        private int value;    
+        private final int VALUE;    
 
+        /**
+         * Enumerated type for Color or formatting Attribute with initial VALUE
+         * @param value The initial color or formatting Attribute VALUE
+         */
         private Attribute(int value) {
-            this.value = value;
+            this.VALUE = value;
         }
 
+        /**
+         * @return The color or formatting attribute
+         */
         public int getValue() {
-            return value;
+            return VALUE;
         }
     }
     
+    /**
+     * Takes attributes and returns a formatted String
+     * @param str The String to apply the formatting to
+     * @param fg The foreground attribute
+     * @param bg The background attribute
+     * @param attrib The text attribute
+     * @return The formatted String
+     */
     public static String getString(String str, Color fg, Color bg, Attribute attrib) {
         sbuilder = new StringBuilder();
         sbuilder.append(0x1B);
@@ -84,6 +109,10 @@ public class TermColors {
         return sbuilder.toString();
     }
 
+    /**
+     * Main method for testing this class
+     * @param args Is ignored
+     */
     public static void main(String[] args) {
         System.out.println(getString("Testing testing 123", Color.RED, Color.YELLOW, Attribute.UNDERLINE));
     }
