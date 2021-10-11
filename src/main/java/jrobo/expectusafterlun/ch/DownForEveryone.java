@@ -39,7 +39,7 @@ public class DownForEveryone {
 	private BufferedReader rd;
 
 	/* Miscellaneous */
-	private final String QUERY_URL = "https://www.downforeveryoneorjustme.com/";
+	private final String QUERY_URL = "https://isitup.org";
 	private boolean isup;
 
 	public DownForEveryone() {
