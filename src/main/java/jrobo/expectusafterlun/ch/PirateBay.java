@@ -32,6 +32,11 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * PirateBay retrieves json results from a thepiratebay python flask API as json, formats the results, and sends them to IRC
+ * 
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
+ */
 public class PirateBay {
 
     /* For the HTTP Connection */
@@ -99,6 +104,12 @@ public class PirateBay {
         gson = new Gson();
     }
 
+    /**
+     * Gets json data for a search query to The Pirate Bay Python Flask API
+     *
+     * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+     * @return json retrieved from the url
+     */
     public String getJson() {
         try {
             /* Create a URL obj from strings */
@@ -197,6 +208,12 @@ public class PirateBay {
         public String seeders;
         public String leechers;
 
+        /**
+         * A colored for IRC String representation of LeetJsonItem
+         *
+         * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+         * @return Colored for IRC String representing LeetJsonItem
+         */
         public String getColorString() {
             final String MYSTRING=
               MircColors.BOLD + name + " " +
@@ -209,6 +226,12 @@ public class PirateBay {
             return MYSTRING;
         }
 
+        /**
+         * A String representation of LeetJsonItem
+         *
+         * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+         * @return A summary without colors and formatting of LeetJsonItem
+         */
         @Override
         public String toString() {
             final String MYSTRING= name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
