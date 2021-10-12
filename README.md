@@ -8,6 +8,8 @@
 
 [teslasolutions](https://github.com/teslasolution "Developer") (Kamal Sajid)
 
+[n0tme](https://github.com/thatsn0tmysite) 
+
 ## About
 
 JRobo is an advanced IRC bot that uses its own IRC framework. It was written from scratch.
