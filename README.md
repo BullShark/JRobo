@@ -23,36 +23,36 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
  * Authenticates with nickserv
  
 ## Provides many commands
- * google|g &lt;search query&gt;
- * wakeroom|wr
+* google|g &lt;search query&gt;
+* wakeroom|wr
   * Brings a dead channel back to life!
- * weather|w &lt;location, zip, etc.&gt;
+* weather|w &lt;location, zip, etc.&gt;
   * Queries the wunderground api for a weather summary
- * urbandict|ud &lt;search query&gt;
+* urbandict|ud &lt;search query&gt;
   * Returns the top 3 results of the search query from urbandictionary.com
   * Sorts by thumbs up, and shows the number of thumbs up and thumbs down for each result
   * Nicely formatted and colored output
- * list|l
+* list|l
   * Provides a list of commands
   * Uses a Linux Man page type Syntax
- * help [cmd]
+* help [cmd]
   * Provides help output on a particular command
- * pirate [-s|-l|-d] &lt;search query&gt;
+* pirate [-s|-l|-d] &lt;search query&gt;
   * Queries pirate bay with formatted and colored output
   * -s sort by seeds (default)
   * -l sort by leachers
   * -d sort by total times downloaded
   * Limits output to 3 lines to avoid flooding the channel
- * isup &lt;url&gt;
+* isup &lt;url&gt;
   * Checks if the url is really up or down
- * version
- * quit|q
+* version
+* quit|q
   * JRobo will only respond to this and other commands/features sent from the master or (Not implemented fully yet)
   * One of the list of masters read in from Config.json
- * And others, download and use the bots in-channel help for more
+* And others, download and use the bots in-channel help for more
 
 # Features to come
- * RSS Feed Support
+* RSS Feed Support
 
 ## Install and run
 
@@ -64,11 +64,12 @@ Requirements
  * Git of course
 
 ### Debian/Linux Mint/Ubuntu
-    $ sudo apt-get install openjdk-8-jdk ant git
+    $ sudo apt-get install openjdk-17-jdk git
     $ git clone https://github.com/BullShark/JRobo.git
     $ cd JRobo
     $ mv src/jrobo/Config.json-example src/JRobo/Config.json
     $ nano src/jrobo/Config.json
+    $ ./gradlew clean
     $ ./gradlew build
     $ ./gradlew run
     $ # Or build and run without ant
