@@ -37,6 +37,9 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
   * Uses a Linux Man page type Syntax
 * help [cmd]
   * Provides help output on a particular command
+* leet <Category> <search query>
+  * Queries 1337x.to with formatted and colored output
+  * Category is one of the following: Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All
 * pirate [-s|-l|-d] &lt;search query&gt;
   * Queries pirate bay with formatted and colored output
   * -s sort by seeds (default)
