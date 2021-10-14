@@ -40,7 +40,8 @@ import java.util.logging.Logger;
  */
 public class Leet {
 
-	/* Example to test this class:
+	/* 
+	 * Example to test this class:
 	 * curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy"
 	 * http://expectusafterlun.ch:5000/1337x/matrix/1/Movies
 	 *
@@ -143,7 +144,8 @@ public class Leet {
 	public String getJson() {
 
 		try {
-			/* Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
+			/* 
+			 * Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
  	 		 * "https://expectusafterlun.ch/1337x.to/{QUERY}/{PAGENUM}/{CATEGORY}/"
 			 */
 			if (!category.equals("")) {
