@@ -197,8 +197,8 @@ public class BotCommand {
 	}
 
 	/**
+	 * TODO divided half of the work getFormattedQuery is doing to here
 	 * 
-	 * @TODO divided half of the work getFormattedQuery is doing to here
 	 * @param 
 	 * @return 
 	 */
@@ -214,7 +214,7 @@ public class BotCommand {
 	} // EOF function
 
 	/**
-         *
+	 *
 	 * @param 
 	 * @return 
 	 */
@@ -231,7 +231,7 @@ public class BotCommand {
 	}
 
 	/**
-         * @return Returns a random user in the chat. If that fails such as when the user list is empty, it returns ChanServ.
+	 * @return Returns a random user in the chat. If that fails such as when the user list is empty, it returns ChanServ.
 	 */
 	private String getRandChanUser() {
 
@@ -261,10 +261,8 @@ public class BotCommand {
 	}
 
 	/**
-	 *
-	 * @TODO This method needs testing. It might be broke.
-	 * @param CHAN
-	 * @return
+	 * @param CHAN The channel to get a list of users
+	 * @return all users that are in the channel CHAN
 	 */
 	private String getUsers(final String CHAN) {
 		String received = "", users = "";
@@ -302,7 +300,8 @@ public class BotCommand {
 	}
 
 	/**
-         * Helper method
+	 * Helper method to The WakeRoom Command
+	 * Highlights all users
 	 */
 	private void wakeRoomHelper() {
 		String users = getUsers();
@@ -330,7 +329,8 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Write me
+	 * Helper method to the isup {@literal <domain>} command
+	 * Checks if the host at domain is up or not
 	 */
 	private void isUpHelper() {
 		if (!hasArgs) {
@@ -341,7 +341,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Implement me
+	 * TODO Implement me
 	 */
 	private void epicHelper() {
 		if(hasArgs) {
@@ -357,7 +357,8 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Write me
+	 * Helper method to the weather {@literal <location>} command
+	 * Sends a weather summary for the location to the channel
 	 */
 	private void weatherHelper() {
 
@@ -374,14 +375,15 @@ public class BotCommand {
 			} catch (Weather.InvalidLocationException ex) {
 				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 
-				helpWrapper(cmd); //@TODO Show the correct syntax for the command and the location here
+				helpWrapper(cmd); //TODO Show the correct syntax for the command and the location here
 
 			}
 		}
 	}
 
 	/**
-	 * @TODO Write me
+	 * Helper method to the .mum {@literal <user>} command
+	 * Sends a yo momma joke to the channel
 	 */
 	private void mumHelper() {
 		try {
@@ -403,15 +405,15 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Write me
+	 * TODO Write me
 	 */
 	private void nextHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Another satisfied customer, NEXT!!!");
 	}
 
 	/**
-	 * @TODO Fix this method
-	 * @TODO Replace code with getHelp(cmd); //Overloaded method
+	 * TODO Fix this method
+	 * TODO Replace code with getHelp(cmd); //Overloaded method
 	 */
 	private void inviteNickHelper() {
 		if (true) {
@@ -451,7 +453,7 @@ public class BotCommand {
 	private void inviteChannelHelper() {
 		String[] userArr;
 		if(!hasArgs) {
-		//@TODO      helpWrapper(cmd);
+		//TODO      helpWrapper(cmd);
 			return;
 		}
 
