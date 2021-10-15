@@ -75,7 +75,7 @@ Requirements
     $ ./gradlew clean
     $ ./gradlew build
     $ ./gradlew run
-    $ # Or build and run without ant
+    $ # Or build and run without Gradle
     $ cd src
     $ # Download gson jar
     $ javac -classpath ../lib/gson-2.8.6.jar:. jrobo/JRobo.java
