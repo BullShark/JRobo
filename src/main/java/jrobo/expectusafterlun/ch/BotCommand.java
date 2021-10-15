@@ -152,11 +152,9 @@ public class BotCommand {
 				break;
 			case "list":
 			case "l":
-				listHelper();
-				break;
 			case "help":
 			case "h":
-				helpHelper();
+				listHelper();
 				break;
 			case "pirate":
 				pirateHelper();
@@ -448,7 +446,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Write me
+	 * TODO Write me
 	 */
 	private void inviteChannelHelper() {
 		String[] userArr;
@@ -462,7 +460,7 @@ public class BotCommand {
 			return;
 		}
 
-		//TODO      exclude duplicates from useray
+		//TODO Exclude duplicates from useray
 		if (cmdArgs.contains(" ")) {
 			final String[] CHANSARR = cmdArgs.split("\\s++");
 			// Channel must begin with a # and be at least two characters long
@@ -584,7 +582,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO Write me
+	 * Helper method to Urban Dictionary command
 	 */
 	private void urbanDictionaryHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true), true, MircColors.BOLD);
@@ -605,14 +603,14 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO Write me
+	 * Helper method called when a Pirate Bay Search Command is called
 	 */
 	private void pirateHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
 	}
 
 	/**
-	 * TODO Write me
+	 * Helper method called when a 1337x.to Search Command is called
 	 */
 	private void leetHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), new Leet(CONFIG, cmdArgs).getFormattedResult(true));
@@ -672,7 +670,7 @@ public class BotCommand {
 			+ LC.colorToken("version, ", MircColors.GREEN)
 			+ LC.colorToken("quit|q", MircColors.GREEN));
 
-		String noColorStr = (colorStr1 +colorStr2).replaceAll("(\\P{Print}|[0-9]{2})", "");
+		//String noColorStr = (colorStr1 +colorStr2).replaceAll("(\\P{Print}|[0-9]{2})", "");
 		//System.out.println("String without colors: " + noColorStr);
 
 		CONNECTION.msgChannel(CONFIG.getChannel(), colorStr1);
@@ -680,7 +678,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Write me
+	 * Called when an Unknown Command is received
 	 */
 	private void unknownCmdHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Unknown command received: " + cmd);
@@ -695,15 +693,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Remove this. We don't need the list command and this. Just list is fine.
-	 * @TODO man page style usage for help blah
-	 */
-	private void helpHelper() {
-		CONNECTION.msgChannel(CONFIG.getChannel(), "You implement it!");
-	}
-
-	/**
-	 * @TODO Write me
+	 * Gives JRobo's version info with the Version Command is received
 	 */
 	private void versionHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(),
@@ -713,7 +703,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Write me
+	 * Helper method to the Greet Command
 	 */
 	private void greetHelper() {
 		try {
@@ -734,14 +724,14 @@ public class BotCommand {
 	}
 
 	/**
-	 * @TODO Only Masters
+	 * TODO Only Masters
 	 */
 	private void moveToChannelHelper() {
 		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 	}
 
 	/**
-         * Starts TIMER for bomb, sets an active WIRE and prints explosion and kicks user holding at [20] seconds.
+	 * Starts TIMER for bomb, sets an active WIRE and prints explosion and kicks user holding at [20] seconds.
 	 */
 	public void bomb() {
 		bombHolder = user;
@@ -786,7 +776,7 @@ public class BotCommand {
 	}
 
 	/**
-         * Simply passes the bomb to another user and returns it if they attempt to pass to JRobo.
+	 * Simply passes the bomb to another user and returns it if they attempt to pass to JRobo.
 	 */
 	private void pass() {
 		String users = getUsers();
@@ -809,7 +799,7 @@ public class BotCommand {
 	}
 
 	/**
-         * This function will return a WIRE for a given COLOR and is only to be used within defuse.
+	 * This function will return a WIRE for a given COLOR and is only to be used within defuse.
 	 * @return 
 	 */
 	private boolean wire(final String COLOR) {
@@ -825,7 +815,7 @@ public class BotCommand {
 	}
 
 	/**
-         * This is the defuse method and refers to a global boolean array of wires and the active WIRE is set to true in bomb() function.
+	 * This is the defuse method and refers to a global boolean array of wires and the active WIRE is set to true in bomb() function.
 	 */
 	public void defuse() {
 		if (bombActive && user.equals(bombHolder)) {
