@@ -81,6 +81,7 @@ public class Leet {
 
 	/**
 	 * Constructor that expects a Config and Search made up of a category and query used to contact the API
+	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param SEARCH Is the CATEGORY and search QUERY
 	 * @param CONFIG Object representing the configuration for JRobo, used to retrieve API_KEY
@@ -122,7 +123,7 @@ public class Leet {
 			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
-		/**
+		 /**
 		  * Set to empty String for ALL.
 		  * Search ALL if CATEGORY is not valid.
 		  */
@@ -158,15 +159,6 @@ public class Leet {
 
 			/* Debug */
 			System.out.println("[***]\tfullUrl:" + fullUrl);
-
-			/*
-			 * Create a URL obj from String
-			 *
-			 * String.replaceAll(" ", "%20");
-			 * toURI() and URI.toURL().
-			 *
-			 * Example: URL url = new URL("http://example.com/hello%20world");
-			 */
 
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
@@ -242,6 +234,7 @@ public class Leet {
 	}
 
 	/**
+	 * Gets the API_Key for the flask torrent API
 	 *
 	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 * @return API Key for Torrent API retrieved from Config.json
