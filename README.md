@@ -75,15 +75,16 @@ Requirements
     $ ./gradlew clean
     $ ./gradlew build
     $ ./gradlew run
-    $ # Or build and run without Gradle
-    $ cd src
-    $ # Download gson jar
-    $ javac -classpath ../lib/gson-2.8.6.jar:. jrobo/JRobo.java
-    $ java -classpath ../lib/gson-2.8.6.jar:. jrobo.JRobo
 
 ### RHEL/Fedora/CentOS
     $ yum install java-latest-openjdk-devel git
     $ # The rest is the same as above
+
+### Compile and run without Gradle
+    $ cd src
+    $ # Download gson jar
+    $ javac -classpath ../lib/gson-2.8.6.jar:. jrobo/JRobo.java
+    $ java -classpath ../lib/gson-2.8.6.jar:. jrobo.JRobo
 
 # Windows
 
