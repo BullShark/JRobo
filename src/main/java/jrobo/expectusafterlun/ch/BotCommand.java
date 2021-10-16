@@ -649,7 +649,7 @@ public class BotCommand {
 			+ LC.colorToken("<catgegory> <search query>, ", MircColors.CYAN));
 
 		String colorStr2 = LC.attributesSynopsisLine(
-			LC.colorToken("(Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX), ", MircColors.GREEN)
+			LC.colorToken("(Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All), ", MircColors.GREEN)
 			+ LC.colorToken("raw|r ", MircColors.GREEN)
 			+ LC.colorToken("<raw irc line>, ", MircColors.CYAN)
 			+ LC.colorToken("help|h ", MircColors.GREEN)
@@ -726,9 +726,12 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO Only Masters
+	 * Move to the channel in cmdArgs
 	 */
 	private void moveToChannelHelper() {
+	 //TODO Only Masters
+
+       		CONFIG.setChannel(cmdArgs);
 		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 	}
 
