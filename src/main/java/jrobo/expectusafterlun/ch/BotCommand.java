@@ -83,10 +83,10 @@ public class BotCommand {
 	 *
 	 * @param USER The user mentioned by a command given to JRobo
 	 * @param FULLCMD The full command not split into segments
-	 * TODO Accept raw irc commands from bot owner to be sent by the bot
-	 * TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 	 */
 	protected void bCommander(final String USER, final String FULLCMD) {
+	 //TODO Accept raw irc commands from bot owner to be sent by the bot
+	 //TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 		this.user = USER;
 		cmd = getCmd(FULLCMD);
 		cmdArgs = getCmdArgs(FULLCMD);
@@ -344,11 +344,12 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO Implement me
-	 * TODO Still a work in progress
-	 * TODO Needed JSON code and check only once a week code (Thursdays)
+	 * Checks Epic's site with JSON every week and notifies the irc channel of new free games
 	 */
 	private void epicHelper() {
+	 //TODO Implement me
+	 //TODO Still a work in progress
+	 //TODO Needed JSON code and check only once a week code (Thursdays)
 		if(hasArgs) {
 	        	helpWrapper(cmd);
 
@@ -416,10 +417,11 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO Fix this method
-	 * TODO Replace code with getHelp(cmd); //Overloaded method
+	 * Helper method to sending 1,000,000,000 invites to nick
 	 */
 	private void inviteNickHelper() {
+	 //TODO Fix this method
+	 //TODO Replace code with getHelp(cmd); //Overloaded method
 		if (true) {
 			return;
 		}
@@ -676,7 +678,7 @@ public class BotCommand {
 			+ LC.colorToken("version, ", MircColors.GREEN)
 			+ LC.colorToken("quit|q", MircColors.GREEN));
 
-		//String noColorStr = (colorStr1 +colorStr2).replaceAll("(\\P{Print}|[0-9]{2})", "");
+		String noColorStr = (colorStr1 +colorStr2).replaceAll("(\\P{Print}|[0-9]{2})", "");
 		//System.out.println("String without colors: " + noColorStr);
 
 		CONNECTION.msgChannel(CONFIG.getChannel(), colorStr1);
@@ -694,7 +696,7 @@ public class BotCommand {
 	 * Wrapper Help command messages
 	 */
 	private void helpWrapper(final String CMD) {
-		//TODO help string for each command
+	//TODO help string for each command
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid usage of command: " + CMD);
 	}
 
@@ -733,7 +735,7 @@ public class BotCommand {
 	 * Move from current channel to the channel specified by cmd args
 	 */
 	private void moveToChannelHelper() {
-		//TODO Only Masters
+	//TODO Only Masters
 		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 	}
 
