@@ -32,7 +32,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * The goal of this class is to get a list of free games, names and discription, and send them to the irc channel when the epic command is called
+ * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  * @since 10-11-21
  */
