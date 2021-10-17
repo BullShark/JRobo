@@ -75,6 +75,7 @@ public class Epic {
 			+ "?locale=" + LOCALE
 			+ "&country=" + COUNTRYCODE
 			+ "&allowCountries=" + COUNTRYCODE).replaceAll(" ", "%20");
+
 		System.out.println("[+++]\t" + URL);
 
 		/* Create a URL obj from strings */
