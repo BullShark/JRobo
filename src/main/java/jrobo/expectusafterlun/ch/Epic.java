@@ -272,16 +272,15 @@ public class Epic {
 						}
 
 						/**
-						 *
-						 * @author Christopher Lemire
-						 * <goodbye300@aim.com>
+						 * Find where discount price == 0
+						 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 						 */
 						private class EpicPriceJsonItem {
 
 							// Class object { ... }
 							// List<Class> object [ ... ]
 							private EpicTotalPriceJsonItem totalPrice;
-							private int discountPrice;
+							private int discountPrice; //TODO Find where this is 0
 							private int originalPrice;
 							private int voucherDiscount;
 							private int discount;
