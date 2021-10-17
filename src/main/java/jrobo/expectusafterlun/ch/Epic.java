@@ -130,6 +130,8 @@ public class Epic {
 
 	/**
 	 * A main method for testing this class
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param args The command line args are expected to not be any
 	 */
 	public static void main(String[] args) {
@@ -190,8 +192,7 @@ public class Epic {
 
 			/**
 			 *
-			 * @author Christopher Lemire
-			 * <goodbye300@aim.com>
+			 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 			 */
 			private class EpicCatalogJsonItem {
 
@@ -205,8 +206,7 @@ public class Epic {
 
 				/**
 				 *
-				 * @author Christopher Lemire
-				 * <goodbye300@aim.com>
+				 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 				 */
 				private class EpicSearchStoreJsonItem {
 
@@ -220,8 +220,7 @@ public class Epic {
 
 					/**
 					 *
-					 * @author Christopher Lemire
-					 * <goodbye300@aim.com>
+					 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 					 */
 					private class EpicElementsJsonItem {
 
@@ -235,10 +234,12 @@ public class Epic {
 						 *
 						 * Class object { ... }
 						 * List<Class> object [ ... ]
+						 * 
+						 * All we care about is title and description where discountprice == 0
 						 */
-						private String title;
+						private String title; //XXX We are looking for this whenever discountprice == 0
 						private String id;
-						private String description;
+						private String description; //XXX We are looking for this whenever discountprice == 0
 						private String effectiveDate;
 						//private EpicKeyImagesJsonItem keyImages;
 						//private EpickeySellerJsonItem seller;
@@ -249,7 +250,7 @@ public class Epic {
 						//private ArrayList<EpicCustomAttributesJsonItem> customAttributes;
 						//private ArrayList<EpicCategoriesJsonItem> categories;
 						//private ArrayList<EpicTagsJsonItem> tags;
-						private EpicPriceJsonItem price;
+						private EpicPriceJsonItem price; //XXX We are looking for price -> totalprice -> discountprice
 						//private EpicPromotionsJsonItem promotions;
 
 						private String getColorString() {
@@ -299,16 +300,24 @@ public class Epic {
 							}
 
 							/**
-							 *
-							 * @author Christopher Lemire
-							 * <goodbye300@aim.com>
+							 * TODO discountprice should not be in both EpicPriceJsonItem ands EpicTotalPriceJsonItem
+							 * 
+							 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 							 */
 							private class EpicTotalPriceJsonItem {
 
+								private int discountPrice; //XXX We are looking for this when it's 0
+								private int originalPrice;
+								private int voucherDiscount;
+								private int discount;
+								private String currencyCode;
+								//currencyInfo	{…}
+								//fmtPrice	{…}
+
 								@Override
 								public String toString() {
-									return null;
 
+									return null;
 								}
 							}
 						}
@@ -320,8 +329,7 @@ public class Epic {
 
 	/**
 	 *
-	 * @author Christopher Lemire
-	 * <goodbye300@aim.com>
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private class EpicExtensionsJsonItem {
 
@@ -334,8 +342,7 @@ public class Epic {
 
 		/**
 		 *
-		 * @author Christopher Lemire
-		 * <goodbye300@aim.com>
+		 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 		 */
 		private class EpicCacheControlJsonItem {
 
