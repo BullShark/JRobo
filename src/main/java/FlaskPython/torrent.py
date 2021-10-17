@@ -76,12 +76,12 @@ def api_1337x(query, page=1, category=None):
         item={}
         link=tr.find("td", attrs={"class":"coll-1 name"}).find_all("a")[1]
         
-        item["href"]    = f"https://1337x.to{link['href']}"
-        item["name"]    = link.getText()
-        item["seeds"]   = tr.find("td", attrs={"class":"coll-2 seeds"}).getText()
-        item["leeches"] = tr.find("td", attrs={"class":"coll-3 leeches"}).getText()
-        item["date"]    = tr.find("td", attrs={"class":"coll-date"}).getText()
-        item["tinyurl"] = make_tiny(f"https://1337x.to{link['href']}")
+        item["href"]	= f"https://1337x.to{link['href']}"
+        item["name"]	= link.getText()
+        item["seeds"]	= tr.find("td", attrs={"class":"coll-2 seeds"}).getText()
+        item["leeches"]	= tr.find("td", attrs={"class":"coll-3 leeches"}).getText()
+        item["date"]	= tr.find("td", attrs={"class":"coll-date"}).getText()
+        item["tinyurl"]	= make_tiny(f"https://1337x.to{link['href']}")
 
         size = tr.find("td", attrs={"class":"coll-4 size mob-user"})
         size = size if size is not None else tr.find("td", attrs={"class":"coll-4 size mob-vip"})
