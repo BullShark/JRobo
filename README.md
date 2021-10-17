@@ -85,7 +85,7 @@ Requirements
     $ wget https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar
     $ cd src/main/java
     $ javac -classpath ../../../gson-2.8.8.jar:. jrobo/expectusafterlun/ch/JRobo.java
-    $ java -classpath ../../../gson-2.8.8.jar:. jrobo.JRobo
+    $ java -classpath ../../../gson-2.8.8.jar:. jrobo.expectusafterlun.ch.JRobo
 
 # Windows
 
