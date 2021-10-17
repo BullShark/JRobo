@@ -81,10 +81,11 @@ Requirements
     $ # The rest is the same as above
 
 ### Compile and run without Gradle
-    $ cd src
-    $ # Download gson jar
-    $ javac -classpath ../lib/gson-2.8.6.jar:. jrobo/JRobo.java
-    $ java -classpath ../lib/gson-2.8.6.jar:. jrobo.JRobo
+    $ # Download gson jar to the project root where it's easy to find
+    $ wget https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar -O gson-2.8.8.jar
+    $ cd src/main/java
+    $ javac -classpath ../../../gson-2.8.8.jar:. jrobo/expectusafterlun/ch/JRobo.java
+    $ java -classpath ../../../gson-2.8.8.jar:. jrobo.JRobo
 
 # Windows
 
@@ -104,3 +105,4 @@ Now go into Netbeans and click File->Open Project. Browse to ~/NetbeansProjects 
 OR:
 
 From Netbeans, use the Git plugin to clone this Netbeans project.
+/main/java
