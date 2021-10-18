@@ -48,12 +48,13 @@ public class Epic {
 	 * 	https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
 	 */
 	//private final String BASE_URL = "https://invalid.not.a.real.domain";
-	private final String BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
+	private final String BASE_URL;
 	private final String LOCALE;
 	private final String COUNTRYCODE;
 
 	/**
-	 *
+	 * The constructor initializes global variables, LOCALE, COUNTRYCODE, and BASE_URL
+	 * 
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public Epic() {
@@ -61,12 +62,12 @@ public class Epic {
 		/* Miscellaneous */
 		LOCALE = "en-US";
 		COUNTRYCODE = "TR";
-//		defaultLimit = 5;
+		BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
 	}
 
 	/**
 	 *
-	 * @return Json data from the Epic api
+	 * @return Json data from the Epic API
 	 */
 	private String getJson() {
 
@@ -161,9 +162,9 @@ public class Epic {
 		 * Class object { ... }; List<Class> object [ ... ];
 		 */
 		private EpicDataJsonItem data;
-		private EpicExtensionsJsonItem extensions;
 
 		private String getColorString() {
+
 			String result = "";
 
 			return result;
@@ -175,7 +176,7 @@ public class Epic {
 		 */
 		@Override
 		public String toString() {
-			return "data: " + data + "extensions: " + extensions;
+			return data.toString();
 		}
 
 		/**
@@ -188,8 +189,8 @@ public class Epic {
 
 			@Override
 			public String toString() {
-				return "Catalog: " + Catalog;
 
+				return Catalog.toString();
 			}
 
 			/**
@@ -202,8 +203,8 @@ public class Epic {
 
 				@Override
 				public String toString() {
-					return "searchStore: " + searchStore;
 
+					return searchStore.toString();
 				}
 
 				/**
@@ -216,8 +217,8 @@ public class Epic {
 
 					@Override
 					public String toString() {
-						return "elements: " + elements;
 
+						return elements.toString();
 					}
 
 					/**
@@ -265,12 +266,7 @@ public class Epic {
 						public String toString() {
 
 							return "title: " + title + "\n"
-								+ "id: " + id + "\n"
 								+ "description: " + description + "\n"
-								+ "effectiveDate" + effectiveDate + "\n"
-								+ "productSlug: " + productSlug + "\n"
-								+ "urlSlug: " + urlSlug + "\n"
-								+ "url: " + url + "\n"
 								+ "price: " + price + "\n";
 						}
 
@@ -283,22 +279,18 @@ public class Epic {
 							// Class object { ... }
 							// List<Class> object [ ... ]
 							private EpicTotalPriceJsonItem totalPrice;
-							private int discountPrice; //TODO Find where this is 0
-							private int originalPrice;
-							private int voucherDiscount;
-							private int discount;
-							private String currencyCode;
+							//private int discountPrice; //TODO Find where this is 0
+							//private int originalPrice;
+							//private int voucherDiscount;
+							//private int discount;
+							//private String currencyCode;
 							//private EpicCurrencyInfoJsonItem currencyInfo;
 							//private EpicfmtPriceJsonItem fmtPrice;
 
 							@Override
 							public String toString() {
-								return "totalPrice: " + totalPrice
-									+ "discountPrice: " + discountPrice + "\n"
-									+ "originalPrice: " + originalPrice + "\n"
-									+ "voucherDiscount: " + voucherDiscount + "\n"
-									+ "discount: " + discount + "\n"
-									+ "currencyCode: " + currencyCode + "\n";
+
+								return totalPrice.toString();
 							}
 
 							/**
@@ -313,13 +305,24 @@ public class Epic {
 								private int voucherDiscount;
 								private int discount;
 								private String currencyCode;
-								//currencyInfo	{…}
-								//fmtPrice	{…}
+
+								/**
+								 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+								 * @return If this contains the price for a free game or not
+								 */
+								public boolean isFree() {
+									return (discountPrice == 0);
+								}
 
 								@Override
 								public String toString() {
 
-									return null;
+									return 
+										"discountPrice: " + discountPrice + '\n'
+										+ "originalPrice: " + originalPrice + '\n'
+										+ "voucherDiscount: " + voucherDiscount + '\n'
+										+ "discount: " + discount + '\n'
+										+ "currencyCode: " + currencyCode;
 								}
 							}
 						}
@@ -328,34 +331,5 @@ public class Epic {
 			}
 		}
 	}
-
-	/**
-	 *
-	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-	 */
-	private class EpicExtensionsJsonItem {
-
-		private EpicCacheControlJsonItem cacheControl;
-
-		@Override
-		public String toString() {
-			return "cacheControl " + cacheControl;
-		}
-
-		/**
-		 *
-		 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-		 */
-		private class EpicCacheControlJsonItem {
-
-			private String version;
-			//private List<EpicHintsJsonItem> hints;
-
-			@Override
-			public String toString() {
-				return null;
-			}
-		} // EOF EpicCacheControlJsonItem
-	} // EOF EpicExtensionsJsonItem
 } // EOF Epic
 
