@@ -107,5 +107,6 @@ OR:
 From Netbeans, use the Git plugin to clone this Netbeans project.
 /main/java
 
-Documentation: 
- http://expectusafterlun.ch/JRobo/docs/javadoc/jrobo/expectusafterlun/ch/package-summary.html
+### Documentation: 
+
+http://expectusafterlun.ch/JRobo/docs/javadoc/jrobo/expectusafterlun/ch/package-summary.html
