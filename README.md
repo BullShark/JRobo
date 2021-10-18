@@ -82,10 +82,10 @@ Requirements
 
 ### Compile and run without Gradle
     $ # Download gson jar to the project root where it's easy to find
-    $ wget https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar -O gson-2.8.8.jar
+    $ wget https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar
     $ cd src/main/java
     $ javac -classpath ../../../gson-2.8.8.jar:. jrobo/expectusafterlun/ch/JRobo.java
-    $ java -classpath ../../../gson-2.8.8.jar:. jrobo.JRobo
+    $ java -classpath ../../../gson-2.8.8.jar:. jrobo.expectusafterlun.ch.JRobo
 
 # Windows
 
