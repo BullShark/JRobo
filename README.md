@@ -94,8 +94,6 @@ Tested, and it works.
 ## Develop
 
 Contact me (BullShark) if you would like to contribute to this project, and you might be able to become a collaborator.
- 
-Documentation: http://expectusafterlun.ch/JRobo/docs/javadoc/jrobo/expectusafterlun/ch/package-summary.html
 
 This works best under Netbeans, but you can choose a different development environment. It is recommended to use my custom build.xml to include Google's GSON for JSON library and other jar libraries bundled with JRobo.jar.
 
@@ -108,3 +106,6 @@ OR:
 
 From Netbeans, use the Git plugin to clone this Netbeans project.
 /main/java
+
+Documentation: 
+ http://expectusafterlun.ch/JRobo/docs/javadoc/jrobo/expectusafterlun/ch/package-summary.html
