@@ -1,31 +1,20 @@
 from __future__ import with_statement                                                        
 
-import flask
-import requests
+
 import random
 import string
-from flask import request, jsonify
+import sys
+import urllib.parse
+
+import requests
+
+from flask import Flask, request, jsonify
 from bs4 import BeautifulSoup
 
-import contextlib
-  
-try:
-    from urllib.parse import urlencode          
-  
-except ImportError:
-    from urllib import urlencode
-  
-try:
-    from urllib.request import urlopen
-  
-except ImportError:
-    from urllib2 import urlopen
-  
-import sys
-
-app = flask.Flask(__name__)
+app = Flask(__name__)
 app.config["DEBUG"] = True
-app.config["API_KEY"] = ''.join(random.SystemRandom().choice(string.ascii_lowercase+string.ascii_uppercase + string.digits) for _ in range(32))
+#app.config["API_KEY"] = ''.join(random.SystemRandom().choice(string.ascii_lowercase+string.ascii_uppercase + string.digits) for _ in range(32))
+app.config["API_KEY"] = "test"
 
 @app.route('/thepiratebay/<query>/<page>', methods=['GET'])
 def api_thepiratebay(query, page=0):
@@ -48,6 +37,8 @@ We can also filter by categories:
     <option value="/category-search/test/Other/1/">
     <option value="/category-search/test/XXX/1/">
 """
+@app.route('/1337x/<query>', methods=['GET'])
+@app.route('/1337x/<query>/<page>', methods=['GET'])
 @app.route('/1337x/<query>/<page>/<category>', methods=['GET'])
 def api_1337x(query, page=1, category=None):
     if request.headers.get("API_KEY") != app.config["API_KEY"]:
@@ -60,7 +51,7 @@ def api_1337x(query, page=1, category=None):
     elif category not in ["Movies","TV","Games","Music","Apps","Documentaries","Anime","Other","XXX"]:
         return jsonify({"error": "unknown category"})
     else:
-        url=f"https://1337x.to/search/{query}/{category}/{page}/"
+        url=f"https://1337x.to/category-search/{query}/{category}/{page}/"
 
     resp=requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
     
@@ -81,7 +72,7 @@ def api_1337x(query, page=1, category=None):
         item["seeds"]	= tr.find("td", attrs={"class":"coll-2 seeds"}).getText()
         item["leeches"]	= tr.find("td", attrs={"class":"coll-3 leeches"}).getText()
         item["date"]	= tr.find("td", attrs={"class":"coll-date"}).getText()
-        item["tinyurl"]	= make_tiny(f"https://1337x.to{link['href']}")
+        item["tinyurl"]	= make_tiny(item["href"])
 
         size = tr.find("td", attrs={"class":"coll-4 size mob-user"})
         size = size if size is not None else tr.find("td", attrs={"class":"coll-4 size mob-vip"})
@@ -99,13 +90,11 @@ def api_1337x(query, page=1, category=None):
         else:
             item["size"]="Unknown"
         results.append(item)
-        
-
     return jsonify(results)
+
 def make_tiny(url):
-    request_url = ('http://tinyurl.com/api-create.php?' + url)
-    with contextlib.closing(urlopen(request_url)) as response:
-        return response.read().decode('utf-8 ')
+    resp = requests.get(f"http://tinyurl.com/api-create.php?url={url}")
+    return str(resp.content, "utf-8")
 
 print("[*] API_KEY: {}".format(app.config["API_KEY"]))
 app.run(host="0.0.0.0")
