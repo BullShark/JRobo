@@ -72,6 +72,7 @@ public class Epic {
 	private String getJson() {
 
 		String json = "";
+
 		final String URL = (BASE_URL
 			+ "/freeGamesPromotions"
 			+ "?locale=" + LOCALE
@@ -130,7 +131,7 @@ public class Epic {
 
 		}
 	}
-
+	
 	/**
 	 * A main method for testing this class
 	 * 
@@ -241,14 +242,9 @@ public class Epic {
 						 * All we care about is title and description where discountprice == 0
 						 */
 						private String title; //XXX We are looking for this whenever discountprice == 0
-						private String id;
 						private String description; //XXX We are looking for this whenever discountprice == 0
-						private String effectiveDate;
 						//private EpicKeyImagesJsonItem keyImages;
 						//private EpickeySellerJsonItem seller;
-						private String productSlug;
-						private String urlSlug;
-						private String url;
 						//private ArrayList<EpicItemsJsonItem> items;
 						//private ArrayList<EpicCustomAttributesJsonItem> customAttributes;
 						//private ArrayList<EpicCategoriesJsonItem> categories;
@@ -265,9 +261,10 @@ public class Epic {
 						@Override
 						public String toString() {
 
-							return "title: " + title + "\n"
+							return 
+								"title: " + title + "\n"
 								+ "description: " + description + "\n"
-								+ "price: " + price + "\n";
+								+ price.toString() + "\n";
 						}
 
 						/**
@@ -302,8 +299,6 @@ public class Epic {
 
 								private int discountPrice; //XXX We are looking for this when it's 0
 								private int originalPrice;
-								private int voucherDiscount;
-								private int discount;
 								private String currencyCode;
 
 								/**
@@ -318,11 +313,9 @@ public class Epic {
 								public String toString() {
 
 									return 
-										"discountPrice: " + discountPrice + '\n'
-										+ "originalPrice: " + originalPrice + '\n'
-										+ "voucherDiscount: " + voucherDiscount + '\n'
-										+ "discount: " + discount + '\n'
-										+ "currencyCode: " + currencyCode;
+										"Discount Price: " + discountPrice + '\n'
+										+ "Original Price: " + originalPrice + '\n'
+										+ "Currency Code: " + currencyCode + '\n';
 								}
 							}
 						}
