@@ -52,7 +52,6 @@ public class Leet {
 	 */
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private String fullUrl;
-	private String json;
 	private final int MAX_RESULTS = 3;
 	private String query;
 	private final String API_KEY;
@@ -70,7 +69,7 @@ public class Leet {
 	 *
 	 * Valid CATEGORIES (case sensitive):
 	 *
-	 * 	Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX
+	 * 	Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All
 	 *
 	 * Omit CATEGORY to search ALL.
 	 */
@@ -78,6 +77,7 @@ public class Leet {
 
 	/* For the Gson/Json */
 	private Gson gson;
+	private String json;
 
 	/**
 	 * Constructor that expects a Config and Search made up of a category and query used to contact the API
@@ -162,8 +162,9 @@ public class Leet {
 
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
-				.headers("Content-Type", "application/json")
-				.setHeader("API_KEY", API_KEY)
+				.headers("Content-Type", "application/json", 
+                                        "API_KEY", API_KEY)
+//				.setHeader("API_KEY", API_KEY)
 				.uri(URI.create(fullUrl))
 				.build();
 
