@@ -23,7 +23,6 @@ def api_thepiratebay(query, page=0):
 
     return jsonify(results)
 
-
 """
 Parse 1337x results and return them as JSON.
 """
@@ -83,7 +82,6 @@ def api_1337x(query, page, category, sort_by, sort_order):
                 item["size"]=size.contents[0]
             else:
                 item["size"]="Unknown"
-
 
             user = tr.find("td", attrs={"class":"coll-5 user"})
             user = user if user is not None else tr.find("td", attrs={"class":"coll-5 vip"})
