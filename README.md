@@ -8,7 +8,7 @@
 
 [teslasolutions](https://github.com/teslasolution "Developer") (Kamal Sajid)
 
-[n0tme](https://github.com/thatsn0tmysite) (Anonymous)
+[n0tme](https://github.com/thatsn0tmysite) (thatsn0tmysite on matrix)
 
 ## About
 
@@ -81,10 +81,11 @@ Requirements
     $ # The rest is the same as above
 
 ### Compile and run without Gradle
-    $ cd src
-    $ # Download gson jar
-    $ javac -classpath ../lib/gson-2.8.6.jar:. jrobo/JRobo.java
-    $ java -classpath ../lib/gson-2.8.6.jar:. jrobo.JRobo
+    $ # Download gson jar to the project root where it's easy to find
+    $ wget https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar
+    $ cd src/main/java
+    $ javac -classpath ../../../gson-2.8.8.jar:. jrobo/expectusafterlun/ch/JRobo.java
+    $ java -classpath ../../../gson-2.8.8.jar:. jrobo.expectusafterlun.ch.JRobo
 
 # Windows
 
@@ -104,3 +105,8 @@ Now go into Netbeans and click File->Open Project. Browse to ~/NetbeansProjects 
 OR:
 
 From Netbeans, use the Git plugin to clone this Netbeans project.
+/main/java
+
+### Developer Documentation
+
+http://expectusafterlun.ch/JRobo/docs/javadoc/jrobo/expectusafterlun/ch/package-summary.html

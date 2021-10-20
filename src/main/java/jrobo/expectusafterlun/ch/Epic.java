@@ -32,7 +32,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * The goal of this class is to get a list of free games, names and description, and send them to the irc channel when the epic command is called
+ * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  * @since 10-11-21
  */
@@ -47,12 +48,13 @@ public class Epic {
 	 * 	https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
 	 */
 	//private final String BASE_URL = "https://invalid.not.a.real.domain";
-	private final String BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
+	private final String BASE_URL;
 	private final String LOCALE;
 	private final String COUNTRYCODE;
 
 	/**
-	 *
+	 * The constructor initializes global variables, LOCALE, COUNTRYCODE, and BASE_URL
+	 * 
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public Epic() {
@@ -60,12 +62,12 @@ public class Epic {
 		/* Miscellaneous */
 		LOCALE = "en-US";
 		COUNTRYCODE = "TR";
-//		defaultLimit = 5;
+		BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
 	}
 
 	/**
 	 *
-	 * @return Json data from the Epic api
+	 * @return Json data from the Epic API
 	 */
 	private String getJson() {
 
@@ -75,6 +77,7 @@ public class Epic {
 			+ "?locale=" + LOCALE
 			+ "&country=" + COUNTRYCODE
 			+ "&allowCountries=" + COUNTRYCODE).replaceAll(" ", "%20");
+
 		System.out.println("[+++]\t" + URL);
 
 		/* Create a URL obj from strings */
@@ -130,6 +133,8 @@ public class Epic {
 
 	/**
 	 * A main method for testing this class
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param args The command line args are expected to not be any
 	 */
 	public static void main(String[] args) {
@@ -157,9 +162,9 @@ public class Epic {
 		 * Class object { ... }; List<Class> object [ ... ];
 		 */
 		private EpicDataJsonItem data;
-		private EpicExtensionsJsonItem extensions;
 
 		private String getColorString() {
+
 			String result = "";
 
 			return result;
@@ -171,7 +176,7 @@ public class Epic {
 		 */
 		@Override
 		public String toString() {
-			return "data: " + data + "extensions: " + extensions;
+			return data.toString();
 		}
 
 		/**
@@ -184,14 +189,13 @@ public class Epic {
 
 			@Override
 			public String toString() {
-				return "Catalog: " + Catalog;
 
+				return Catalog.toString();
 			}
 
 			/**
 			 *
-			 * @author Christopher Lemire
-			 * <goodbye300@aim.com>
+			 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 			 */
 			private class EpicCatalogJsonItem {
 
@@ -199,14 +203,13 @@ public class Epic {
 
 				@Override
 				public String toString() {
-					return "searchStore: " + searchStore;
 
+					return searchStore.toString();
 				}
 
 				/**
 				 *
-				 * @author Christopher Lemire
-				 * <goodbye300@aim.com>
+				 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 				 */
 				private class EpicSearchStoreJsonItem {
 
@@ -214,14 +217,13 @@ public class Epic {
 
 					@Override
 					public String toString() {
-						return "elements: " + elements;
 
+						return elements.toString();
 					}
 
 					/**
 					 *
-					 * @author Christopher Lemire
-					 * <goodbye300@aim.com>
+					 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 					 */
 					private class EpicElementsJsonItem {
 
@@ -235,10 +237,12 @@ public class Epic {
 						 *
 						 * Class object { ... }
 						 * List<Class> object [ ... ]
+						 * 
+						 * All we care about is title and description where discountprice == 0
 						 */
-						private String title;
+						private String title; //XXX We are looking for this whenever discountprice == 0
 						private String id;
-						private String description;
+						private String description; //XXX We are looking for this whenever discountprice == 0
 						private String effectiveDate;
 						//private EpicKeyImagesJsonItem keyImages;
 						//private EpickeySellerJsonItem seller;
@@ -249,7 +253,7 @@ public class Epic {
 						//private ArrayList<EpicCustomAttributesJsonItem> customAttributes;
 						//private ArrayList<EpicCategoriesJsonItem> categories;
 						//private ArrayList<EpicTagsJsonItem> tags;
-						private EpicPriceJsonItem price;
+						private EpicPriceJsonItem price; //XXX We are looking for price -> totalprice -> discountprice
 						//private EpicPromotionsJsonItem promotions;
 
 						private String getColorString() {
@@ -262,54 +266,63 @@ public class Epic {
 						public String toString() {
 
 							return "title: " + title + "\n"
-								+ "id: " + id + "\n"
 								+ "description: " + description + "\n"
-								+ "effectiveDate" + effectiveDate + "\n"
-								+ "productSlug: " + productSlug + "\n"
-								+ "urlSlug: " + urlSlug + "\n"
-								+ "url: " + url + "\n"
 								+ "price: " + price + "\n";
 						}
 
 						/**
-						 *
-						 * @author Christopher Lemire
-						 * <goodbye300@aim.com>
+						 * Find where discount price == 0
+						 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 						 */
 						private class EpicPriceJsonItem {
 
 							// Class object { ... }
 							// List<Class> object [ ... ]
 							private EpicTotalPriceJsonItem totalPrice;
-							private int discountPrice;
-							private int originalPrice;
-							private int voucherDiscount;
-							private int discount;
-							private String currencyCode;
+							//private int discountPrice; //TODO Find where this is 0
+							//private int originalPrice;
+							//private int voucherDiscount;
+							//private int discount;
+							//private String currencyCode;
 							//private EpicCurrencyInfoJsonItem currencyInfo;
 							//private EpicfmtPriceJsonItem fmtPrice;
 
 							@Override
 							public String toString() {
-								return "totalPrice: " + totalPrice
-									+ "discountPrice: " + discountPrice + "\n"
-									+ "originalPrice: " + originalPrice + "\n"
-									+ "voucherDiscount: " + voucherDiscount + "\n"
-									+ "discount: " + discount + "\n"
-									+ "currencyCode: " + currencyCode + "\n";
+
+								return totalPrice.toString();
 							}
 
 							/**
-							 *
-							 * @author Christopher Lemire
-							 * <goodbye300@aim.com>
+							 * TODO discountprice should not be in both EpicPriceJsonItem ands EpicTotalPriceJsonItem
+							 * 
+							 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 							 */
 							private class EpicTotalPriceJsonItem {
 
+								private int discountPrice; //XXX We are looking for this when it's 0
+								private int originalPrice;
+								private int voucherDiscount;
+								private int discount;
+								private String currencyCode;
+
+								/**
+								 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+								 * @return If this contains the price for a free game or not
+								 */
+								public boolean isFree() {
+									return (discountPrice == 0);
+								}
+
 								@Override
 								public String toString() {
-									return null;
 
+									return 
+										"discountPrice: " + discountPrice + '\n'
+										+ "originalPrice: " + originalPrice + '\n'
+										+ "voucherDiscount: " + voucherDiscount + '\n'
+										+ "discount: " + discount + '\n'
+										+ "currencyCode: " + currencyCode;
 								}
 							}
 						}
@@ -318,36 +331,5 @@ public class Epic {
 			}
 		}
 	}
-
-	/**
-	 *
-	 * @author Christopher Lemire
-	 * <goodbye300@aim.com>
-	 */
-	private class EpicExtensionsJsonItem {
-
-		private EpicCacheControlJsonItem cacheControl;
-
-		@Override
-		public String toString() {
-			return "cacheControl " + cacheControl;
-		}
-
-		/**
-		 *
-		 * @author Christopher Lemire
-		 * <goodbye300@aim.com>
-		 */
-		private class EpicCacheControlJsonItem {
-
-			private String version;
-			//private List<EpicHintsJsonItem> hints;
-
-			@Override
-			public String toString() {
-				return null;
-			}
-		} // EOF EpicCacheControlJsonItem
-	} // EOF EpicExtensionsJsonItem
 } // EOF Epic
 

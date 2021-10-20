@@ -27,9 +27,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *
+ * Handles all bot commands with a switch and case as well as helper methods for each command
+ * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
- * TODO http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html
  */
 public class BotCommand {
 
@@ -48,7 +48,8 @@ public class BotCommand {
 	private final Jokes JOKE;
 
 	/**
-	 *
+	 * Constructor that initializes all globals of BotCommand and takes 3 arguments
+	 * 
 	 * @param CONNECTION Takes the CONNECTION created by JRobo.
 	 * @param CONFIG A Config object represents the bots configuration read in from Config.json
 	 * @param JROBO Class containing the main method for this bot
@@ -82,10 +83,10 @@ public class BotCommand {
 	 *
 	 * @param USER The user mentioned by a command given to JRobo
 	 * @param FULLCMD The full command not split into segments
-	 * TODO Accept raw irc commands from bot owner to be sent by the bot
-	 * TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 	 */
 	protected void bCommander(final String USER, final String FULLCMD) {
+	 //TODO Accept raw irc commands from bot owner to be sent by the bot
+	 //TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 		this.user = USER;
 		cmd = getCmd(FULLCMD);
 		cmdArgs = getCmdArgs(FULLCMD);
@@ -197,10 +198,10 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO divided half of the work getFormattedQuery is doing to here
+	 * Takes the full command "command arg1 arg2 arg3" and returns "arg1 arg2 arg3"
 	 * 
-	 * @param 
-	 * @return 
+	 * @param FULLCMD The full command given to the bot
+	 * @return The arguments only excluding the command given to the bot
 	 */
 	private String getCmdArgs(final String FULLCMD) {
 		
@@ -214,9 +215,10 @@ public class BotCommand {
 	} // EOF function
 
 	/**
+	 * Takes the full command "cmd arg1 arg2 arg3" and returns "cmd"
 	 *
-	 * @param 
-	 * @return 
+	 * @param The full command including the command and all arguments given to the bot
+	 * @return Only the command without the arguments given to the bot
 	 */
 	private String getCmd(final String FULLCMD) {
 
@@ -317,7 +319,8 @@ public class BotCommand {
 	}
 
 	/**
-	 * Puts together a String in the form http://lmgtfy.com/?q=test+a+b+c .
+	 * Puts together a String in the form http://lmgtfy.com/?q=test+a+b+c 
+	 * And sends it to the channel
 	 */
 	private void googleHelper() {
 		if (!hasArgs) {
@@ -341,9 +344,12 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO Implement me
+	 * Checks Epic's site with JSON every week and notifies the irc channel of new free games
 	 */
 	private void epicHelper() {
+	 //TODO Implement me
+	 //TODO Still a work in progress
+	 //TODO Needed JSON code and check only once a week code (Thursdays)
 		if(hasArgs) {
 	        	helpWrapper(cmd);
 
@@ -366,17 +372,16 @@ public class BotCommand {
 	        	helpWrapper(cmd);
 
         	} else {
-        		//connection.msgChannel(CONFIG.getChannel(), CONFIG.getCmdSymb() + cmd + " " + cmdArgs);
         		Weather w = new Weather(this.CONFIG);
 
 			try {
 				CONNECTION.msgChannel(CONFIG.getChannel(), w.getFormattedWeatherSummary(cmdArgs, true, 5) );
 
 			} catch (Weather.InvalidLocationException ex) {
+
 				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 
 				helpWrapper(cmd); //TODO Show the correct syntax for the command and the location here
-
 			}
 		}
 	}
@@ -405,17 +410,18 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO Write me
+	 * Helper to next! Another satisified customer
 	 */
 	private void nextHelper() {
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Another satisfied customer, NEXT!!!");
 	}
 
 	/**
-	 * TODO Fix this method
-	 * TODO Replace code with getHelp(cmd); //Overloaded method
+	 * Helper method to sending 1,000,000,000 invites to nick
 	 */
 	private void inviteNickHelper() {
+	 //TODO Fix this method
+	 //TODO Replace code with getHelp(cmd); //Overloaded method
 		if (true) {
 			return;
 		}
@@ -448,7 +454,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO Write me
+	 * Helper to invite all members of a channel
 	 */
 	private void inviteChannelHelper() {
 		String[] userArr;
@@ -563,7 +569,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * TODO Write me
+	 * Helper to send a raw IRC command by one of the masters only
 	 * FIXME Use Config.getMasters()
 	 */
 	private void rawHelper() {
@@ -672,7 +678,7 @@ public class BotCommand {
 			+ LC.colorToken("version, ", MircColors.GREEN)
 			+ LC.colorToken("quit|q", MircColors.GREEN));
 
-		//String noColorStr = (colorStr1 +colorStr2).replaceAll("(\\P{Print}|[0-9]{2})", "");
+		String noColorStr = (colorStr1 +colorStr2).replaceAll("(\\P{Print}|[0-9]{2})", "");
 		//System.out.println("String without colors: " + noColorStr);
 
 		CONNECTION.msgChannel(CONFIG.getChannel(), colorStr1);
@@ -690,7 +696,7 @@ public class BotCommand {
 	 * Wrapper Help command messages
 	 */
 	private void helpWrapper(final String CMD) {
-		//TODO help string for each command
+	//TODO help string for each command
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid usage of command: " + CMD);
 	}
 
@@ -726,12 +732,10 @@ public class BotCommand {
 	}
 
 	/**
-	 * Move to the channel in cmdArgs
+	 * Move from the current channel to the channel in cmdArgs
 	 */
 	private void moveToChannelHelper() {
 	 //TODO Only Masters
-
-       		CONFIG.setChannel(cmdArgs);
 		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 	}
 
@@ -805,7 +809,8 @@ public class BotCommand {
 
 	/**
 	 * This function will return a WIRE for a given COLOR and is only to be used within defuse.
-	 * @return 
+	 * 
+	 * @return True if wire COLOR is found, false otherwise
 	 */
 	private boolean wire(final String COLOR) {
 		switch (COLOR) {

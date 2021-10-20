@@ -3,12 +3,14 @@
     "second_name": "JRobo",
     "password": "pizzaandboobs",
     "masters": [
-      "BullShark"
+      "BullShark",
+      "drkrieger",
+      "zer0"
     ],
     "command_symbol":".",
     "network":"irc.acc.umu.se:6667",
     "channel":"#blackhats",
     "openweathermap_apikey":"0dcf84bfef65b293b5e3b444246ad6b2",
-    "torrent_apikey":"MuxcSEB5QpOpgCfehfk1SMRlS9s3QRsT"
+    "torrent_apikey":"n1eveSZElHP41iRl85SrNfIj7SYO8WVy"
 }
 
