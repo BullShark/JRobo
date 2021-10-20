@@ -49,14 +49,20 @@ public class Leet {
 	 *
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() )
 	 * "https://expectusafterlun.ch/1337x/{QUERY}/{PAGENUM}/{CATEGORY}/"
+	 *
+	 * For the HTTP Connection
 	 */
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private String fullUrl;
-	private final int MAX_RESULTS = 3;
 	private String query;
 	private final String API_KEY;
+
+	/*
+	 * Miscellaneous
+	 */
+	private final int MAX_RESULTS = 3;
 	private final Config CONFIG;
-	private final String PAGENUM = "1";
+	private final char PAGENUM = '1';
 
 	/*
 	 * Test this API with curl:
