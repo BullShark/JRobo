@@ -8,7 +8,7 @@
 
 [teslasolutions](https://github.com/teslasolution "Developer") (Kamal Sajid)
 
-[n0tme](https://github.com/thatsn0tmysite) (Anonymous)
+[n0tme](https://github.com/thatsn0tmysite) (thatsn0tmysite on matrix)
 
 ## About
 
