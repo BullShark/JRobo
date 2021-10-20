@@ -154,13 +154,15 @@ public class Leet {
 			/* 
 			 * Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
  	 		 * "https://expectusafterlun.ch/1337x.to/{QUERY}/{PAGENUM}/{CATEGORY}/"
+                            *
+                            * Do not URL encode this because the server does that
 			 */
 			if (!category.equals("")) {
 
-				fullUrl = String.format(BASE_URL + "/%s/%s/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM, category);
+				fullUrl = String.format(BASE_URL + "/%s/%s/%s", query, PAGENUM, category);
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = String.format(BASE_URL + "/%s/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM);
+				fullUrl = String.format(BASE_URL + "/%s/%s/", query, PAGENUM);
 			}
 
 			/* Debug */
@@ -168,8 +170,7 @@ public class Leet {
 
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
-				.headers("Content-Type", "application/json", 
-                                        "API_KEY", API_KEY)
+				.headers("Content-Type", "application/json", "API_KEY", API_KEY)
 //				.setHeader("API_KEY", API_KEY)
 				.uri(URI.create(fullUrl))
 				.build();
