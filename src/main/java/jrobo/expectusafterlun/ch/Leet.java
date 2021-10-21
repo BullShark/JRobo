@@ -159,10 +159,10 @@ public class Leet {
 			 */
 			if (!category.equals("")) {
 
-				fullUrl = String.format(BASE_URL + "/%s/%s/%s", query, PAGENUM, category);
+				fullUrl = String.format(BASE_URL + "/%s/%s/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM, category);
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = String.format(BASE_URL + "/%s/%s/", query, PAGENUM);
+                                    fullUrl = String.format(BASE_URL + "/%s/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM);
 			}
 
 			/* Debug */
