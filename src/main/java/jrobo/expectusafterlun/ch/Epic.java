@@ -234,9 +234,7 @@ public class Epic {
 					public String toString() {
 						String result = "";
 
-						for(EpicElementsJsonItem e : elements) {
-							result += e.toString();
-						}
+						result = elements.stream().map(e -> e.toString()).reduce(result, String::concat);
 
 						return result;
 					}
