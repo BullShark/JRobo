@@ -70,7 +70,7 @@ public class Weather {
 	 * Called by its wrapper method
 	 * 
 	 * @param LOCATION the location for the weather query
-	 * @return String The json weather results for the LOCATION
+	 * @return String The JSON weather results for the LOCATION
 	 */
 	protected String getJson(final String LOCATION) {
 
