@@ -32,7 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The goal of this class is to get a list of free games, names and description, and send them to the irc channel when the epic command is called
+ * The goal of this class is to get a list of free games, names and description, and send them to the IRC channel when the epic command is called
  * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  * @since 10-11-21
@@ -100,7 +100,7 @@ public class Epic {
 	}
 
 	/**
-	 * Retrieve the data as a summary with irc color codes and formatting if HASCOLORS or just return the names and values from the json
+	 * Retrieve the data as a summary with IRC color codes and formatting if HASCOLORS or just return the names and values from the JSON
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param HASCOLORS Should the formatted output use colors
@@ -251,10 +251,15 @@ public class Epic {
 						@Override
 						public String toString() {
 
-							return 
-								"title: " + title + "\n"
-								+ "description: " + description + "\n"
-								+ price.toString() + "\n";
+							if(price.totalPrice.isFree()) {
+
+								return 
+									"title: " + title + "\n"
+									+ "description: " + description + "\n"
+									+ price.toString() + "\n";
+							} else {
+								return "";
+							}
 						}
 
 						/**
@@ -279,7 +284,6 @@ public class Epic {
 							private class EpicTotalPriceJsonItem {
 
 								private int discountPrice; //XXX We are looking for this when it's 0
-								private int originalPrice;
 								private String currencyCode;
 
 								/**
@@ -294,9 +298,7 @@ public class Epic {
 								public String toString() {
 
 									return 
-										"Discount Price: " + discountPrice + '\n'
-										+ "Original Price: " + originalPrice + '\n'
-										+ "Currency Code: " + currencyCode + '\n';
+										"Price: " + discountPrice + ' ' + currencyCode + '\n';
 								}
 							}
 						}
