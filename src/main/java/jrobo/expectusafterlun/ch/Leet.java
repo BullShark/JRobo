@@ -49,6 +49,8 @@ public class Leet {
 	 *
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() )
 	 * "https://expectusafterlun.ch/1337x/{QUERY}/{PAGENUM}/{CATEGORY}/"
+	 *
+	 * For the HTTP Connection
 	 */
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private String fullUrl;
@@ -56,8 +58,13 @@ public class Leet {
 	private String query;
 	private final int MAX_RESULTS = 3;
 	private final String API_KEY;
+
+	/*
+	 * Miscellaneous
+	 */
+	private final int MAX_RESULTS = 3;
 	private final Config CONFIG;
-	private final String PAGENUM = "1";
+	private final char PAGENUM = '1';
 
 	/*
 	 * Test this API with curl:
@@ -70,7 +77,7 @@ public class Leet {
 	 *
 	 * Valid CATEGORIES (case sensitive):
 	 *
-	 * 	Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX
+	 * 	Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All
 	 *
 	 * Omit CATEGORY to search ALL.
 	 */
@@ -78,6 +85,7 @@ public class Leet {
 
 	/* For the Gson/Json */
 	private Gson gson;
+	private String json;
 
 	/**
 	 * Constructor that expects a Config and Search made up of a category and query used to contact the API
@@ -156,13 +164,15 @@ public class Leet {
 			/* 
 			 * Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
  	 		 * "https://expectusafterlun.ch/1337x.to/{QUERY}/{PAGENUM}/{CATEGORY}/"
+                            *
+                            * Do not URL encode this because the server does that
 			 */
 			if (!category.equals("")) {
 
 				fullUrl = String.format(BASE_URL + "/%s/%s/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM, category);
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = String.format(BASE_URL + "/%s/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM);
+                                    fullUrl = String.format(BASE_URL + "/%s/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM);
 			}
 
 			/* Debug */

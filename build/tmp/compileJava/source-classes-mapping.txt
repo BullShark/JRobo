@@ -2,21 +2,6 @@ jrobo/expectusafterlun/ch/TermColors.java
  jrobo.expectusafterlun.ch.TermColors
  jrobo.expectusafterlun.ch.TermColors$Attribute
  jrobo.expectusafterlun.ch.TermColors$Color
-jrobo/expectusafterlun/ch/PirateBay.java
- jrobo.expectusafterlun.ch.PirateBay
- jrobo.expectusafterlun.ch.PirateBay$PirateBayJsonItem
-jrobo/expectusafterlun/ch/WireColor.java
- jrobo.expectusafterlun.ch.WireColor
-jrobo/expectusafterlun/ch/UrbanDict.java
- jrobo.expectusafterlun.ch.UrbanDict
- jrobo.expectusafterlun.ch.UrbanDict$1
- jrobo.expectusafterlun.ch.UrbanDict$UrbanJson
- jrobo.expectusafterlun.ch.UrbanDict$UrbanJson$1
- jrobo.expectusafterlun.ch.UrbanDict$UrbanJson$UrbanJsonItem
-jrobo/expectusafterlun/ch/MircColors.java
- jrobo.expectusafterlun.ch.MircColors
-jrobo/expectusafterlun/ch/ListColors.java
- jrobo.expectusafterlun.ch.ListColors
 jrobo/expectusafterlun/ch/FileReader.java
  jrobo.expectusafterlun.ch.FileReader
 jrobo/expectusafterlun/ch/Weather.java
@@ -31,20 +16,40 @@ jrobo/expectusafterlun/ch/Weather.java
  jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherSysJsonItem
  jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherWeatherJsonItem
  jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherWindJsonItem
+jrobo/expectusafterlun/ch/UrbanDict.java
+ jrobo.expectusafterlun.ch.UrbanDict
+ jrobo.expectusafterlun.ch.UrbanDict$1
+ jrobo.expectusafterlun.ch.UrbanDict$UrbanJson
+ jrobo.expectusafterlun.ch.UrbanDict$UrbanJson$1
+ jrobo.expectusafterlun.ch.UrbanDict$UrbanJson$UrbanJsonItem
+jrobo/expectusafterlun/ch/DownForEveryone.java
+ jrobo.expectusafterlun.ch.DownForEveryone
+jrobo/expectusafterlun/ch/Jokes.java
+ jrobo.expectusafterlun.ch.Jokes
 jrobo/expectusafterlun/ch/Config.java
  jrobo.expectusafterlun.ch.Config
+jrobo/expectusafterlun/ch/BotCommand.java
+ jrobo.expectusafterlun.ch.BotCommand
+ jrobo.expectusafterlun.ch.BotCommand$1
+ jrobo.expectusafterlun.ch.BotCommand$1BombTask
+jrobo/expectusafterlun/ch/JRobo.java
+ jrobo.expectusafterlun.ch.JRobo
+jrobo/expectusafterlun/ch/ListColors.java
+ jrobo.expectusafterlun.ch.ListColors
+jrobo/expectusafterlun/ch/IRCTester.java
+ jrobo.expectusafterlun.ch.IRCTester
 jrobo/expectusafterlun/ch/Leet.java
  jrobo.expectusafterlun.ch.Leet
  jrobo.expectusafterlun.ch.Leet$LeetJsonItem
+jrobo/expectusafterlun/ch/WireColor.java
+ jrobo.expectusafterlun.ch.WireColor
+jrobo/expectusafterlun/ch/MircColors.java
+ jrobo.expectusafterlun.ch.MircColors
 jrobo/expectusafterlun/ch/Networking.java
  jrobo.expectusafterlun.ch.Networking
-jrobo/expectusafterlun/ch/DownForEveryone.java
- jrobo.expectusafterlun.ch.DownForEveryone
 jrobo/expectusafterlun/ch/Epic.java
  jrobo.expectusafterlun.ch.Epic
  jrobo.expectusafterlun.ch.Epic$1
- jrobo.expectusafterlun.ch.Epic$EpicExtensionsJsonItem
- jrobo.expectusafterlun.ch.Epic$EpicExtensionsJsonItem$EpicCacheControlJsonItem
  jrobo.expectusafterlun.ch.Epic$EpicJson
  jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem
  jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem
@@ -52,13 +57,6 @@ jrobo/expectusafterlun/ch/Epic.java
  jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem
  jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem$EpicPriceJsonItem
  jrobo.expectusafterlun.ch.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem$EpicPriceJsonItem$EpicTotalPriceJsonItem
-jrobo/expectusafterlun/ch/Jokes.java
- jrobo.expectusafterlun.ch.Jokes
-jrobo/expectusafterlun/ch/IRCTester.java
- jrobo.expectusafterlun.ch.IRCTester
-jrobo/expectusafterlun/ch/BotCommand.java
- jrobo.expectusafterlun.ch.BotCommand
- jrobo.expectusafterlun.ch.BotCommand$1
- jrobo.expectusafterlun.ch.BotCommand$1BombTask
-jrobo/expectusafterlun/ch/JRobo.java
- jrobo.expectusafterlun.ch.JRobo
+jrobo/expectusafterlun/ch/PirateBay.java
+ jrobo.expectusafterlun.ch.PirateBay
+ jrobo.expectusafterlun.ch.PirateBay$PirateBayJsonItem
