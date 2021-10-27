@@ -109,7 +109,7 @@ public class Epic {
 	 */
 	protected String getFormattedEpicSummary(final boolean HASCOLORS, final int LIMIT) {
 
-		String result;
+		String result = "";
 		try {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			EpicJson epicJson = gson.fromJson(this.getJson(), EpicJson.class);
@@ -119,13 +119,13 @@ public class Epic {
 
 			result = (HASCOLORS) ? epicJson.getColorString() : epicJson.toString();
 
-			return result;
-
 		} catch (JsonSyntaxException | IllegalStateException | NullPointerException ex) {
+
 			Logger.getLogger(Epic.class.getName()).log(Level.SEVERE, null, ex);
 			result = "{ \"data\": \"Unable to retrieve Epic json data\" }";
-			return result;
+		} finally {
 
+			return result;
 		}
 	}
 	
