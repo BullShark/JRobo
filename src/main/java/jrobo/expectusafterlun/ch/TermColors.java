@@ -52,6 +52,9 @@ public class TermColors {
         }
     } 
 
+    /**
+     * Available Attributes for formatting are RESET, BRIGHT, DIM, UNDERLINE, BLINK, REVERSE, and HIDDEN.
+     */
     public static enum Attribute {
         RESET(0), BRIGHT(1), DIM(2),
         UNDERLINE(3), BLINK(4),
