@@ -347,14 +347,11 @@ public class BotCommand {
 	 * Checks Epic's site with JSON every week and notifies the irc channel of new free games
 	 */
 	private void epicHelper() {
-	 //TODO Implement me
-	 //TODO Still a work in progress
-	 //TODO Needed JSON code and check only once a week code (Thursdays)
 		if(hasArgs) {
-	        	helpWrapper(cmd);
+	        		helpWrapper(cmd);
 
-        	} else {
-        		//connection.msgChannel(CONFIG.getChannel(), CONFIG.getCmdSymb() + cmd + " " + cmdArgs); // Uncomment to see the command and args being used
+        		} else {
+        			//CONNECTION.msgChannel(CONFIG.getChannel(), CONFIG.getCmdSymb() + cmd + " " + cmdArgs); // Uncomment to see the command and args being used
 
 			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(false, -1));
 			
