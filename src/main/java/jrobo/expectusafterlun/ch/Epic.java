@@ -58,7 +58,7 @@ public class Epic {
 
 		/* Miscellaneous */
 		LOCALE = "en-US";
-		COUNTRYCODE = "TR";
+		COUNTRYCODE = "US";
 		BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
 	}
 
