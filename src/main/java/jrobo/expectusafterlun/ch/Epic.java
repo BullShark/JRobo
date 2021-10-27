@@ -240,14 +240,7 @@ public class Epic {
 						 */
 						private String title; //XXX We are looking for this whenever discountprice == 0
 						private String description; //XXX We are looking for this whenever discountprice == 0
-						//private EpicKeyImagesJsonItem keyImages;
-						//private EpickeySellerJsonItem seller;
-						//private ArrayList<EpicItemsJsonItem> items;
-						//private ArrayList<EpicCustomAttributesJsonItem> customAttributes;
-						//private ArrayList<EpicCategoriesJsonItem> categories;
-						//private ArrayList<EpicTagsJsonItem> tags;
 						private EpicPriceJsonItem price; //XXX We are looking for price -> totalprice -> discountprice
-						//private EpicPromotionsJsonItem promotions;
 
 						private String getColorString() {
 							String result = "";
@@ -270,16 +263,7 @@ public class Epic {
 						 */
 						private class EpicPriceJsonItem {
 
-							// Class object { ... }
-							// List<Class> object [ ... ]
 							private EpicTotalPriceJsonItem totalPrice;
-							//private int discountPrice; //TODO Find where this is 0
-							//private int originalPrice;
-							//private int voucherDiscount;
-							//private int discount;
-							//private String currencyCode;
-							//private EpicCurrencyInfoJsonItem currencyInfo;
-							//private EpicfmtPriceJsonItem fmtPrice;
 
 							@Override
 							public String toString() {
