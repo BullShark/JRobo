@@ -185,6 +185,11 @@ public class Epic {
 
 			private EpicCatalogJsonItem Catalog;
 
+			private String getColorString() {
+
+				return "";
+			}
+
 			@Override
 			public String toString() {
 
@@ -199,6 +204,10 @@ public class Epic {
 
 				private EpicSearchStoreJsonItem searchStore;
 
+				private String getColorString() {
+					return "";
+				}
+
 				@Override
 				public String toString() {
 
@@ -212,6 +221,10 @@ public class Epic {
 				private class EpicSearchStoreJsonItem {
 
 					private ArrayList<EpicElementsJsonItem> elements;
+
+					private String getColorString() {
+						return "";
+					}
 
 					@Override
 					public String toString() {
@@ -270,6 +283,10 @@ public class Epic {
 
 							private EpicTotalPriceJsonItem totalPrice;
 
+							private String getColorString() {
+								return "";
+							}
+
 							@Override
 							public String toString() {
 
@@ -292,6 +309,10 @@ public class Epic {
 								 */
 								public boolean isFree() {
 									return (discountPrice == 0);
+								}
+
+								private String getColorString() {
+									return "";
 								}
 
 								@Override
