@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  */
 public class Weather {
 
-	/*
+	/**
 	 * OpenWeatherMap API URL and URL Parameters
 	 *
 	 * Guide for OpenWeatherMap API: https://web.stanford.edu/group/csp/cs22/using-an-api.pdf
@@ -51,6 +51,7 @@ public class Weather {
 	private final String APIKEY;
 
 	/**
+	 * Constructor that takes a Config object for retriving the API Key
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param CONFIG Used to retrieve the API Key
@@ -67,6 +68,7 @@ public class Weather {
         
 	/**
 	 * Called by its wrapper method
+	 * 
 	 * @param LOCATION the location for the weather query
 	 * @return String The json weather results for the LOCATION
 	 */
