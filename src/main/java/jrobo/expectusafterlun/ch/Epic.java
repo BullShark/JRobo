@@ -223,7 +223,8 @@ public class Epic {
 					private ArrayList<EpicElementsJsonItem> elements;
 
 					private String getColorString() {
-						return "";
+//						return elements.getColorString(); //TODO FIXME Why is the method not found???
+						return elements.toString();
 					}
 
 					@Override
@@ -256,9 +257,19 @@ public class Epic {
 						private EpicPriceJsonItem price; //XXX We are looking for price -> totalprice -> discountprice
 
 						private String getColorString() {
-							String result = "";
 
-							return result;
+							if(price.totalPrice.isFree()) {
+
+								return 
+									MircColors.BOLD 
+									+ "Title: " +MircColors.GREEN + title + "\n"
+									+ MircColors.WHITE + "Description: " + MircColors.CYAN + description + "\n"
+									+ MircColors.NORMAL
+									+ price.toString() + "\n";
+							} else {
+								return "";
+							}
+
 						}
 
 						@Override
@@ -311,7 +322,10 @@ public class Epic {
 								}
 
 								private String getColorString() {
-									return "";
+									return 
+										MircColors.BOLD
+										+ "Price: " + MircColors.GREEN + discountPrice + " " + MircColors.CYAN + currencyCode + '\n'
+										+ MircColors.NORMAL;
 								}
 
 								@Override
