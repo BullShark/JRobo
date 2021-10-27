@@ -163,9 +163,7 @@ public class Epic {
 
 		private String getColorString() {
 
-			String result = "";
-
-			return result;
+			return data.getColorString();
 		}
 
 		/**
@@ -187,7 +185,7 @@ public class Epic {
 
 			private String getColorString() {
 
-				return "";
+				return Catalog.getColorString();
 			}
 
 			@Override
@@ -205,7 +203,7 @@ public class Epic {
 				private EpicSearchStoreJsonItem searchStore;
 
 				private String getColorString() {
-					return "";
+					return searchStore.getColorString();
 				}
 
 				@Override
@@ -223,14 +221,24 @@ public class Epic {
 					private ArrayList<EpicElementsJsonItem> elements;
 
 					private String getColorString() {
-//						return elements.getColorString(); //TODO FIXME Why is the method not found???
-						return elements.toString();
+						String result = "";
+
+						for(EpicElementsJsonItem e : elements) {
+							result += e.getColorString();
+						}
+
+						return result;
 					}
 
 					@Override
 					public String toString() {
+						String result = "";
 
-						return elements.toString();
+						for(EpicElementsJsonItem e : elements) {
+							result += e.toString();
+						}
+
+						return result;
 					}
 
 					/**
@@ -265,7 +273,7 @@ public class Epic {
 									+ "Title: " +MircColors.GREEN + title + "\n"
 									+ MircColors.WHITE + "Description: " + MircColors.CYAN + description + "\n"
 									+ MircColors.NORMAL
-									+ price.toString() + "\n";
+									+ price.getColorString() + "\n";
 							} else {
 								return "";
 							}
@@ -295,7 +303,7 @@ public class Epic {
 							private EpicTotalPriceJsonItem totalPrice;
 
 							private String getColorString() {
-								return "";
+								return totalPrice.getColorString();
 							}
 
 							@Override
@@ -310,7 +318,7 @@ public class Epic {
 							 */
 							private class EpicTotalPriceJsonItem {
 
-								private int discountPrice; //XXX We are looking for this when it's 0
+								private int discountPrice; // We are looking for this when it's 0
 								private String currencyCode;
 
 								/**
