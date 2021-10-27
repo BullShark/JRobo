@@ -294,7 +294,6 @@ public class Epic {
 							}
 
 							/**
-							 * TODO discountprice should not be in both EpicPriceJsonItem ands EpicTotalPriceJsonItem
 							 * 
 							 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 							 */
