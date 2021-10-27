@@ -254,7 +254,7 @@ public class Epic {
 							if(price.totalPrice.isFree()) {
 
 								return 
-									"title: " + title + "\n"
+									"Title: " + title + "\n"
 									+ "Description: " + description + "\n"
 									+ price.toString() + "\n";
 							} else {
