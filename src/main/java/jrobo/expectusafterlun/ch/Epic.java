@@ -271,7 +271,7 @@ public class Epic {
 								return 
 									MircColors.BOLD 
 									+ "Title: " +MircColors.GREEN + title + "\n"
-									+ MircColors.WHITE + "Description: " + MircColors.CYAN + description + "\n"
+									+ MircColors.WHITE + MircColors.BOLD + "Description: " + MircColors.CYAN + description + "\n"
 									+ MircColors.NORMAL
 									+ price.getColorString() + "\n";
 							} else {
