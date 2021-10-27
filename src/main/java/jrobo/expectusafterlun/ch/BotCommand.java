@@ -344,7 +344,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * Checks Epic's site with JSON every week and notifies the irc channel of new free games
+	 * Checks Epic's site with JSON every week and notifies the IRC channel of new free games
 	 */
 	private void epicHelper() {
 		if(hasArgs) {
@@ -353,7 +353,7 @@ public class BotCommand {
         		} else {
         			//CONNECTION.msgChannel(CONFIG.getChannel(), CONFIG.getCmdSymb() + cmd + " " + cmdArgs); // Uncomment to see the command and args being used
 
-			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(false, -1));
+			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(true, -1));
 			
 		}
 	
