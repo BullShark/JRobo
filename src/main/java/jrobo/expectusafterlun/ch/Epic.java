@@ -255,7 +255,7 @@ public class Epic {
 
 								return 
 									"title: " + title + "\n"
-									+ "description: " + description + "\n"
+									+ "Description: " + description + "\n"
 									+ price.toString() + "\n";
 							} else {
 								return "";
