@@ -35,7 +35,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- *
+ * UrbanDict's purpose is to turn formatted json search query results into formatted dictionary definitions from Urban Dictionary.
+ * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class UrbanDict {
