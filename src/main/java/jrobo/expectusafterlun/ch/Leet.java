@@ -162,8 +162,8 @@ public class Leet {
 			/* 
 			 * Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
  	 		 * "https://expectusafterlun.ch/1337x.to/{QUERY}/{PAGENUM}/{CATEGORY}/"
-                            *
-                            * Do not URL encode this because the server does that
+			 *
+			 * Do not URL encode this because the server does that
 			 */
 			if (!category.equals("")) {
 
