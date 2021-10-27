@@ -53,8 +53,8 @@ public class Leet {
 	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private String fullUrl;
 	private String json;
-	private final int MAX_RESULTS = 3;
 	private String query;
+	private final int MAX_RESULTS = 3;
 	private final String API_KEY;
 	private final Config CONFIG;
 	private final String PAGENUM = "1";
@@ -112,22 +112,30 @@ public class Leet {
 		/* For the Gson/Json */
 		gson = null;
 
+		 /**
+		  * Set to empty String for ALL.
+		  * Search ALL if CATEGORY is not valid.
+		  */
+		final String[] CATEGORIES = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
+
 		/* Divide SEARCH into CATEGORY and QUERY */
 		try {
-			category = SEARCH.split("\\s+", 2)[0];
-			query = SEARCH.split("\\s+", 2)[1];
+			/*
+			 * Only set the category if SEARCH contains a category.
+			 */
+			if(Arrays.asList(CATEGORIES).contains(SEARCH.split("\\s+", 2)[0])) {
+				category = SEARCH.split("\\s+", 2)[0];
+				query = SEARCH.split("\\s+", 2)[1];
+			} else {
+				category = "";
+				query = SEARCH;
+			}
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			// There is no CATEGORY. Search ALL.
 			category = "";
 			query = SEARCH;
 			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
-		 /**
-		  * Set to empty String for ALL.
-		  * Search ALL if CATEGORY is not valid.
-		  */
-		final String[] CATEGORIES = {"Movies", "TV", "Games", "Music", "Apps", "Documentaries", "Anime", "Other", "XXX"};
 
 		if (category.equalsIgnoreCase("All")
 			|| !(Arrays.asList(CATEGORIES)).contains(category)) {
