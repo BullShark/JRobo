@@ -109,11 +109,12 @@ public class Weather {
 	}
 
 	/**
-	 * Retrieve the data as a summary with irc color codes and formatting or just return the names and values from the json
+	 * Retrieve the data as a summary with IRC color codes and formatting or just return the names and values from the json
+	 * 
 	 * @param LOCATION The LOCATION for the weather summary
 	 * @param HASCOLORS Whether there is IRC colors and formatting
 	 * @param LIMIT Limit the number of definitions returned by this method
-	 * @return Formatted and colored Json if hasColor is true, else just the json information
+	 * @return Formatted and colored JSON if hasColor is true, else just the JSON information
 	 */
 	protected String getFormattedWeatherSummary(final String LOCATION, final boolean HASCOLORS, final int LIMIT) throws InvalidLocationException {
 
@@ -159,6 +160,7 @@ public class Weather {
 	/**
 	 * Represents the situation in which the location input provided by the user
 	 * Does not represent a valid location and the API won't recognize it
+	 * 
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected static class InvalidLocationException extends RuntimeException {
@@ -176,7 +178,7 @@ public class Weather {
 	/**
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-	 * @TODO Retrieve sunrise and sunset info
+	 * TODO Retrieve sunrise and sunset info
 	 */
 	private class WeatherJson {
 
