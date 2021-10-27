@@ -191,9 +191,10 @@ public class BotCommand {
 	/**
 	 * Puts together a String in the form "test+a+b+c"
 	 *
-	 * @return Returns a new String from the String argument by removing all starting and ending whitespace, and then replacing all other whitespace, no matter the length of that whitespace, with one '+'.
+	 * @return Returns a new String from the String argument by removing all starting and ending whitespace, and then replacing all other whitespace, no matter the length of that white-space, with one '+'.
 	 */
 	private String getFormattedQuery(final String STR) {
+
 		return STR.trim().replaceAll("\\s++", "+");
 	}
 
@@ -206,8 +207,10 @@ public class BotCommand {
 	private String getCmdArgs(final String FULLCMD) {
 		
 		try {
+
 			return FULLCMD.split("\\" + CONFIG.getCmdSymb() + "[a-zA-Z_0-9\\-]++", 2)[1].trim();
 		} catch (ArrayIndexOutOfBoundsException ex) {
+
 			/* Means no args!!! */
 			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 			return "";
@@ -226,9 +229,9 @@ public class BotCommand {
 			return FULLCMD.substring(1).replaceFirst("\\s.*+", "");
 
 		} catch (IndexOutOfBoundsException ex) {
+
 			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 			return "";
-			
 		}
 	}
 
@@ -242,14 +245,14 @@ public class BotCommand {
 		usersList = getUsers().split("\\s++");
 
 		try {
+
 			// Random array index
 			int randIndex = (int) (Math.random() * usersList.length);
 			return usersList[randIndex];
-
 		} catch(NullPointerException | ArrayIndexOutOfBoundsException ex) {
+
 			Logger.getLogger( BotCommand.class.getName() ).log( Level.SEVERE, null, ex );
 			return "ChanServ";
-
 		}
 	}
 
@@ -259,6 +262,7 @@ public class BotCommand {
 	 * @return Returns the list of users in the channel defined by Config.getChannel()
 	 */
 	private String getUsers() {
+
 		return getUsers(CONFIG.getChannel());
 	}
 
@@ -274,28 +278,34 @@ public class BotCommand {
 
 		CONNECTION.sendln("NAMES " + CHAN);
 		do {
+
 			received = CONNECTION.recieveln();
 			try {
+
 				first = received.split(" :", 2)[0];
 				last = received.split(" :", 2)[1];
 			} catch (ArrayIndexOutOfBoundsException ex) {
+
 				//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				first = "";
 				last = "";
 			}
 			if (first.contains("353")) {
+
 				try {
 					users += last.replaceAll("@|\\+|&|~|%", "");
 				} catch (ArrayIndexOutOfBoundsException ex) {
 					Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			} else if (first.equals("PING")) {
+
 				CONNECTION.sendln("PONG " + last);
 			}
 			tries--;
 		} while (!first.contains("366") && tries > 0);
 
 			if (users.equals("")) {
+
 				CONNECTION.msgMasters("Could not get list of users!!!");
 			}
 
