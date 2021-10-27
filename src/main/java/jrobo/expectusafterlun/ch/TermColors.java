@@ -79,6 +79,7 @@ public class TermColors {
     
     /**
      * Takes attributes and returns a formatted String
+     * 
      * @param str The String to apply the formatting to
      * @param fg The foreground attribute
      * @param bg The background attribute
@@ -114,6 +115,7 @@ public class TermColors {
 
     /**
      * Main method for testing this class
+     * 
      * @param args Is ignored
      */
     public static void main(String[] args) {
