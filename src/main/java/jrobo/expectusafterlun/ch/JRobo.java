@@ -22,7 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * JRobo is an advanced IRC bot that uses its own IRC framework. It was written from scratch. This class is where execution begins.
+ * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class JRobo {
