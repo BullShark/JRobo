@@ -267,6 +267,7 @@ public class BotCommand {
 	 * @return all users that are in the channel CHAN
 	 */
 	private String getUsers(final String CHAN) {
+
 		String received = "", users = "";
 		String first = "", last = "";
 		int tries = 8;
@@ -323,9 +324,12 @@ public class BotCommand {
 	 * And sends it to the channel
 	 */
 	private void googleHelper() {
+
 		if (!hasArgs) {
+
 			helpWrapper(cmd);
 		} else {
+
 			String googleUrl = "http://lmgtfy.com/?q=".concat(getFormattedQuery(cmdArgs));
 			CONNECTION.msgChannel(CONFIG.getChannel(), googleUrl);
 		}
@@ -336,9 +340,12 @@ public class BotCommand {
 	 * Checks if the host at domain is up or not
 	 */
 	private void isUpHelper() {
+
 		if (!hasArgs) {
+
 			helpWrapper(cmd);
 		} else {
+
 			CONNECTION.msgChannel(CONFIG.getChannel(), new DownForEveryone().isUp(getFormattedQuery(cmdArgs), true));
 		}
 	}
@@ -347,16 +354,14 @@ public class BotCommand {
 	 * Checks Epic's site with JSON every week and notifies the IRC channel of new free games
 	 */
 	private void epicHelper() {
-		if(hasArgs) {
-	        		helpWrapper(cmd);
 
+		if(hasArgs) {
+
+	        		helpWrapper(cmd);
         		} else {
-        			//CONNECTION.msgChannel(CONFIG.getChannel(), CONFIG.getCmdSymb() + cmd + " " + cmdArgs); // Uncomment to see the command and args being used
 
 			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(true, -1));
-			
 		}
-	
 	}
 
 	/**
@@ -366,10 +371,11 @@ public class BotCommand {
 	private void weatherHelper() {
 
 		if(!hasArgs) {
-	        	helpWrapper(cmd);
 
-        	} else {
-        		Weather w = new Weather(this.CONFIG);
+			helpWrapper(cmd);
+        		} else {
+
+        			Weather w = new Weather(this.CONFIG);
 
 			try {
 				CONNECTION.msgChannel(CONFIG.getChannel(), w.getFormattedWeatherSummary(cmdArgs, true, 5) );
@@ -388,11 +394,14 @@ public class BotCommand {
 	 * Sends a yo momma joke to the channel
 	 */
 	private void mumHelper() {
+
 		try {
 			if (!hasArgs) {
+
 				CONNECTION.msgChannel(CONFIG.getChannel(),
 					JOKE.getMommaJoke(getRandChanUser().replace("[m]", "")));
 			} else {
+
 				//TODO I don't remember why I wrote this. What does it do? Is it really needed?
 				int temp = cmdArgs.indexOf(' ');
 				if (temp != -1) {
@@ -402,6 +411,7 @@ public class BotCommand {
 				}
 			}
 		} catch (NullPointerException | ArrayIndexOutOfBoundsException ex) {
+
 			Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
@@ -410,6 +420,7 @@ public class BotCommand {
 	 * Helper to next! Another satisified customer
 	 */
 	private void nextHelper() {
+
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Another satisfied customer, NEXT!!!");
 	}
 
@@ -417,6 +428,7 @@ public class BotCommand {
 	 * Helper method to sending 1,000,000,000 invites to nick
 	 */
 	private void inviteNickHelper() {
+
 	 //TODO Fix this method
 	 //TODO Replace code with getHelp(cmd); //Overloaded method
 		if (true) {
@@ -454,9 +466,10 @@ public class BotCommand {
 	 * Helper to invite all members of a channel
 	 */
 	private void inviteChannelHelper() {
+
 		String[] userArr;
 		if(!hasArgs) {
-		//TODO      helpWrapper(cmd);
+			helpWrapper(cmd);
 			return;
 		}
 
@@ -570,16 +583,19 @@ public class BotCommand {
 	 * FIXME Use Config.getMasters()
 	 */
 	private void rawHelper() {
+
 		if (JROBO.getFirst().startsWith(":BullShark!")) {
+
 			CONNECTION.sendln("PRIVMSG " + CONFIG.getChannel() + " :Yes Sir Chief!");
 			String rawStr = JROBO.getLast();
 			rawStr = rawStr.substring(rawStr.indexOf(' '));
 			CONNECTION.sendln(rawStr);
 			try {
+
 				Thread.sleep(500);
 				CONNECTION.msgChannel(CONFIG.getChannel(), CONNECTION.recieveln());
-
 			} catch (InterruptedException | NullPointerException ex) {
+
 				Logger.getLogger(BotCommand.class
 					.getName()).log(Level.SEVERE, null, ex);
 			}
@@ -590,6 +606,7 @@ public class BotCommand {
 	 * Helper method to Urban Dictionary command
 	 */
 	private void urbanDictionaryHelper() {
+
 		CONNECTION.msgChannel(CONFIG.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true), true, MircColors.BOLD);
 	}
 
@@ -597,6 +614,7 @@ public class BotCommand {
 	 * Gabe's quit message for this bot
 	 */
 	private void quitHelper() {
+
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Detenation devices to nuclear reactors! (Zer0 is pressing the "
 			+ "stupid BUTTOnN so GO OUT OF THIS FUCKING CHANNEL BITCHES!!!)");
 	}
@@ -611,6 +629,7 @@ public class BotCommand {
 	 * Helper method called when a Pirate Bay Search Command is called
 	 */
 	private void pirateHelper() {
+
 		CONNECTION.msgChannel(CONFIG.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
 	}
 
@@ -618,6 +637,7 @@ public class BotCommand {
 	 * Helper method called when a 1337x.to Search Command is called
 	 */
 	private void leetHelper() {
+
 		CONNECTION.msgChannel(CONFIG.getChannel(), new Leet(CONFIG, cmdArgs).getFormattedResult(true));
 	}
 
@@ -686,6 +706,7 @@ public class BotCommand {
 	 * Called when an Unknown Command is received
 	 */
 	private void unknownCmdHelper() {
+
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Unknown command received: " + cmd);
 	}
 
@@ -693,7 +714,8 @@ public class BotCommand {
 	 * Wrapper Help command messages
 	 */
 	private void helpWrapper(final String CMD) {
-	//TODO help string for each command
+
+		//TODO help string for each command
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid usage of command: " + CMD);
 	}
 
@@ -701,6 +723,7 @@ public class BotCommand {
 	 * Gives JRobo's version info with the Version Command is received
 	 */
 	private void versionHelper() {
+
 		CONNECTION.msgChannel(CONFIG.getChannel(),
 			MircColors.BOLD + MircColors.CYAN + "JRobo"
 			+ MircColors.NORMAL + MircColors.BOLD + " - "
@@ -711,6 +734,7 @@ public class BotCommand {
 	 * Helper method to the Greet Command
 	 */
 	private void greetHelper() {
+
 		try {
 			if (!hasArgs) {
 				CONNECTION.msgChannel(CONFIG.getChannel(), JOKE.getPhoneNumber(getRandChanUser()));
@@ -732,7 +756,8 @@ public class BotCommand {
 	 * Move from the current channel to the channel in cmdArgs
 	 */
 	private void moveToChannelHelper() {
-	 //TODO Only Masters
+
+		 //TODO Only Masters
 		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 	}
 
@@ -740,6 +765,7 @@ public class BotCommand {
 	 * Starts TIMER for bomb, sets an active WIRE and prints explosion and kicks user holding at [20] seconds.
 	 */
 	public void bomb() {
+
 		bombHolder = user;
 		CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BOLD + bombHolder + MircColors.WHITE + " started the bomb!!!");
 		CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.WHITE + "You can pass it to another user with >pass [nick].");
@@ -785,11 +811,14 @@ public class BotCommand {
 	 * Simply passes the bomb to another user and returns it if they attempt to pass to JRobo.
 	 */
 	private void pass() {
+
 		String users = getUsers();
 		if (users.contains(cmdArgs) && !cmdArgs.equals("") && user.equals(bombHolder) && bombActive == true) {
+
 			bombHolder = cmdArgs;
 			CONNECTION.msgChannel(CONFIG.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
 			if (cmdArgs.equals(CONFIG.getName())) {
+
 				try {
 					Thread.sleep(2500);
 				} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
@@ -800,6 +829,7 @@ public class BotCommand {
 				CONNECTION.msgChannel(CONFIG.getChannel(), "The Bomb has been passed to " + bombHolder + "!!!");
 			}
 		} else {
+
 			CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid.");
 		}
 	}
@@ -810,6 +840,7 @@ public class BotCommand {
 	 * @return True if wire COLOR is found, false otherwise
 	 */
 	private boolean wire(final String COLOR) {
+
 		switch (COLOR) {
 			case "red":
 				return WIRE[0];
@@ -825,11 +856,15 @@ public class BotCommand {
 	 * This is the defuse method and refers to a global boolean array of wires and the active WIRE is set to true in bomb() function.
 	 */
 	public void defuse() {
+
 		if (bombActive && user.equals(bombHolder)) {
+
 			if (wire(cmdArgs) == true) {
+
 				CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.WHITE + "Bomb defused.");
 				bombActive = false;
 			} else {
+
 				//TODO Will removing leading spaces break things, or should we do it?
 				CONNECTION.msgChannel(CONFIG.getChannel(),
 					MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          \n"
@@ -849,6 +884,7 @@ public class BotCommand {
 				bombActive = false;
 			}
 		} else {
+
 			CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid.");
 		}
 	}
@@ -857,19 +893,23 @@ public class BotCommand {
 	 * Does a drive-by lol's parts and returns as well as try-sleeps in loop to avoid flooding.
 	 */
 	private void driveBy() {
+
 		if (cmdArgs.length() < 2 || !cmdArgs.startsWith("#")) {
+
 			CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid channel: " + cmdArgs);
 			return;
 		}
 		CONFIG.setBaseChan(CONFIG.getChannel()); // The channel JRobo will return to
 		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 		for (int i = 0; 25 >= i; i++) {
+
 			CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 			for (int z = 0; 5 >= z; z++) {
+
 				CONNECTION.msgChannel(CONFIG.getChannel(), "lol");
 				try {
 					Thread.sleep(1000);
-					//FIXME Bad coding
+					//FIXME Check for Masters?
 					if (CONNECTION.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
 						break;
 					}
@@ -890,6 +930,7 @@ public class BotCommand {
 		}
 		// If not in basechannel he will return to Basechannel
 		if (CONFIG.getChannel() == null ? CONFIG.getBaseChan() != null : !CONFIG.getChannel().equals(CONFIG.getBaseChan())) {
+
 			CONNECTION.moveToChannel(cmdArgs, CONFIG.getBaseChan());
 		}
 	}
