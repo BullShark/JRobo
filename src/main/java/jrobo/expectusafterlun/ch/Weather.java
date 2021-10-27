@@ -114,7 +114,7 @@ public class Weather {
 	 */
 	protected String getFormattedWeatherSummary(final String LOCATION, final boolean HASCOLORS, final int LIMIT) throws InvalidLocationException {
 
-		String result;
+		String result = "";
 
 		try {
 			Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>() {}.getType();
@@ -124,15 +124,14 @@ public class Weather {
 			WeatherJson weatherJson = gson.fromJson(this.getJson(LOCATION), WeatherJson.class);
 
 			result = (HASCOLORS) ? weatherJson.getColorString() : weatherJson.toString();
-			return result;
 
 		} catch (JsonSyntaxException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 			System.err.println("[+++]\tInvalid Json: Does not match the Json code or wrong type");
 			result = "Unable to retrieve the weather";
-			return result;
 
 		} finally {
+			return result;
 
 		}
 	}
