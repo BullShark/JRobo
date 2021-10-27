@@ -417,7 +417,7 @@ public class BotCommand {
 	}
 
 	/**
-	 * Helper to next! Another satisified customer
+	 * Helper to next! Another satisfied customer
 	 */
 	private void nextHelper() {
 
