@@ -267,7 +267,7 @@ public class Epic {
 
 						private String getColorString() {
 
-							if(price.totalPrice.isFree()) {
+							if(price.totalPrice.isFree() && !(title.equals("Control")) && !(description.equals("Control"))) {
 
 								return 
 									MircColors.BOLD 
