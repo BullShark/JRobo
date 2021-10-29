@@ -144,7 +144,7 @@ public class Networking {
 	}
 
 	/**
-	 * Overridden and wrapper method, 4 parameters
+	 * Overridden and wrapper method, no DELAY, 4 parameters
 	 *
 	 * @param CHAN The IRC channel for the message to be sent to
 	 * @param MSGARR An array of messages, each message sent on its own line
@@ -157,7 +157,7 @@ public class Networking {
 	protected boolean msgChannel(final String CHAN, final String[] MSGARR, final boolean COLORLINES, final String CODES) {
 		boolean success = true;
 		for (String s : MSGARR) {
-			if (!msgChannel(CHAN, s, COLORLINES, CODES)) {
+			if (!msgChannel(CHAN, s, COLORLINES, CODES, 0)) {
 				success = false;
 			}
 		}
@@ -168,7 +168,7 @@ public class Networking {
 	/**
 	 * The attribute codes can be lost some times on the messages After the
 	 * first one that were split.By giving a code(s), They will be
-	 * prepended to the split messages after the first one, 4 parameters
+	 * prepended to the split messages after the first one, 5 parameters
 	 *
 	 * @param CHAN Channel to send the message
 	 * @param msg Message to send to the channel
@@ -177,7 +177,7 @@ public class Networking {
 	 * empty string if none.
 	 * @return Whether this method was successful
 	 */
-	protected boolean msgChannel(final String CHAN, String msg, final boolean COLORLINES, final String CODES) {
+	protected boolean msgChannel(final String CHAN, String msg, final boolean COLORLINES, final String CODES, final int DELAY) {
 		boolean success = true;
 		msg = addNewLines(msg);
 		final String[] MSGARR = msg.split("\n");
@@ -199,6 +199,8 @@ public class Networking {
 						success = false;
 					}
 				}
+				// Pause before the next itteration (send) of this loop for DELAY ms
+				Thread.sleep(DELAY);
 			}
 		} else {
 			for (String message : MSGARR) {
@@ -215,14 +217,26 @@ public class Networking {
 	}
 
 	/**
-	 * Wrapper method using defaults, no colors added for split messages, 2 parameters
+	 * Wrapper method using defaults, no colors added for split messages, 3 parameters
+	 *
+	 * @param CHAN Channel to send the message to
+	 * @param MSG Message that gets send to the channel
+	 * @param DELAY The amount of time in ms between sending messages
+	 * @return Whether this method was successful
+	 */
+	protected boolean msgChannel(final String CHAN, final String MSG, final int DELAY) {
+		return msgChannel(CHAN, MSG, false, "", DELAY);
+	}
+
+	/**
+	 * Wrapper method using defaults, no colors added for split messages, no DELAY, 2 parameters
 	 *
 	 * @param CHAN Channel to send the message to
 	 * @param MSG Message that gets send to the channel
 	 * @return Whether this method was successful
 	 */
 	protected boolean msgChannel(final String CHAN, final String MSG) {
-		return msgChannel(CHAN, MSG, false, "");
+		return msgChannel(CHAN, MSG, false, "", 0);
 	}
 
 //	protected boolean msgChannel(String chan, String msg) { }
