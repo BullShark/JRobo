@@ -40,15 +40,16 @@ public class Jokes {
    * 
    * @param CONN The Networking connection used by JRobo
    * @param CHANNEL The IRC CHANNEL that JRobo resides
+   * @param FR
    */
-  public Jokes (final Networking CONN, final String CHANNEL) {
+  public Jokes (final Networking CONN, final String CHANNEL, final FileReader FR) {
     
     this.CONN = CONN;
     this.CHANNEL = CHANNEL;
 
     //FIXME TODO This is causing the FileReader constructor to be called twice, then Config.json is read twice
 //    Thread.dumpStack();
-    READER = new FileReader(); 
+    READER = FR;
     
     mommaJokes = new ArrayList<>(50);
     pickUpJokes = new ArrayList<>(50);

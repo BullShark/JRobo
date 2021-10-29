@@ -54,14 +54,15 @@ public class BotCommand {
 	 * @param CONNECTION Takes the CONNECTION created by JRobo.
 	 * @param CONFIG A Config object represents the bots configuration read in from Config.json
 	 * @param JROBO Class containing the main method for this bot
+	 * @param READER A Reader object for files
 	 */
-	public BotCommand(final Networking CONNECTION, final Config CONFIG, final JRobo JROBO) {
+	public BotCommand(final Networking CONNECTION, final Config CONFIG, final JRobo JROBO, final FileReader READER) {
 
 		/* Objects */
 		this.CONNECTION = CONNECTION;
 		this.CONFIG = CONFIG;
 		this.JROBO = JROBO;
-		JOKE = new Jokes(this.CONNECTION, this.CONFIG.getChannel());
+		JOKE = new Jokes(this.CONNECTION, this.CONFIG.getChannel(), READER);
 
 		/* Cmds */
 		cmd = "";
@@ -431,40 +432,11 @@ public class BotCommand {
 
 	/**
 	 * Helper method to sending 1,000,000,000 invites to nick
+	 * @todo Currently does nothing
 	 */
 	private void inviteNickHelper() {
 
-	 //TODO Fix this method
-	 //TODO Replace code with getHelp(cmd); //Overloaded method
-		if (true) {
-			return;
-		}
-
-		if (!hasArgs || !(cmdArgs.split("\\s++").length > 0)) { // Min 1 Arg
-			
-			CONNECTION.msgChannel(CONFIG.getChannel(), "Usage: " + CONFIG.getCmdSymb() + "invite-nick {nick} [# of times]");
-		} else {
-			CONNECTION.msgChannel(CONFIG.getChannel(), "Roger that.");
-			String cmdArgsArr[] = cmdArgs.split("\\s++");
-			int numInvites = 50; // Default value
-			if (cmdArgsArr.length < 1) {
-				try {
-					Thread.sleep(1500);
-					//numInvites = Integer.getInteger(cmdArgsArr[1]);
-					//TODO replace with CONFIG.getMaster()
-					if (CONNECTION.recieveln().contains(":JRobo!~Tux@unaffiliated/robotcow QUIT :Excess Flood")) {
-						//               this.JROBO. 
-					}
-
-				} catch (InterruptedException ex) {
-					Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-
-				}
-			}
-			for (int x = 0; numInvites >= x; x++) {
-				CONNECTION.sendln("INVITE " + CONFIG.getChannel() + " " + cmdArgsArr[0]);
-			}
-		}
+		return;
 	}
 
 	/**
@@ -483,7 +455,6 @@ public class BotCommand {
 			return;
 		}
 
-		//TODO Exclude duplicates from useray
 		if (cmdArgs.contains(" ")) {
 			final String[] CHANSARR = cmdArgs.split("\\s++");
 			// Channel must begin with a # and be at least two characters long
@@ -560,7 +531,7 @@ public class BotCommand {
 
 				for (String user : user2Arr) {
 					try {
-						Thread.sleep(35000); //TODO Delay set by last command arg?
+						Thread.sleep(35000);
 					} catch (InterruptedException ex) {
 						Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 					}
@@ -575,12 +546,6 @@ public class BotCommand {
 		//Remove In a minute -projektile
 		inviteT.start();
 
-		/*
-		 * TODO Implement and use FileReader.getNickAndHost() instead
-		 * FIXME check all masters for-each loop    if(JROBO.getFirst().startsWith(CONFIG.getMasters()[0]) && hasArgs ) {
-		 * Use for multiple channels, array    String[] channels = this.cmdArgs.split("\\s++");
-		 *    if(channels.length )
-		 */
 	}
 
 	/**
@@ -720,7 +685,6 @@ public class BotCommand {
 	 */
 	private void helpWrapper(final String CMD) {
 
-		//TODO help string for each command
 		CONNECTION.msgChannel(CONFIG.getChannel(), "Invalid usage of command: " + CMD);
 	}
 

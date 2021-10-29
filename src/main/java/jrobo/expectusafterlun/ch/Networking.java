@@ -125,11 +125,21 @@ public class Networking {
 	 */
 	protected boolean closeConnection() {
 
-		System.out.println("[***]\tClosing connection!");
-		sock.close();
-		breader.close();
-		bwriter.close();
-		received = "";
+		try {
+			System.out.println("[***]\tClosing connection!");
+
+			sock.close();
+			breader.close();
+			bwriter.close();
+			received = "";
+
+			return true;
+
+		} catch(IOException ex) {
+			
+			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+			return false;
+		}
 	}
 
 	/**

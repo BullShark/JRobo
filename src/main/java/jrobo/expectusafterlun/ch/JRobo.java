@@ -51,8 +51,8 @@ public class JRobo {
 		READER = new FileReader();
 		CONFIG = FileReader.getConfig();
 		CONN = new Networking(CONFIG);
-		JOKES = new Jokes(CONN, CONFIG.getChannel());
-		BCMD = new BotCommand(CONN, CONFIG, this);
+		JOKES = new Jokes(CONN, CONFIG.getChannel(), READER);
+		BCMD = new BotCommand(CONN, CONFIG, this, READER);
 	}
 
 	/**
@@ -65,8 +65,8 @@ public class JRobo {
 		READER = new FileReader();
 		CONFIG = FileReader.getConfig();
 		CONN = new Networking(CONFIG);
-		JOKES = new Jokes(CONN, CONFIG.getChannel());
-		BCMD = new BotCommand(CONN, CONFIG, this);
+		JOKES = new Jokes(CONN, CONFIG.getChannel(), READER);
+		BCMD = new BotCommand(CONN, CONFIG, this, READER);
 	}
 
 	/**
@@ -160,7 +160,8 @@ public class JRobo {
 			} // EOF if-else-if-else...
 		} // EOF while
 
-		//TODO Implement a Networking.killConnection() and call it here
+		CONN.closeConnection();
+
 		System.out.println("\u001b[1;44m *** TERMINATED *** \u001b[m");
 	}
 

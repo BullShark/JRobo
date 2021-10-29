@@ -28,9 +28,6 @@ import java.util.Arrays;
  * @author BinaryStroke {@literal <binarystroke@null.net>}
  * @since 2013-02-18
  *
- * TODO Make this class, variables or methods static,
- * TODO so the same data can be accessed from multiple classes
- *
  * BullShark: What is the best way to prevent a config file from being read
  * twice? If I have 15 java files, do I need to pass around the reference to
  * that config class to each java class file, so I won't be running new Config()

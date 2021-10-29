@@ -23,7 +23,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A tester bot to help learn the IRC protcol and test commands sent to the server
+ * A tester bot to help learn the IRC protocol and test commands sent to the server
+ * 
  * @author Christopher Lemire {@literal <goodbye300@aim.com>}
  */
 public class IRCTester {
@@ -46,16 +47,16 @@ public class IRCTester {
   private final char SYMB = '$';
 
   private int randomBoolean;
-  private final FileReader fReader;
+  private final FileReader FR;
 
   /**
-   * Initializes the FileReasder, config, connection, jokes, bot name, bot pass, bot channel, and a random boolean used to make the jokes random
+   * Initializes the FileReasder, Config, connection, jokes, bot name, bot pass, bot channel, and a random boolean used to make the jokes random
    */
   public IRCTester() {
-    this.fReader = new FileReader();
-    this.config = this.fReader.getConfig();
+    this.FR = new FileReader();
+    this.config = this.FR.getConfig();
     this.connection = new Networking(config);
-    this.jokes = new Jokes(connection,config.getChannel());
+    this.jokes = new Jokes(connection,config.getChannel(), FR);
 
     /* Set Attributes/State for this JRobo Object */
     this.botN = "ProtoAnazlyer";
@@ -146,7 +147,7 @@ public class IRCTester {
       last = "";
     }
 
-  } //TODO Get List of Users
+  }
 
   /**
    * Retrieves a random Yo momma joke and sends it to the channel
