@@ -159,6 +159,7 @@ public class BotCommand {
 				listHelper();
 				break;
 			case "pirate":
+			case "pi":
 				pirateHelper();
 				break;
 			case "isup":
