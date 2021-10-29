@@ -264,6 +264,7 @@ public class Epic {
 						private String title; //XXX We are looking for this whenever discountprice == 0
 						private String description; //XXX We are looking for this whenever discountprice == 0
 						private EpicPriceJsonItem price; //XXX We are looking for price -> totalprice -> discountprice
+						private String urlSlug;
 
 						private String getColorString() {
 
@@ -274,7 +275,11 @@ public class Epic {
 									+ "Title: " +MircColors.GREEN + title + "\n"
 									+ MircColors.WHITE + MircColors.BOLD + "Description: " + MircColors.CYAN + description + "\n"
 									+ MircColors.NORMAL
-									+ price.getColorString() + "\n";
+									+ price.getColorString() + "\n"
+									+ MircColors.BOLD + MircColors.WHITE + "URL: "
+									+ MircColors.GREEN + "<"
+									+ MircColors.CYAN + "https://www.epicgames.com/store/en-US/p/" + urlSlug
+									+ MircColors.GREEN + ">";
 							} else {
 								return "";
 							}
