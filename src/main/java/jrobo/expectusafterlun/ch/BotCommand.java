@@ -854,12 +854,15 @@ public class BotCommand {
 	private boolean wire(final String COLOR) {
 
 		switch (COLOR) {
-			case "red":
+			case "red" -> {
 				return WIRE[0];
-			case "green":
+			}
+			case "green" -> {
 				return WIRE[1];
-			case "blue":
+			}
+			case "blue" -> {
 				return WIRE[2];
+			}
 		}
 		return false;
 	}
