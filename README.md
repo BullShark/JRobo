@@ -46,6 +46,8 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
   * -l sort by leachers
   * -d sort by total times downloaded
   * Limits output to 3 lines to avoid flooding the channel
+* epic
+  * Gets a list of free Epic Games with links
 * isup &lt;url&gt;
   * Checks if the url is really up or down
 * version
