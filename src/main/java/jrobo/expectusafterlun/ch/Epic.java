@@ -279,7 +279,7 @@ public class Epic {
 									+ MircColors.BOLD + MircColors.WHITE + "URL: "
 									+ MircColors.GREEN + "<"
 									+ MircColors.CYAN + "https://www.epicgames.com/store/en-US/p/" + urlSlug
-									+ MircColors.GREEN + ">";
+									+ MircColors.GREEN + ">" + "\n";
 							} else {
 								return "";
 							}
