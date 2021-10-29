@@ -87,7 +87,7 @@ public class Leet {
 	private String json;
 
 	/**
-	 * Constructor that expects a Config and Search made up of a category and query used to contact the API
+	 * Constructor that expects a CONFIG and SEARCH made up of a category and query used to contact the API
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param SEARCH Is the CATEGORY and search QUERY

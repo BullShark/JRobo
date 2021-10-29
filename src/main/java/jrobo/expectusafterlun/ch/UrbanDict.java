@@ -224,11 +224,6 @@ public class UrbanDict {
 				}
 			});
 
-			/**
-			 * @TODO Check the output. Is it sorted?
-			 * @TODO Remove after testing
-			 */
-			Thread.dumpStack();
 			list.forEach(System.out::println);
 		}
 	

@@ -34,9 +34,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * PirateBay retrieves json results from a thepiratebay python flask API as json, formats the results, and sends them to IRC
+ * PirateBay retrieves JSON results from a The PirateBay python flask API as JSON, formats the results, and sends them to IRC
  * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
+ * @author Muhammad Sajid {@literal <sajidctn@gmail.com>}
  */
 public class PirateBay {
 
@@ -48,7 +49,6 @@ public class PirateBay {
 
     /*
      * Miscellaneous
-     * TODO Fix bug, if the url is not available, the bot will throw an exception and crash
      */
     private static final String BASE_URL = "http://odin.root.sx/thepiratebay.php";
     private String json;
@@ -106,10 +106,10 @@ public class PirateBay {
     }
 
     /**
-     * Gets json data for a search query to The Pirate Bay Python Flask API
+     * Gets JSON data for a search query to The Pirate Bay Python Flask API
      *
      * @author Christopher Lemire {@literal <goodbye300@aim.com>}
-     * @return json retrieved from the url
+     * @return JSON retrieved from the URL
      */
     public String getJson() {
         try {
@@ -144,11 +144,11 @@ public class PirateBay {
     }
 
     /**
-     * The formatted search results from ThePirateBay Json API with colors and formatting if HASCOLORS
+     * The formatted search results from ThePirateBay JSON API with colors and formatting if HASCOLORS
      * 
      * @author Christopher Lemire {@literal <goodbye300@aim.com>}
      * @param HASCOLORS True for IRC colors, false otherwise
-     * @return Formatted json data optionally with colors
+     * @return Formatted JSON data optionally with colors
      */
     public String getFormattedResult(final boolean HASCOLORS) {
 
@@ -194,7 +194,7 @@ public class PirateBay {
     } // EOF main
 
     /**
-     * Strings and ints representing json data
+     * Strings and ints representing JSON data
      *
      * @author Christopher Lemire {@literal <goodbye300@aim.com>}
      */

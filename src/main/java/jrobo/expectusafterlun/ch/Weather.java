@@ -37,7 +37,6 @@ import java.util.logging.Logger;
  * Weather obtains weather information for a specific area, and this class colors, formats, and summarizes that info from the API.
  * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
- * TODO Use try-with-resources instead
  */
 public class Weather {
 

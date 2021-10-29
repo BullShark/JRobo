@@ -63,7 +63,7 @@ public class Networking {
 		int port = Integer.parseInt(server[1]);
 
 		try {
-			sock = new Socket(hostname, port); //TODO SSL conn on port 6697
+			sock = new Socket(hostname, port);
 
 			bwriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
 			breader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -91,7 +91,7 @@ public class Networking {
 			bwriter.write(COMMAND);
 			bwriter.newLine();
 			bwriter.flush();
-			out.println("[***]\t" + COMMAND); //@TODO Color-code me
+			out.println("[***]\t" + COMMAND); //@todo Color-code me
 			return true;
 
 		} catch (IOException ex) {
@@ -110,7 +110,7 @@ public class Networking {
 	protected String recieveln() {
 		try {
 			received = breader.readLine();
-			out.printf("[---]\t%s\n", received); //@TODO Color-code this opposite of colorcode for sent, "[-]" should be blue
+			out.printf("[---]\t%s\n", received); //@todo Color-code this opposite of colorcode for sent, "[-]" should be blue
 			return received;
 		} catch (IOException ex) {
 			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
@@ -143,7 +143,7 @@ public class Networking {
 	}
 
 	/**
-	 * The following function is only used to kick members from a channel.It should probably be modified at some point to pass any desired irc command.
+	 * The following function is only used to kick members from a channel.It should probably be modified at some point to pass any desired IRC command.
 	 * TODO MSGARR commit more than one word after " "
 	 * @param CHAN The channel JRobo is in and the user to be kicked
 	 * @param msg The kick message, reason for kicking
