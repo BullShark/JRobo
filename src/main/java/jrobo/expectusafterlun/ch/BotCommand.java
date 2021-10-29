@@ -372,7 +372,7 @@ public class BotCommand {
 	        		helpWrapper(cmd);
         		} else {
 
-			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(true, -1), true, MircColors.BOLD, 2000);
+			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(true, -1), false, MircColors.BOLD, 2000);
 //			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(true, -1), 2000);
 		}
 	}
