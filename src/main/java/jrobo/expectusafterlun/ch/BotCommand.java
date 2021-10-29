@@ -363,6 +363,7 @@ public class BotCommand {
 
 	/**
 	 * Checks Epic's site with JSON every week and notifies the IRC channel of new free games
+	 * Sends the Formatted Epic Summary with a DELAY
 	 */
 	private void epicHelper() {
 
@@ -371,7 +372,7 @@ public class BotCommand {
 	        		helpWrapper(cmd);
         		} else {
 
-			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(true, -1));
+			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(true, -1), 2000);
 		}
 	}
 
