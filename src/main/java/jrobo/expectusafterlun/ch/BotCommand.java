@@ -373,7 +373,6 @@ public class BotCommand {
         		} else {
 
 			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(true, -1), false, MircColors.BOLD, 2000);
-//			CONNECTION.msgChannel(CONFIG.getChannel(), new Epic().getFormattedEpicSummary(true, -1), 2000);
 		}
 	}
 
@@ -669,6 +668,9 @@ public class BotCommand {
 		 * args = light
 		 * special characters = no bold, no color
 		 * such as [] <> , ...
+		 *
+		 * @todo "(Avaliable categories are: Movies" is not BOLD.
+		 * @todo "invite-channel" is not BOLD.
 		 */
 		String colorStr1 = LC.attributesSynopsisLine(LC.colorToken("Available commands: ", MircColors.BOLD)
 			+ LC.colorToken("google|lmgtfy|stfw ", MircColors.GREEN)
@@ -685,7 +687,7 @@ public class BotCommand {
 			+ LC.colorToken("<catgegory> <search query>, ", MircColors.CYAN));
 
 		String colorStr2 = LC.attributesSynopsisLine(
-			LC.colorToken("(Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All), ", MircColors.GREEN)
+			LC.colorToken(MircColors.BOLD + "(Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All), ", MircColors.GREEN)
 			+ LC.colorToken("raw|r ", MircColors.GREEN)
 			+ LC.colorToken("<raw irc line>, ", MircColors.CYAN)
 			+ LC.colorToken("help|h ", MircColors.GREEN)
@@ -693,7 +695,7 @@ public class BotCommand {
 			+ LC.colorToken("next|n, ", MircColors.GREEN)
 			+ LC.colorToken("mum|m ", MircColors.GREEN)
 			+ LC.colorToken("[user], ", MircColors.CYAN)
-			+ LC.colorToken("invite-channel|ic ", MircColors.BOLD + MircColors.GREEN)
+			+ LC.colorToken(MircColors.BOLD + "invite-channel|ic ", MircColors.GREEN)
 			+ LC.colorToken("<channel>, ", MircColors.CYAN)
 			+ LC.colorToken("invite-nick|in ", MircColors.GREEN)
 			+ LC.colorToken("<nick> ", MircColors.CYAN)
