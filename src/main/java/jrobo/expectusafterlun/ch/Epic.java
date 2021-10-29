@@ -59,8 +59,7 @@ public class Epic {
 		/* Miscellaneous */
 		LOCALE = "en-US";
 		COUNTRYCODE = "US";
-//		BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
-		BASE_URL = "https://invalid.not.a.real.domain"; //TODO Catch the exception from this
+		BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
 	}
 
 	/**
