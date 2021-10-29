@@ -35,7 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Leet retrieves Json results from a Leetx.to Python Flask API as Json, formats the results, and sends them to IRC
+ * Leet retrieves JSON results from a Leetx.to Python Flask API as JSON, formats the results, and sends them to IRC
  * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
@@ -165,6 +165,11 @@ public class Leet {
  	 		 * "https://expectusafterlun.ch/1337x.to/{QUERY}/{PAGENUM}/{CATEGORY}/"
 			 *
 			 * Do not URL encode this because the server does that
+			 *
+			 * @todo Something is going wrong when category is not set.
+			 * .leet James Bond
+			 * ^JRobo^
+			 * { "data": "Unable to retrieve Torrent json data" }
 			 */
 			if (!category.equals("")) {
 
