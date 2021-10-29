@@ -115,10 +115,9 @@ public class Weather {
 	 * 
 	 * @param LOCATION The LOCATION for the weather summary
 	 * @param HASCOLORS Whether there is IRC colors and formatting
-	 * @param LIMIT Limit the number of definitions returned by this method
 	 * @return Formatted and colored JSON if hasColor is true, else just the JSON information
 	 */
-	protected String getFormattedWeatherSummary(final String LOCATION, final boolean HASCOLORS, final int LIMIT) {
+	protected String getFormattedWeatherSummary(final String LOCATION, final boolean HASCOLORS) {
 
 		String result = "";
 
@@ -160,7 +159,7 @@ public class Weather {
 	 */
 	public static void main(String[] args) {
 
-		System.out.println(new Weather(null).getFormattedWeatherSummary("Texarkana,TX,US", false, 3));
+		System.out.println(new Weather(null).getFormattedWeatherSummary("Texarkana,TX,US", false));
 	}
 
 	/**

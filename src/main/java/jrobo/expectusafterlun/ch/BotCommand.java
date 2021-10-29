@@ -390,7 +390,7 @@ public class BotCommand {
 
         			Weather w = new Weather(this.CONFIG);
 
-			CONNECTION.msgChannel(CONFIG.getChannel(), w.getFormattedWeatherSummary(cmdArgs, true, 5) );
+			CONNECTION.msgChannel(CONFIG.getChannel(), w.getFormattedWeatherSummary(cmdArgs, true) );
 		}
 	}
 
