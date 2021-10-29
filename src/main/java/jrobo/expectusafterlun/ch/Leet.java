@@ -152,10 +152,10 @@ public class Leet {
 	}
 
 	/**
-	 * Gets json data for a search query to the Leetx Python Flask API
+	 * Gets JSON data for a search query to the Leetx Python Flask API
 	 *
 	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
-	 * @return json retrieved from the url
+	 * @return JSON retrieved from the URL
 	 */
 	public String getJson() {
 
@@ -210,11 +210,11 @@ public class Leet {
 	}
 
 	/**
-	 * The formatted search results from Leetx json api with colors and formatting if HASCOLORS
+	 * The formatted search results from Leetx JSON API with colors and formatting if HASCOLORS
 	 * 
 	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 * @param HASCOLORS True for IRC colors, false otherwise
-	 * @return Formatted json data optionally with colors
+	 * @return Formatted JSON data optionally with colors
 	 */
 	public String getFormattedResult(final boolean HASCOLORS) {
 
@@ -278,7 +278,7 @@ public class Leet {
 	}
 
 	/**
-	 * Strings and ints representing json data
+	 * Strings and ints representing JSON data
 	 *
 	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 */
