@@ -273,8 +273,8 @@ public class Epic {
 								return 
 									MircColors.BOLD 
 									+ "Title: " +MircColors.GREEN + title + "\n"
-									+ MircColors.WHITE + MircColors.BOLD + "Description: " + MircColors.CYAN + description + "\n"
-									+ MircColors.NORMAL
+									+ MircColors.WHITE + MircColors.BOLD 
+									+ "Description: " + MircColors.CYAN + description + MircColors.NORMAL + "\n"
 									+ price.getColorString() + "\n"
 									+ MircColors.BOLD + MircColors.WHITE + "URL: "
 									+ MircColors.GREEN + "<"
