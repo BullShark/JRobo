@@ -45,7 +45,6 @@ public class Epic {
 	 *
 	 * 	https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=TR&allowCountries=TR
 	 */
-	//private final String BASE_URL = "https://invalid.not.a.real.domain"; //TODO Catch the exception from this
 	private final String BASE_URL;
 	private final String LOCALE;
 	private final String COUNTRYCODE;
@@ -60,7 +59,8 @@ public class Epic {
 		/* Miscellaneous */
 		LOCALE = "en-US";
 		COUNTRYCODE = "US";
-		BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
+//		BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
+		BASE_URL = "https://invalid.not.a.real.domain"; //TODO Catch the exception from this
 	}
 
 	/**
@@ -267,9 +267,9 @@ public class Epic {
 						 * 
 						 * All we care about is title and description where discountprice == 0
 						 */
-						private String title; //XXX We are looking for this whenever discountprice == 0
-						private String description; //XXX We are looking for this whenever discountprice == 0
-						private EpicPriceJsonItem price; //XXX We are looking for price -> totalprice -> discountprice
+						private String title;
+						private String description;
+						private EpicPriceJsonItem price;
 						private String urlSlug;
 
 						private String getColorString() {
