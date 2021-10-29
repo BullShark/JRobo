@@ -51,8 +51,8 @@ public class Networking {
 	/**
 	 * Networking takes care of the connection, reads from the Config file, and handles the MAXCHARS a message can have
 	 * Some RFC says 510 max chars
+	 * @param CONFIG The configuration to be read such as which IRC network to join
  	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-	 * @param CONFIG The configuration to be read such as which irc network to join
 	 */
 	public Networking(final Config CONFIG) {
 		super(); // Gets rid of java.lang.VerifyError
@@ -85,6 +85,7 @@ public class Networking {
 	 *
 	 * @param COMMAND The raw IRC line to send
 	 * @return Successful sending
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean sendln(final String COMMAND) {
 		try {
@@ -106,6 +107,7 @@ public class Networking {
 	 * For receiving in raw IRC protocol
 	 *
 	 * @return Successful sending
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected String recieveln() {
 		try {
@@ -122,6 +124,8 @@ public class Networking {
 	 * Close all I/O streams
 	 * 
 	 * @return true on success
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @since 2021-10-29
 	 */
 	protected boolean closeConnection() {
 
@@ -143,22 +147,22 @@ public class Networking {
 	}
 
 	/**
-	 * The following function is only used to kick members from a channel.It should probably be modified at some point to pass any desired IRC command.
+	 * The following function is only used to kick members from a channel. It should probably be modified at some point to pass any desired IRC command.
 	 * TODO MSGARR commit more than one word after " "
 	 * @param CHAN The channel JRobo is in and the user to be kicked
 	 * @param msg The kick message, reason for kicking
 	 * @return Whether the kicking succeeded or not
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean kickFromChannel(final String CHAN, String msg) {
 		boolean success = true;
 		msg = addNewLines(msg);
 		final String[] MSGARR = msg.split("\n");
-		char ch;
 
 		for (String token : MSGARR) {
 			/*
-		   * Meaning if one call to sendln returns false
-		   * This entire function will return false
+		   	 * Meaning if one call to sendln returns false
+			 * This entire function will return false
 			 */
 			if (!sendln("kick " + CHAN + " " + token)) {
 				success = false;
@@ -171,12 +175,12 @@ public class Networking {
 	 * Overridden and wrapper method, no DELAY, 4 parameters
 	 *
 	 * @param CHAN The IRC channel for the message to be sent to
-	 * @param MSGARR An array of messages, each message sent on its own line
-	 * in IRC
+	 * @param MSGARR An array of messages, each message sent on its own line in IRC
 	 * @param COLORLINES If true, use color and attribute codes
 	 * @param CODES Attribute codes to use if the message is split. Use an
 	 * empty string if none.
 	 * @return Whether this method was successful
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean msgChannel(final String CHAN, final String[] MSGARR, final boolean COLORLINES, final String CODES) {
 		boolean success = true;
@@ -195,9 +199,9 @@ public class Networking {
 	 * @param CHAN Channel to send the message
 	 * @param msg Message to send to the channel
 	 * @param COLORLINES If true, use color and attribute CODES
-	 * @param CODES Attribute CODES to use if the message is split. Use an
-	 * empty string if none.
+	 * @param CODES Attribute CODES to use if the message is split. Use an empty string if none.
 	 * @return Whether this method was successful
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean msgChannel(final String CHAN, String msg, final boolean COLORLINES, final String CODES) {
 		return msgChannel(CHAN, msg, COLORLINES, CODES, 0);
@@ -211,10 +215,10 @@ public class Networking {
 	 * @param CHAN Channel to send the message
 	 * @param msg Message to send to the channel
 	 * @param COLORLINES If true, use color and attribute CODES
-	 * @param CODES Attribute CODES to use if the message is split. Use an
-	 * empty string if none.
+	 * @param CODES Attribute CODES to use if the message is split. Use an empty string if none.
 	 * @param DELAY The amount of time in ms between sending messages
 	 * @return Whether this method was successful
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean msgChannel(final String CHAN, String msg, final boolean COLORLINES, final String CODES, final int DELAY) {
 		boolean success = true;
@@ -280,6 +284,7 @@ public class Networking {
 	 * @param MSG Message that gets send to the channel
 	 * @param DELAY The amount of time in ms between sending messages
 	 * @return Whether this method was successful
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean msgChannel(final String CHAN, final String MSG, final int DELAY) {
 		return msgChannel(CHAN, MSG, false, "", DELAY);
@@ -291,18 +296,19 @@ public class Networking {
 	 * @param CHAN Channel to send the message to
 	 * @param MSG Message that gets send to the channel
 	 * @return Whether this method was successful
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean msgChannel(final String CHAN, final String MSG) {
 		return msgChannel(CHAN, MSG, false, "", 0);
 	}
 
-//	protected boolean msgChannel(String chan, String msg) { }
 	/**
 	 * Sends a private message to the user
 	 *
 	 * @param USER User to message
 	 * @param MSG Message to send to user
 	 * @return Whether this method was successful
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean msgUser(final String USER, final String MSG) {
 		boolean success = true;
@@ -321,9 +327,11 @@ public class Networking {
 
 	/**
 	 * Sends a notice message to the channel
+	 * 
 	 * @param CHAN The IRC channel for the notice to be sent to
 	 * @param MSG The message as a notice to be sent to the channel
 	 * @return If succeeded or not
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean noticeChan(final String CHAN, final String MSG) {
 		boolean success = true;
@@ -340,9 +348,11 @@ public class Networking {
 
 	/**
 	 * Moves JRobo from one channel to another
+	 * 
 	 * @param FROMCHAN The channel to move from
 	 * @param TOCHAN The channel to move to
 	 * @return If succeeded or not
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean moveToChannel(final String FROMCHAN, final String TOCHAN) {
 		boolean success = true;
@@ -358,9 +368,11 @@ public class Networking {
 
 	/**
 	 * Sends a notice message to the user
+	 * 
 	 * @param USER The user that receives the notice message
 	 * @param MSG The message to be sent as a notice to the user
 	 * @return Whether it succeeded or not
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean noticeUser(final String USER, final String MSG) {
 		boolean success = true;
@@ -383,6 +395,7 @@ public class Networking {
 	 * It exceeds MAXCHARS
 	 * 
 	 * TODO Is this really needed or does the wrapText make it obsolete?
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private String addNewLines(final String COMMAND) {
 		final String[] LINES = wrapText(COMMAND, MAXCHARS);
@@ -396,9 +409,11 @@ public class Networking {
 
 	/**
 	 * Splits a message into multiple messages that is too long
+	 * 
 	 * @param TEXT The message TEXT to be split
 	 * @param LEN The length each new split message should be
 	 * @return The split message as an Array of String
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected static String[] wrapText(final String TEXT, final int LEN) {
 		if (TEXT == null) {
@@ -458,6 +473,7 @@ public class Networking {
 	 * Inform masters in PM
 	 *
 	 * @param MSG Message to send to all masters
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @since 2013-03-22
 	 */
 	protected void msgMasters(final String MSG) {
