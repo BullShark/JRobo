@@ -668,9 +668,6 @@ public class BotCommand {
 		 * args = light
 		 * special characters = no bold, no color
 		 * such as [] <> , ...
-		 *
-		 * @todo "(Avaliable categories are: Movies" is not BOLD.
-		 * @todo "invite-channel" is not BOLD.
 		 */
 		String colorStr1 = LC.attributesSynopsisLine(LC.colorToken("Available commands: ", MircColors.BOLD)
 			+ LC.colorToken("google|lmgtfy|stfw ", MircColors.GREEN)
