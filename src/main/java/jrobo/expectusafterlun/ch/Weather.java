@@ -60,10 +60,11 @@ public class Weather {
 	public Weather(final Config CONFIG) throws NullPointerException {
 
 		if(CONFIG == null) { 
+			APIKEY = "";
 			throw new NullPointerException("Config is not set and cannot retrieve The OpenWeatherMap API Key");
 		} else {
 			this.CONFIG = CONFIG;
-			APIKEY = getApiKey(); //@FIXME Does this method some times throw an exception?
+			APIKEY = getApiKey();
 		}
 	}
         
@@ -117,7 +118,7 @@ public class Weather {
 	 * @param LIMIT Limit the number of definitions returned by this method
 	 * @return Formatted and colored JSON if hasColor is true, else just the JSON information
 	 */
-	protected String getFormattedWeatherSummary(final String LOCATION, final boolean HASCOLORS, final int LIMIT) throws InvalidLocationException {
+	protected String getFormattedWeatherSummary(final String LOCATION, final boolean HASCOLORS, final int LIMIT) {
 
 		String result = "";
 
@@ -146,7 +147,11 @@ public class Weather {
 	 * @return API Key for OpenWeatherMap retrieved from Config.json
 	 */
 	private String getApiKey() {
-		return CONFIG.getOpenWeatherMapKey();
+		if(CONFIG != null) {
+			return CONFIG.getOpenWeatherMapKey();
+		} else {
+			return "";
+		}
 	}
 
 	/**
@@ -156,24 +161,6 @@ public class Weather {
 	public static void main(String[] args) {
 
 		System.out.println(new Weather(null).getFormattedWeatherSummary("Texarkana,TX,US", false, 3));
-	}
-
-	/**
-	 * Represents the situation in which the location input provided by the user
-	 * Does not represent a valid location and the API won't recognize it
-	 * 
-	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-	 */
-	protected static class InvalidLocationException extends RuntimeException {
-
-		/**
-		 * Sets up this exception with an appropriate message.
-		 * 
-		 * @param INVALID User input for location that is INVALID
-		 */
-		protected InvalidLocationException(final String INVALID) {
-			super ("Invalid OpenWeatherMap Location: \"" + INVALID + "\"");
-		}
 	}
 
 	/**
