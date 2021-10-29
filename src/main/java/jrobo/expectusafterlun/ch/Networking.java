@@ -119,9 +119,56 @@ public class Networking {
 	}
 
 	/**
+	 * The following function is only used to kick members from a channel.It should probably be modified at some point to pass any desired irc command.
+	 * TODO MSGARR commit more than one word after " "
+	 * @param CHAN The channel JRobo is in and the user to be kicked
+	 * @param msg The kick message, reason for kicking
+	 * @return Whether the kicking succeeded or not
+	 */
+	protected boolean kickFromChannel(final String CHAN, String msg) {
+		boolean success = true;
+		msg = addNewLines(msg);
+		final String[] MSGARR = msg.split("\n");
+		char ch;
+
+		for (String token : MSGARR) {
+			/*
+		   * Meaning if one call to sendln returns false
+		   * This entire function will return false
+			 */
+			if (!sendln("kick " + CHAN + " " + token)) {
+				success = false;
+			}
+		}
+		return success;
+	}
+
+	/**
+	 * Overridden and wrapper method, 4 parameters
+	 *
+	 * @param CHAN The IRC channel for the message to be sent to
+	 * @param MSGARR An array of messages, each message sent on its own line
+	 * in IRC
+	 * @param COLORLINES If true, use color and attribute codes
+	 * @param CODES Attribute codes to use if the message is split. Use an
+	 * empty string if none.
+	 * @return Whether this method was successful
+	 */
+	protected boolean msgChannel(final String CHAN, final String[] MSGARR, final boolean COLORLINES, final String CODES) {
+		boolean success = true;
+		for (String s : MSGARR) {
+			if (!msgChannel(CHAN, s, COLORLINES, CODES)) {
+				success = false;
+			}
+		}
+
+		return success;
+	}
+
+	/**
 	 * The attribute codes can be lost some times on the messages After the
 	 * first one that were split.By giving a code(s), They will be
-	 * prepended to the split messages after the first one
+	 * prepended to the split messages after the first one, 4 parameters
 	 *
 	 * @param CHAN Channel to send the message
 	 * @param msg Message to send to the channel
@@ -168,32 +215,7 @@ public class Networking {
 	}
 
 	/**
-	 * The following function is only used to kick members from a channel.It should probably be modified at some point to pass any desired irc command.
-	 * TODO MSGARR commit more than one word after " "
-	 * @param CHAN The channel JRobo is in and the user to be kicked
-	 * @param msg The kick message, reason for kicking
-	 * @return Whether the kicking succeeded or not
-	 */
-	protected boolean kickFromChannel(final String CHAN, String msg) {
-		boolean success = true;
-		msg = addNewLines(msg);
-		final String[] MSGARR = msg.split("\n");
-		char ch;
-
-		for (String token : MSGARR) {
-			/*
-		   * Meaning if one call to sendln returns false
-		   * This entire function will return false
-			 */
-			if (!sendln("kick " + CHAN + " " + token)) {
-				success = false;
-			}
-		}
-		return success;
-	}
-
-	/**
-	 * Wrapper method using defaults, no colors added for split messages
+	 * Wrapper method using defaults, no colors added for split messages, 2 parameters
 	 *
 	 * @param CHAN Channel to send the message to
 	 * @param MSG Message that gets send to the channel
@@ -201,29 +223,6 @@ public class Networking {
 	 */
 	protected boolean msgChannel(final String CHAN, final String MSG) {
 		return msgChannel(CHAN, MSG, false, "");
-	}
-
-	/**
-	 * Overridden and wrapper method
-	 *
-	 * @param CHAN The IRC channel for the message to be sent to
-	 * @param MSGARR An array of messages, each message sent on its own line
-	 * in IRC
-	 * @param COLORLINES If true, use color and attribute codes
-	 * @param CODES Attribute codes to use if the message is split. Use an
-	 * empty string if none.
-	 * @return Whether this method was successful
-	 *
-	 */
-	protected boolean msgChannel(final String CHAN, final String[] MSGARR, final boolean COLORLINES, final String CODES) {
-		boolean success = true;
-		for (String s : MSGARR) {
-			if (!msgChannel(CHAN, s, COLORLINES, CODES)) {
-				success = false;
-			}
-		}
-
-		return success;
 	}
 
 //	protected boolean msgChannel(String chan, String msg) { }
