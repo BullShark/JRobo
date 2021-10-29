@@ -166,6 +166,20 @@ public class Networking {
 	}
 
 	/**
+	 * Overridden and wrapper method, no DELAY, 4 parameters
+	 *
+	 * @param CHAN Channel to send the message
+	 * @param msg Message to send to the channel
+	 * @param COLORLINES If true, use color and attribute CODES
+	 * @param CODES Attribute CODES to use if the message is split. Use an
+	 * empty string if none.
+	 * @return Whether this method was successful
+	 */
+	protected boolean msgChannel(final String CHAN, String msg, final boolean COLORLINES, final String CODES) {
+		return msgChannel(CHAN, msg, COLORLINES, CODES, 0);
+	}
+
+	/**
 	 * The attribute codes can be lost some times on the messages After the
 	 * first one that were split.By giving a code(s), They will be
 	 * prepended to the split messages after the first one, 5 parameters
@@ -175,6 +189,7 @@ public class Networking {
 	 * @param COLORLINES If true, use color and attribute CODES
 	 * @param CODES Attribute CODES to use if the message is split. Use an
 	 * empty string if none.
+	 * @param DELAY The amount of time in ms between sending messages
 	 * @return Whether this method was successful
 	 */
 	protected boolean msgChannel(final String CHAN, String msg, final boolean COLORLINES, final String CODES, final int DELAY) {
@@ -199,8 +214,16 @@ public class Networking {
 						success = false;
 					}
 				}
+
 				// Pause before the next itteration (send) of this loop for DELAY ms
-				Thread.sleep(DELAY);
+				try {
+					Thread.sleep(DELAY);
+					System.out.println("[***]\tPausing for " + DELAY + "milliseconds");
+
+				} catch(InterruptedException ex) {
+					Logger.getLogger(Networking.class.getName()).log(Level.INFO, null, ex);
+
+				}
 			}
 		} else {
 			for (String message : MSGARR) {
@@ -210,6 +233,16 @@ public class Networking {
 				 */
 				if (!sendln("PRIVMSG " + CHAN + " :" + message)) {
 					success = false;
+				}
+
+				// Pause before the next itteration (send) of this loop for DELAY ms
+				try {
+					Thread.sleep(DELAY);
+					System.out.println("[***]\tPausing for " + DELAY + "milliseconds");
+
+				} catch(InterruptedException ex) {
+					Logger.getLogger(Networking.class.getName()).log(Level.INFO, null, ex);
+
 				}
 			}
 		}
