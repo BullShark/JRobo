@@ -87,7 +87,6 @@ public class BotCommand {
 	 * @param FULLCMD The full command not split into segments
 	 */
 	protected void bCommander(final String USER, final String FULLCMD) {
-	 //TODO Accept raw irc commands from bot owner to be sent by the bot
 	 //TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 		this.user = USER;
 		cmd = getCmd(FULLCMD);
