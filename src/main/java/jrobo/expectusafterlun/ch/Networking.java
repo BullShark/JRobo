@@ -119,6 +119,20 @@ public class Networking {
 	}
 
 	/**
+	 * Close all I/O streams
+	 * 
+	 * @return true on success
+	 */
+	protected boolean closeConnection() {
+
+		System.out.println("[***]\tClosing connection!");
+		sock.close();
+		breader.close();
+		bwriter.close();
+		received = "";
+	}
+
+	/**
 	 * The following function is only used to kick members from a channel.It should probably be modified at some point to pass any desired irc command.
 	 * TODO MSGARR commit more than one word after " "
 	 * @param CHAN The channel JRobo is in and the user to be kicked
