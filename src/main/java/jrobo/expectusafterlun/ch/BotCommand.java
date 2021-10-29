@@ -657,6 +657,7 @@ public class BotCommand {
 			+ LC.colorToken("pirate ", MircColors.GREEN)
 			+ LC.colorToken("[-s|-l|-d] ", MircColors.CYAN)
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
+			+ LC.colorToken("epic, ", MircColors.GREEN)
 			+ LC.colorToken("isup ", MircColors.GREEN)
 			+ LC.colorToken("<url>, ", MircColors.CYAN)
 			+ LC.colorToken("epic|e ", MircColors.GREEN)
