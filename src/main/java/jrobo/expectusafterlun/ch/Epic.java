@@ -227,7 +227,12 @@ public class Epic {
 						String result = "";
 
 						for(EpicElementsJsonItem e : elements) {
-							result += e.getColorString();
+
+							/* Try to prevent extra newlines in the output */
+							if(!e.getColorString().equals("")) {
+
+								result += e.getColorString();
+							}
 						}
 
 						return result;
@@ -235,9 +240,12 @@ public class Epic {
 
 					@Override
 					public String toString() {
+
 						String result = "";
 
-						result = elements.stream().map(e -> e.toString()).reduce(result, String::concat);
+						for(EpicElementsJsonItem e : elements) {
+							result += e.toString();
+						}
 
 						return result;
 					}
@@ -281,7 +289,7 @@ public class Epic {
 									+ MircColors.CYAN + "https://www.epicgames.com/store/en-US/p/" + urlSlug
 									+ MircColors.GREEN + ">" + "\n";
 							} else {
-								return null;
+								return "";
 							}
 
 						}
