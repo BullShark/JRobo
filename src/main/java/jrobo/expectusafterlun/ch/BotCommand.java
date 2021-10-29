@@ -123,10 +123,6 @@ public class BotCommand {
 			case "next":
 				nextHelper();
 				break;
-			case "invite-nick":
-			case "in":
-				inviteNickHelper();
-				break;
 			case "invite-channel":
 			case "ic":
 				inviteChannelHelper();
@@ -134,10 +130,6 @@ public class BotCommand {
 			case "leet":
 			case "leetx":
 				leetHelper();
-				break;
-			case "raw":
-			case "r":
-				rawHelper();
 				break;
 			case "urbandict":
 			case "ud":
@@ -194,6 +186,7 @@ public class BotCommand {
 	 * Puts together a String in the form "test+a+b+c"
 	 *
 	 * @return Returns a new String from the String argument by removing all starting and ending whitespace, and then replacing all other whitespace, no matter the length of that white-space, with one '+'.
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private String getFormattedQuery(final String STR) {
 
@@ -205,6 +198,7 @@ public class BotCommand {
 	 * 
 	 * @param FULLCMD The full command given to the bot
 	 * @return The arguments only excluding the command given to the bot
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private String getCmdArgs(final String FULLCMD) {
 		
@@ -224,6 +218,7 @@ public class BotCommand {
 	 *
 	 * @param The full command including the command and all arguments given to the bot
 	 * @return Only the command without the arguments given to the bot
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private String getCmd(final String FULLCMD) {
 
@@ -239,6 +234,7 @@ public class BotCommand {
 
 	/**
 	 * @return Returns a random user in the chat. If that fails such as when the user list is empty, it returns ChanServ.
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private String getRandChanUser() {
 
@@ -262,6 +258,7 @@ public class BotCommand {
 	 * Wrapper to getUsers(String chan) that uses channel defined by Config
 	 *
 	 * @return Returns the list of users in the channel defined by Config.getChannel()
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private String getUsers() {
 
@@ -271,6 +268,7 @@ public class BotCommand {
 	/**
 	 * @param CHAN The channel to get a list of users
 	 * @return all users that are in the channel CHAN
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private String getUsers(final String CHAN) {
 
@@ -288,7 +286,7 @@ public class BotCommand {
 				last = received.split(" :", 2)[1];
 			} catch (ArrayIndexOutOfBoundsException ex) {
 
-				//Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(BotCommand.class.getName()).log(Level.INFO, null, ex);
 				first = "";
 				last = "";
 			}
@@ -297,7 +295,7 @@ public class BotCommand {
 				try {
 					users += last.replaceAll("@|\\+|&|~|%", "");
 				} catch (ArrayIndexOutOfBoundsException ex) {
-					Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(BotCommand.class.getName()).log(Level.WARNING, null, ex);
 				}
 			} else if (first.equals("PING")) {
 
@@ -317,6 +315,8 @@ public class BotCommand {
 	/**
 	 * Helper method to The WakeRoom Command
 	 * Highlights all users
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void wakeRoomHelper() {
 		String users = getUsers();
@@ -334,6 +334,8 @@ public class BotCommand {
 	/**
 	 * Puts together a String in the form http://lmgtfy.com/?q=test+a+b+c 
 	 * And sends it to the channel
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void googleHelper() {
 
@@ -350,6 +352,8 @@ public class BotCommand {
 	/**
 	 * Helper method to the isup {@literal <domain>} command
 	 * Checks if the host at domain is up or not
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void isUpHelper() {
 
@@ -365,6 +369,8 @@ public class BotCommand {
 	/**
 	 * Checks Epic's site with JSON every week and notifies the IRC channel of new free games
 	 * Sends the Formatted Epic Summary with a DELAY
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void epicHelper() {
 
@@ -380,6 +386,8 @@ public class BotCommand {
 	/**
 	 * Helper method to the weather {@literal <location>} command
 	 * Sends a weather summary for the location to the channel
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void weatherHelper() {
 
@@ -397,6 +405,8 @@ public class BotCommand {
 	/**
 	 * Helper method to the .mum {@literal <user>} command
 	 * Sends a yo momma joke to the channel
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void mumHelper() {
 
@@ -423,6 +433,8 @@ public class BotCommand {
 
 	/**
 	 * Helper to next! Another satisfied customer
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void nextHelper() {
 
@@ -430,16 +442,10 @@ public class BotCommand {
 	}
 
 	/**
-	 * Helper method to sending 1,000,000,000 invites to nick
-	 * @todo Currently does nothing
-	 */
-	private void inviteNickHelper() {
-
-		return;
-	}
-
-	/**
 	 * Helper to invite all members of a channel
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @author Tyler Polard
 	 */
 	private void inviteChannelHelper() {
 
@@ -548,31 +554,9 @@ public class BotCommand {
 	}
 
 	/**
-	 * Helper to send a raw IRC command by one of the masters only
-	 * FIXME Use Config.getMasters()
-	 */
-	private void rawHelper() {
-
-		if (JROBO.getFirst().startsWith(":BullShark!")) {
-
-			CONNECTION.sendln("PRIVMSG " + CONFIG.getChannel() + " :Yes Sir Chief!");
-			String rawStr = JROBO.getLast();
-			rawStr = rawStr.substring(rawStr.indexOf(' '));
-			CONNECTION.sendln(rawStr);
-			try {
-
-				Thread.sleep(500);
-				CONNECTION.msgChannel(CONFIG.getChannel(), CONNECTION.recieveln());
-			} catch (InterruptedException | NullPointerException ex) {
-
-				Logger.getLogger(BotCommand.class
-					.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-	}
-
-	/**
 	 * Helper method to Urban Dictionary command
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void urbanDictionaryHelper() {
 
@@ -581,6 +565,8 @@ public class BotCommand {
 
 	/**
 	 * Gabe's quit message for this bot
+	 * 
+	 * @author Gabriele Zuddas {@literal <zer0.cam0@gmail.com>}
 	 */
 	private void quitHelper() {
 
@@ -590,12 +576,16 @@ public class BotCommand {
 
 	/**
 	 * Does nothing at all, just a placeholder
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void doNothingHelper() {
 	}
 
 	/**
 	 * Helper method called when a Pirate Bay Search Command is called
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void pirateHelper() {
 
@@ -604,6 +594,8 @@ public class BotCommand {
 
 	/**
 	 * Helper method called when a 1337x.to Search Command is called
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void leetHelper() {
 
@@ -613,6 +605,8 @@ public class BotCommand {
 	/**
 	 * A helper executed when the list bot command is received by JRobo
 	 * Lists the bot commands syntax in a help message
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void listHelper() {
 
@@ -642,8 +636,6 @@ public class BotCommand {
 
 		String colorStr2 = LC.attributesSynopsisLine(
 			LC.colorToken(MircColors.BOLD + "(Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All), ", MircColors.GREEN)
-			+ LC.colorToken("raw|r ", MircColors.GREEN)
-			+ LC.colorToken("<raw irc line>, ", MircColors.CYAN)
 			+ LC.colorToken("help|h ", MircColors.GREEN)
 			+ LC.colorToken("[cmd], ", MircColors.CYAN)
 			+ LC.colorToken("next|n, ", MircColors.GREEN)
@@ -651,9 +643,6 @@ public class BotCommand {
 			+ LC.colorToken("[user], ", MircColors.CYAN)
 			+ LC.colorToken(MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "invite-channel|ic ", "")
 			+ LC.colorToken("<channel>, ", MircColors.CYAN)
-			+ LC.colorToken("invite-nick|in ", MircColors.GREEN)
-			+ LC.colorToken("<nick> ", MircColors.CYAN)
-			+ LC.colorToken("[# of times], ", MircColors.CYAN)
 			+ LC.colorToken("pirate ", MircColors.GREEN)
 			+ LC.colorToken("[-s|-l|-d] ", MircColors.CYAN)
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
@@ -674,6 +663,8 @@ public class BotCommand {
 
 	/**
 	 * Called when an Unknown Command is received
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void unknownCmdHelper() {
 
@@ -682,6 +673,8 @@ public class BotCommand {
 
 	/**
 	 * Wrapper Help command messages
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void helpWrapper(final String CMD) {
 
@@ -690,6 +683,8 @@ public class BotCommand {
 
 	/**
 	 * Gives JRobo's version info with the Version Command is received
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void versionHelper() {
 
@@ -701,6 +696,8 @@ public class BotCommand {
 
 	/**
 	 * Helper method to the Greet Command
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void greetHelper() {
 
@@ -723,6 +720,8 @@ public class BotCommand {
 
 	/**
 	 * Move from the current channel to the channel in cmdArgs
+	 * 
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private void moveToChannelHelper() {
 
@@ -732,6 +731,8 @@ public class BotCommand {
 
 	/**
 	 * Starts TIMER for bomb, sets an active WIRE and prints explosion and kicks user holding at [20] seconds.
+	 * 
+	 * @author Tyler Polard
 	 */
 	public void bomb() {
 
@@ -778,6 +779,8 @@ public class BotCommand {
 
 	/**
 	 * Simply passes the bomb to another user and returns it if they attempt to pass to JRobo.
+	 * 
+	 * @author Tyler Polard
 	 */
 	private void pass() {
 
@@ -807,6 +810,7 @@ public class BotCommand {
 	 * This function will return a WIRE for a given COLOR and is only to be used within defuse.
 	 * 
 	 * @return True if wire COLOR is found, false otherwise
+	 * @author Tyler Polard
 	 */
 	private boolean wire(final String COLOR) {
 
@@ -826,6 +830,8 @@ public class BotCommand {
 
 	/**
 	 * This is the defuse method and refers to a global boolean array of wires and the active WIRE is set to true in bomb() function.
+	 * 
+	 * @author Tyler Polard
 	 */
 	public void defuse() {
 
@@ -863,6 +869,8 @@ public class BotCommand {
 
 	/**
 	 * Does a drive-by lol's parts and returns as well as try-sleeps in loop to avoid flooding.
+	 * 
+	 * @author Tyler Polard
 	 */
 	private void driveBy() {
 
