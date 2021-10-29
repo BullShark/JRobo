@@ -127,6 +127,8 @@ public class Epic {
 			Logger.getLogger(Epic.class.getName()).log(Level.SEVERE, null, ex);
 			result = "{ \"data\": \"Unable to retrieve Epic json data\" }";
 		} finally {
+			/* Debug */
+			System.out.println(result);
 
 			return result;
 		}
@@ -224,15 +226,11 @@ public class Epic {
 					private ArrayList<EpicElementsJsonItem> elements;
 
 					private String getColorString() {
+
 						String result = "";
 
 						for(EpicElementsJsonItem e : elements) {
-
-							/* Try to prevent extra newlines in the output */
-							if(!e.getColorString().equals("")) {
-
-								result += e.getColorString();
-							}
+							result += e.getColorString();
 						}
 
 						return result;
