@@ -389,15 +389,7 @@ public class BotCommand {
 
         			Weather w = new Weather(this.CONFIG);
 
-			try {
-				CONNECTION.msgChannel(CONFIG.getChannel(), w.getFormattedWeatherSummary(cmdArgs, true, 5) );
-
-			} catch (Weather.InvalidLocationException ex) {
-
-				Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
-
-				helpWrapper(cmd); //TODO Show the correct syntax for the command and the location here
-			}
+			CONNECTION.msgChannel(CONFIG.getChannel(), w.getFormattedWeatherSummary(cmdArgs, true, 5) );
 		}
 	}
 
