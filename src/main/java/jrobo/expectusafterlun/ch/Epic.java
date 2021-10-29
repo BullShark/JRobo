@@ -128,7 +128,7 @@ public class Epic {
 			result = "{ \"data\": \"Unable to retrieve Epic json data\" }";
 		} finally {
 			/* Debug */
-			System.out.println(result);
+			System.out.println('\n' + result);
 
 			return result;
 		}
@@ -284,8 +284,8 @@ public class Epic {
 									+ price.getColorString()
 									+ MircColors.BOLD + MircColors.WHITE + "URL: "
 									+ MircColors.GREEN + "<"
-//									+ MircColors.CYAN + "https://www.epicgames.com/store/en-US/p/" + urlSlug
-									+ MircColors.CYAN + "https://url/en-US/p/" + urlSlug
+									+ MircColors.CYAN + "https://www.epicgames.com/store/en-US/p/" + urlSlug
+//									+ MircColors.CYAN + "https://url/en-US/p/" + urlSlug
 									+ MircColors.GREEN + ">" + "\n";
 							} else {
 								return "";
