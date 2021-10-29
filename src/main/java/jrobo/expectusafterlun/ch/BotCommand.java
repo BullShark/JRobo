@@ -695,7 +695,7 @@ public class BotCommand {
 			+ LC.colorToken("next|n, ", MircColors.GREEN)
 			+ LC.colorToken("mum|m ", MircColors.GREEN)
 			+ LC.colorToken("[user], ", MircColors.CYAN)
-			+ LC.colorToken(MircColors.BOLD + "invite-channel|ic ", MircColors.GREEN)
+			+ LC.colorToken(MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "invite-channel|ic ", "")
 			+ LC.colorToken("<channel>, ", MircColors.CYAN)
 			+ LC.colorToken("invite-nick|in ", MircColors.GREEN)
 			+ LC.colorToken("<nick> ", MircColors.CYAN)
