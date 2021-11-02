@@ -445,7 +445,6 @@ public class Networking {
 				line.append(word);
 				word.delete(0, word.length());
 			}
-
 		}
 
 		if (word.length() > 0) {
