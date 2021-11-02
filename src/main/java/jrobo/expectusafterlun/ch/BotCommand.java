@@ -649,7 +649,7 @@ public class BotCommand {
 			+ LC.colorToken("epic, ", MircColors.GREEN)
 			+ LC.colorToken("isup ", MircColors.GREEN)
 			+ LC.colorToken("<url>, ", MircColors.CYAN)
-			+ LC.colorToken("version, ", MircColors.GREEN)
+			+ LC.colorToken(MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "version, ", MircColors.GREEN)
 			+ LC.colorToken("quit|q", MircColors.GREEN));
 
 		String noColorStr = (colorStr1 +colorStr2).replaceAll("(\\P{Print}|[0-9]{2})", "");
