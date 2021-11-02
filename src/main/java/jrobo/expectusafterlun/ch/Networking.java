@@ -149,6 +149,7 @@ public class Networking {
 	/**
 	 * The following function is only used to kick members from a channel. It should probably be modified at some point to pass any desired IRC command.
 	 * TODO MSGARR commit more than one word after " "
+	 * 
 	 * @param CHAN The channel JRobo is in and the user to be kicked
 	 * @param msg The kick message, reason for kicking
 	 * @return Whether the kicking succeeded or not
