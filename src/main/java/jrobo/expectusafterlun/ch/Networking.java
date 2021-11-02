@@ -245,8 +245,8 @@ public class Networking {
 
 				// Pause before the next itteration (send) of this loop for DELAY ms
 				try {
-					Thread.sleep(DELAY);
 					System.out.println("[***]\tPausing for " + DELAY + " milliseconds");
+					Thread.sleep(DELAY);
 
 				} catch(InterruptedException ex) {
 					Logger.getLogger(Networking.class.getName()).log(Level.INFO, null, ex);
