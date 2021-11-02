@@ -635,7 +635,7 @@ public class BotCommand {
 			+ LC.colorToken("<catgegory> <search query>, ", MircColors.CYAN));
 
 		String colorStr2 = LC.attributesSynopsisLine(
-			LC.colorToken(MircColors.BOLD + "(Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All), ", MircColors.GREEN)
+			LC.colorToken(MircColors.BOLD + "(" + MircColors.CYAN + "Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All" +MircColors.GREEN + "), ", MircColors.GREEN)
 			+ LC.colorToken("help|h ", MircColors.GREEN)
 			+ LC.colorToken("[cmd], ", MircColors.CYAN)
 			+ LC.colorToken("next|n, ", MircColors.GREEN)
