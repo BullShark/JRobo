@@ -649,8 +649,6 @@ public class BotCommand {
 			+ LC.colorToken("epic, ", MircColors.GREEN)
 			+ LC.colorToken("isup ", MircColors.GREEN)
 			+ LC.colorToken("<url>, ", MircColors.CYAN)
-			+ LC.colorToken("epic|e ", MircColors.GREEN)
-			+ LC.colorToken("[country code], ", MircColors.CYAN)
 			+ LC.colorToken("version, ", MircColors.GREEN)
 			+ LC.colorToken("quit|q", MircColors.GREEN));
 
