@@ -17,7 +17,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package jrobo.expectusafterlun.ch;
 
 import com.google.gson.Gson;
@@ -34,10 +33,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * PirateBay retrieves JSON results from a The PirateBay python flask API as JSON, formats the results, and sends them to IRC
+ * PirateBay retrieves JSON results from a thepiratebay python flask API as JSON, formats the results, and sends them to IRC
  * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
- * @author Muhammad Sajid {@literal <sajidctn@gmail.com>}
  */
 public class PirateBay {
 
@@ -46,18 +44,19 @@ public class PirateBay {
     private URLConnection conn;
     private BufferedReader rd;
     private String fullUrl;
+    private static final String BASE_URL = "http://odin.root.sx/thepiratebay.php";
 
     /*
      * Miscellaneous
+     * TODO Fix bug, if the url is not available, the bot will throw an exception and crash
      */
-    private static final String BASE_URL = "http://odin.root.sx/thepiratebay.php";
-    private String json;
     private final String s_name;
     private String s_switch="s";
     private final int MAX_RESULTS = 5;
 
     /* For the Gson/Json */
     private Gson gson;
+    private String json;
 
     /**
      * Get the switch used for sorting the results, the query to be searched and set up the connection to the PirateBay API
@@ -136,7 +135,7 @@ public class PirateBay {
             rd.close();
         } catch (MalformedURLException | ConnectException ex) {
             Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
         }
 
