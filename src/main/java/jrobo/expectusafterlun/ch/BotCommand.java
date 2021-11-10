@@ -730,7 +730,7 @@ public class BotCommand {
 			CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
 		} else {
 
-			CONNECTION.msgChannel(CONFIG.getChannel(), (user + " is not a master!") );
+			CONNECTION.msgChannel(CONFIG.getChannel(), (user + " is not authorized!") );
 		}
 	}
 
