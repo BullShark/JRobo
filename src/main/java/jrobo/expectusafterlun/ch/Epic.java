@@ -66,7 +66,7 @@ public class Epic {
 	 * Do as the method says, get the JSON and return it.
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-	 * @return Json data from the Epic API
+	 * @return JSON data from the Epic API
 	 */
 	private String getJson() {
 
@@ -150,6 +150,7 @@ public class Epic {
 	} // EOF main
 
 	/**
+	 * Strings and ints representing JSON data
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
