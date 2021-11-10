@@ -164,7 +164,7 @@ public class Leet {
 			 *
 			 * Do not URL encode this because the server does that
 			 *
-			 * @todo Something is going wrong when category is not set.
+			 * @todo Something is going wrong with torrent.py category is not set.
 			 * .leet James Bond
 			 * ^JRobo^
 			 * { "data": "Unable to retrieve Torrent json data" }
