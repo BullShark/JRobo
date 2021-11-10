@@ -894,8 +894,9 @@ public class BotCommand {
 				CONNECTION.msgChannel(CONFIG.getChannel(), "lol");
 				try {
 					Thread.sleep(1000);
-					//FIXME Check for Masters?
-					if (CONNECTION.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
+
+					/* Checking if the command was issued by a master */
+					if(Arrays.asList(CONFIG.getMasters()).contains(user)) {
 						break;
 					}
 				} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
