@@ -145,10 +145,10 @@ public class JRobo {
 				} catch (StringIndexOutOfBoundsException ex) {
 					Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
 				}
-				/*
-		                                     * A user has joined the channel
-		                                     * Excluding the bot joining
-				 */
+			/*
+		                   * A user has joined the channel
+		                   * Excluding the bot joining
+			 */
 			} else if (first.contains("JOIN") && last.equals(CONFIG.getChannel()) && !first.contains(CONFIG.getName())) {
 				user = first.substring(1, first.indexOf('!'));
 
