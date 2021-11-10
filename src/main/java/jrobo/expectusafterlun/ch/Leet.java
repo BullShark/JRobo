@@ -135,8 +135,13 @@ public class Leet {
 				query = SEARCH.split("\\s+", 2)[1];
 			} else {
 				category = "";
-				query = SEARCH;
+				if(SEARCH.startsWith("All")) {
+					query = SEARCH.split("\\s+", 2)[1];
+				} else {
+					query = SEARCH;
+				}
 			}
+
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			// There is no CATEGORY. Search ALL.
 			category = "";
