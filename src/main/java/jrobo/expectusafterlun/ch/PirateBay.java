@@ -45,7 +45,6 @@ public class PirateBay {
     private URLConnection conn;
     private BufferedReader rd;
     private String fullUrl;
-    //TODO Fix bug, if the url is not available, the bot will throw an exception and crash
     private static final String BASE_URL = "http://odin.root.sx/thepiratebay.php";
 
     /* Miscellaneous */
