@@ -22,6 +22,7 @@
 
 package jrobo.expectusafterlun.ch;
 
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Timer;
@@ -724,8 +725,13 @@ public class BotCommand {
 	 */
 	private void moveToChannelHelper() {
 
-		 //TODO Only Masters
-		CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
+		if(Arrays.asList(CONFIG.getMasters()).contains(user)) {
+
+			CONNECTION.moveToChannel(CONFIG.getChannel(), cmdArgs);
+		} else {
+
+			CONNECTION.msgChannel(CONFIG.getChannel(), (user + " is not a master!") );
+		}
 	}
 
 	/**
