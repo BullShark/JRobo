@@ -137,10 +137,6 @@ public class PirateBay {
             Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
             json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 
-        } catch (IOException ex) {
-            Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
-            json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
-
         } finally {
             return json;
         }
