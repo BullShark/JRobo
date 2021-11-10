@@ -50,20 +50,12 @@ public class JRobo {
 	public JRobo() {
 		READER = new FileReader();
 		CONFIG = FileReader.getConfig();
-		CONN = new Networking(this);
-		JOKES = new Jokes(this);
-		BCMD = new BotCommand(this);
-	}
+		if(CONFIG.getProxyHost() != null && CONFIG.getProxyPort() != null) {
 
-	/**
-	 * Start JRobo with a proxied connection
-	 * @param PROXY A PROXY to use for JRobo's connection
-	 * @param PORT The PROXY PORT to connect to
-	 */
-	public JRobo(final String PROXY, final int PORT) {
-	//TODO Implement PROXY and PORT
-		READER = new FileReader();
-		CONFIG = FileReader.getConfig();
+			//TODO Needs testing
+			System.setProperty("http.proxyHost", CONFIG.getProxyHost());
+			System.setProperty("http.proxyPort", CONFIG.getProxyPort());
+		}
 		CONN = new Networking(this);
 		JOKES = new Jokes(this);
 		BCMD = new BotCommand(this);

@@ -44,6 +44,8 @@ public class Config {
 	private String[] masters;
 	private char command_symbol;
 	private String network;
+	private String proxy_host;
+	private String proxy_port;
 	private String channel;
 	private String openweathermap_apikey;
 	private String torrent_apikey;
@@ -99,6 +101,26 @@ public class Config {
 	 */
 	protected String getNetwork() {
 		return network;
+	}
+
+	/**
+	 *
+	 * @return The proxy address to connect to
+	 * @since 2021-11-10
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 */
+	protected String getProxyHost() {
+		return proxy_host;
+	}
+
+	/**
+	 *
+	 * @return The port that the proxy listens on
+	 * @since 2021-11-10
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 */
+	protected String getProxyPort() {
+		return proxy_port;
 	}
 
 	/**
