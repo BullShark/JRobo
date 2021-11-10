@@ -7,7 +7,6 @@ jrobo/expectusafterlun/ch/FileReader.java
 jrobo/expectusafterlun/ch/Weather.java
  jrobo.expectusafterlun.ch.Weather
  jrobo.expectusafterlun.ch.Weather$1
- jrobo.expectusafterlun.ch.Weather$InvalidLocationException
  jrobo.expectusafterlun.ch.Weather$WeatherJson
  jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem
  jrobo.expectusafterlun.ch.Weather$WeatherJson$WeatherListJsonItem$WeatherCloudsJsonItem

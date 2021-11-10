@@ -51,12 +51,13 @@ public class Networking {
 	/**
 	 * Networking takes care of the connection, reads from the Config file, and handles the MAXCHARS a message can have
 	 * Some RFC says 510 max chars
-	 * @param CONFIG The configuration to be read such as which IRC network to join
+	 * @param JROBO Provide getters for the Config
+	 * @seealso CONFIG The configuration to be read such as which IRC network to join
  	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
-	public Networking(final Config CONFIG) {
+	public Networking(final JRobo JROBO) {
 		super(); // Gets rid of java.lang.VerifyError
-		this.CONFIG = CONFIG;
+		this.CONFIG = JROBO.getCONFIG();
 		String network = CONFIG.getNetwork();
 		String[] server = network.split(":");
 		String hostname = server[0];

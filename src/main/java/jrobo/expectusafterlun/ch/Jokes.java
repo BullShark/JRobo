@@ -38,16 +38,17 @@ public class Jokes {
   
   /**
    * 
-   * @param CONN The Networking connection used by JRobo
-   * @param CHANNEL The IRC CHANNEL that JRobo resides
-   * @param FR
+   * @param JROBO Provides getters for the Networking, Config/Channel, and FileReader
+   * @seealso CONN The Networking connection used by JRobo
+   * @seealso CHANNEL The IRC CHANNEL that JRobo resides
+   * @seealso READER The FileReader used for Jokes and the Config file
    */
-  public Jokes (final Networking CONN, final String CHANNEL, final FileReader FR) {
+  public Jokes (final JRobo JROBO) {
     
-    this.CONN = CONN;
-    this.CHANNEL = CHANNEL;
+    this.CONN = JROBO.getCONN();
+    this.CHANNEL = JROBO.getCONFIG().getChannel();
 
-    READER = FR;
+    READER = JROBO.getREADER();
     
     mommaJokes = new ArrayList<>(50);
     pickUpJokes = new ArrayList<>(50);

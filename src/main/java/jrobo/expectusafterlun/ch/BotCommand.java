@@ -51,18 +51,19 @@ public class BotCommand {
 	/**
 	 * Constructor that initializes all globals of BotCommand and takes 3 arguments
 	 * 
-	 * @param CONNECTION Takes the CONNECTION created by JRobo.
-	 * @param CONFIG A Config object represents the bots configuration read in from Config.json
-	 * @param JROBO Class containing the main method for this bot
-	 * @param READER A Reader object for files
+	 * @param JROBO Provides getters for the Networking, Config, and Joke
+	 * @seealso CONNECTION Takes the CONNECTION created by JRobo.
+	 * @seealso CONFIG A Config object represents the bots configuration read in from Config.json
+	 * @seealso JROBO Class containing the main method for this bot
+	 * @seealso READER A Reader object for files
 	 */
-	public BotCommand(final Networking CONNECTION, final Config CONFIG, final JRobo JROBO, final FileReader READER) {
+	public BotCommand(final JRobo JROBO) {
 
 		/* Objects */
-		this.CONNECTION = CONNECTION;
-		this.CONFIG = CONFIG;
 		this.JROBO = JROBO;
-		JOKE = new Jokes(this.CONNECTION, this.CONFIG.getChannel(), READER);
+		this.CONNECTION = this.JROBO.getCONN();
+		this.CONFIG = this.JROBO.getCONFIG();
+		JOKE = new Jokes(this.JROBO);
 
 		/* Cmds */
 		cmd = "";

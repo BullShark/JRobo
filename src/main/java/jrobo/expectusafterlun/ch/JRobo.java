@@ -50,9 +50,9 @@ public class JRobo {
 	public JRobo() {
 		READER = new FileReader();
 		CONFIG = FileReader.getConfig();
-		CONN = new Networking(CONFIG);
-		JOKES = new Jokes(CONN, CONFIG.getChannel(), READER);
-		BCMD = new BotCommand(CONN, CONFIG, this, READER);
+		CONN = new Networking(this);
+		JOKES = new Jokes(this);
+		BCMD = new BotCommand(this);
 	}
 
 	/**
@@ -64,9 +64,9 @@ public class JRobo {
 	//TODO Implement PROXY and PORT
 		READER = new FileReader();
 		CONFIG = FileReader.getConfig();
-		CONN = new Networking(CONFIG);
-		JOKES = new Jokes(CONN, CONFIG.getChannel(), READER);
-		BCMD = new BotCommand(CONN, CONFIG, this, READER);
+		CONN = new Networking(this);
+		JOKES = new Jokes(this);
+		BCMD = new BotCommand(this);
 	}
 
 	/**
@@ -162,6 +162,7 @@ public class JRobo {
 
 		CONN.closeConnection();
 
+		//@todo Use TermColors instead
 		System.out.println("\u001b[1;44m *** TERMINATED *** \u001b[m");
 	}
 
@@ -190,6 +191,26 @@ public class JRobo {
 	 */
 	public String getLast() {
 		return last;
+	}
+
+	public Networking getCONN() {
+		return CONN;
+	}
+
+	public FileReader getREADER() {
+		return READER;
+	}
+
+	public Config getCONFIG() {
+		return CONFIG;
+	}
+
+	public Jokes getJOKES() {
+		return JOKES;
+	}
+
+	public BotCommand getBCMD() {
+		return BCMD;
 	}
 
 	/**
