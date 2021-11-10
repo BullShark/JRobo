@@ -133,13 +133,12 @@ public class Leet {
 			if(Arrays.asList(CATEGORIES).contains(SEARCH.split("\\s+", 2)[0])) {
 				category = SEARCH.split("\\s+", 2)[0];
 				query = SEARCH.split("\\s+", 2)[1];
+			} else if(SEARCH.startsWith("All")) {
+				category = "";
+				query = SEARCH.split("\\s+", 2)[1];
 			} else {
 				category = "";
-				if(SEARCH.startsWith("All")) {
-					query = SEARCH.split("\\s+", 2)[1];
-				} else {
-					query = SEARCH;
-				}
+				query = SEARCH;
 			}
 
 		} catch (ArrayIndexOutOfBoundsException ex) {
