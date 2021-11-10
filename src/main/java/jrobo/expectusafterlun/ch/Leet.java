@@ -178,7 +178,7 @@ public class Leet {
 			}
 
 			/* Debug */
-			System.out.println("[***]\tfullUrl:" + fullUrl);
+			System.out.println("[***]\tfullUrl:   " + fullUrl);
 
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
