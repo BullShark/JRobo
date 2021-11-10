@@ -197,6 +197,7 @@ public class Config {
 			+ "\n[+++]\t\tmasters are " + Arrays.toString(masters)
 			+ "\n[+++]\t\tcommand_symbol is " + command_symbol
 			+ "\n[+++]\t\tnetwork is " + network
+			+ "\n[+++]\t\tproxy host/port is " + proxy_host + ":" + proxy_port
 			+ "\n[+++]\t\tchannel is " + channel
 			+ "\n[+++]\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*")
 			+ "\n[+++]\t\ttorrent_apikey is " + torrent_apikey.replaceAll(".", "*")
