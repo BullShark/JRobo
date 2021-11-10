@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -132,13 +133,18 @@ public class PirateBay {
                 json = json.concat(line);
             }
             rd.close();
-        } catch (MalformedURLException | ConnectException ex) {
+        } catch (MalformedURLException | ConnectException | FileNotFoundException ex) {
             Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
+            json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+
         } catch (IOException ex) {
             Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
+            json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+
+        } finally {
+            return json;
         }
 
-        return json;
     }
 
     /**
@@ -150,7 +156,7 @@ public class PirateBay {
      */
     public String getFormattedResult(final boolean HASCOLORS) {
 
-	PirateBayJsonItem[] results;
+        PirateBayJsonItem[] results;
 
         try {
 
@@ -159,7 +165,9 @@ public class PirateBay {
 
         } catch(IllegalStateException | NullPointerException | JsonSyntaxException ex) {
           Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
-          return "";
+            json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+            return json;
+
         }
 
         String output = "";
