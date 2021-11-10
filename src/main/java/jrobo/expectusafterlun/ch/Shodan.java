@@ -24,7 +24,6 @@ package jrobo.expectusafterlun.ch;
 
 /**
  * @todo https://github.com/fooock/jshodan
- * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class Shodan {
