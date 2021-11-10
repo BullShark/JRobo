@@ -21,6 +21,7 @@ package jrobo.expectusafterlun.ch;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -156,7 +157,7 @@ public class PirateBay {
           gson = new GsonBuilder().setPrettyPrinting().create();
           results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
 
-        } catch(IllegalStateException | NullPointerException ex) {
+        } catch(IllegalStateException | NullPointerException | JsonSyntaxException ex) {
           Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
           return "";
         }
