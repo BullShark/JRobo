@@ -45,7 +45,7 @@ public class JRobo {
 	private String user = null;
 
 	/**
-	 * Set the Reader, Config, Connection, Jokes and BotCommand
+	 * Set the FileReader, Config, the Networking connection, Jokes and BotCommand
 	 */
 	public JRobo() {
 		READER = new FileReader();
