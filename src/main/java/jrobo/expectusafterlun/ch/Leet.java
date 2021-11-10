@@ -147,12 +147,6 @@ public class Leet {
 			query = SEARCH;
 			Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
-		if (category.equalsIgnoreCase("All")
-			|| !(Arrays.asList(CATEGORIES)).contains(category)) {
-
-			category = "";
-		}
 	}
 
 	/**
