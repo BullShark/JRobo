@@ -222,7 +222,7 @@ public class PirateBay {
          * @return Colored for IRC String representing LeetJsonItem
          */
         public String getColorString() {
-            final String MYSTRING=
+            final String RESULT =
               MircColors.BOLD + name + " " +
               MircColors.GREEN + "<" + tinyurl + ">" +
               MircColors.NORMAL + MircColors.BOLD + " (" + Size + 
@@ -230,7 +230,7 @@ public class PirateBay {
               MircColors.CYAN + " L:" + leechers + 
               MircColors.NORMAL + MircColors.BOLD + ")\n";
              
-            return MYSTRING;
+            return RESULT;
         }
 
         /**
@@ -241,8 +241,8 @@ public class PirateBay {
          */
         @Override
         public String toString() {
-            final String MYSTRING= name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
-            return MYSTRING;
+            final String RESULT = name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
+            return RESULT;
         }
     }
 }
