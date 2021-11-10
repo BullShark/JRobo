@@ -152,31 +152,30 @@ public class PirateBay {
     public String getFormattedResult(final boolean HASCOLORS) {
 
         PirateBayJsonItem[] results;
+        String output = "";
 
         try {
 
-          gson = new GsonBuilder().setPrettyPrinting().create();
-          results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
+            gson = new GsonBuilder().setPrettyPrinting().create();
+            results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
 
+            if(HASCOLORS) {
+                for (PirateBayJsonItem result : results) {
+                    output += result.getColorString();
+                }
+            } else {
+                 for (PirateBayJsonItem result : results) {
+                     output += result.toString();
+                 }
+            }
         } catch(IllegalStateException | NullPointerException | JsonSyntaxException ex) {
           Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
-            json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
-            return json;
+          output = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 
+        } finally {
+
+            return output;
         }
-
-        String output = "";
-
-        if(HASCOLORS) {
-          for (PirateBayJsonItem result : results) {
-            output += result.getColorString();
-          }
-        } else {
-          for (PirateBayJsonItem result : results) {
-            output += result.toString();
-          }
-        }
-        return output;
     }
 
     /**
