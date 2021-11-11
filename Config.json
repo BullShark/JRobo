@@ -8,7 +8,7 @@
       "zer0"
     ],
     "command_symbol":".",
-    "network":"irc.libera.chat:6697",
+    "network":"irc.libera.chat:6667",
     "proxy_host":"null",
     "proxy_port":"null",
     "channel":"##blackhats",
