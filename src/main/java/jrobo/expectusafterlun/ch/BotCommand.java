@@ -273,8 +273,8 @@ public class BotCommand {
 	 */
 	private String getUsers(final String CHAN) {
 
-		String received = "", users = "";
-		String first = "", last = "";
+		String received, users = "";
+		String first, last;
 		int tries = 8;
 
 		CONNECTION.sendln("NAMES " + CHAN);
@@ -418,7 +418,10 @@ public class BotCommand {
 					JOKE.getMommaJoke(getRandChanUser().replace("[m]", "")));
 			} else {
 
-				//TODO I don't remember why I wrote this. What does it do? Is it really needed?
+				/* 
+				 * If temp is -1, that means there is no space
+				 * We are getting the user for the joke
+				 */
 				int temp = cmdArgs.indexOf(' ');
 				if (temp != -1) {
 					CONNECTION.msgChannel(CONFIG.getChannel(), JOKE.getMommaJoke(cmdArgs.substring(0, temp)));
