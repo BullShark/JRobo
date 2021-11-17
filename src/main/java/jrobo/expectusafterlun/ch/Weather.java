@@ -51,7 +51,7 @@ public class Weather {
 	private final String APIKEY;
 
 	/**
-	 * Constructor that takes a Config object for retriving the API Key
+	 * Constructor that takes a Config object for retrieving the API Key
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param CONFIG Used to retrieve the API Key
@@ -85,7 +85,7 @@ public class Weather {
 				+ "&lang=" + "en"
 				+ "&appid=" + APIKEY).replaceAll(" ", "%20");
 
-		System.out.println("[+++]\t" + URL);
+		System.out.println(TermColors.colorInfo(URL));
 
 		String json = "";
 
@@ -122,7 +122,7 @@ public class Weather {
 
 		try {
 			Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>() {}.getType();
-			System.out.println("[+++]\tWeatherJson Type: " + WeatherJsonT);
+			System.out.println(TermColors.colorInfo("WeatherJson Type: " + WeatherJsonT));
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			WeatherJson weatherJson = gson.fromJson(this.getJson(LOCATION), WeatherJson.class);
@@ -131,7 +131,7 @@ public class Weather {
 
 		} catch (JsonSyntaxException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-			System.err.println("[+++]\tInvalid Json: Does not match the Json code or wrong type");
+			System.err.println(TermColors.colorInfo("Invalid Json: Does not match the Json code or wrong type"));
 			result = "Unable to retrieve the weather";
 
 		} finally {
