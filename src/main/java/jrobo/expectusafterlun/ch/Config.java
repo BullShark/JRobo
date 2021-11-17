@@ -191,8 +191,8 @@ public class Config {
 	 */
 	public String getColorString() {
 
-		return (TermColors.colorInfo("\t\tMy name is " + name + "\n") 
-			+ "\n" + TermColors.colorInfo("\t\tpassword is " + password.replaceAll(".", "*") + "\n") 
+		return (TermColors.colorInfo("\t\tMy name is " + name) 
+			+ "\n" + TermColors.colorInfo("\t\tpassword is " + password.replaceAll(".", "*")) 
 			+ "\n" + TermColors.colorInfo("\t\tmasters are " + Arrays.toString(masters))
 			+ "\n" + TermColors.colorInfo("\t\tcommand_symbol is " + command_symbol)
 			+ "\n" + TermColors.colorInfo("\t\tnetwork is " + network)
