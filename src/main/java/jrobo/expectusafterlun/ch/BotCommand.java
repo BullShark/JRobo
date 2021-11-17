@@ -908,8 +908,7 @@ public class BotCommand {
 			CONNECTION.moveToChannel(cmdArgs, CONFIG.getBaseChan());
 			try {
 				Thread.sleep(2500);
-				//FIXME Bad coding
-				if (CONNECTION.recieveln().contains(":the_derp_knight!~JRobo@d-24-245-107-185.cpe.metrocast.net QUIT :Excess Flood")) {
+				if (CONNECTION.recieveln().contains("QUIT :Excess Flood")) {
 					break;
 				}
 			} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown
