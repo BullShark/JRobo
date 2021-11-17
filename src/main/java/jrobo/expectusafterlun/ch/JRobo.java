@@ -67,7 +67,7 @@ public class JRobo {
 	private void initiate() {
 		System.out.print("[+++]\tUsing configuration: \n" + CONFIG.toString());
 
-		System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + " *** INITIATED *** " + TermColors.ANSI_RESET);
+		System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + "[***]\t" + " *** INITIATED *** " + TermColors.ANSI_RESET);
 
 		/* Identify to server */
 		CONN.sendln("NICK " + CONFIG.getName());
@@ -153,7 +153,7 @@ public class JRobo {
 
 		CONN.closeConnection();
 
-		System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + " *** TERMINATED *** " + TermColors.ANSI_RESET);
+		System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + "[***]\t" + " *** TERMINATED *** " + TermColors.ANSI_RESET);
 	}
 
 	/**
