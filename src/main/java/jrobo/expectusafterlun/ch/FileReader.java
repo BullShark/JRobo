@@ -70,11 +70,11 @@ public class FileReader {
      * @return A true on success and false on failure
      */
     protected boolean fileToArrayList(final String FILENAME, final ArrayList<String> LISTARR) {
-        out.println(TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\tReading Configuration File (" + FILENAME + ")");
-        out.println(TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\tAbsolute path: " + new File(FILENAME).getAbsolutePath());
-        out.println(TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\tSystem user directory: " + System.getProperty("user.dir"));
+        out.println( TermColors.colorInfo("Reading Configuration File (" + FILENAME + ")") );
+        out.println( TermColors.colorInfo("Absolute path: " + new File(FILENAME).getAbsolutePath()) );
+        out.println( TermColors.colorInfo("System user directory: " + System.getProperty("user.dir")) );
         
-        out.println("[+++]\tReading File (" + FILENAME + ")");
+        out.println( TermColors.colorInfo("Reading File (" + FILENAME + ")") );
         try {
             File file = new File(FILENAME);
                 try (Scanner myReader = new Scanner(file)) {
