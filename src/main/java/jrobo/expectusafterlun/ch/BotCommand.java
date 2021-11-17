@@ -63,7 +63,7 @@ public class BotCommand {
 		this.JROBO = JROBO;
 		this.CONNECTION = this.JROBO.getCONN();
 		this.CONFIG = this.JROBO.getCONFIG();
-		JOKE = new Jokes(this.JROBO);
+		this.JOKE = this.JROBO.getJOKES();
 
 		/* Cmds */
 		cmd = "";
