@@ -22,7 +22,6 @@ package jrobo.expectusafterlun.ch;
 /**
  * Makes color formatting the console output more user-friendly
  *
- * TODO Missing: BRIGHT, DIM, UNDERLINE, BLINK, REVERSE, and HIDDEN
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class TermColors {
@@ -344,13 +343,11 @@ public class TermColors {
 	 */
 	public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";
 
-	/* TODO Use me, 3 methods below */
-
 	/**
 	 * This method means to change the color, it only needs to be done here, not in 150 different places, change once
 	 * <p>
-	 * [***] means output
-	 * [---] means input
+	 * [***] means server output
+	 * [---] means server input
 	 * [+++] means info, neither output or input
 	 * 
 	 * @param MSG The console server info message to color

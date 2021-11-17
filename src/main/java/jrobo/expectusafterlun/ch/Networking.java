@@ -93,7 +93,7 @@ public class Networking {
 			bwriter.write(COMMAND);
 			bwriter.newLine();
 			bwriter.flush();
-			out.println(TermColors.ANSI_RED + "[***]" + TermColors.ANSI_RESET + "\t" + COMMAND);
+			out.println(TermColors.colorOut(COMMAND));
 			return true;
 
 		} catch (IOException ex) {
@@ -113,7 +113,7 @@ public class Networking {
 	protected String recieveln() {
 		try {
 			received = breader.readLine();
-			out.printf(TermColors.ANSI_BLUE + "[---]" + TermColors.ANSI_RESET + "\t%s\n", received);
+			out.printf(TermColors.colorIn(received + "\n"));
 			return received;
 		} catch (IOException ex) {
 			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,7 +131,7 @@ public class Networking {
 	protected boolean closeConnection() {
 
 		try {
-			System.out.println("[***]\tClosing connection!");
+			System.out.println(TermColors.colorInfo("Closing connection!"));
 
 			sock.close();
 			breader.close();
@@ -247,7 +247,7 @@ public class Networking {
 
 				// Pause before the next itteration (send) of this loop for DELAY ms
 				try {
-					System.out.println("[***]\tPausing for " + DELAY + " milliseconds");
+					System.out.println(TermColors.colorInfo("Pausing for " + DELAY + " milliseconds"));
 					Thread.sleep(DELAY);
 
 				} catch(InterruptedException ex) {
