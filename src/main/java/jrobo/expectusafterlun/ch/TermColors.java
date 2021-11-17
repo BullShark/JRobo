@@ -20,9 +20,6 @@
 
 package jrobo.expectusafterlun.ch;
 
-import static java.lang.System.out;
-//import static java.lang.System.err;
-
 /**
  * Makes color formatting the console output more user-friendly
  *
