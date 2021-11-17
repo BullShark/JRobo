@@ -149,7 +149,7 @@ public class BotCommand {
 			case "l":
 			case "help":
 			case "h":
-				listHelper();
+				listHelper(true);
 				break;
 			case "pirate":
 			case "pi":
@@ -612,7 +612,7 @@ public class BotCommand {
 	 * 
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
-	private void listHelper() {
+	private void listHelper(final boolean HASCOLORS) {
 
 		/*
 		 * GREEN = dark color
@@ -624,7 +624,7 @@ public class BotCommand {
 		 * special characters = no bold, no color
 		 * such as [] <> , ...
 		 */
-		String colorStr1 = LC.attributesSynopsisLine(LC.colorToken("Available commands: ", MircColors.BOLD)
+		String colorStr = LC.attributesSynopsisLine(LC.colorToken("Available commands: ", MircColors.BOLD)
 			+ LC.colorToken("google|lmgtfy|stfw ", MircColors.GREEN)
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
 			+ LC.colorToken("greet|g ", MircColors.GREEN)
@@ -636,10 +636,8 @@ public class BotCommand {
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
 			+ LC.colorToken("list|l, ", MircColors.GREEN)
 			+ LC.colorToken("leet|leetx ", MircColors.GREEN)
-			+ LC.colorToken("<catgegory> <search query>, ", MircColors.CYAN));
-
-		String colorStr2 = LC.attributesSynopsisLine(
-			LC.colorToken(MircColors.BOLD + "(" + MircColors.CYAN + "Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All" +MircColors.WHITE + "), ", MircColors.WHITE)
+			+ LC.colorToken("<catgegory> <search query>, ", MircColors.CYAN)
+			+ LC.colorToken(MircColors.BOLD + "(" + MircColors.CYAN + "Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All" +MircColors.WHITE + "), ", MircColors.WHITE)
 			+ LC.colorToken("help|h ", MircColors.GREEN)
 			+ LC.colorToken("[cmd], ", MircColors.CYAN)
 			+ LC.colorToken("next|n, ", MircColors.GREEN)
@@ -656,11 +654,14 @@ public class BotCommand {
 			+ LC.colorToken(MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "version, ", MircColors.GREEN)
 			+ LC.colorToken("quit|q", MircColors.GREEN));
 
-		String noColorStr = (colorStr1 +colorStr2).replaceAll("(\\P{Print}|[0-9]{2})", "");
-		//System.out.println("String without colors: " + noColorStr);
+		if(HASCOLORS) {
 
-		CONNECTION.msgChannel(CONFIG.getChannel(), colorStr1);
-		CONNECTION.msgChannel(CONFIG.getChannel(), colorStr2);
+			CONNECTION.msgChannel(CONFIG.getChannel(), colorStr);
+		} else {
+
+			String noColorStr = colorStr.replaceAll("(\\P{Print}|[0-9]{2})", "");
+			CONNECTION.msgChannel(CONFIG.getChannel(), noColorStr);
+		}
 	}
 
 	/**
