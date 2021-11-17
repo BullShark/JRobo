@@ -11,7 +11,7 @@
     "network":"irc.libera.chat:6667",
     "proxy_host":"null",
     "proxy_port":"null",
-    "channel":"##blackhats",
+    "channel":"##blackhats-alt",
     "openweathermap_apikey":"0dcf84bfef65b293b5e3b444246ad6b2",
     "torrent_apikey":"v4o101U1Gn3QbZG8JLRkHiD487zlhi0z"
 }
