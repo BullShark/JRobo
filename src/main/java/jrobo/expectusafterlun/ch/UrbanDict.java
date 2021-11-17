@@ -281,7 +281,7 @@ public class UrbanDict {
 					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
 					+ MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") "
 					+ MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:"
-					+ MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n";
+					+ MircColors.NORMAL + MircColors.BOLD + " " + definition;
 
 				return result;
 			}
@@ -290,7 +290,7 @@ public class UrbanDict {
 			public String toString() {
 				definition = definition.replaceAll("[\\r\\n\\s]++", " ");
 
-				return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
+				return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition;
 			}
 		} // EOF UrbanJsonItem
 	} // EOF UrbanJson
