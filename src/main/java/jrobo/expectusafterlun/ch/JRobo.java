@@ -40,14 +40,14 @@ public class JRobo {
 	private String first = null;
 	private String last = null;
 	private String received = null;
-
 	/* Miscallenous */
-	private String user = null;
+	private String user;
 
 	/**
 	 * Set the FileReader, Config, the Networking connection, Jokes and BotCommand
 	 */
 	public JRobo() {
+		this.user = null;
 		READER = new FileReader();
 		CONFIG = FileReader.getConfig();
 		if(CONFIG.getProxyHost() != null && CONFIG.getProxyPort() != null) {
