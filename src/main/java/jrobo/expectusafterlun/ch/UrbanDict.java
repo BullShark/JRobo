@@ -78,7 +78,7 @@ public class UrbanDict {
 		final String URL = (BASE_URL
 				+ "/v0/define"
 				+ "?term=" + WORD).replace(" ", "%20");
-		System.out.println("[+++]\t" + URL);
+		System.out.println(TermColors.colorInfo(URL));
 			
 		/* Create a URL obj from strings */
 		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -95,7 +95,7 @@ public class UrbanDict {
 			json = "{ \"data\": \"Unable to retrieve UrbanDict json data\" }";
 
 		} finally {
-			System.out.println("[+++]\t" + json);
+			System.out.println(TermColors.colorInfo(json));
 			return json;
 		}
 	}
@@ -113,18 +113,19 @@ public class UrbanDict {
 		try {
 			Type UrbanJsonT = new TypeToken<ArrayList<UrbanJson>>() {
 				}.getType();
-			System.out.println("[+++]\tUrbanJson Type: " + UrbanJsonT);
+			System.out.println(TermColors.colorInfo("UrbanJson Type: " + UrbanJsonT));
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			UrbanJson urbanJson = gson.fromJson(this.getJson(), UrbanJson.class);
 
 			urbanJson.sort();
 			
-			System.out.println("[+++]\turbanJson.getListSize(): " + urbanJson.getListSize());
+			System.out.println(TermColors.colorInfo("urbanJson.getListSize(): " + urbanJson.getListSize()));
 
 			urbanJson.setLimit(LIMIT);
 
-			System.out.println("[+++]\turbanJson.getListSize(): " + urbanJson.getListSize());
+			System.out.println( TermColors.colorInfo("urbanJson.getListSize(): " + urbanJson.getListSize()) );
+			System.out.println( TermColors.colorInfo("UrbanJson Type: " + UrbanJsonT) );
 
 			urbanJson.sort(); // Ascending order -> Decending order
 
@@ -137,7 +138,7 @@ public class UrbanDict {
 			return result;
 
 		} finally {
-			System.out.println("[+++]\t" + result);
+			System.out.println( TermColors.colorInfo(result) );
 
 		}
 	}
@@ -160,6 +161,7 @@ public class UrbanDict {
 	} // EOF main
 
 	/**
+	 * Strings and ints representing JSON data
 	 *
 	 * @author Christopher Lemire {@literal <christopher.lemire@gmail.com>}
 	 */
@@ -170,7 +172,7 @@ public class UrbanDict {
 		private List<UrbanJsonItem> list;
 
 		/**
-		 * Not part of the Json 
+		 * Not part of the JSON 
 		 * Used for limiting the number of results
 		 * A limit of zero means there's no limit
 		 * @since 2020-10-03
@@ -199,7 +201,7 @@ public class UrbanDict {
 			if(limit > 0 && !list.isEmpty() && list != null) {
 
 				this.limit = limit;
-				System.out.println("[+++]\tUrbanJson.limit: " + this.limit);
+				System.out.println(TermColors.colorInfo("UrbanJson.limit: " + this.limit));
 
 				//sort(); // subList() should be given a sorted List
 				List<UrbanJsonItem> temp = list;
