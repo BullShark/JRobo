@@ -20,6 +20,9 @@
 
 package jrobo.expectusafterlun.ch;
 
+import static java.lang.System.out;
+//import static java.lang.System.err;
+
 /**
  * Makes color formatting the console output more user-friendly
  *
@@ -111,6 +114,41 @@ public class TermColors {
 	 * White colored background.
 	 */
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+	/* TODO Use me, 3 methods below */
+
+	/**
+	 * This method means to change the color, it only needs to be done here, not in 150 different places, change once
+	 * 
+	 * [***] means output
+	 * [---] means input
+	 * [+++] means info, neither output or input
+	 * @param MSG The console server info message to color
+	 */
+	public static void colorInfo(final String MSG) {
+
+		System.out.println(TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t" + MSG);
+	}
+
+	/**
+	 * This method means to change the color, it only needs to be done here, not in 150 different places, change only once
+	 *
+	 * @param MSG The console server output message to color
+	 */
+	public static void colorOut(final String MSG) {
+
+		out.println(TermColors.ANSI_RED + "[***]" + TermColors.ANSI_RESET + "\t" + MSG);
+	}
+
+	/**
+	 * This method means to change the color, it only needs to be done here, not in 150 different places, change only once
+	 *
+	 * @param MSG The console server input message to color
+	 */
+	public static void colorIn(final String MSG) {
+
+			out.printf(TermColors.ANSI_BLUE + "[---]" + TermColors.ANSI_RESET + "\t%s\n", MSG);
+	}
 
 	/**
 	 * Main method for testing this class
