@@ -191,16 +191,16 @@ public class Config {
 	 */
 	public String getColorString() {
 
-		return (TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\tMy name is " + name
-			+ "\n" + TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\tpassword is " + password.replaceAll(".", "*")
-			+ "\n" + TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\tmasters are " + Arrays.toString(masters)
-			+ "\n" + TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\tcommand_symbol is " + command_symbol
-			+ "\n" + TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\tnetwork is " + network
-			+ "\n" + TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\tproxy host/port is " + proxy_host + ":" + proxy_port
-			+ "\n" + TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\tchannel is " + channel
-			+ "\n" + TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*")
-			+ "\n" + TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\ttorrent_apikey is " + torrent_apikey.replaceAll(".", "*")
-			+ "\n" + TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t\tbase_chan is " + base_chan
+		return (TermColors.colorInfo("\t\tMy name is " + name + "\n") 
+			+ "\n" + TermColors.colorInfo("\t\tpassword is " + password.replaceAll(".", "*") + "\n") 
+			+ "\n" + TermColors.colorInfo("\t\tmasters are " + Arrays.toString(masters))
+			+ "\n" + TermColors.colorInfo("\t\tcommand_symbol is " + command_symbol)
+			+ "\n" + TermColors.colorInfo("\t\tnetwork is " + network)
+			+ "\n" + TermColors.colorInfo("\t\tproxy host/port is " + proxy_host + ":" + proxy_port)
+			+ "\n" + TermColors.colorInfo("\t\tchannel is " + channel)
+			+ "\n" + TermColors.colorInfo("\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*"))
+			+ "\n" + TermColors.colorInfo("\t\ttorrent_apikey is " + torrent_apikey.replaceAll(".", "*"))
+			+ "\n" + TermColors.colorInfo("\t\tbase_chan is " + base_chan)
 			+ "\n");
 	}
 
