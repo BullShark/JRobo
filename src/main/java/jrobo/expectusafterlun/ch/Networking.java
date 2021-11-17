@@ -93,7 +93,7 @@ public class Networking {
 			bwriter.write(COMMAND);
 			bwriter.newLine();
 			bwriter.flush();
-			out.println(TermColors.ANSI_CYAN_BACKGROUND + TermColors.ANSI_YELLOW + "[***]\t" + COMMAND);
+			out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_YELLOW + "[***]\t" + COMMAND);
 			return true;
 
 		} catch (IOException ex) {
