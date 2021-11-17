@@ -396,7 +396,6 @@ public class Networking {
 	 * This is used to prevent a message being truncated by IRC because
 	 * It exceeds MAXCHARS
 	 * 
-	 * TODO Is this really needed or does the wrapText make it obsolete?
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private String addNewLines(final String COMMAND) {
