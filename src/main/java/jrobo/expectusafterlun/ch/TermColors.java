@@ -119,35 +119,39 @@ public class TermColors {
 
 	/**
 	 * This method means to change the color, it only needs to be done here, not in 150 different places, change once
-	 * 
+	 * <p>
 	 * [***] means output
 	 * [---] means input
 	 * [+++] means info, neither output or input
+	 * 
 	 * @param MSG The console server info message to color
+	 * @return The colored info line
 	 */
-	public static void colorInfo(final String MSG) {
+	public static String colorInfo(final String MSG) {
 
-		System.out.println(TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t" + MSG);
+		return TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t" + MSG;
 	}
 
 	/**
 	 * This method means to change the color, it only needs to be done here, not in 150 different places, change only once
 	 *
 	 * @param MSG The console server output message to color
+	 * @return The colored server output line
 	 */
-	public static void colorOut(final String MSG) {
+	public static String colorOut(final String MSG) {
 
-		out.println(TermColors.ANSI_RED + "[***]" + TermColors.ANSI_RESET + "\t" + MSG);
+		return TermColors.ANSI_RED + "[***]" + TermColors.ANSI_RESET + "\t" + MSG;
 	}
 
 	/**
 	 * This method means to change the color, it only needs to be done here, not in 150 different places, change only once
 	 *
 	 * @param MSG The console server input message to color
+	 * @return The colored server input line
 	 */
-	public static void colorIn(final String MSG) {
+	public static String colorIn(final String MSG) {
 
-			out.printf(TermColors.ANSI_BLUE + "[---]" + TermColors.ANSI_RESET + "\t%s\n", MSG);
+			return String.format(TermColors.ANSI_BLUE + "[---]" + TermColors.ANSI_RESET + "\t%s", MSG );
 	}
 
 	/**
