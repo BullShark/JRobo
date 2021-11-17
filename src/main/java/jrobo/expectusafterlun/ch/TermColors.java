@@ -84,13 +84,44 @@ public class TermColors {
 	 * Bold
 	 *******************************************************************/
 
+	/**
+	 * Black bold colored text.
+	 */
 	public static final String BLACK_BOLD = "\033[1;30m";  // BLACK
+
+	/**
+	 * Red bold colored text.
+	 */
 	public static final String RED_BOLD = "\033[1;31m";    // RED
+
+	/**
+	 * Green bold colored text.
+	 */
 	public static final String GREEN_BOLD = "\033[1;32m";  // GREEN
+
+	/**
+	 * Yellow bold colored text.
+	 */
 	public static final String YELLOW_BOLD = "\033[1;33m"; // YELLOW
+
+	/**
+	 * Blue bold colored text.
+	 */
 	public static final String BLUE_BOLD = "\033[1;34m";   // BLUE
+
+	/**
+	 * Purple bold colored text.
+	 */
 	public static final String PURPLE_BOLD = "\033[1;35m"; // PURPLE
+
+	/**
+	 * Cyan bold colored text.
+	 */
 	public static final String CYAN_BOLD = "\033[1;36m";   // CYAN
+
+	/**
+	 * White bold colored text.
+	 */
 	public static final String WHITE_BOLD = "\033[1;37m";  // WHITE
 
 	/*******************************************************************
