@@ -282,13 +282,44 @@ public class Leet {
 	 */
 	public class LeetJsonItem {
 
+		/**
+		 * The date the torrent was submitted
+		 */
 		public String date;
+
+		/**
+		 * The full URL to the torrent
+		 */
 		public String href;
+
+		/**
+		 * The number of leeches for this torrent
+		 */
 		public int leeches;
+
+		/**
+		 * The name of this torrent
+		 */
 		public String name;
+
+		/**
+		 * The number of seeds for this torrent
+		 */
 		public int seeds;
+
+		/**
+		 * How much space this torrent takes up
+		 */
 		public String size;
+
+		/**
+		 * The user who uploaded this torrent
+		 */
 		public String user;
+
+		/**
+		 * A shortened version of the href url
+		 */
 		public String tinyurl;
 
 		/**

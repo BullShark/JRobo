@@ -185,22 +185,42 @@ public class JRobo {
 		return last;
 	}
 
+	/**
+	 * For Network I/O
+	 * @return The Network Connection for this bot
+	 */
 	public Networking getCONN() {
 		return CONN;
 	}
 
+	/**
+	 * Handles all the File Reading I/O such as reading jokes and the Config file
+	 * @return The FileReader for this bot
+	 */
 	public FileReader getREADER() {
 		return READER;
 	}
 
+	/**
+	 * Provides getters and setters for everything set in Config.json
+	 * @return The Configuration for JRobo
+	 */
 	public Config getCONFIG() {
 		return CONFIG;
 	}
 
+	/**
+	 * Used for retrieving jokes abourt an irc user
+	 * @return The Jokes used by JRobo
+	 */
 	public Jokes getJOKES() {
 		return JOKES;
 	}
 
+	/**
+	 * Handles BotCommands given to JRobo
+	 * @return The BotCommand for JRobo
+	 */
 	public BotCommand getBCMD() {
 		return BCMD;
 	}

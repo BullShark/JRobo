@@ -50,7 +50,7 @@ public class Config {
 	private String openweathermap_apikey;
 	private String torrent_apikey;
 	// Chan the bot originally was in before moving between channels
-	private String baseChan;
+	private String base_chan;
 
 	/**
 	 * Just a placeholder for this object, doesn't execute any code
@@ -142,7 +142,7 @@ public class Config {
 	 * @since 2013-08-12
 	 */
 	protected void setChannel(String chan) {
-		baseChan = chan;
+		base_chan = chan;
 		channel = chan;
 	}
 
@@ -171,17 +171,17 @@ public class Config {
 	 * @return baseChan is the previous channel
 	 */
 	protected String getBaseChan() {
-		return baseChan;
+		return base_chan;
 	}
 
 	/**
 	 * Channel from where the bot began moving
 	 *
-	 * @param baseChan The first channel JRobo goes to before moving to any other channel
+	 * @param base_chan The first channel JRobo goes to before moving to any other channel
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
-	protected void setBaseChan(String baseChan) {
-		this.baseChan = baseChan;
+	protected void setBaseChan(String base_chan) {
+		this.base_chan = base_chan;
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class Config {
 			+ "\n[+++]\t\tchannel is " + channel
 			+ "\n[+++]\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*")
 			+ "\n[+++]\t\ttorrent_apikey is " + torrent_apikey.replaceAll(".", "*")
-			+ "\n[+++]\t\tbaseChan is " + baseChan
+			+ "\n[+++]\t\tbase_chan is " + base_chan
 			+ "\n");
 	}
 }

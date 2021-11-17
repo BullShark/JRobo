@@ -53,10 +53,9 @@ public class BotCommand {
 	 * Constructor that initializes all globals of BotCommand and takes 3 arguments
 	 * 
 	 * @param JROBO Provides getters for the Networking, Config, and Joke
-	 * @seealso CONNECTION Takes the CONNECTION created by JRobo.
-	 * @seealso CONFIG A Config object represents the bots configuration read in from Config.json
-	 * @seealso JROBO Class containing the main method for this bot
-	 * @seealso READER A Reader object for files
+	 * @see CONNECTION Takes the CONNECTION created by JRobo.
+	 * @see CONFIG A Config object represents the bots configuration read in from Config.json
+	 * @see JROBO Class containing the main method for this bot
 	 */
 	public BotCommand(final JRobo JROBO) {
 

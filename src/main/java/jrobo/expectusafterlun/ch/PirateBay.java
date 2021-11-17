@@ -198,14 +198,47 @@ public class PirateBay {
      * @author Christopher Lemire {@literal <goodbye300@aim.com>}
      */
     public class PirateBayJsonItem {
+
         public String type;
+
+        /**
+         * The name of this torrent
+         */
         public String name;
+
+        /**
+         * The full URL to the torrent
+         */
         public String url;
+
+        /**
+         * A shortened version of the url
+         */
         public String tinyurl;
+
+        /**
+         * The user who uploaded this torrent
+         */
         public String Uploaded;
+
+        /**
+         * How much space this torrent takes up
+         */
         public String Size;
+
+        /**
+         * The date the torrent was UpLoaded
+         */
         public String ULed;
+
+        /**
+         * The number of seeds for this torrent
+         */
         public String seeders;
+
+        /**
+         * The number of leeches for this torrent
+         */
         public String leechers;
 
         /**

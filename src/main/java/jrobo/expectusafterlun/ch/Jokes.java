@@ -39,9 +39,9 @@ public class Jokes {
   /**
    * 
    * @param JROBO Provides getters for the Networking, Config/Channel, and FileReader
-   * @seealso CONN The Networking connection used by JRobo
-   * @seealso CHANNEL The IRC CHANNEL that JRobo resides
-   * @seealso READER The FileReader used for Jokes and the Config file
+   * @see CONN The Networking connection used by JRobo
+   * @see CHANNEL The IRC CHANNEL that JRobo resides
+   * @see READER The FileReader used for Jokes and the Config file
    */
   public Jokes (final JRobo JROBO) {
     

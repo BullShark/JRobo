@@ -51,8 +51,8 @@ public class Networking {
 	/**
 	 * Networking takes care of the connection, reads from the Config file, and handles the MAXCHARS a message can have
 	 * Some RFC says 510 max chars
-	 * @param JROBO Provide getters for the Config
-	 * @seealso CONFIG The configuration to be read such as which IRC network to join
+	 * @param JROBO Provide Getters for the Config
+	 * @see CONFIG The configuration to be read such as which IRC network to join
  	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public Networking(final JRobo JROBO) {
