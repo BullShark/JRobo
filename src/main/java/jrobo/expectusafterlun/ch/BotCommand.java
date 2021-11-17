@@ -707,6 +707,10 @@ public class BotCommand {
 			if (!hasArgs) {
 				CONNECTION.msgChannel(CONFIG.getChannel(), JOKE.getPhoneNumber(getRandChanUser()));
 			} else {
+				/* 
+				 * If temp is -1, that means there is no space
+				 * We are getting the user for the joke
+				 */
 				int temp = cmdArgs.indexOf(' ');
 				if (temp != -1) {
 					CONNECTION.msgChannel(CONFIG.getChannel(), JOKE.getPhoneNumber(cmdArgs.substring(0, temp)));
