@@ -22,103 +22,102 @@ package jrobo.expectusafterlun.ch;
 
 /**
  * Makes color formatting the console output more user-friendly
+ *
+ * TODO Missing: BRIGHT, DIM, UNDERLINE, BLINK, REVERSE, and HIDDEN
  */
 public class TermColors {
-    static StringBuilder sbuilder;
-   
-    /**
-     * The Color enumerated type
-     */
-    public static enum Color {
-        BLACK(0), RED(1), GREEN(2),
-        YELLOW(3), BLUE(4), MAGENTA(5),
-        CYAN(6), WHITE(7);
 
-        private int value;    
+	 /**
+	  * Removes all previously applied color and formatting attributes.
+	  */
+	public static final String ANSI_RESET = "\u001B[0m";
 
-        /**
-         * Constructor Color with initial VALUE
-         * @param value Color or formatting attribute to initialize Color with
-         */
-        private Color(int value) {
-            this.value = value;
-        }
+	/**
+	 * Black colored text.
+	 */
+	public static final String ANSI_BLACK = "\u001B[30m";
 
-        /**
-         * @return Sets the color or formatting attribute
-         */
-        public int getValue() {
-            return value;
-        }
-    } 
+	/**
+	 * Red colored text.
+	 */
+	public static final String ANSI_RED = "\u001B[31m";
 
-    /**
-     * Available Attributes for formatting are RESET, BRIGHT, DIM, UNDERLINE, BLINK, REVERSE, and HIDDEN.
-     */
-    public static enum Attribute {
-        RESET(0), BRIGHT(1), DIM(2),
-        UNDERLINE(3), BLINK(4),
-        REVERSE(7), HIDDEN(8);
-        private final int VALUE;    
+	/**
+	 * Green colored text.
+	 */
+	public static final String ANSI_GREEN = "\u001B[32m";
 
-        /**
-         * Enumerated type for Color or formatting Attribute with initial VALUE
-         * @param value The initial color or formatting Attribute VALUE
-         */
-        private Attribute(int value) {
-            this.VALUE = value;
-        }
+	/**
+	 * Yellow colored text.
+	 */
+	public static final String ANSI_YELLOW = "\u001B[33m";
 
-        /**
-         * @return The color or formatting attribute
-         */
-        public int getValue() {
-            return VALUE;
-        }
-    }
-    
-    /**
-     * Takes attributes and returns a formatted String
-     * 
-     * @param str The String to apply the formatting to
-     * @param fg The foreground attribute
-     * @param bg The background attribute
-     * @param attrib The text attribute
-     * @return The formatted String
-     */
-    public static String getString(String str, Color fg, Color bg, Attribute attrib) {
-        sbuilder = new StringBuilder();
-        sbuilder.append(0x1B);
-        sbuilder.append('[');
+	/**
+	 * Blue colored text.
+	 */
+	public static final String ANSI_BLUE = "\u001B[34m";
+		
+	/**
+	 * Purple colored text.
+	 */
+	public static final String ANSI_PURPLE = "\u001B[35m";
 
-        sbuilder.append(attrib.getValue());
-        sbuilder.append(';');
+	/**
+	 * Cyan colored text.
+	 */
+	public static final String ANSI_CYAN = "\u001B[36m";
 
-        sbuilder.append(fg.getValue() + 30);
-        sbuilder.append(';');
+	/**
+	 * White colored text.
+	 */
+	public static final String ANSI_WHITE = "\u001B[37m";
 
-        sbuilder.append(bg.getValue() + 40);
-        sbuilder.append(';');
+	/**
+	 * Black colored background.
+	 */
+	public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
 
-        sbuilder.append('m');
-        
-        sbuilder.append(str);
+	/**
+	 * Red colored background.
+	 */
+	public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
 
-        // Reset attributes and colors
-        sbuilder.append(0x1B);
-        sbuilder.append('[');
-        sbuilder.append(Attribute.RESET.getValue());
-        sbuilder.append('m');
+	/**
+	 * Green colored background.
+	 */
+	public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
 
-        return sbuilder.toString();
-    }
+	/**
+	 * Yellow colored background.
+	 */
+	public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m";
 
-    /**
-     * Main method for testing this class
-     * 
-     * @param args Is ignored
-     */
-    public static void main(String[] args) {
-        System.out.println(getString("Testing testing 123", Color.RED, Color.YELLOW, Attribute.UNDERLINE));
-    }
+	/**
+	 * Blue colored background.
+	 */
+	public static final String ANSI_BLUE_BACKGROUND = "\u001B[44m";
+
+	/**
+	 * Purple colored background.
+	 */
+	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
+
+	/**
+	 * Cyan colored background.
+	 */
+	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
+
+	/**
+	 * White colored background.
+	 */
+	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+	/**
+	 * Main method for testing this class
+	 *
+	 * @param args Is ignored
+	 */
+	public static void main(String[] args) {
+		System.out.println(TermColors.ANSI_BLUE + TermColors.ANSI_RED_BACKGROUND + "Testing testing 123" + TermColors.ANSI_RESET);
+	}
 }
