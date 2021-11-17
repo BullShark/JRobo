@@ -153,7 +153,6 @@ public class JRobo {
 
 		CONN.closeConnection();
 
-		//@todo Use TermColors instead
 		System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + " *** TERMINATED *** " + TermColors.ANSI_RESET);
 	}
 
