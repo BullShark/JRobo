@@ -130,16 +130,15 @@ public class UrbanDict {
 			urbanJson.sort(); // Ascending order -> Decending order
 
 			result = (HASCOLORS) ? urbanJson.getColorString() : urbanJson.toString();
-			return result;
 
 		} catch (JsonSyntaxException | IllegalStateException | NullPointerException ex) {
 			Logger.getLogger(UrbanDict.class.getName()).log(Level.SEVERE, null, ex);
 			result = "{ \"list\": \"Unable to retrieve UrbanDict json data\" }";
-			return result;
 
 		} finally {
-			System.out.println( TermColors.colorInfo(result) );
 
+			System.out.println( TermColors.colorInfo(result) );
+			return result;
 		}
 	}
 
@@ -281,7 +280,7 @@ public class UrbanDict {
 					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
 					+ MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") "
 					+ MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:"
-					+ MircColors.NORMAL + MircColors.BOLD + " " + definition;
+					+ MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n";
 
 				return result;
 			}
@@ -290,7 +289,7 @@ public class UrbanDict {
 			public String toString() {
 				definition = definition.replaceAll("[\\r\\n\\s]++", " ");
 
-				return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition;
+				return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
 			}
 		} // EOF UrbanJsonItem
 	} // EOF UrbanJson
