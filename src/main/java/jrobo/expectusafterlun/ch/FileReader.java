@@ -61,30 +61,6 @@ public class FileReader {
         config = null;
     }
 
-/*
-    TODO: Why are the joke files being each read twice?
-
-[+++]  Reading Configuration File (Config.json) 
-[+++]  Absolute path: /home/bullshark/JRobo/Config.json 
-[+++]  System user directory: /home/bullshark/JRobo 
-[+++]  Reading Configuration File (MomJokes.txt) 
-[+++]  Absolute path: /home/bullshark/JRobo/MomJokes.txt 
-[+++]  System user directory: /home/bullshark/JRobo 
-[+++]  Reading File (MomJokes.txt) 
-[+++]  Reading Configuration File (FunnyJokes.txt) 
-[+++]  Absolute path: /home/bullshark/JRobo/FunnyJokes.txt 
-[+++]  System user directory: /home/bullshark/JRobo 
-[+++]  Reading File (FunnyJokes.txt) 
-[+++]  Reading Configuration File (MomJokes.txt) 
-[+++]  Absolute path: /home/bullshark/JRobo/MomJokes.txt 
-[+++]  System user directory: /home/bullshark/JRobo 
-[+++]  Reading File (MomJokes.txt) 
-[+++]  Reading Configuration File (FunnyJokes.txt) 
-[+++]  Absolute path: /home/bullshark/JRobo/FunnyJokes.txt 
-[+++]  System user directory: /home/bullshark/JRobo 
-[+++]  Reading File (FunnyJokes.txt)
-*/
-    
     /**
      * Opens a resource file inside the package and fills the passed ArrayList
      *
