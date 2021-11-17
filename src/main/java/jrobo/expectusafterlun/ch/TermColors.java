@@ -128,13 +128,44 @@ public class TermColors {
 	 * Underline
 	 *******************************************************************/
 
+	/**
+	 * Black underlined colored text.
+	 */
 	public static final String BLACK_UNDERLINED = "\033[4;30m";  // BLACK
+
+	/**
+	 * Red underlined colored text.
+	 */
 	public static final String RED_UNDERLINED = "\033[4;31m";    // RED
+
+	/**
+	 * Green underlined colored text.
+	 */
 	public static final String GREEN_UNDERLINED = "\033[4;32m";  // GREEN
+
+	/**
+	 * Yellow underlined colored text.
+	 */
 	public static final String YELLOW_UNDERLINED = "\033[4;33m"; // YELLOW
+
+	/**
+	 * Blue underlined colored text.
+	 */
 	public static final String BLUE_UNDERLINED = "\033[4;34m";   // BLUE
+
+	/**
+	 * White underlined colored text.
+	 */
 	public static final String PURPLE_UNDERLINED = "\033[4;35m"; // PURPLE
+
+	/**
+	 * White underlined colored text.
+	 */
 	public static final String CYAN_UNDERLINED = "\033[4;36m";   // CYAN
+
+	/**
+	 * White underlined colored text.
+	 */
 	public static final String WHITE_UNDERLINED = "\033[4;37m";  // WHITE
 
 	/*******************************************************************
@@ -185,13 +216,44 @@ public class TermColors {
 	 * High Intensity
 	 *******************************************************************/
 
+	/**
+	 * Black brightly colored text.
+	 */
 	public static final String BLACK_BRIGHT = "\033[0;90m";  // BLACK
+
+	/**
+	 * Red brightly colored text.
+	 */
 	public static final String RED_BRIGHT = "\033[0;91m";    // RED
+
+	/**
+	 * Green brightly colored text.
+	 */
 	public static final String GREEN_BRIGHT = "\033[0;92m";  // GREEN
+
+	/**
+	 * Yellow brightly colored text.
+	 */
 	public static final String YELLOW_BRIGHT = "\033[0;93m"; // YELLOW
+
+	/**
+	 * Blue brightly colored text.
+	 */
 	public static final String BLUE_BRIGHT = "\033[0;94m";   // BLUE
+
+	/**
+	 * Purple brightly colored text.
+	 */
 	public static final String PURPLE_BRIGHT = "\033[0;95m"; // PURPLE
+
+	/**
+	 * Cyan brightly colored text.
+	 */
 	public static final String CYAN_BRIGHT = "\033[0;96m";   // CYAN
+
+	/**
+	 * White brightly colored text.
+	 */
 	public static final String WHITE_BRIGHT = "\033[0;97m";  // WHITE
 
 	/*******************************************************************
@@ -219,11 +281,6 @@ public class TermColors {
 	public static final String PURPLE_BACKGROUND_BRIGHT = "\033[0;105m"; // PURPLE
 	public static final String CYAN_BACKGROUND_BRIGHT = "\033[0;106m";  // CYAN
 	public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
-
-
-
-	
-
 
 	/* TODO Use me, 3 methods below */
 
