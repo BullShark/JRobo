@@ -2,7 +2,6 @@
  * JRobo - An Advanced IRC Bot written in Java
  *
  * Copyright (C) <2013> <Christopher Lemire>
- * Copyright (C) <2013> <Travis Mosley>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -24,6 +23,7 @@ package jrobo.expectusafterlun.ch;
  * Makes color formatting the console output more user-friendly
  *
  * TODO Missing: BRIGHT, DIM, UNDERLINE, BLINK, REVERSE, and HIDDEN
+ * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class TermColors {
 
@@ -123,6 +123,7 @@ public class TermColors {
 	 * 
 	 * @param MSG The console server info message to color
 	 * @return The colored info line
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public static String colorInfo(final String MSG) {
 
@@ -134,6 +135,7 @@ public class TermColors {
 	 *
 	 * @param MSG The console server output message to color
 	 * @return The colored server output line
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public static String colorOut(final String MSG) {
 
@@ -145,6 +147,7 @@ public class TermColors {
 	 *
 	 * @param MSG The console server input message to color
 	 * @return The colored server input line
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public static String colorIn(final String MSG) {
 
@@ -155,6 +158,7 @@ public class TermColors {
 	 * Main method for testing this class
 	 *
 	 * @param args Is ignored
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	public static void main(String[] args) {
 		System.out.println(TermColors.ANSI_BLUE + TermColors.ANSI_RED_BACKGROUND + "Testing testing 123" + TermColors.ANSI_RESET);
