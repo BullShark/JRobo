@@ -78,7 +78,7 @@ public class Epic {
 			+ "&country=" + COUNTRYCODE
 			+ "&allowCountries=" + COUNTRYCODE).replaceAll(" ", "%20");
 
-		System.out.println("[+++]\t" + URL);
+		System.out.println(TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t" + URL);
 
 		/* Create a URL obj from strings */
 		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -95,7 +95,7 @@ public class Epic {
 			json = "{ \"data\": \"Unable to retrieve Epic json data\" }";
 
 		} finally {
-			System.err.println("[+++]\t" + json);
+			System.err.println(TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t" + json);
 			return json;
 
 		}
@@ -117,7 +117,7 @@ public class Epic {
 			EpicJson epicJson = gson.fromJson(this.getJson(), EpicJson.class);
 			Type epicJsonT = new TypeToken<ArrayList<EpicJson>>() {
 			}.getType();
-			System.out.println("[+++]\tepicJson Type: " + epicJsonT);
+			System.out.println(TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\tepicJson Type: " + epicJsonT);
 
 			result = (HASCOLORS) ? epicJson.getColorString() : epicJson.toString();
 

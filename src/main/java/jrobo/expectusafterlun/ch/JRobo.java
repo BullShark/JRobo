@@ -65,7 +65,8 @@ public class JRobo {
 	 * The beginning of JRobo's execution starts here
 	 */
 	private void initiate() {
-		System.out.print("[+++]\tUsing configuration: \n" + CONFIG.toString());
+		//@todo Use toString() for output that's not colored
+		System.out.print(TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\tUsing configuration: \n" + CONFIG.getColorString());
 
 		System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + "[+++]\t" + " *** INITIATED *** " + TermColors.ANSI_RESET);
 
