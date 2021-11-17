@@ -763,18 +763,18 @@ public class BotCommand {
 				if (!bombActive) {
 					TIMER.cancel();
 				} else {
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,          ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")       ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")     ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "   (" + MircColors.BROWN + "=:" + MircColors.YELLOW + "(" + MircColors.BROWN + ",=:~++" + MircColors.YELLOW + "=:" + MircColors.BROWN + "::~,:~:" + MircColors.YELLOW + "))" + MircColors.BROWN + "~~~." + MircColors.YELLOW + ")    ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~" + MircColors.YELLOW + ")" + MircColors.BROWN + ",$,I?" + MircColors.YELLOW + "))   ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "    ``  ```" + MircColors.YELLOW + "~~" + MircColors.BROWN + "?" + MircColors.YELLOW + "~=" + MircColors.BROWN + "$.~~~  ``     ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "             :" + MircColors.BROWN + "S" + MircColors.YELLOW + "Z=             ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "         .-~~" + MircColors.BROWN + "?=:=" + MircColors.YELLOW + "``~-_        ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "         `--=~=+~++=~`        ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "             ." + MircColors.BROWN + "~" + MircColors.YELLOW + ":" + MircColors.BROWN + "~             ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "         ((.(\\.!/.):?)        ");
-					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:... ");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "          ,_=~~:-" + MircColors.YELLOW + ")" + MircColors.BROWN + ",,");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "      (" + MircColors.BROWN + "==?,::,:::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "=:=" + MircColors.YELLOW + ")");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "     ?:=" + MircColors.YELLOW + "(" + MircColors.BROWN + ",~:::::::" + MircColors.YELLOW + ")" + MircColors.BROWN + "~+=:I" + MircColors.YELLOW + ")");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "   (" + MircColors.BROWN + "=:" + MircColors.YELLOW + "(" + MircColors.BROWN + ",=:~++" + MircColors.YELLOW + "=:" + MircColors.BROWN + "::~,:~:" + MircColors.YELLOW + "))" + MircColors.BROWN + "~~~." + MircColors.YELLOW + ")");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "    (" + MircColors.BROWN + "+~" + MircColors.YELLOW + "(" + MircColors.BROWN + ",:" + MircColors.YELLOW + "(==:" + MircColors.BROWN + ":~~+~~" + MircColors.YELLOW + ")" + MircColors.BROWN + ",$,I?" + MircColors.YELLOW + "))");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "    ``  ```" + MircColors.YELLOW + "~~" + MircColors.BROWN + "?" + MircColors.YELLOW + "~=" + MircColors.BROWN + "$.~~~  ``");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "             :" + MircColors.BROWN + "S" + MircColors.YELLOW + "Z=");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "         .-~~" + MircColors.BROWN + "?=:=" + MircColors.YELLOW + "``~-_");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "         `--=~=+~++=~`");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.YELLOW + "             ." + MircColors.BROWN + "~" + MircColors.YELLOW + ":" + MircColors.BROWN + "~");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.BROWN + "         ((.(\\.!/.):?)");
+					CONNECTION.msgChannel(CONFIG.getChannel(), MircColors.DARK_GREEN + "   .?~:?.?7::,::::+,,~+~=:...");
 					CONNECTION.kickFromChannel(CONFIG.getChannel(), user + " KABOOM!!!");
 					bombActive = false;
 					TIMER.cancel();
