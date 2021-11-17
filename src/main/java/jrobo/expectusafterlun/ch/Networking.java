@@ -93,7 +93,7 @@ public class Networking {
 			bwriter.write(COMMAND);
 			bwriter.newLine();
 			bwriter.flush();
-			out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_YELLOW + "[***]\t" + COMMAND);
+			out.println(TermColors.ANSI_RED + "[***]" + TermColors.ANSI_RESET + "\t" + COMMAND);
 			return true;
 
 		} catch (IOException ex) {
@@ -113,7 +113,7 @@ public class Networking {
 	protected String recieveln() {
 		try {
 			received = breader.readLine();
-			out.printf("[---]\t%s\n", received); //@todo Color-code this opposite of colorcode for sent, "[-]" should be blue
+			out.printf(TermColors.ANSI_BLUE + "[---]" + TermColors.ANSI_RESET + "\t%s\n", received);
 			return received;
 		} catch (IOException ex) {
 			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
