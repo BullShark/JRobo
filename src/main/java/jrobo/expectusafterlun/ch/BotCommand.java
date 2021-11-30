@@ -186,7 +186,7 @@ public class BotCommand {
 	/**
 	 * Puts together a String in the form "test+a+b+c"
 	 *
-	 * @return Returns a new String from the String argument by removing all starting and ending whitespace, and then replacing all other whitespace, no matter the length of that white-space, with one '+'.
+	 * @return Returns a new String from the String argument by removing all starting and ending white-space, and then replacing all other white-space, no matter the length of that white-space, with one '+'.
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private String getFormattedQuery(final String STR) {
@@ -501,8 +501,8 @@ public class BotCommand {
 		//Statement required for Build (currently is workaround)
 		final String[] user2Arr = userArr;
 
-		for (String user : userArr) {
-			System.out.println("userArr: " + user);
+		for (String u : userArr) {
+			System.out.println("userArr: " + u);
 		}
 
 		// Checking if ChanServ has opped JRobo
