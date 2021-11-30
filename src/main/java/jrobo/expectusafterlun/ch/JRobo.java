@@ -72,7 +72,8 @@ public class JRobo {
 
 		/* Identify to server */
 		CONN.sendln("NICK " + CONFIG.getName());
-		CONN.sendln("PASS " + CONFIG.getPass().replaceAll(".", "*"));
+//		CONN.sendln("PASS " + CONFIG.getPass().replaceAll(".", "*"));
+		CONN.sendln("PASS " + CONFIG.getPass());
 		CONN.sendln("USER JRobo 0 * :Microsoft Exterminator!");
 		/*
 		 * Wait for server message:
