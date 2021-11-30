@@ -564,7 +564,11 @@ public class BotCommand {
 	 */
 	private void urbanDictionaryHelper() {
 
-		CONNECTION.msgChannel(CONFIG.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true), true, MircColors.BOLD);
+		if (!hasArgs) {
+			helpWrapper(cmd);	
+		} else {
+			CONNECTION.msgChannel(CONFIG.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true), true, MircColors.BOLD);
+		}
 	}
 
 	/**
@@ -593,7 +597,11 @@ public class BotCommand {
 	 */
 	private void pirateHelper() {
 
-		CONNECTION.msgChannel(CONFIG.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
+		if (!hasArgs) {
+			helpWrapper(cmd);	
+		} else {
+			CONNECTION.msgChannel(CONFIG.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
+		}
 	}
 
 	/**
@@ -603,7 +611,11 @@ public class BotCommand {
 	 */
 	private void leetHelper() {
 
-		CONNECTION.msgChannel(CONFIG.getChannel(), new Leet(CONFIG, cmdArgs).getFormattedResult(true));
+		if (!hasArgs) {
+			helpWrapper(cmd);	
+		} else {
+			CONNECTION.msgChannel(CONFIG.getChannel(), new Leet(CONFIG, cmdArgs).getFormattedResult(true));
+		}
 	}
 
 	/**
