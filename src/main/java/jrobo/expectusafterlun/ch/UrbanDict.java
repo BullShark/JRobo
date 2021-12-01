@@ -272,17 +272,42 @@ public class UrbanDict {
 			 */
 			private int getThumbsDown() { return thumbs_down; }
 
+			/* TODO Fix the regex to match correctly and test it
+			 * From the Pattern class docs:
+			 *
+			 * \s 	A whitespace character: [ \t\n\x0B\f\r]
+			 *
+			 * [a-z&&[^bc]] 	a through z, except for b and c: [ad-z] (subtraction)
+			 *
+			 * \v 	A vertical whitespace character: [\n\x0B\f\r\x85\u2028\u2029]
+			 *
+			 * \V 	A non-vertical whitespace character: [^\v]
+			 *
+			 * \p{Blank} 	A space or a tab: [ \t]
+			 *
+			 * ^ 	The beginning of a line
+			 *
+			 * $ 	The end of a line
+			 *
+			 * \b 	A word boundary
+			 *
+			 * X+ 	X, one or more times
+			 *
+			 * X{n,} 	X, at least n times
+			 */
 			private String getColorString() {
 				/* Replace lines with 2 or more newlines with a single newline */
+//				definition = definition.replaceAll("[\\r\\n\\s]++", " ");
 				definition = definition.replaceAll("\\r|\\n{2,}", "\n");
-				definition = definition.replaceAll("\\s++", " ");
+				definition = definition.replaceAll("\\s+", " ");
 
 				/* Remove trailing white-space from the beginning and the end. */
-				definition = definition.replaceFirst("^\\s++", "");
-				definition = definition.replaceFirst("\\s++$", "");
+				definition = definition.replaceFirst("^\\s+", "");
+				definition = definition.replaceFirst("\\s+$", "");
 
 				String result =
-					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
+//					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
+					MircColors.BOLD + MircColors.GREEN + "Thumbs:"
 					+ MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") "
 					+ MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:"
 					+ MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n";
