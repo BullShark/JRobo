@@ -32,9 +32,19 @@ import java.util.Random;
 public enum WireColor {
 
   /**
-   * RED, GREEN, and BLUE
+   * Red colored wire.
    */
-  RED, GREEN, BLUE;
+  RED, 
+
+  /**
+   * Green colored wire.
+   */
+  GREEN, 
+
+  /**
+   * Blue colored wire.
+   */
+  BLUE;
 
   private static final List<WireColor> VALUES =
           Collections.unmodifiableList(Arrays.asList(values()));
