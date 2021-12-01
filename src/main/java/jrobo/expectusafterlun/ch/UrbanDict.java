@@ -238,8 +238,6 @@ public class UrbanDict {
 			String result = "";
 		
 			for (UrbanJsonItem uji : list) {
-				//@todo Is this where the extra space before "Thumbs" is coming from?
-//				result += uji.getColorString() + " ";
 				result += uji.getColorString();
 			}
 
