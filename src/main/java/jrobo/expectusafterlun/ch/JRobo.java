@@ -72,6 +72,7 @@ public class JRobo {
 
 		/* Identify to server */
 		CONN.sendln("NICK " + CONFIG.getName());
+		//TODO Censor terminal output without sending asterisks to the server
 //		CONN.sendln("PASS " + CONFIG.getPass().replaceAll(".", "*"));
 		CONN.sendln("PASS " + CONFIG.getPass());
 		CONN.sendln("USER JRobo 0 * :Microsoft Exterminator!");
@@ -117,9 +118,9 @@ public class JRobo {
 			} else if (first.contains("PRIVMSG")) {
 				try {
 					if (last.charAt(0) == CONFIG.getCmdSymb()) {
-						String user = first.substring(1, first.indexOf('!'));
+						String u = first.substring(1, first.indexOf('!'));
 						String fullCmd = last;
-						BCMD.bCommander(user, fullCmd);
+						BCMD.bCommander(u, fullCmd);
 					} else {
 
 						/*
