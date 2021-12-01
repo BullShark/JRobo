@@ -344,7 +344,7 @@ public class TermColors {
 	public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";
 
 	/**
-	 * This method means to change the color, it only needs to be done here, not in 150 different places, change once
+	 * This method, colorInfo, means to change the color for info lines.
 	 * <p>
 	 * [***] means server output
 	 * [---] means server input
@@ -360,7 +360,7 @@ public class TermColors {
 	}
 
 	/**
-	 * This method means to change the color, it only needs to be done here, not in 150 different places, change only once
+	 * This method, colorOut, means to change the color for server output lines.
 	 *
 	 * @param MSG The console server output message to color
 	 * @return The colored server output line
@@ -372,8 +372,7 @@ public class TermColors {
 	}
 
 	/**
-	 * This method means to change the color, it only needs to be done here,
-	 * not in 150 different places, change only once
+	 * This method means to change the color for server input lines.
 	 *
 	 * @param MSG The console server input message to color
 	 * @return The colored server input line
