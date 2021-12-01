@@ -273,7 +273,8 @@ public class UrbanDict {
 			private int getThumbsDown() { return thumbs_down; }
 
 			private String getColorString() {
-				definition = definition.replaceAll("\\r|\\n++", " ");
+				/* Replace lines with 2 or more newlines with a single newline */
+				definition = definition.replaceAll("\\r|\\n{2,}", "\n");
 				definition = definition.replaceAll("\\s++", " ");
 
 				/* Remove trailing white-space from the beginning and the end. */
