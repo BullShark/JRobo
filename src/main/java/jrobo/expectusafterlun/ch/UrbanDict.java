@@ -300,13 +300,15 @@ public class UrbanDict {
 			 * X+ 	X, one or more times
 			 *
 			 * X{n,} 	X, at least n times
+			 *
+			 * static final int MULTILINE : Enables multiline mode.
 			 */
 			private String getColorString() {
 				/*
 				 * Replace lines with 2 or more newlines with a single newline
-				 * Replace one or more non-vertical whitespace chars with a single space
+				 * Replace one or more whitespace chars with a single space
 				 */
-				definition = definition.replaceAll("\\v{2,}", "\n");
+//				definition = definition.replaceAll("\\v{2,}", "\n");
 				definition = definition.replaceAll("\\s+", " ");
 
 				String result =
