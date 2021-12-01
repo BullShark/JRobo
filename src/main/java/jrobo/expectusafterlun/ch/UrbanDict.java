@@ -101,7 +101,7 @@ public class UrbanDict {
 	}
 
 	/**
-	 * Retrieves the Urban Dictionary results formatted from the json results
+	 * Retrieves the Urban Dictionary results formatted from the JSON results
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param HASCOLORS Should the formatted output use colors
 	 * @return The formatted summary result
@@ -162,7 +162,7 @@ public class UrbanDict {
 	/**
 	 * Strings and ints representing JSON data
 	 *
-	 * @author Christopher Lemire {@literal <christopher.lemire@gmail.com>}
+	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 */
 	private class UrbanJson {
 
