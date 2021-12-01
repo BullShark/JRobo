@@ -304,9 +304,7 @@ public class UrbanDict {
 			 * static final int MULTILINE : Enables multiline mode.
 			 */
 			private String getColorString() {
-				/*
-				 * Replace one or more whitespace chars with a single space
-				 */
+				 /* Replace one or more whitespace chars with a single space */
 				definition = definition.replaceAll("\\s+", " ");
 
 				String result =
@@ -320,7 +318,7 @@ public class UrbanDict {
 
 			@Override
 			public String toString() {
-				definition = definition.replaceAll("[\\r\\n\\s]++", " ");
+				definition = definition.replaceAll("\\s+", " ");
 
 				return "Thumbs: (+" + thumbs_up + " -" + thumbs_down + ") Definition: " + definition + "\n";
 			}
