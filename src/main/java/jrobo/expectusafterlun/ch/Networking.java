@@ -44,6 +44,7 @@ public class Networking {
 	private Socket sock = null;
 	private BufferedWriter bwriter;
 	private BufferedReader breader;
+	/* Cannot do static here, Will cause an error below */
 	private final Config CONFIG;
 	private String received = null;
 	private final int MAXCHARS = 450;
