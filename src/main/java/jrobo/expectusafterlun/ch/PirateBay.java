@@ -199,6 +199,9 @@ public class PirateBay {
      */
     public class PirateBayJsonItem {
 
+        /*
+         * Either xml or json, but since this is a json class, it will always be the json type here
+         */
         public String type;
 
         /**
