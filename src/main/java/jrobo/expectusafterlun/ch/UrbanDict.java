@@ -276,6 +276,10 @@ public class UrbanDict {
 				definition = definition.replaceAll("\\r|\\n", " ");
 				definition = definition.replaceAll("\\s++", " ");
 
+				/* Remove trailing white-space from the beginning and the end. */
+				definition = definition.replaceFirst("^\\s++", "");
+				definition = definition.replaceFirst("\\s++$", "");
+
 				String result =
 					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
 					+ MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") "
