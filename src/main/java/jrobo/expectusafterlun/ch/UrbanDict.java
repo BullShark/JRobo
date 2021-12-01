@@ -69,8 +69,8 @@ public class UrbanDict {
 	}
 
 	/**
-	 * Retrieves json dictionary results from urbandictionary.com
-	 * @return Json weather data
+	 * Retrieves JSON dictionary results from urbandictionary.com
+	 * @return JSON weather data
 	 */
 	public String getJson() {
 
