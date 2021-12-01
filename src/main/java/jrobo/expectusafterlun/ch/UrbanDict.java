@@ -307,7 +307,7 @@ public class UrbanDict {
 				 * Replace one or more non-vertical whitespace chars with a single space
 				 */
 				definition = definition.replaceAll("\\v{2,}", "\n");
-				definition = definition.replaceAll("\\V+", " ");
+				definition = definition.replaceAll("\\s+", " ");
 
 				String result =
 //					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
