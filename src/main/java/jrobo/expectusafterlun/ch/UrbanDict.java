@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * UrbanDict's purpose is to turn formatted json search query results into formatted dictionary definitions from Urban Dictionary.
+ * UrbanDict's purpose is to turn formatted JSON search query results into formatted dictionary definitions from Urban Dictionary.
  * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
@@ -225,7 +225,11 @@ public class UrbanDict {
 				}
 			});
 
-			list.forEach(System.out::println);
+//			list.forEach(System.out::println);
+
+			for(UrbanJsonItem uji : list) {
+				System.out.println(uji);
+			}
 		}
 	
 		private String getColorString() {
@@ -234,7 +238,9 @@ public class UrbanDict {
 			String result = "";
 		
 			for (UrbanJsonItem uji : list) {
-				result += uji.getColorString() + " ";
+				//@todo Is this where the extra space before "Thumbs" is coming from?
+//				result += uji.getColorString() + " ";
+				result += uji.getColorString();
 			}
 
 			return result;
