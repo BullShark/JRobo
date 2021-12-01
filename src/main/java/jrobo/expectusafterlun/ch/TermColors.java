@@ -372,7 +372,7 @@ public class TermColors {
 	}
 
 	/**
-	 * This method means to change the color for server input lines.
+	 * This method, colorIn, means to change the color for server input lines.
 	 *
 	 * @param MSG The console server input message to color
 	 * @return The colored server input line
