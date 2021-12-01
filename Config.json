@@ -1,17 +1,17 @@
 {
     "name": "^JRobo^",
     "second_name": "JRobo",
-    "password": "UrLyPk7Ckw4qBXm",
+    "password": "p@$$w0rd",
     "masters": [
       "BullShark",
       "drkrieger",
       "zer0"
     ],
     "command_symbol":".",
-    "network":"irc.libera.chat:6667",
+    "network":"irc.freenode.net:6667",
     "proxy_host":"null",
     "proxy_port":"null",
-    "channel":"#blackhats-alt",
+    "channel":"##blackhats",
     "base_chan":"",
     "openweathermap_apikey":"0dcf84bfef65b293b5e3b444246ad6b2",
     "torrent_apikey":"k96wtq1uAi0sqk7ZonCQ8D06hA3aNTh0"
