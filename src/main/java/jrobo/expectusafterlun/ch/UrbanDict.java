@@ -278,7 +278,7 @@ public class UrbanDict {
 			 */
 			private int getThumbsDown() { return thumbs_down; }
 
-			/* TODO Fix the regex to match correctly and test it
+			/*
 			 * From the Pattern class docs:
 			 *
 			 * \s 	A whitespace character: [ \t\n\x0B\f\r]
@@ -302,17 +302,12 @@ public class UrbanDict {
 			 * X{n,} 	X, at least n times
 			 */
 			private String getColorString() {
-				/* Replace lines with 2 or more newlines with a single newline
-				 * Replace one or more whitespace chars with a single space
+				/*
+				 * Replace lines with 2 or more newlines with a single newline
+				 * Replace one or more non-vertical whitespace chars with a single space
 				 */
-//				definition = definition.replaceAll("[\\r\\n\\s]++", " ");
 				definition = definition.replaceAll("\\v{2,}", "\n");
-				definition = definition.replaceAll("\\s+", " ");
-
-				/* Remove trailing white-space from the beginning and the end. */
-				//@todo Test if this is even needed.
-//				definition = definition.replaceFirst("^\\s+", "");
-//				definition = definition.replaceFirst("\\s+$", "");
+				definition = definition.replaceAll("\\V+", " ");
 
 				String result =
 //					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
