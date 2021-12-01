@@ -302,14 +302,17 @@ public class UrbanDict {
 			 * X{n,} 	X, at least n times
 			 */
 			private String getColorString() {
-				/* Replace lines with 2 or more newlines with a single newline */
+				/* Replace lines with 2 or more newlines with a single newline
+				 * Replace one or more whitespace chars with a single space
+				 */
 //				definition = definition.replaceAll("[\\r\\n\\s]++", " ");
-				definition = definition.replaceAll("\\r|\\n{2,}", "\n");
+				definition = definition.replaceAll("\\v{2,}", "\n");
 				definition = definition.replaceAll("\\s+", " ");
 
 				/* Remove trailing white-space from the beginning and the end. */
-				definition = definition.replaceFirst("^\\s+", "");
-				definition = definition.replaceFirst("\\s+$", "");
+				//@todo Test if this is even needed.
+//				definition = definition.replaceFirst("^\\s+", "");
+//				definition = definition.replaceFirst("\\s+$", "");
 
 				String result =
 //					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
