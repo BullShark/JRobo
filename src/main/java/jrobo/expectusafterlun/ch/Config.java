@@ -47,10 +47,10 @@ public class Config {
 	private String proxy_host;
 	private String proxy_port;
 	private String channel;
-	private String openweathermap_apikey;
-	private String torrent_apikey;
 	// Chan the bot originally was in before moving between channels
 	private String base_chan;
+	private String openweathermap_apikey;
+	private String torrent_apikey;
 
 	/**
 	 * Just a placeholder for this object, doesn't execute any code
@@ -147,6 +147,25 @@ public class Config {
 	}
 
 	/**
+	 * Channel from where the bot began moving
+	 *
+	 * @return baseChan is the previous channel
+	 */
+	protected String getBaseChan() {
+		return base_chan;
+	}
+
+	/**
+	 * Channel from where the bot began moving
+	 *
+	 * @param base_chan The first channel JRobo goes to before moving to any other channel
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 */
+	protected void setBaseChan(String base_chan) {
+		this.base_chan = base_chan;
+	}
+
+	/**
 	 *
 	 * @return The weatherUndergound API key
 	 * @since 2013-02-18
@@ -165,24 +184,6 @@ public class Config {
 		return torrent_apikey;
 	}
 
-	/**
-	 * Channel from where the bot began moving
-	 *
-	 * @return baseChan is the previous channel
-	 */
-	protected String getBaseChan() {
-		return base_chan;
-	}
-
-	/**
-	 * Channel from where the bot began moving
-	 *
-	 * @param base_chan The first channel JRobo goes to before moving to any other channel
-	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-	 */
-	protected void setBaseChan(String base_chan) {
-		this.base_chan = base_chan;
-	}
 	/**
 	 * A colored for IRC String representation of the Config
 	 *
