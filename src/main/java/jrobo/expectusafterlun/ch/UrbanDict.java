@@ -305,15 +305,12 @@ public class UrbanDict {
 			 */
 			private String getColorString() {
 				/*
-				 * Replace lines with 2 or more newlines with a single newline
 				 * Replace one or more whitespace chars with a single space
 				 */
-//				definition = definition.replaceAll("\\v{2,}", "\n");
 				definition = definition.replaceAll("\\s+", " ");
 
 				String result =
-//					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
-					MircColors.BOLD + MircColors.GREEN + "Thumbs:"
+					MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "Thumbs:"
 					+ MircColors.NORMAL + MircColors.BOLD + " (+" + thumbs_up + " -" + thumbs_down + ") "
 					+ MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Definition:"
 					+ MircColors.NORMAL + MircColors.BOLD + " " + definition + "\n";
