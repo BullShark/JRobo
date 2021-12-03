@@ -114,7 +114,7 @@ public class Networking {
 	protected String recieveln() {
 		try {
 			received = breader.readLine();
-			out.printf(TermColors.colorIn(received + "\n"));
+			out.println(TermColors.colorIn(received));
 			return received;
 		} catch (IOException ex) {
 			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
