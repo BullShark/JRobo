@@ -21,6 +21,10 @@ tasks.withType(JavaCompile).each {
     it.options.compilerArgs.add('--enable-preview')
 }
 
+tasks.withType(JavaExec) {
+    jvmArgs += '--enable-preview'
+}
+
 test {
     jvmArgs(['--enable-preview'])
 }
