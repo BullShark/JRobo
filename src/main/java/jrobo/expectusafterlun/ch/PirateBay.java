@@ -156,7 +156,7 @@ public class PirateBay {
     public String getFormattedResult(final boolean HASCOLORS) {
 
         PirateBayJsonItem[] results;
-        String output = "";
+        StringBuilder output = new StringBuilder("");
 
         try {
 
@@ -165,20 +165,20 @@ public class PirateBay {
 
             if(HASCOLORS) {
                 for (PirateBayJsonItem result : results) {
-                    output += result.getColorString();
+                    output.append(result.getColorString());
                 }
             } else {
                  for (PirateBayJsonItem result : results) {
-                     output += result.toString();
+                     output.append(result.toString());
                  }
             }
         } catch(IllegalStateException | NullPointerException | JsonSyntaxException ex) {
           Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
-          output = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
+          output = new StringBuilder("{ \"data\": \"Unable to retrieve Torrent json data\" }");
 
         } finally {
 
-            return output;
+            return output.toString();
         }
     }
 
@@ -205,7 +205,7 @@ public class PirateBay {
     public class PirateBayJsonItem {
 
         /**
-         * Either xml or json, but since this is a json class, it will always be the json type here
+         * Either XML or JSON, but since this is a JSON class, it will always be the JSON type here
          */
         public String type;
 
@@ -220,7 +220,7 @@ public class PirateBay {
         public String url;
 
         /**
-         * A shortened version of the url
+         * A shortened version of the URL
          */
         public String tinyurl;
 
