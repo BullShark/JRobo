@@ -24,6 +24,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.ConnectException;
@@ -34,7 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * PirateBay retrieves JSON results from a thepiratebay python flask API as JSON, formats the results, and sends them to IRC
+ * PirateBay retrieves JSON results from a thepiratebay.org python flask API as JSON, formats the results, and sends them to IRC
  * 
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
@@ -54,7 +55,7 @@ public class PirateBay {
 
     /* For the Gson/Json */
     private Gson gson;
-    private String json;
+    private StringBuilder json;
 
     /**
      * Get the switch used for sorting the results, the query to be searched and set up the connection to the PirateBay API
@@ -97,7 +98,7 @@ public class PirateBay {
         rd = null;
         fullUrl = "";
         /* Miscelanous */
-        json = "";
+        json = new StringBuilder("");
         /* For the Gson/Json */
         gson = new Gson();
     }
@@ -107,8 +108,9 @@ public class PirateBay {
      *
      * @author Christopher Lemire {@literal <goodbye300@aim.com>}
      * @return JSON retrieved from the URL
+     * @throws java.io.IOException Should never occur with the null check
      */
-    public String getJson() {
+    public String getJson() throws IOException {
         try {
             /* Create a URL obj from strings */
             fullUrl =
@@ -128,15 +130,18 @@ public class PirateBay {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
             while ((line = rd.readLine()) != null) {
-                json = json.concat(line);
+                json.append(line);
             }
             rd.close();
         } catch (MalformedURLException | ConnectException | FileNotFoundException ex) {
             Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
-            json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
-
+            json = new StringBuilder("{ \"data\": \"Unable to retrieve Torrent json data\" }");
         } finally {
-            return json;
+            if(rd != null) {
+                rd.close();
+            }
+
+            return json.toString();
         }
 
     }
