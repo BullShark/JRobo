@@ -649,7 +649,7 @@ public class BotCommand {
 			+ LC.colorToken("list|l, ", MircColors.GREEN)
 			+ LC.colorToken("leet|leetx ", MircColors.GREEN)
 			+ LC.colorToken("<catgegory> <search query>, " + MircColors.NORMAL, MircColors.CYAN)
-			+ LC.colorToken(MircColors.BOLD + "(" + MircColors.CYAN + "Avaliable categories are:  Movies, TV, Games, Music, Apps, Documentaries, Anime, Other, XXX, All" +MircColors.WHITE + "), ", MircColors.WHITE)
+			+ LC.colorToken(MircColors.BOLD + "(" + MircColors.CYAN + "Avaliable categories are:  Movies, TV, Games, " + MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Music, Apps, Documentaries, Anime, Other, XXX, All" +MircColors.WHITE + "), ", MircColors.WHITE)
 			+ LC.colorToken("help|h ", MircColors.GREEN)
 			+ LC.colorToken("[cmd], ", MircColors.CYAN)
 			+ LC.colorToken("next|n, ", MircColors.GREEN)
