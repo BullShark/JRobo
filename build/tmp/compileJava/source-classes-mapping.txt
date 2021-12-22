@@ -1,9 +1,9 @@
 jrobo/expectusafterlun/ch/TermColors.java
  jrobo.expectusafterlun.ch.TermColors
- jrobo.expectusafterlun.ch.TermColors$Attribute
- jrobo.expectusafterlun.ch.TermColors$Color
 jrobo/expectusafterlun/ch/FileReader.java
  jrobo.expectusafterlun.ch.FileReader
+jrobo/expectusafterlun/ch/Shodan.java
+ jrobo.expectusafterlun.ch.Shodan
 jrobo/expectusafterlun/ch/Weather.java
  jrobo.expectusafterlun.ch.Weather
  jrobo.expectusafterlun.ch.Weather$1
@@ -35,8 +35,6 @@ jrobo/expectusafterlun/ch/JRobo.java
  jrobo.expectusafterlun.ch.JRobo
 jrobo/expectusafterlun/ch/ListColors.java
  jrobo.expectusafterlun.ch.ListColors
-jrobo/expectusafterlun/ch/IRCTester.java
- jrobo.expectusafterlun.ch.IRCTester
 jrobo/expectusafterlun/ch/Leet.java
  jrobo.expectusafterlun.ch.Leet
  jrobo.expectusafterlun.ch.Leet$LeetJsonItem
