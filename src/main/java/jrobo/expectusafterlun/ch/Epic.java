@@ -279,7 +279,7 @@ public class Epic {
 									+ "Description: " + MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN 
 									+ description + MircColors.NORMAL + "\n"
 									+ price.getColorString()
-									+ MircColors.BOLD + MircColors.WHITE + "URL: "
+									+ MircColors.BOLD + MircColors.WHITE + "URL: " + MircColors.NORMAL
 									+ MircColors.BOLD + MircColors.GREEN + "<"
 									+ MircColors.CYAN + "https://www.epicgames.com/store/en-US/p/" + urlSlug
 //									+ MircColors.CYAN + "https://url/en-US/p/" + urlSlug
