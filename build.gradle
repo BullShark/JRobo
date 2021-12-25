@@ -8,23 +8,34 @@ description = 'Advanced IRC Robot'
 mainClassName = 'jrobo.expectusafterlun.ch.JRobo'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    testImplementation     'junit:junit:4.13'
-    implementation 'com.google.code.gson:gson:2.8.8'
+	testImplementation     'junit:junit:4.13'
+	implementation 'com.google.code.gson:gson:2.8.8'
+}
+
+jar {
+	manifest {
+		attributes(
+			'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+			'Main-Class': 'jrobo.expectusafterlun.ch.JRobo'
+		)
+	}
 }
 
 // https://stackoverflow.com/questions/55433883/how-to-enable-java-12-preview-features-with-gradle
 tasks.withType(JavaCompile).each {
-    it.options.compilerArgs.add('--enable-preview')
+	it.options.compilerArgs.add('--enable-preview')
 }
 
 tasks.withType(JavaExec) {
-    jvmArgs += '--enable-preview'
+	jvmArgs += '--enable-preview'
 }
 
 test {
-    jvmArgs(['--enable-preview'])
+	jvmArgs(['--enable-preview'])
+	useJUnitPlatform()
 }
+
