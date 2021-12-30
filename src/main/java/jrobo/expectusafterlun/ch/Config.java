@@ -49,8 +49,9 @@ public class Config {
 	private String channel;
 	// Chan the bot originally was in before moving between channels
 	private String base_chan;
-	private String openweathermap_apikey;
-	private String torrent_apikey;
+	private String openweathermap_api_key;
+	private String torrent_api_key;
+	private String torrent_api_host;
 
 	/**
 	 * Just a placeholder for this object, doesn't execute any code
@@ -171,7 +172,7 @@ public class Config {
 	 * @since 2013-02-18
 	 */
 	protected String getOpenWeatherMapKey() {
-		return openweathermap_apikey;
+		return openweathermap_api_key;
 	}
 
 	/**
@@ -181,7 +182,17 @@ public class Config {
 	 * @since 2021-10-21
 	 */
 	protected String getTorrentKey() {
-		return torrent_apikey;
+		return torrent_api_key;
+	}
+
+    	/**
+	 *
+	 * @return The Torrent API Host
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @since 2021-12-30
+	 */
+	protected String getTorrentAPIHost() {
+		return torrent_api_host;
 	}
 
 	/**
