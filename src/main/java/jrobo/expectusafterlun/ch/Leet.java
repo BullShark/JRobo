@@ -29,8 +29,9 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.nio.charset.StandardCharsets;
 import java.net.http.HttpRequest;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -180,11 +181,16 @@ public class Leet {
 			/* Debug */
 			System.out.println(TermColors.colorInfo("fullUrl:   " + fullUrl));
 
-			HttpClient client = HttpClient.newHttpClient();
+//			HttpClient client = HttpClient.newHttpClient();
+			HttpClient client = HttpClient.newBuilder()
+                                                            .connectTimeout(Duration.ofSeconds(30))
+                                                            .build();
+
 			HttpRequest request = HttpRequest.newBuilder()
 				.headers("Content-Type", "application/json")
 				.setHeader("API_KEY", API_KEY)
 				.uri(URI.create(fullUrl))
+                                    .timeout(Duration.ofSeconds(30))
 				.build();
 
 			HttpResponse<String> response;
