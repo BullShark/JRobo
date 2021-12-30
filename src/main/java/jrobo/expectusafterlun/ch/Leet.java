@@ -24,6 +24,7 @@ import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.URI;
 import java.util.Arrays;
 import java.net.URLEncoder;
@@ -159,14 +160,18 @@ public class Leet {
          * Try to contact my server using "localhost" instead of its internet ip if this is my server
          */
         myserver = false;
-        for (NetworkInterface netint : Collections.list((Enumeration<NetworkInterface>) NetworkInterface.getNetworkInterfaces())) {
-            if (netint.getName().equals("eth0")) {
-                for (InetAddress inetAddress : Collections.list((Enumeration<InetAddress>) netint.getInetAddresses())) {
-                    if(inetAddress.equals("202.61.205.246%eth0") || inetAddress.equals("2a03:4000:5b:456:542a:e1ff:fe66:8f0%eth0")) {
-                        myserver = true;
+        try {
+            for (NetworkInterface netint : Collections.list((Enumeration<NetworkInterface>) NetworkInterface.getNetworkInterfaces())) {
+                if (netint.getName().equals("eth0")) {
+                    for (InetAddress inetAddress : Collections.list((Enumeration<InetAddress>) netint.getInetAddresses())) {
+                        if(inetAddress.equals("202.61.205.246%eth0") || inetAddress.equals("2a03:4000:5b:456:542a:e1ff:fe66:8f0%eth0")) {
+                            myserver = true;
+                        }
                     }
                 }
             }
+        } catch (SocketException ex) {
+            Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
