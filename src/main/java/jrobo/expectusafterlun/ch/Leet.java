@@ -209,7 +209,10 @@ public class Leet {
 			if (json == null) {
 				json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			}
+
+		         System.out.println(TermColors.colorInfo("json:   " + json));
 		}
+
 
 		return json;
 	}
