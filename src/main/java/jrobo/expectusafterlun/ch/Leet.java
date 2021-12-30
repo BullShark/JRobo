@@ -207,22 +207,17 @@ public class Leet {
                     .connectTimeout(Duration.ofSeconds(30))
                     .build();
 
-            HttpRequest request;
-            if (!myserver) {
-                request = HttpRequest.newBuilder()
+            // If JRobo is running on my server, use "localhost" instead of "expectusafterlun.ch" and avoid an exception
+            if (myserver) {
+                fullUrl = fullUrl.replaceFirst("expectusafterlun\\.ch", "localhost");
+            }
+
+            HttpRequest request = HttpRequest.newBuilder()
                         .headers("Content-Type", "application/json")
                         .setHeader("API_KEY", API_KEY)
                         .uri(URI.create(fullUrl))
                         .timeout(Duration.ofSeconds(30))
                         .build();
-            } else {
-                request = HttpRequest.newBuilder()
-                        .headers("Content-Type", "application/json")
-                        .setHeader("API_KEY", API_KEY)
-                        .uri(URI.create(fullUrl.replaceFirst("expectusafterlun.ch", "localhost")))
-                        .timeout(Duration.ofSeconds(30))
-                        .build();
-            }
 
             HttpResponse<String> response;
             response = client.send(request, BodyHandlers.ofString(StandardCharsets.UTF_8));
