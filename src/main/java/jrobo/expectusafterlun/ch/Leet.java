@@ -22,9 +22,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.net.URI;
 import java.util.Arrays;
 import java.net.URLEncoder;
@@ -34,8 +31,6 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.net.http.HttpRequest;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,7 +54,9 @@ public class Leet {
 	 *
 	 * For the HTTP Connection
      */
-    private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
+    // @todo Should we have a torrent_apihost json item in the Config.json?
+//    private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
+    private static final String BASE_URL = "http://localhost:5000/1337x";
     private boolean myserver;
     private final String API_KEY;
     private String fullUrl;
@@ -155,25 +152,6 @@ public class Leet {
             query = SEARCH;
             Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        /* Is this my server at expectusafterlun.ch?
-         * Try to contact my server using "localhost" instead of its internet ip if this is my server
-         */
-        myserver = false;
-        try {
-            for (NetworkInterface netint : Collections.list((Enumeration<NetworkInterface>) NetworkInterface.getNetworkInterfaces())) {
-                if (netint.getName().equals("eth0")) {
-                    for (InetAddress inetAddress : Collections.list((Enumeration<InetAddress>) netint.getInetAddresses())) {
-                        if(inetAddress.equals("202.61.205.246%eth0") || inetAddress.equals("2a03:4000:5b:456:542a:e1ff:fe66:8f0%eth0")) {
-                            myserver = true;
-                        }
-                    }
-                }
-            }
-        } catch (SocketException ex) {
-            Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     /**
@@ -211,11 +189,6 @@ public class Leet {
             HttpClient client = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(30))
                     .build();
-
-            // If JRobo is running on my server, use "localhost" instead of "expectusafterlun.ch" and avoid an exception
-            if (myserver) {
-                fullUrl = fullUrl.replaceFirst("expectusafterlun\\.ch", "localhost");
-            }
 
             HttpRequest request = HttpRequest.newBuilder()
                         .headers("Content-Type", "application/json")
