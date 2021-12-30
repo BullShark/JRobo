@@ -199,7 +199,7 @@ public class Leet {
             HttpResponse<String> response;
             response = client.send(request, BodyHandlers.ofString(StandardCharsets.UTF_8));
 
-            System.out.println(TermColors.colorInfo("Response status code: " + response.statusCode()));
+            System.out.println(TermColors.colorInfo("Response status code: " + response.statusCode() + "\t"));
             json = response.body();
 
         } catch (IOException ex) {
