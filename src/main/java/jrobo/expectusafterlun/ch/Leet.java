@@ -189,7 +189,7 @@ public class Leet {
                                                             .build();
 
 			HttpRequest request = HttpRequest.newBuilder()
-				.headers("Content-Type", "application/json")
+                                    .header("Content-Type", "application/json")
 				.setHeader("API_KEY", API_KEY)
 				.uri(URI.create(fullUrl))
                                     .timeout(Duration.ofSeconds(30))
