@@ -210,8 +210,9 @@ public class Config {
 			+ "\n" + TermColors.colorInfo("\t\tnetwork is " + network)
 			+ "\n" + TermColors.colorInfo("\t\tproxy host/port is " + proxy_host + ":" + proxy_port)
 			+ "\n" + TermColors.colorInfo("\t\tchannel is " + channel)
-			+ "\n" + TermColors.colorInfo("\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*"))
-			+ "\n" + TermColors.colorInfo("\t\ttorrent_apikey is " + torrent_apikey.replaceAll(".", "*"))
+			+ "\n" + TermColors.colorInfo("\t\topenweathermap_api_key is " + openweathermap_api_key.replaceAll(".", "*"))
+			+ "\n" + TermColors.colorInfo("\t\ttorrent_api_key is " + torrent_api_key.replaceAll(".", "*"))
+			+ "\n" + TermColors.colorInfo("\t\ttorrent_api_host is " + torrent_api_host)
 			+ "\n" + TermColors.colorInfo("\t\tbase_chan is " + base_chan)
 			+ "\n");
 	}
@@ -231,8 +232,9 @@ public class Config {
 			+ "\n[+++]\t\tnetwork is " + network
 			+ "\n[+++]\t\tproxy host/port is " + proxy_host + ":" + proxy_port
 			+ "\n[+++]\t\tchannel is " + channel
-			+ "\n[+++]\t\topenweathermap_apikey is " + openweathermap_apikey.replaceAll(".", "*")
-			+ "\n[+++]\t\ttorrent_apikey is " + torrent_apikey.replaceAll(".", "*")
+			+ "\n[+++]\t\topenweathermap_api_key is " + openweathermap_api_key.replaceAll(".", "*")
+			+ "\n[+++]\t\ttorrent_api_key is " + torrent_api_key.replaceAll(".", "*")
+			+ "\n[+++]\t\ttorrent_api_host is " + torrent_api_host
 			+ "\n[+++]\t\tbase_chan is " + base_chan
 			+ "\n");
 	}
