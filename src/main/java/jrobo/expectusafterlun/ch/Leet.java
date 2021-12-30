@@ -176,9 +176,8 @@ public class Leet {
 				fullUrl = String.format(BASE_URL + "/%s/%s/%s/seeders/desc", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM, category);
 			} else {
 				// Exclude CATEGORY to search ALL
-                                    // No PAGENUM
- 	 		         // "https://expectusafterlun.ch/1337x/{QUERY}/{PAGENUM}/seeders/desc"
-				fullUrl = String.format(BASE_URL + "/%s/seeders/desc", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()));
+                                    // If no category, the defaults in torrent.py are used for page num, sort by, and sort order
+				fullUrl = String.format(BASE_URL + "/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()));
 			}
 
 			/* Debug */

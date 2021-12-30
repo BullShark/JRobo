@@ -27,12 +27,12 @@ jrobo/expectusafterlun/ch/Jokes.java
  jrobo.expectusafterlun.ch.Jokes
 jrobo/expectusafterlun/ch/Config.java
  jrobo.expectusafterlun.ch.Config
+jrobo/expectusafterlun/ch/JRobo.java
+ jrobo.expectusafterlun.ch.JRobo
 jrobo/expectusafterlun/ch/BotCommand.java
  jrobo.expectusafterlun.ch.BotCommand
  jrobo.expectusafterlun.ch.BotCommand$1
  jrobo.expectusafterlun.ch.BotCommand$1BombTask
-jrobo/expectusafterlun/ch/JRobo.java
- jrobo.expectusafterlun.ch.JRobo
 jrobo/expectusafterlun/ch/ListColors.java
  jrobo.expectusafterlun.ch.ListColors
 jrobo/expectusafterlun/ch/Leet.java
