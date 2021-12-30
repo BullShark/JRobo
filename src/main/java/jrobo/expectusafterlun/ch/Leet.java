@@ -53,7 +53,8 @@ public class Leet {
 	 *
 	 * For the HTTP Connection
 	 */
-	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
+//	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
+	private static final String BASE_URL = "http://202.61.205.246:5000/1337x";
 	private final String API_KEY;
 	private String fullUrl;
 	private String query;
@@ -170,10 +171,10 @@ public class Leet {
 			 */
 			if (!category.equals("")) {
 
-				fullUrl = String.format(BASE_URL + "/%s/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), category);
+				fullUrl = String.format(BASE_URL + "/%s/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), category);
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = String.format(BASE_URL + "/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()));
+				fullUrl = String.format(BASE_URL + "/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()));
 			}
 
 			/* Debug */
