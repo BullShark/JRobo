@@ -176,7 +176,9 @@ public class Leet {
 				fullUrl = String.format(BASE_URL + "/%s/%s/%s/seeders/desc", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM, category);
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = String.format(BASE_URL + "/%s/%s/seeders/desc", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM);
+                                    // No PAGENUM
+ 	 		         // "https://expectusafterlun.ch/1337x/{QUERY}/{PAGENUM}/seeders/desc"
+				fullUrl = String.format(BASE_URL + "/%s/seeders/desc", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()));
 			}
 
 			/* Debug */
@@ -325,7 +327,7 @@ public class Leet {
 		/**
 		 * The user who uploaded this torrent
 		 */
-//		public String user;
+		public String user;
 
 		/**
 		 * A shortened version of the href url
