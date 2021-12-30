@@ -322,7 +322,7 @@ public class Leet {
 		/**
 		 * The user who uploaded this torrent
 		 */
-		public String user;
+//		public String user;
 
 		/**
 		 * A shortened version of the href url
