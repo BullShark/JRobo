@@ -54,7 +54,7 @@ public class Leet {
 	 *
 	 * For the HTTP Connection
      */
-    // @todo Should we have a torrent_apihost json item in the Config.json?
+    // @todo Read in the torrent_api_host json item in the Config.json
 //    private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
     private static final String BASE_URL = "http://localhost:5000/1337x";
     private final String API_KEY;
