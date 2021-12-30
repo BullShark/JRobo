@@ -13,6 +13,7 @@
     "proxy_port":"null",
     "channel":"##blackhats-alt",
     "base_chan":"",
-    "openweathermap_apikey":"0dcf84bfef65b293b5e3b444246ad6b2",
-    "torrent_apikey":"hYJWKwGW1rZzNgD3bvYU0ZVIgjHanwxK"
+    "openweathermap_api_key":"0dcf84bfef65b293b5e3b444246ad6b2",
+    "torrent_api_key":"hYJWKwGW1rZzNgD3bvYU0ZVIgjHanwxK",
+    "torrent_api_host":"localhost"
 }
