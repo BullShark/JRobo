@@ -55,7 +55,8 @@ public class Leet {
 	 * For the HTTP Connection
 	 */
 //	private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
-	private static final String BASE_URL = "http://202.61.205.246:5000/1337x";
+//	private static final String BASE_URL = "http://202.61.205.246:5000/1337x";
+	private static final String BASE_URL = "http://localhost:5000/1337x";
 	private final String API_KEY;
 	private String fullUrl;
 	private String query;
