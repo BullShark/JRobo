@@ -19,7 +19,7 @@ dependencies {
 jar {
 	manifest {
 		attributes(
-			'Class-Path': configurations.implementation.collect { it.getName() }.join(' '),
+			'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
 			'Main-Class': 'jrobo.expectusafterlun.ch.JRobo'
 		)
 	}
