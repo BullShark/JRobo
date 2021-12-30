@@ -49,7 +49,7 @@ public class Leet {
 	 * CATEGORY can be omitted for the SEARCH
 	 *
 	 * Use String.format("BASE_URL/{%s}/{%s}/{%s}", new String(), new String(), new String() )
-	 * "https://expectusafterlun.ch/1337x/{QUERY}/{PAGENUM}/{CATEGORY}/"
+	 * "https://expectusafterlun.ch/1337x/{QUERY}/{CATEGORY}/"
 	 *
 	 * For the HTTP Connection
 	 */
@@ -63,12 +63,11 @@ public class Leet {
 	 */
 	private final int MAX_RESULTS = 3;
 	private final Config CONFIG;
-	private final char PAGENUM = '1';
 
 	/*
 	 * Test this API with curl:
 	 *
-	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<QUERY>/<PAGENUM>/<CATEGORY>
+	 *	curl -H"API_KEY:<api key>" http://expectusafterlun.ch:5000/<QUERY>/<CATEGORY>
 	 *
 	 * Example:
 	 *
@@ -160,7 +159,7 @@ public class Leet {
 		try {
 			/* 
 			 * Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
- 	 		 * "https://expectusafterlun.ch/1337x.to/{QUERY}/{PAGENUM}/{CATEGORY}/"
+ 	 		 * "https://expectusafterlun.ch/1337x.to/{QUERY}/{CATEGORY}/"
 			 *
 			 * Do not URL encode this because the server does that
 			 *
@@ -171,10 +170,10 @@ public class Leet {
 			 */
 			if (!category.equals("")) {
 
-				fullUrl = String.format(BASE_URL + "/%s/%s/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM, category);
+				fullUrl = String.format(BASE_URL + "/%s/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), category);
 			} else {
 				// Exclude CATEGORY to search ALL
-				fullUrl = String.format(BASE_URL + "/%s/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM);
+				fullUrl = String.format(BASE_URL + "/%s/", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()));
 			}
 
 			/* Debug */
