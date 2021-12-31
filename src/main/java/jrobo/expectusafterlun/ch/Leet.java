@@ -202,11 +202,7 @@ public class Leet {
             System.out.println(TermColors.colorInfo("Response status code: " + response.statusCode() + "\t"));
             json = response.body();
 
-        } catch (IOException ex) {
-            System.err.println("Did you include the API_KEY in the HTTP Header?");
-            Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
-
-        } catch (InterruptedException ex) {
+        } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
 
         } finally {
