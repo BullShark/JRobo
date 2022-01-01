@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import static java.lang.System.err;
 import static java.lang.System.out;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -74,17 +75,16 @@ public class FileReader {
 		out.println(TermColors.colorInfo("System User Directory: " + System.getProperty("user.dir")));
 		out.println(TermColors.colorInfo("Reading File (" + FILENAME + ")"));
 
-		try {
-			File file = new File(FILENAME);
-			try (Scanner myReader = new Scanner(file)) {
-				if (FILENAME.equals(CONFIGFILE)) {
-					ranOnce = true;
-				}
-
-				while (myReader.hasNextLine()) {
-					LISTARR.add(myReader.nextLine());
-				}
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(FILENAME)))) {
+			if (FILENAME.equals(CONFIGFILE)) {
+				ranOnce = true;
 			}
+
+			while (reader.ready()) {
+				LISTARR.add(reader.readLine());
+			}
+
+			System.out.println(TermColors.colorInfo("LISTARR: " + LISTARR.toString()));
 
 		} catch (IOException ex) {
 			Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
