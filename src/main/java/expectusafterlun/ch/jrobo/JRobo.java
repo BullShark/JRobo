@@ -66,7 +66,7 @@ public class JRobo {
 
 			public void run() {
 				while (true) {
-					CONN.msgUser("thatsn0tmysite[m]", JOKES.getMommaJoke(""));
+					CONN.msgUser("thatsn0tmysite[m", JOKES.getMommaJoke(""));
 					try {
 						Thread.sleep(timeInterval);
 					} catch (InterruptedException e) {
