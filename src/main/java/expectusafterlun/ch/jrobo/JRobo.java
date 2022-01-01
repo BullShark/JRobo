@@ -49,7 +49,7 @@ public class JRobo {
 	public JRobo() {
 		this.user = null;
 		READER = new FileReader();
-		CONFIG = FileReader.getConfig();
+		CONFIG = READER.getConfig();
 		if(CONFIG.getProxyHost() != null && CONFIG.getProxyPort() != null) {
 
 			//TODO Needs testing
