@@ -43,7 +43,7 @@ public class FileReader {
     private static String CONFIGFILE;
 
     /* Path to resources */
-    private final String PATH = "src/main/resources";
+    private final String PATH = "src/main/resources/jrobo/expectusafterlun/ch";
 
     /* User-defined Classes */
     private static Config config;
@@ -70,15 +70,15 @@ public class FileReader {
      * @return A true on success and false on failure
      */
     protected boolean fileToArrayList(final String FILENAME, final ArrayList<String> LISTARR) {
-        out.println( TermColors.colorInfo("Reading Configuration File (" + FILENAME + ")") );
-        out.println( TermColors.colorInfo("Absolute path: " + new File(FILENAME).getAbsolutePath()) );
-        out.println( TermColors.colorInfo("System user directory: " + System.getProperty("user.dir")) );
-        out.println( TermColors.colorInfo("Reading File (" + FILENAME + ")") );
+        out.println( TermColors.colorInfo("Reading Configuration File (" + PATH + FILENAME + ")") );
+        out.println( TermColors.colorInfo("Absolute path: " + new File(PATH + FILENAME).getAbsolutePath()) );
+        out.println( TermColors.colorInfo("System user directory: " + PATH + System.getProperty("user.dir")) );
+        out.println( TermColors.colorInfo("Reading File (" + PATH + FILENAME + ")") );
 
         try {
-            File file = new File(FILENAME);
+            File file = new File(PATH + FILENAME);
                 try (Scanner myReader = new Scanner(file)) {
-                    if (FILENAME.equals(CONFIGFILE)) {
+                    if (FILENAME.equals(PATH + CONFIGFILE)) {
                         ranOnce = true;
                 }
 			
