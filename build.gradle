@@ -36,6 +36,13 @@ tasks.withType(JavaExec) {
 
 test {
 	jvmArgs(['--enable-preview'])
+	// Has too many dependencies, takes up too much disk space
 //	useJUnitPlatform()
 }
+
+task runPython(type:Exec) {
+	workingDir 'src/main/resources/python'
+
+//	commandLine 'python', 'torrent.py'
+} 
 
