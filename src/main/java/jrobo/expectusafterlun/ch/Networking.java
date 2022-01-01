@@ -268,7 +268,7 @@ public class Networking {
 
 				// Pause before the next itteration (send) of this loop for DELAY ms
 				try {
-					System.out.println("[***]\tPausing for " + DELAY + " milliseconds");
+					System.out.println(TermColors.colorInfo("Pausing for " + DELAY + " milliseconds"));
 					Thread.sleep(DELAY);
 
 				} catch(InterruptedException ex) {
