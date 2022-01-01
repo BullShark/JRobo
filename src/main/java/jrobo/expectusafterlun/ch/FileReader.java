@@ -43,7 +43,7 @@ public class FileReader {
     private static String CONFIGFILE;
 
     /* Path to resources */
-    private final String PATH = "src/main/resources/jrobo/expectusafterlun/ch/";
+    private static final String PATH = "src/main/resources/jrobo/expectusafterlun/ch/";
 
     /* User-defined Classes */
     private static Config config;
@@ -115,12 +115,12 @@ public class FileReader {
             return config;
         }
 
-        out.println(TermColors.colorInfo("Reading Configuration File (" + CONFIGFILE + ")"));
-        out.println(TermColors.colorInfo("Absolute path: " + new File(CONFIGFILE).getAbsolutePath()));
-        out.println(TermColors.colorInfo("System user directory: " + System.getProperty("user.dir")));
+        out.println(TermColors.colorInfo("Reading Configuration File (" + PATH.concat(CONFIGFILE) + ")"));
+        out.println(TermColors.colorInfo("Absolute path: " + new File( (PATH.concat(CONFIGFILE)) ).getAbsolutePath()));
+        out.println(TermColors.colorInfo("System user directory: " + PATH.concat(System.getProperty("user.dir"))));
         
         try {
-            File file = new File(CONFIGFILE);
+            File file = new File(PATH.concat(CONFIGFILE));
             String json;
 //            Thread.dumpStack();
             try (Scanner myReader = new Scanner(file)) {
