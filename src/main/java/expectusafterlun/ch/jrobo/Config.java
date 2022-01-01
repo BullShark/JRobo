@@ -203,6 +203,11 @@ public class Config {
 	 */
 	public String getColorString() {
 
+		// Avoid a NullPointerException that sometimes can occur
+		if(openweathermap_api_key == null) {
+			openweathermap_api_key = "null";
+		}
+
 		return (TermColors.colorInfo("\t\tMy name is " + name) 
 			+ "\n" + TermColors.colorInfo("\t\tpassword is " + password.replaceAll(".", "*")) 
 			+ "\n" + TermColors.colorInfo("\t\tmasters are " + Arrays.toString(masters))
