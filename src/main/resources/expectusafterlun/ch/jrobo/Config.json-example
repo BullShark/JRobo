@@ -3,11 +3,15 @@
     "second_name": "JRobo",
     "password": "",
     "masters": [
-      "BullShark"
+      "BullShark", "drkrieger"
     ],
     "command_symbol":".",
     "network":"irc.ipv6.freenode.net:6667",
+    "proxy_host":"null",
+    "proxy_port":"null",
     "channel":"##blackhats",
-    "openweathermap_apikey":"abcd"
-    "torrent_apikey":"efgh"
+    "base_chan":"",
+    "openweathermap_api_key":"abcd"
+    "torrent_api_key":"efgh"
+    "torrent_api_host":"expectusafterlun.ch"
 }
