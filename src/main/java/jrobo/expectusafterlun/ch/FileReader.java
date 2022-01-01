@@ -43,7 +43,7 @@ public class FileReader {
     private static String CONFIGFILE;
 
     /* Path to resources */
-    private final String PATH = "src/main/resources/jrobo/expectusafterlun/ch";
+    private final String PATH = "src/main/resources/jrobo/expectusafterlun/ch/";
 
     /* User-defined Classes */
     private static Config config;
