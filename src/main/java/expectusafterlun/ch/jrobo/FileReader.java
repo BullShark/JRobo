@@ -123,30 +123,25 @@ public class FileReader {
 		out.println(TermColors.colorInfo("Absolute path: " + new File((PATH.concat(CONFIGFILE))).getAbsolutePath()));
 		out.println(TermColors.colorInfo("System user directory: " + System.getProperty("user.dir").concat(PATH)));
 
-		try {
-			//InputStream in = getClass().getResourceAsStream("/" + CONFIGFILE);
-			//BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		//Thread.dumpStack();
 
-			//Thread.dumpStack();
+		String json = null;
 
-			String json = null;
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/" + CONFIGFILE)))) {
+			json = "";
 
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/" + CONFIGFILE)))) {
-				json = "";
-
-				while (reader.ready()) {
-					json += reader.readLine();
-				}
-			} catch (IOException ex) {
-				Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
+			while (reader.ready()) {
+				json += reader.readLine();
 			}
+
+			System.out.println(TermColors.colorInfo(json));
 
 			Gson gson = new Gson();
 			config = gson.fromJson(json, Config.class);
 
 			ranOnce = true;
 
-		} catch (JsonSyntaxException | NullPointerException  ex) {
+		} catch (JsonSyntaxException | NullPointerException | IOException  ex) {
 			Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
 			System.exit(1);
 		}
