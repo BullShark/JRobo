@@ -74,7 +74,7 @@ public class DownForEveryone {
 			url = new URL((BASE_URL.concat(TESTURL)).replace(" ", "%20"));
 
 			/* Debug */
-			System.out.println("URL: " + url);
+			System.out.println(TermColors.colorInfo("URL: " + url));
 
 			conn = url.openConnection();
 			conn.addRequestProperty("User-Agent", "Mozilla/4.0"); // Resolves the 403 error
