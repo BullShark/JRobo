@@ -59,9 +59,28 @@ public class JRobo {
 		CONN = new Networking(this);
 		JOKES = new Jokes(this);
 		BCMD = new BotCommand(this);
+
+		// Create and run another thread
+		final long timeInterval = 1000 * 60 * 60 * 3;
+		Runnable runnable = new Runnable() {
+
+			public void run() {
+				while (true) {
+					CONN.msgUser("thatsn0tmysite", JOKES.getMommaJoke(""));
+					try {
+						Thread.sleep(timeInterval);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+
+		Thread thread = new Thread(runnable);
+		thread.start();
 	}
 
-	/**
+/**
 	 * The beginning of JRobo's execution starts here
 	 */
 	private void initiate() {
