@@ -123,12 +123,12 @@ public class FileReader {
 		out.println(TermColors.colorInfo("Absolute path: " + new File((PATH.concat(CONFIGFILE))).getAbsolutePath()));
 		out.println(TermColors.colorInfo("System user directory: " + System.getProperty("user.dir").concat(PATH)));
 
+
 		//Thread.dumpStack();
 
-		String json = null;
+		String json = "";
 
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/" + CONFIGFILE)))) {
-			json = "";
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
 
 			while (reader.ready()) {
 				json += reader.readLine();
