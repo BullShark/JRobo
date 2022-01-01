@@ -25,6 +25,23 @@ jar {
 	}
 }
 
+tasks.register('uberJar', Jar) {
+	archiveClassifier = 'uber'
+
+	from sourceSets.main.output
+
+	dependsOn configurations.runtimeClasspath
+	from {
+		configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+	}
+	manifest {
+		attributes(
+			'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
+			'Main-Class': 'expectusafterlun.ch.jrobo.JRobo'
+		)
+	}
+}
+
 // https://stackoverflow.com/questions/55433883/how-to-enable-java-12-preview-features-with-gradle
 tasks.withType(JavaCompile).each {
 	it.options.compilerArgs.add('--enable-preview')
