@@ -5,7 +5,7 @@ apply plugin: 'application'
 
 description = 'Advanced IRC Robot'
 
-mainClassName = 'jrobo.expectusafterlun.ch.JRobo'
+mainClassName = 'expectusafterlun.ch.jrobo.JRobo'
 
 repositories {
 	mavenCentral()
@@ -20,7 +20,7 @@ jar {
 	manifest {
 		attributes(
 			'Class-Path': configurations.runtimeClasspath.files.collect { it.getName() }.join(' '),
-			'Main-Class': 'jrobo.expectusafterlun.ch.JRobo'
+			'Main-Class': 'expectusafterlun.ch.jrobo.JRobo'
 		)
 	}
 }
