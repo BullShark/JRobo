@@ -70,9 +70,9 @@ public class FileReader {
      * @return A true on success and false on failure
      */
     protected boolean fileToArrayList(final String FILENAME, final ArrayList<String> LISTARR) {
-        out.println( TermColors.colorInfo("Reading Configuration File (" + PATH + FILENAME + ")") );
-        out.println( TermColors.colorInfo("Absolute path: " + new File(PATH + FILENAME).getAbsolutePath()) );
-        out.println( TermColors.colorInfo("System user directory: " + PATH + System.getProperty("user.dir")) );
+        out.println( TermColors.colorInfo("Reading File (" + PATH + FILENAME + ")") );
+        out.println( TermColors.colorInfo("Absolute Path: " + new File(PATH + FILENAME).getAbsolutePath()) );
+        out.println( TermColors.colorInfo("System User Directory: " + PATH + System.getProperty("user.dir")) );
         out.println( TermColors.colorInfo("Reading File (" + PATH + FILENAME + ")") );
 
         try {
@@ -111,13 +111,13 @@ public class FileReader {
          */
         if (config != null || ranOnce) {
             //Thread.dumpStack();
-            out.println(TermColors.colorInfo("Reusing Config because it's != null or " + CONFIGFILE + " has already been read once"));
+            out.println(TermColors.colorInfo("Reusing Config because it's != null or " + PATH + CONFIGFILE + " has already been read once"));
             return config;
         }
 
         out.println(TermColors.colorInfo("Reading Configuration File (" + PATH.concat(CONFIGFILE) + ")"));
         out.println(TermColors.colorInfo("Absolute path: " + new File( (PATH.concat(CONFIGFILE)) ).getAbsolutePath()));
-        out.println(TermColors.colorInfo("System user directory: " + PATH.concat(System.getProperty("user.dir"))));
+        out.println(TermColors.colorInfo("System user directory: " + System.getProperty("user.dir").concat(PATH)));
         
         try {
             File file = new File(PATH.concat(CONFIGFILE));
