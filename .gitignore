@@ -22,3 +22,8 @@ build/libs/JRobo.jar
 !.gitignore
 
 # End of https://www.toptal.com/developers/gitignore/api/netbeans
+/build/classes/java/main/jrobo/expectusafterlun/ch/Weather$WeatherJson$WeatherListJsonItem$WeatherWindJsonItem.class
+/.gradle/checksums/sha1-checksums.bin
+/build/classes/java/main/jrobo/expectusafterlun/ch/Leet.class
+/.gradle/checksums/md5-checksums.bin
+/build/classes/java/main/jrobo/expectusafterlun/ch/Leet$LeetJsonItem.class
