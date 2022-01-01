@@ -22,9 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import static java.lang.System.err;
 import static java.lang.System.out;
@@ -45,9 +43,6 @@ public class FileReader {
 
 	/* Standard Java API Classes */
 	private final static String CONFIGFILE = "Config.json";
-
-	/* Path to resources */
-	private final static String PATH = "src/main/resources/jrobo/expectusafterlun/ch/";
 
 	/* User-defined Classes */
 	private static Config config;
@@ -74,15 +69,15 @@ public class FileReader {
 	 * @return A true on success and false on failure
 	 */
 	protected boolean fileToArrayList(final String FILENAME, final ArrayList<String> LISTARR) {
-		out.println(TermColors.colorInfo("Reading File (" + PATH + FILENAME + ")"));
-		out.println(TermColors.colorInfo("Absolute Path: " + new File(PATH + FILENAME).getAbsolutePath()));
-		out.println(TermColors.colorInfo("System User Directory: " + PATH + System.getProperty("user.dir")));
-		out.println(TermColors.colorInfo("Reading File (" + PATH + FILENAME + ")"));
+		out.println(TermColors.colorInfo("Reading File (" + FILENAME + ")"));
+		out.println(TermColors.colorInfo("Absolute Path: " + new File(FILENAME).getAbsolutePath()));
+		out.println(TermColors.colorInfo("System User Directory: " + System.getProperty("user.dir")));
+		out.println(TermColors.colorInfo("Reading File (" + FILENAME + ")"));
 
 		try {
-			File file = new File(PATH + FILENAME);
+			File file = new File(FILENAME);
 			try (Scanner myReader = new Scanner(file)) {
-				if (FILENAME.equals(PATH + CONFIGFILE)) {
+				if (FILENAME.equals(CONFIGFILE)) {
 					ranOnce = true;
 				}
 
@@ -115,13 +110,13 @@ public class FileReader {
 		 */
 		if (config != null || ranOnce) {
 			//Thread.dumpStack();
-			out.println(TermColors.colorInfo("Reusing Config because it's != null or " + PATH + CONFIGFILE + " has already been read once"));
+			out.println(TermColors.colorInfo("Reusing Config because it's != null or " + CONFIGFILE + " has already been read once"));
 			return config;
 		}
 
-		out.println(TermColors.colorInfo("Reading Configuration File (" + PATH.concat(CONFIGFILE) + ")"));
-		out.println(TermColors.colorInfo("Absolute path: " + new File((PATH.concat(CONFIGFILE))).getAbsolutePath()));
-		out.println(TermColors.colorInfo("System user directory: " + System.getProperty("user.dir").concat(PATH)));
+		out.println(TermColors.colorInfo("Reading Configuration File (" + CONFIGFILE + ")"));
+		out.println(TermColors.colorInfo("Absolute path: " + new File((CONFIGFILE)).getAbsolutePath()));
+		out.println(TermColors.colorInfo("System user directory: " + System.getProperty("user.dir")));
 
 
 		//Thread.dumpStack();
@@ -134,7 +129,7 @@ public class FileReader {
 				json += reader.readLine();
 			}
 
-			System.out.println(TermColors.colorInfo(json));
+			System.out.println(TermColors.colorInfo("json: " + json));
 
 			Gson gson = new Gson();
 			config = gson.fromJson(json, Config.class);
