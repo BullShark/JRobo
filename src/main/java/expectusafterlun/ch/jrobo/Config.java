@@ -203,7 +203,7 @@ public class Config {
 	 */
 	public String getColorString() {
 
-		// Avoid a NullPointerException that sometimes can occur
+		// Avoid a NullPointerException by not executing replace() on a null object
 		if(openweathermap_api_key == null) {
 			openweathermap_api_key = "null";
 		}
@@ -230,6 +230,12 @@ public class Config {
 	 */
 	@Override
 	public String toString() {
+
+		// Avoid a NullPointerException by not executing replace() on a null object
+		if(openweathermap_api_key == null) {
+			openweathermap_api_key = "null";
+		}
+
 		return ("[+++]\t\tMy name is " + name
 			+ "\n[+++]\t\tpassword is " + password.replaceAll(".", "*")
 			+ "\n[+++]\t\tmasters are " + Arrays.toString(masters)
