@@ -70,6 +70,9 @@ Requirements
 
 ### Manjaro / Arch Linux
     $ yay -Syy aur/jrobo
+
+    Edit the Config.json in /usr/lib/JRobo.jar
+
     $ jrobo
 
 ### Debian/Linux Mint/Ubuntu
