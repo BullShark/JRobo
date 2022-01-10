@@ -64,7 +64,7 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
 # Linux
 
 Requirements
- * Gradle
+ * Gradle (included)
  * OpenJDK or Oracle/Sun JDK version 16 or newer
  * Git of course
 
