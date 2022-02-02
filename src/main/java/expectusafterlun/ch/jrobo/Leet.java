@@ -59,7 +59,7 @@ public class Leet {
     private static final String BASE_URL = "http://localhost:5000/1337x";
     private final String API_KEY;
     private String fullUrl;
-    private String query;
+    private final String QUERY;
 
     /*
 	 * Miscellaneous
@@ -83,15 +83,15 @@ public class Leet {
 	 *
 	 * Omit CATEGORY to search ALL.
      */
-    private String category;
+    private final String CATEGORY;
 
     /* For the Gson/Json */
     private Gson gson;
     private String json;
 
     /**
-     * Constructor that expects a CONFIG and SEARCH made up of a category and
-     * query used to contact the API
+     * Constructor that expects a CONFIG and SEARCH made up of a CATEGORY and
+ QUERY used to contact the API
      *
      * @author Chris Lemire {@literal <goodbye300@aim.com>}
      * @param SEARCH Is the CATEGORY and search QUERY
@@ -114,7 +114,7 @@ public class Leet {
         }
 
         /* 
-		 * For the HTTP Connection
+         * For the HTTP Connection
          */
         fullUrl = null;
 
@@ -132,35 +132,34 @@ public class Leet {
         /* Divide SEARCH into CATEGORY and QUERY */
         try {
             /*
-			 * Only set the category if SEARCH contains a category.
+             * Only set the CATEGORY if SEARCH contains a CATEGORY.
              */
             if (Arrays.asList(CATEGORIES).contains(SEARCH.split("\\s+", 2)[0])) {
-                category = SEARCH.split("\\s+", 2)[0];
-                query = SEARCH.split("\\s+", 2)[1];
+                CATEGORY = SEARCH.split("\\s+", 2)[0];
+                QUERY = SEARCH.split("\\s+", 2)[1];
             } else if (SEARCH.startsWith("All")) {
-                category = "";
-                query = SEARCH.split("\\s+", 2)[1];
+                CATEGORY = "";
+                QUERY = SEARCH.split("\\s+", 2)[1];
             } else {
-                category = "";
-                query = SEARCH;
+                CATEGORY = "";
+                QUERY = SEARCH;
             }
 
         } catch (ArrayIndexOutOfBoundsException ex) {
             // There is no CATEGORY. Search ALL.
-            category = "";
-            query = SEARCH;
             Logger.getLogger(Leet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new AssertionError("impossible to reach this place"); // Fix for variable QUERY might not have been initialized
+
         }
     }
 
     /**
-     * Gets JSON data for a search query to the Leetx Python Flask API
+     * Gets JSON data for a search QUERY to the Leetx Python Flask API
      *
      * @author Christopher Lemire {@literal <goodbye300@aim.com>}
      * @return JSON retrieved from the URL
      */
-    public String getJson() {
-
+    public String getJson() { 
         try {
             /* 
 			 * Use String.format(BASE_URL + "/{%s}/{%s}/{%s}", new String(), new String(), new String() );
@@ -168,17 +167,17 @@ public class Leet {
 			 *
 			 * Do not URL encode this because the server does that
 			 *
-			 * @todo Something is going wrong with torrent.py category is not set.
+			 * @todo Something is going wrong with torrent.py CATEGORY is not set.
 			 * .leet James Bond
 			 * ^JRobo^
 			 * { "data": "Unable to retrieve Torrent json data" }
              */
-            if (!category.equals("")) {
-                fullUrl = String.format(BASE_URL + "/%s/%s/%s/seeders/desc", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()), PAGENUM, category);
+            if (!CATEGORY.equals("")) {
+                fullUrl = String.format(BASE_URL + "/%s/%s/%s/seeders/desc", URLEncoder.encode(QUERY, StandardCharsets.UTF_8.toString()), PAGENUM, CATEGORY);
             } else {
                 // Exclude CATEGORY to search ALL
-                // If no category, the defaults in torrent.py are used for page num, sort by, and sort order
-                fullUrl = String.format(BASE_URL + "/%s", URLEncoder.encode(query, StandardCharsets.UTF_8.toString()));
+                // If no CATEGORY, the defaults in torrent.py are used for page num, sort by, and sort order
+                fullUrl = String.format(BASE_URL + "/%s", URLEncoder.encode(QUERY, StandardCharsets.UTF_8.toString()));
             }
 
             /* Debug */
