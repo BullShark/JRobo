@@ -23,6 +23,7 @@ import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import static java.lang.System.err;
 import static java.lang.System.out;
@@ -50,7 +51,7 @@ public class FileReader {
 	private static boolean ranOnce = false;
 
 	/**
-	 * Set the filename for CONFIGFILE and initialize config to null
+	 * Initialize config to null
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
@@ -73,7 +74,7 @@ public class FileReader {
 		out.println(TermColors.info("System User Directory: " + System.getProperty("user.dir")));
 		out.println(TermColors.info("Reading File (" + FILENAME + ")"));
 
-		try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(FILENAME)))) {
+		try ( BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(FILENAME)))) {
 			if (FILENAME.equals(CONFIGFILE)) {
 				ranOnce = true;
 			}
@@ -116,30 +117,58 @@ public class FileReader {
 		out.println(TermColors.info("Absolute path: " + new File((CONFIGFILE)).getAbsolutePath()));
 		out.println(TermColors.info("System user directory: " + System.getProperty("user.dir")));
 
-
 		//Thread.dumpStack();
-
 		String json = "";
 
 		/*
-		 * @todo Check if the Config file exists at /etc/JRobo/Config.json, and if it doesn't exist, then proceed to read it from resources in the jar.
+		 * Check if the Config file exists at /etc/JRobo/Config.json.
+		 * And if it doesn't exist, then proceed to read it from resources in the jar.
 		 */
-		try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
+		if (new File("/etc/JRobo/" + CONFIGFILE).exists()) {
+			try (BufferedReader br
+				= new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("/etc/JRobo/" + CONFIGFILE)))) {
 
-			while (reader.ready()) {
-				json += reader.readLine();
+				String line = "";
+
+				while ((line = br.readLine()) != null) {
+					json += line + "\n";
+				}
+
+				System.out.println(TermColors.info("json: " + json));
+
+				Gson gson = new Gson();
+				config = gson.fromJson(json, Config.class);
+
+				ranOnce = true;
+
+			} catch (IOException ex) {
+				Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
+				System.exit(1);
 			}
 
-			System.out.println(TermColors.info("json: " + json));
+		/*
+		 * File /etc/JRobo/Config.json does not exist.
+		 * So we are using the Config.json bundled in the jar's resource folder instead.
+		 */
+		} else {
+			try ( BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
 
-			Gson gson = new Gson();
-			config = gson.fromJson(json, Config.class);
+				while (reader.ready()) {
+					json += reader.readLine();
+				}
 
-			ranOnce = true;
+				System.out.println(TermColors.info("json: " + json));
 
-		} catch (JsonSyntaxException | NullPointerException | IOException  ex) {
-			Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
-			System.exit(1);
+				Gson gson = new Gson();
+				config = gson.fromJson(json, Config.class);
+
+				ranOnce = true;
+
+			} catch (JsonSyntaxException | NullPointerException | IOException ex) {
+				Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
+				System.exit(1);
+
+			}
 		}
 
 		// Verifiying important settings for connection
