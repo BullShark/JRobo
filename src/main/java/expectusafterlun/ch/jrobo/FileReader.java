@@ -128,6 +128,8 @@ public class FileReader {
 			try (BufferedReader br
 				= new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("/etc/JRobo/" + CONFIGFILE)))) {
 
+				System.out.println(TermColors.info("Reading Config from:\t/etc/JRobo/" + CONFIGFILE));
+
 				String line = "";
 
 				while ((line = br.readLine()) != null) {
@@ -152,6 +154,8 @@ public class FileReader {
 		 */
 		} else {
 			try ( BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
+
+				System.out.println(TermColors.info("Reading Config from the jar as a resource stream:\t" + CONFIGFILE));
 
 				while (reader.ready()) {
 					json += reader.readLine();
