@@ -103,7 +103,7 @@ public class Weather {
 			json = "{ \"data\": \"Unable to retrieve Weather json data\" }";
 
 		} finally {
-			System.out.println("[+++]\t" + json);
+			System.out.println(TermColors.colorInfo(json));
 			return json;
 
 		}
