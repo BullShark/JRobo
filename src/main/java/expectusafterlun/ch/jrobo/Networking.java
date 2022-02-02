@@ -79,6 +79,14 @@ public class Networking {
 			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
 			err.println("I/O Error, Check networking");
 			System.exit(-1);
+		} finally {
+			try {
+				if(sock != null) { sock.close(); }
+				if(bwriter != null) { bwriter.close(); }
+				if(breader != null) { breader.close(); }
+			} catch (IOException ex) {
+				Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
 	}
 
