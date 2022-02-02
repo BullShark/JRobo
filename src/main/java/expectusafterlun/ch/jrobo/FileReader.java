@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.io.IOUtils;
 
 /**
  * FileReader is used to supply the Config class with configuration read in from
@@ -118,7 +120,7 @@ public class FileReader {
 		out.println(TermColors.info("System user directory: " + System.getProperty("user.dir")));
 
 		//Thread.dumpStack();
-		String json = "";
+		//String json = "";
 
 		/*
 		 * Check if the Config file exists at /etc/JRobo/Config.json.
@@ -128,16 +130,8 @@ public class FileReader {
 
 			System.out.println(TermColors.info("Reading Config from:\t/etc/JRobo/" + CONFIGFILE));
 
-			try ( InputStream is = FileReader.class.getResourceAsStream("/etc/JRobo/" + CONFIGFILE);
-				BufferedReader br
-				= new BufferedReader(new InputStreamReader(is))) {
-
-
-				String line = "";
-
-				while ((line = br.readLine()) != null) {
-					json += line + "\n";
-				}
+			try (FileInputStream fis = new FileInputStream("/etc/JRobo/" + CONFIGFILE); ) {
+				String json = IOUtils.toString(fis, "UTF-8");
 
 				System.out.println(TermColors.info("json: " + json));
 
@@ -162,6 +156,7 @@ public class FileReader {
 			
 			try ( BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
 
+				String json = "";
 				while (reader.ready()) {
 					json += reader.readLine();
 				}
