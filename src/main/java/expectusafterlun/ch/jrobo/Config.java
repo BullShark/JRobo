@@ -196,7 +196,7 @@ public class Config {
 	}
 
 	/**
-	 * A colored for IRC String representation of the Config
+	 * A colored for IRC String representation of the this Config class
 	 *
 	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 * @return Colored for IRC String representing LeetJsonItem
