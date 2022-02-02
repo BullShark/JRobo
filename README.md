@@ -65,9 +65,13 @@ JRobo is an advanced IRC bot that uses its own IRC framework. It was written fro
 
 Requirements for Building
  * Gradle (included)
- * OpenJDK or Oracle/Sun JDK version 16 or newer
+ * OpenJDK or Oracle/Sun JDK version 16
  * Git of course
-
+ 
+Problems
+  * Java JDK 17 is not compatible with Gradle, cannot fetch Gradle/Maven dependencies, and won't work for now
+  * Recommended to use sdkman to install Java JDK 16 unless your distro has a package for JDK 16.
+ 
 ### Manjaro / Arch Linux
     $ yay -Syy aur/jrobo
 
@@ -76,7 +80,11 @@ Requirements for Building
     $ jrobo
 
 ### Debian/Linux Mint/Ubuntu
-    $ sudo apt-get install openjdk-17-jdk git
+    $ sudo apt install git
+    # Use SDK Manager, sdkman to fetch a compatible Java JDK
+    $ curl -s "https://get.sdkman.io" | bash
+    $ sdk install java 16.0.2.fx-librca
+    $ sdk help # for more info
     $ git clone https://github.com/BullShark/JRobo.git
     $ cd JRobo
     # Extract one file from JRobo.jar
