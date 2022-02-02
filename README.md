@@ -79,8 +79,14 @@ Requirements for Building
     $ sudo apt-get install openjdk-17-jdk git
     $ git clone https://github.com/BullShark/JRobo.git
     $ cd JRobo
-    $ mv src/jrobo/Config.json-example src/JRobo/Config.json
-    $ nano src/jrobo/Config.json
+    # Extract one file from JRobo.jar
+    $ jar xf JRobo.jar expectusafterlun/ch/jrobo/Config.json
+    # Rename Config.json-example to Config.json
+    $ mv ./expectusafterlun/ch/jrobo/Config.json-example ./expectusafterlun/ch/jrobo/Config.json
+    # Put your own settings into the bot's configuration file
+    $ nano ./expectusafterlun/ch/jrobo/Config.json
+    # Update JRobo.jar with the new Config.json
+    $ jar uf JRobo.jar expectusafterlun/ch/jrobo/Config.json
     $ ./gradlew clean
     $ ./gradlew build
     $ ./gradlew run
@@ -92,9 +98,10 @@ Requirements for Building
 ### Compile and run without Gradle
     $ # Download gson jar to the project root where it's easy to find
     $ wget https://repo1.maven.org/maven2/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar
+    $ wget https://repo1.maven.org/maven2/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar
     $ cd src/main/java
-    $ javac -classpath ../../../gson-2.8.8.jar:. jrobo/expectusafterlun/ch/JRobo.java
-    $ java -classpath ../../../gson-2.8.8.jar:. jrobo.expectusafterlun.ch.JRobo
+    $ javac -classpath ../../../gson-2.8.8.jar:../../../commons-io-2.11.0.jar:. expectusafterlun/ch/jrobo/JRobo.java
+    $ java -classpath ../../../gson-2.8.8.jar:../../../commons-io-2.11.0.jar:. expectusafterlun.ch.jrobo.JRobo
 
 # Windows
 
