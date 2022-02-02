@@ -11,7 +11,7 @@
     "proxy_port":"null",
     "channel":"##blackhats",
     "base_chan":"##blackhats",
-    "openweathermap_api_key":"abcd"
-    "torrent_api_key":"efgh"
+    "openweathermap_api_key":"abcd",
+    "torrent_api_key":"efgh",
     "torrent_api_host":"expectusafterlun.ch"
 }
