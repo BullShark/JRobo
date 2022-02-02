@@ -124,10 +124,12 @@ public class FileReader {
 		 * And if it doesn't exist, then proceed to read it from resources in the jar.
 		 */
 		if (new File("/etc/JRobo/" + CONFIGFILE).exists()) {
+
+			System.out.println(TermColors.info("Reading Config from:\t/etc/JRobo/" + CONFIGFILE));
+
 			try (BufferedReader br
 				= new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("/etc/JRobo/" + CONFIGFILE)))) {
 
-				System.out.println(TermColors.info("Reading Config from:\t/etc/JRobo/" + CONFIGFILE));
 
 				String line = "";
 
@@ -142,7 +144,7 @@ public class FileReader {
 
 				ranOnce = true;
 
-			} catch (IOException ex) {
+			} catch (JsonSyntaxException | NullPointerException | IOException ex) {
 				Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
 				System.exit(1);
 
@@ -153,9 +155,10 @@ public class FileReader {
 		 * So we are using the Config.json bundled in the jar's resource folder instead.
 		 */
 		} else {
-			try ( BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
 
-				System.out.println(TermColors.info("Reading Config from the jar as a resource stream:\t" + CONFIGFILE));
+			System.out.println(TermColors.info("Reading Config from the jar as a resource stream:\t" + CONFIGFILE));
+			
+			try ( BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
 
 				while (reader.ready()) {
 					json += reader.readLine();
