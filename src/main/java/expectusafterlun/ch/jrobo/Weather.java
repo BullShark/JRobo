@@ -154,7 +154,7 @@ public class Weather {
 
 	/**
 	 * A main method for testing this class
-	 * @param args Command line args
+	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
 
