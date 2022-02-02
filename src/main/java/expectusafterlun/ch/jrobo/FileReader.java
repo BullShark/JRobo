@@ -27,9 +27,7 @@ import java.io.InputStreamReader;
 import static java.lang.System.err;
 import static java.lang.System.out;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
