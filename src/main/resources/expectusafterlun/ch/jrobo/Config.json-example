@@ -3,7 +3,7 @@
     "second_name": "JRobo",
     "password": "",
     "masters": [
-      "BullShark", "drkrieger"
+      "BullShark", "drkrieger", "zer0"
     ],
     "command_symbol":".",
     "network":"irc.ipv6.freenode.net:6667",
