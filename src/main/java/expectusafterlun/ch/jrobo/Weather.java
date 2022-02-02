@@ -186,7 +186,7 @@ public class Weather {
 
 			} catch (IndexOutOfBoundsException ex) {
 				Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-				System.err.println("[+++]\tCould not get json for list at index 0");
+				System.err.println(TermColors.info("Could not get json for list at index 0"));
 
 			} finally {
 				return result;
