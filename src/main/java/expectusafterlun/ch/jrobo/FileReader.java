@@ -146,6 +146,7 @@ public class FileReader {
 			} catch (IOException ex) {
 				Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
 				System.exit(1);
+
 			}
 
 		/*
