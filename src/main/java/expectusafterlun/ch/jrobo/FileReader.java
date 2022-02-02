@@ -121,6 +121,9 @@ public class FileReader {
 
 		String json = "";
 
+		/*
+		 * @todo Check if the Config file exists at /etc/JRobo/Config.json, and if it doesn't exist, then proceed to read it from resources in the jar.
+		 */
 		try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
 
 			while (reader.ready()) {
