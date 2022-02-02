@@ -354,31 +354,31 @@ public class TermColors {
 	 * @return The colored info line
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
-	public static String colorInfo(final String MSG) {
+	public static String info(final String MSG) {
 
 		return TermColors.ANSI_GREEN + "[+++]" + TermColors.ANSI_RESET + "\t" + MSG;
 	}
 
 	/**
-	 * This method, colorOut, means to change the color for server output lines.
+	 * This method, out, means to change the color for server output lines.
 	 *
 	 * @param MSG The console server output message to color
 	 * @return The colored server output line
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
-	public static String colorOut(final String MSG) {
+	public static String out(final String MSG) {
 
 		return TermColors.ANSI_RED + "[***]" + TermColors.ANSI_RESET + "\t" + MSG;
 	}
 
 	/**
-	 * This method, colorIn, means to change the color for server input lines.
+	 * This method, in, means to change the color for server input lines.
 	 *
 	 * @param MSG The console server input message to color
 	 * @return The colored server input line
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
-	public static String colorIn(final String MSG) {
+	public static String in(final String MSG) {
 
 		return String.format(TermColors.ANSI_BLUE + "[---]" + TermColors.ANSI_RESET + "\t%s", MSG);
 	}
