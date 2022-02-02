@@ -56,7 +56,7 @@ public class Leet {
 	 */
 	// @todo Read in the torrent_api_host json item in the Config.json
 	//private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
-	private static final String BASE_URL = "http://localhost:5000/1337x";
+	private final String BASE_URL;
 	private final String API_KEY;
 	private String fullUrl;
 	private final String QUERY;
@@ -112,6 +112,9 @@ public class Leet {
 				throw new NullPointerException("The API_KEY could not be retrieved from CONFIG");
 			}
 		}
+
+		/* Set the host for the torrent api in BASE_URL */
+		BASE_URL = "http://" + CONFIG.getTorrentAPIHost() +":5000/1337x";
 
 		/* 
 		 * For the HTTP Connection
