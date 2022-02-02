@@ -158,7 +158,7 @@ public class Weather {
 	 */
 	public static void main(String[] args) {
 
-		System.out.println(new Weather(null).getFormattedWeatherSummary("Texarkana,TX,US", false));
+		System.out.println(new Weather(null).getFormattedWeatherSummary("San Antonio,TX,US", false));
 	}
 
 	/**
