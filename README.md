@@ -75,26 +75,38 @@ Problems
 ### Manjaro / Arch Linux
     $ yay -Syy aur/jrobo
 
-    Edit the Config.json in /usr/lib/JRobo.jar
+    Edit the Config.json in /usr/lib/JRobo.jar or /etc/JRobo/Config.json. The config file in /etc will be used unless it doesn't exist. If it does not exist, a bundled Config.json in JRobo.jar will be used instead.
 
     $ jrobo
 
 ### Debian/Linux Mint/Ubuntu
     $ sudo apt install git
+
     # Use SDK Manager, sdkman to fetch a compatible Java JDK
     $ curl -s "https://get.sdkman.io" | bash
+
+    $ source "$HOME/.sdkman/bin/sdkman-init.sh"
+
     $ sdk install java 16.0.2.fx-librca
+
     $ sdk help # for more info
+
     $ git clone https://github.com/BullShark/JRobo.git
+
     $ cd JRobo
+
     # Extract one file from JRobo.jar
     $ jar xf JRobo.jar expectusafterlun/ch/jrobo/Config.json
+
     # Rename Config.json-example to Config.json
     $ mv ./expectusafterlun/ch/jrobo/Config.json-example ./expectusafterlun/ch/jrobo/Config.json
+
     # Put your own settings into the bot's configuration file
     $ nano ./expectusafterlun/ch/jrobo/Config.json
+
     # Update JRobo.jar with the new Config.json
     $ jar uf JRobo.jar expectusafterlun/ch/jrobo/Config.json
+
     $ ./gradlew clean
     $ ./gradlew build
     $ ./gradlew run
