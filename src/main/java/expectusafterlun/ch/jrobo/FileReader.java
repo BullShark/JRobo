@@ -23,6 +23,7 @@ import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import static java.lang.System.err;
 import static java.lang.System.out;
@@ -127,8 +128,9 @@ public class FileReader {
 
 			System.out.println(TermColors.info("Reading Config from:\t/etc/JRobo/" + CONFIGFILE));
 
-			try (BufferedReader br
-				= new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("/etc/JRobo/" + CONFIGFILE)))) {
+			try ( InputStream is = FileReader.class.getResourceAsStream("/etc/JRobo/" + CONFIGFILE);
+				BufferedReader br
+				= new BufferedReader(new InputStreamReader(is))) {
 
 
 				String line = "";
