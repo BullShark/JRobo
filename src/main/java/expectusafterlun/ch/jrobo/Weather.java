@@ -85,7 +85,7 @@ public class Weather {
 				+ "&lang=" + "en"
 				+ "&appid=" + APIKEY).replaceAll(" ", "%20");
 
-		System.out.println(TermColors.colorInfo(URL));
+		System.out.println(TermColors.info(URL));
 
 		String json = "";
 
@@ -103,7 +103,7 @@ public class Weather {
 			json = "{ \"data\": \"Unable to retrieve Weather json data\" }";
 
 		} finally {
-			System.out.println(TermColors.colorInfo(json));
+			System.out.println(TermColors.info(json));
 			return json;
 
 		}
@@ -122,7 +122,7 @@ public class Weather {
 
 		try {
 			Type WeatherJsonT = new TypeToken<ArrayList<WeatherJson>>() {}.getType();
-			System.out.println(TermColors.colorInfo("WeatherJson Type: " + WeatherJsonT));
+			System.out.println(TermColors.info("WeatherJson Type: " + WeatherJsonT));
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			WeatherJson weatherJson = gson.fromJson(this.getJson(LOCATION), WeatherJson.class);
@@ -131,7 +131,7 @@ public class Weather {
 
 		} catch (JsonSyntaxException ex) {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
-			System.err.println(TermColors.colorInfo("Invalid Json: Does not match the Json code or wrong type"));
+			System.err.println(TermColors.info("Invalid Json: Does not match the Json code or wrong type"));
 			result = "Unable to retrieve the weather";
 
 		} finally {

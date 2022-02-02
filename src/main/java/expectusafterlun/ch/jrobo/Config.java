@@ -208,17 +208,17 @@ public class Config {
 			openweathermap_api_key = "null";
 		}
 
-		return (TermColors.colorInfo("\t\tMy name is " + name) 
-			+ "\n" + TermColors.colorInfo("\t\tpassword is " + password.replaceAll(".", "*")) 
-			+ "\n" + TermColors.colorInfo("\t\tmasters are " + Arrays.toString(masters))
-			+ "\n" + TermColors.colorInfo("\t\tcommand_symbol is " + command_symbol)
-			+ "\n" + TermColors.colorInfo("\t\tnetwork is " + network)
-			+ "\n" + TermColors.colorInfo("\t\tproxy host/port is " + proxy_host + ":" + proxy_port)
-			+ "\n" + TermColors.colorInfo("\t\tchannel is " + channel)
-			+ "\n" + TermColors.colorInfo("\t\topenweathermap_api_key is " + openweathermap_api_key.replaceAll(".", "*"))
-			+ "\n" + TermColors.colorInfo("\t\ttorrent_api_key is " + torrent_api_key.replaceAll(".", "*"))
-			+ "\n" + TermColors.colorInfo("\t\ttorrent_api_host is " + torrent_api_host)
-			+ "\n" + TermColors.colorInfo("\t\tbase_chan is " + base_chan)
+		return (TermColors.info("\t\tMy name is " + name) 
+			+ "\n" + TermColors.info("\t\tpassword is " + password.replaceAll(".", "*")) 
+			+ "\n" + TermColors.info("\t\tmasters are " + Arrays.toString(masters))
+			+ "\n" + TermColors.info("\t\tcommand_symbol is " + command_symbol)
+			+ "\n" + TermColors.info("\t\tnetwork is " + network)
+			+ "\n" + TermColors.info("\t\tproxy host/port is " + proxy_host + ":" + proxy_port)
+			+ "\n" + TermColors.info("\t\tchannel is " + channel)
+			+ "\n" + TermColors.info("\t\topenweathermap_api_key is " + openweathermap_api_key.replaceAll(".", "*"))
+			+ "\n" + TermColors.info("\t\ttorrent_api_key is " + torrent_api_key.replaceAll(".", "*"))
+			+ "\n" + TermColors.info("\t\ttorrent_api_host is " + torrent_api_host)
+			+ "\n" + TermColors.info("\t\tbase_chan is " + base_chan)
 			+ "\n");
 	}
 

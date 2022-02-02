@@ -78,7 +78,7 @@ public class UrbanDict {
 		final String URL = (BASE_URL
 				+ "/v0/define"
 				+ "?term=" + WORD).replace(" ", "%20");
-		System.out.println(TermColors.colorInfo(URL));
+		System.out.println(TermColors.info(URL));
 			
 		/* Create a URL obj from strings */
 		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -95,7 +95,7 @@ public class UrbanDict {
 			json = "{ \"data\": \"Unable to retrieve UrbanDict json data\" }";
 
 		} finally {
-			System.out.println(TermColors.colorInfo(json));
+			System.out.println(TermColors.info(json));
 			return json;
 		}
 	}
@@ -113,19 +113,19 @@ public class UrbanDict {
 		try {
 			Type UrbanJsonT = new TypeToken<ArrayList<UrbanJson>>() {
 				}.getType();
-			System.out.println(TermColors.colorInfo("UrbanJson Type: " + UrbanJsonT));
+			System.out.println(TermColors.info("UrbanJson Type: " + UrbanJsonT));
 
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			UrbanJson urbanJson = gson.fromJson(this.getJson(), UrbanJson.class);
 
 			urbanJson.sort();
 			
-			System.out.println(TermColors.colorInfo("urbanJson.getListSize(): " + urbanJson.getListSize()));
+			System.out.println(TermColors.info("urbanJson.getListSize(): " + urbanJson.getListSize()));
 
 			urbanJson.setLimit(LIMIT);
 
-			System.out.println( TermColors.colorInfo("urbanJson.getListSize(): " + urbanJson.getListSize()) );
-			System.out.println( TermColors.colorInfo("UrbanJson Type: " + UrbanJsonT) );
+			System.out.println( TermColors.info("urbanJson.getListSize(): " + urbanJson.getListSize()) );
+			System.out.println( TermColors.info("UrbanJson Type: " + UrbanJsonT) );
 
 			urbanJson.sort(); // Ascending order -> Decending order
 
@@ -137,7 +137,7 @@ public class UrbanDict {
 
 		} finally {
 
-			System.out.println( TermColors.colorInfo(result) );
+			System.out.println( TermColors.info(result) );
 			return result;
 		}
 	}
@@ -200,7 +200,7 @@ public class UrbanDict {
 			if(limit > 0 && !list.isEmpty() && list != null) {
 
 				this.limit = limit;
-				System.out.println(TermColors.colorInfo("UrbanJson.limit: " + this.limit));
+				System.out.println(TermColors.info("UrbanJson.limit: " + this.limit));
 
 				//sort(); // subList() should be given a sorted List
 				List<UrbanJsonItem> temp = list;

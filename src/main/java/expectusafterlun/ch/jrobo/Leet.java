@@ -182,7 +182,7 @@ public class Leet {
             }
 
             /* Debug */
-            System.out.println(TermColors.colorInfo("fullUrl:   " + fullUrl));
+            System.out.println(TermColors.info("fullUrl:   " + fullUrl));
 
 //			HttpClient client = HttpClient.newHttpClient();
             HttpClient client = HttpClient.newBuilder()
@@ -199,7 +199,7 @@ public class Leet {
             HttpResponse<String> response;
             response = client.send(request, BodyHandlers.ofString(StandardCharsets.UTF_8));
 
-            System.out.println(TermColors.colorInfo("Response status code: " + response.statusCode() + "\t"));
+            System.out.println(TermColors.info("Response status code: " + response.statusCode() + "\t"));
             json = response.body();
 
         } catch (IOException | InterruptedException ex) {
@@ -210,7 +210,7 @@ public class Leet {
                 json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
             }
 
-            System.out.println(TermColors.colorInfo("json:   " + json));
+            System.out.println(TermColors.info("json:   " + json));
         }
 
         return json;

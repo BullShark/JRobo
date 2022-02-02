@@ -68,10 +68,10 @@ public class FileReader {
 	 * @return A true on success and false on failure
 	 */
 	protected boolean fileToArrayList(final String FILENAME, final ArrayList<String> LISTARR) {
-		out.println(TermColors.colorInfo("Reading File (" + FILENAME + ")"));
-		out.println(TermColors.colorInfo("Absolute Path: " + new File(FILENAME).getAbsolutePath()));
-		out.println(TermColors.colorInfo("System User Directory: " + System.getProperty("user.dir")));
-		out.println(TermColors.colorInfo("Reading File (" + FILENAME + ")"));
+		out.println(TermColors.info("Reading File (" + FILENAME + ")"));
+		out.println(TermColors.info("Absolute Path: " + new File(FILENAME).getAbsolutePath()));
+		out.println(TermColors.info("System User Directory: " + System.getProperty("user.dir")));
+		out.println(TermColors.info("Reading File (" + FILENAME + ")"));
 
 		try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(FILENAME)))) {
 			if (FILENAME.equals(CONFIGFILE)) {
@@ -82,7 +82,7 @@ public class FileReader {
 				LISTARR.add(reader.readLine());
 			}
 
-			System.out.println(TermColors.colorInfo("LISTARR: " + LISTARR.toString()));
+			System.out.println(TermColors.info("LISTARR: " + LISTARR.toString()));
 
 		} catch (IOException ex) {
 			Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -108,13 +108,13 @@ public class FileReader {
 		 */
 		if (config != null || ranOnce) {
 			//Thread.dumpStack();
-			out.println(TermColors.colorInfo("Reusing Config because it's != null or " + CONFIGFILE + " has already been read once"));
+			out.println(TermColors.info("Reusing Config because it's != null or " + CONFIGFILE + " has already been read once"));
 			return config;
 		}
 
-		out.println(TermColors.colorInfo("Reading Configuration File (" + CONFIGFILE + ")"));
-		out.println(TermColors.colorInfo("Absolute path: " + new File((CONFIGFILE)).getAbsolutePath()));
-		out.println(TermColors.colorInfo("System user directory: " + System.getProperty("user.dir")));
+		out.println(TermColors.info("Reading Configuration File (" + CONFIGFILE + ")"));
+		out.println(TermColors.info("Absolute path: " + new File((CONFIGFILE)).getAbsolutePath()));
+		out.println(TermColors.info("System user directory: " + System.getProperty("user.dir")));
 
 
 		//Thread.dumpStack();
@@ -127,7 +127,7 @@ public class FileReader {
 				json += reader.readLine();
 			}
 
-			System.out.println(TermColors.colorInfo("json: " + json));
+			System.out.println(TermColors.info("json: " + json));
 
 			Gson gson = new Gson();
 			config = gson.fromJson(json, Config.class);
@@ -142,43 +142,43 @@ public class FileReader {
 		// Verifiying important settings for connection
 		if (config.getName()
 			== null) {
-			err.println(TermColors.colorInfo("Error: Unable to find bot's Nickname"));
+			err.println(TermColors.info("Error: Unable to find bot's Nickname"));
 			System.exit(1);
 		}
 
 		if (config.getPass()
 			== null) {
-			err.println(TermColors.colorInfo("Error: Unable to find bot's Password"));
+			err.println(TermColors.info("Error: Unable to find bot's Password"));
 			System.exit(1);
 		}
 
 		if (config.getMasters()
 			== null) {
-			err.println(TermColors.colorInfo("Error: Unable to find bot's Masters"));
+			err.println(TermColors.info("Error: Unable to find bot's Masters"));
 			System.exit(1);
 		}
 
 		if (config.getCmdSymb()
 			== '\u0000') {
-			err.println(TermColors.colorInfo("Error: Unable to find bot's Command Symbol"));
+			err.println(TermColors.info("Error: Unable to find bot's Command Symbol"));
 			System.exit(1);
 		}
 
 		if (config.getNetwork()
 			== null) {
-			err.println(TermColors.colorInfo("Error: Unable to find bot's Network"));
+			err.println(TermColors.info("Error: Unable to find bot's Network"));
 			System.exit(1);
 		}
 
 		if (config.getChannel()
 			== null) {
-			err.println(TermColors.colorInfo("Error: Unable to find bot's Channel"));
+			err.println(TermColors.info("Error: Unable to find bot's Channel"));
 			System.exit(1);
 		}
 
 		if (config.getOpenWeatherMapKey()
 			== null) {
-			err.println(TermColors.colorInfo("Error: Unable to find bot's OpenWeatherMap API Key"));
+			err.println(TermColors.info("Error: Unable to find bot's OpenWeatherMap API Key"));
 			//System.exit(1);
 		}
 
