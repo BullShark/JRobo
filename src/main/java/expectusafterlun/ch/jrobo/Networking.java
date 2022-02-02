@@ -142,9 +142,9 @@ public class Networking {
 		try {
 			System.out.println(TermColors.info("Closing connection!"));
 
-			sock.close();
-			breader.close();
-			bwriter.close();
+			if(sock != null) { sock.close(); }
+			if(breader != null) { breader.close(); }
+			if(bwriter != null) { bwriter.close(); }
 			received = "";
 
 			return true;
