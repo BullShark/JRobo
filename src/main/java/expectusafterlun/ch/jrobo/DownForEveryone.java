@@ -94,8 +94,6 @@ public class DownForEveryone {
 				}
 			}
 
-			rd.close();
-
 		} catch (MalformedURLException ex) {
 			Logger.getLogger(DownForEveryone.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
