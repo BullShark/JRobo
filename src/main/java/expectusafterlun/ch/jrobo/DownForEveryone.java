@@ -39,14 +39,15 @@ public class DownForEveryone {
 	private URL url;
 	private URLConnection conn;
 	private BufferedReader rd;
+	private InputStreamReader isr;
 
 	/* Miscellaneous */
 	private final String BASE_URL = "https://isitup.org/";
 	private boolean isup;
 
 	/**
-	 * Initalizes the global variables used for by DownForEveryone,
-	 * url, conn, rd, and isup
+	 * Initializes the global variables used for by DownForEveryone,
+	 * url, conn, rd, isr, and isup
 	 * 
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
@@ -55,6 +56,7 @@ public class DownForEveryone {
 		url = null;
 		conn = null;
 		rd = null;
+		isr = null;
 
 		/* Miscellaneous */
 		isup = false;
@@ -80,7 +82,8 @@ public class DownForEveryone {
 			conn.addRequestProperty("User-Agent", "Mozilla/4.0"); // Resolves the 403 error
 
 			// Get the response
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			isr = new InputStreamReader(conn.getInputStream());
+			rd = new BufferedReader(isr);
 
 			String line;
 			while ((line = rd.readLine()) != null) {
@@ -97,6 +100,14 @@ public class DownForEveryone {
 			Logger.getLogger(DownForEveryone.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
 			Logger.getLogger(DownForEveryone.class.getName()).log(Level.SEVERE, null, ex);
+		} finally {
+			try {
+				if(rd != null) { rd.close(); }
+				if(isr != null) { isr.close(); }
+					
+			} catch (IOException ex) {
+				Logger.getLogger(DownForEveryone.class.getName()).log(Level.SEVERE, null, ex);
+			}
 		}
 
 		String result;
@@ -125,7 +136,7 @@ public class DownForEveryone {
 	 * A main method for testing this class
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-	 * @param args Command line args
+	 * @param args Command line arguments
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {
