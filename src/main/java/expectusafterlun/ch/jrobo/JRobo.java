@@ -138,8 +138,11 @@ public class JRobo {
 					Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			/*
-		                   * A user has joined the channel
-		                   * Excluding the bot joining
+		                   * 1) A user has joined the channel excluding the bot joining
+			 *
+			 * 2) JRobo has been kicked. Join back.
+			 *
+			 * 3) JRobo's nick is already in use. Switch to secondary nick.
 			 */
 			} else if (first.contains("JOIN") && last.equals(CONFIG.getChannel()) && !first.contains(CONFIG.getName())) {
 				user = first.substring(1, first.indexOf('!'));
