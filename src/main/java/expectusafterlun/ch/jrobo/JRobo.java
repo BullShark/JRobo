@@ -29,6 +29,8 @@ import java.util.logging.Logger;
  */
 public class JRobo {
 
+	private static boolean debug = false;
+
 	/* Defined Objects */
 	private final Networking CONN;
 	private final FileReader READER;
@@ -48,7 +50,7 @@ public class JRobo {
 	 */
 	public JRobo() {
 		this.user = null;
-		READER = new FileReader();
+		READER = new FileReader(debug);
 		CONFIG = READER.getConfig();
 		if(CONFIG.getProxyHost() != null && CONFIG.getProxyPort() != null) {
 
@@ -227,9 +229,23 @@ public class JRobo {
 	}
 
 	/**
-	 * @param args The command line arguments, expects none
+	 * @param args The command line arguments, expects either -g|--debug for
+	 * raw json output or none
 	 */
 	public static void main(String[] args) {
+		for (String s : args) {
+			if (s.equals("-g") || s.equals("--debug")) {
+				debug = true;
+			}
+		}
+
+		System.out.println("""
+				This software was created by Christopher Lemire <goodbye300@aim.com>
+				Feedback is appreciated!
+
+				To show raw JSON output and errors use -g or --debug
+				""");
+
 		new JRobo().initiate();
 	}
 }

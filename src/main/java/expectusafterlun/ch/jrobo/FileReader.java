@@ -48,14 +48,17 @@ public class FileReader {
 
 	/* Miscellaneous */
 	private static boolean ranOnce = false;
+	private static boolean debug;
 
 	/**
 	 * Initialize config to null
 	 *
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @param debug Whether to output raw json output
 	 */
-	public FileReader() {
+	public FileReader(boolean debug) {
 		config = null;
+		FileReader.debug = debug;
 	}
 
 	/**
@@ -82,7 +85,7 @@ public class FileReader {
 				LISTARR.add(reader.readLine());
 			}
 
-			System.out.println(TermColors.info("LISTARR: " + LISTARR.toString()));
+			if(debug) { System.out.println(TermColors.info("LISTARR: " + LISTARR.toString())); }
 
 		} catch (IOException ex) {
 			Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,7 +133,7 @@ public class FileReader {
 				json += reader.readLine();
 			}
 
-			System.out.println(TermColors.info("json: " + json));
+			if(debug) { System.out.println(TermColors.info("json: " + json)); }
 
 			Gson gson = new Gson();
 			config = gson.fromJson(json, Config.class);
