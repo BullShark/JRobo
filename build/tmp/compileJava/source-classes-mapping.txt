@@ -23,12 +23,14 @@ expectusafterlun/ch/jrobo/MircColors.java
  expectusafterlun.ch.jrobo.MircColors
 expectusafterlun/ch/jrobo/DownForEveryone.java
  expectusafterlun.ch.jrobo.DownForEveryone
-expectusafterlun/ch/jrobo/Networking.java
- expectusafterlun.ch.jrobo.Networking
-expectusafterlun/ch/jrobo/BotCommand.java
- expectusafterlun.ch.jrobo.BotCommand
- expectusafterlun.ch.jrobo.BotCommand$1
- expectusafterlun.ch.jrobo.BotCommand$1BombTask
+expectusafterlun/ch/jrobo/UrbanDict.java
+ expectusafterlun.ch.jrobo.UrbanDict
+ expectusafterlun.ch.jrobo.UrbanDict$1
+ expectusafterlun.ch.jrobo.UrbanDict$UrbanJson
+ expectusafterlun.ch.jrobo.UrbanDict$UrbanJson$1
+ expectusafterlun.ch.jrobo.UrbanDict$UrbanJson$UrbanJsonItem
+expectusafterlun/ch/jrobo/Shodan.java
+ expectusafterlun.ch.jrobo.Shodan
 expectusafterlun/ch/jrobo/TermColors.java
  expectusafterlun.ch.jrobo.TermColors
 expectusafterlun/ch/jrobo/WireColor.java
@@ -43,17 +45,15 @@ expectusafterlun/ch/jrobo/Epic.java
  expectusafterlun.ch.jrobo.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem
  expectusafterlun.ch.jrobo.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem$EpicPriceJsonItem
  expectusafterlun.ch.jrobo.Epic$EpicJson$EpicDataJsonItem$EpicCatalogJsonItem$EpicSearchStoreJsonItem$EpicElementsJsonItem$EpicPriceJsonItem$EpicTotalPriceJsonItem
-expectusafterlun/ch/jrobo/UrbanDict.java
- expectusafterlun.ch.jrobo.UrbanDict
- expectusafterlun.ch.jrobo.UrbanDict$1
- expectusafterlun.ch.jrobo.UrbanDict$UrbanJson
- expectusafterlun.ch.jrobo.UrbanDict$UrbanJson$1
- expectusafterlun.ch.jrobo.UrbanDict$UrbanJson$UrbanJsonItem
+expectusafterlun/ch/jrobo/BotCommand.java
+ expectusafterlun.ch.jrobo.BotCommand
+ expectusafterlun.ch.jrobo.BotCommand$1
+ expectusafterlun.ch.jrobo.BotCommand$1BombTask
 expectusafterlun/ch/jrobo/Jokes.java
  expectusafterlun.ch.jrobo.Jokes
 expectusafterlun/ch/jrobo/FileReader.java
  expectusafterlun.ch.jrobo.FileReader
-expectusafterlun/ch/jrobo/Shodan.java
- expectusafterlun.ch.jrobo.Shodan
 expectusafterlun/ch/jrobo/JRobo.java
  expectusafterlun.ch.jrobo.JRobo
+expectusafterlun/ch/jrobo/Networking.java
+ expectusafterlun.ch.jrobo.Networking

@@ -43,6 +43,7 @@ public class Config {
 	private String password;
 	private String[] masters;
 	private char command_symbol;
+	private boolean debug;
 	private String network;
 	private String proxy_host;
 	private String proxy_port;
@@ -93,6 +94,16 @@ public class Config {
 	 */
 	protected char getCmdSymb() {
 		return command_symbol;
+	}
+
+	/**
+	 *
+	 * @return Debug: Whether to show raw JSON in the console
+	 * @since 2022-02-09
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 */
+	protected boolean getDebug() {
+		return debug;
 	}
 
 	/**

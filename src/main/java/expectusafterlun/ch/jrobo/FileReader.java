@@ -48,7 +48,7 @@ public class FileReader {
 
 	/* Miscellaneous */
 	private static boolean ranOnce = false;
-	private static boolean debug;
+	private static boolean debug = false;
 
 	/**
 	 * Initialize config to null
@@ -56,7 +56,7 @@ public class FileReader {
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param debug Whether to output raw json output
 	 */
-	public FileReader(boolean debug) {
+	public FileReader() {
 		config = null;
 		FileReader.debug = debug;
 	}
@@ -191,4 +191,13 @@ public class FileReader {
 
 		return config;
 	} // EOF getConfig()
+
+	/**
+	 *
+	 * @param debug Whether to show raw JSON in the console
+	 */
+	public void setDebug(boolean debug) {
+		FileReader.debug = debug;
+	}
+
 } // EOF class

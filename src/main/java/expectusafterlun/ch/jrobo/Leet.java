@@ -88,6 +88,7 @@ public class Leet {
 	/* For the Gson/Json */
 	private Gson gson;
 	private String json;
+	private static boolean debug = false;
 
 	/**
 	 * Constructor that expects a CONFIG and SEARCH made up of a CATEGORY
@@ -126,6 +127,9 @@ public class Leet {
 
 		/* For the Gson/Json */
 		gson = null;
+
+		/* Debugging output */
+		Leet.debug = CONFIG.getDebug();
 
 		/**
 		 * Set to empty String for ALL. Search ALL if CATEGORY is not
@@ -201,7 +205,7 @@ public class Leet {
 			HttpResponse<String> response;
 			response = client.send(request, BodyHandlers.ofString(StandardCharsets.UTF_8));
 
-			System.out.println(TermColors.info("Response status code: " + response.statusCode() + "\t"));
+			System.out.println(TermColors.info("Response Status Code: " + response.statusCode() + "\t"));
 			json = response.body();
 
 		} catch (IOException | InterruptedException ex) {
@@ -212,7 +216,7 @@ public class Leet {
 				json = "{ \"data\": \"Unable to retrieve Torrent json data\" }";
 			}
 
-			System.out.println(TermColors.info("json:   " + json));
+			if(debug) { System.out.println(TermColors.info("json:   " + json)); }
 		}
 
 		return json;

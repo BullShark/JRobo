@@ -49,6 +49,7 @@ public class Weather {
 	private final String BASE_URL = "https://api.openweathermap.org";
 	private final Config CONFIG;
 	private final String APIKEY;
+	private static boolean debug = false;
 
 	/**
 	 * Constructor that takes a Config object for retrieving the API Key
@@ -65,6 +66,10 @@ public class Weather {
 			this.CONFIG = CONFIG;
 			APIKEY = getApiKey();
 		}
+
+		/* Debugging output */
+		Weather.debug = CONFIG.getDebug();
+
 	}
         
 	/**
@@ -103,7 +108,7 @@ public class Weather {
 			json = "{ \"data\": \"Unable to retrieve Weather json data\" }";
 
 		} finally {
-			System.out.println(TermColors.info(json));
+			if(debug) { System.out.println(TermColors.info(json)); }
 			return json;
 
 		}

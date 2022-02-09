@@ -35,248 +35,265 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * PirateBay retrieves JSON results from a thepiratebay.org python flask API as JSON, formats the results, and sends them to IRC
- * 
+ * PirateBay retrieves JSON results from a thepiratebay.org python flask API as
+ * JSON, formats the results, and sends them to IRC
+ *
  * @author Chris Lemire {@literal <goodbye300@aim.com>}
  */
 public class PirateBay {
 
-    /* For the HTTP Connection */
-    private URL url;
-    private URLConnection conn;
-    private BufferedReader rd;
-    private String fullUrl;
-    private static final String BASE_URL = "http://odin.root.sx/thepiratebay.php";
+	/* For the HTTP Connection */
+	private URL url;
+	private URLConnection conn;
+	private BufferedReader rd;
+	private String fullUrl;
+	private static final String BASE_URL = "http://odin.root.sx/thepiratebay.php";
 
-    /* Miscellaneous */
-    private final String s_name;
-    private String s_switch="s";
-    private final int MAX_RESULTS = 5;
+	/* Miscellaneous */
+	private final String s_name;
+	private String s_switch = "s";
+	private final int MAX_RESULTS = 5;
 
-    /* For the Gson/Json */
-    private Gson gson;
-    private StringBuilder json;
+	/* For the Gson/Json */
+	private Gson gson;
+	private StringBuilder json;
+	private static boolean debug = false;
 
-    /**
-     * Get the switch used for sorting the results, the query to be searched and set up the connection to the PirateBay API
-     * @param command Made up of the sort type and search query, sort by seeds, peers, date, or name
-     */
-    public PirateBay(String command) {
-        String[] splitArray = command.split("\\s+");
-        String argument="";
-        if (splitArray.length > 0) {
-            switch (splitArray[0]) {
-                case "-s":
-                    argument=splitArray[0];
-                    s_switch = "s";
-                    break;
-                case "-l":
-                    argument=splitArray[0];
-                    s_switch = "l";
-                    break;
-                case "-d":
-                    argument=splitArray[0];
-                    s_switch = "d";
-                    break;
-                case "-n":
-                    argument=splitArray[0];
-                    s_switch = "n";
-                default:
-                    s_switch = "s";
-                    break;
-            }
-            command=command.replace(argument, "");
-        }
-        if(command.length()>0) {
-            s_name =command;
-        } else {
-            s_name ="blackhats";
-        }
-        /* For the HTTP Connection */
-        url = null;
+	/**
+	 * Get the switch used for sorting the results, the query to be searched
+	 * and set up the connection to the PirateBay API
+	 *
+	 * @param CONFIG
+	 * @param command Made up of the sort type and search query, sort by
+	 * seeds, peers, date, or name
+	 */
+	public PirateBay(final Config CONFIG, String command) {
+
+		/* Debugging output */
+		PirateBay.debug = CONFIG.getDebug();
+		
+		String[] splitArray = command.split("\\s+");
+		String argument = "";
+		if (splitArray.length > 0) {
+			switch (splitArray[0]) {
+				case "-s":
+					argument = splitArray[0];
+					s_switch = "s";
+					break;
+				case "-l":
+					argument = splitArray[0];
+					s_switch = "l";
+					break;
+				case "-d":
+					argument = splitArray[0];
+					s_switch = "d";
+					break;
+				case "-n":
+					argument = splitArray[0];
+					s_switch = "n";
+				default:
+					s_switch = "s";
+					break;
+			}
+			command = command.replace(argument, "");
+		}
+		if (command.length() > 0) {
+			s_name = command;
+		} else {
+			s_name = "blackhats";
+		}
+		/* For the HTTP Connection */
+		url = null;
 //        conn = null;
-        rd = null;
-        fullUrl = "";
-        /* Miscelanous */
-        json = new StringBuilder("");
-        /* For the Gson/Json */
-        gson = new Gson();
-    }
+		rd = null;
+		fullUrl = "";
+		/* Miscelanous */
+		json = new StringBuilder("");
+		/* For the Gson/Json */
+		gson = new Gson();
+	}
 
-    /**
-     * Gets JSON data for a search query to The Pirate Bay Python Flask API
-     *
-     * @author Christopher Lemire {@literal <goodbye300@aim.com>}
-     * @return JSON retrieved from the URL
-     * @throws java.io.IOException Should never occur with the null check
-     */
-    public String getJson() throws IOException {
-        try {
-            /* Create a URL obj from strings */
-            fullUrl =
-		    (BASE_URL + 
-			    "?name=" + s_name + 
-			    "&orderby=" + s_switch + 
-			    "&limit=" + MAX_RESULTS
-		    ).replaceAll(" ", "%20");
+	/**
+	 * Gets JSON data for a search query to The Pirate Bay Python Flask API
+	 *
+	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+	 * @return JSON retrieved from the URL
+	 * @throws java.io.IOException Should never occur with the null check
+	 */
+	public String getJson() throws IOException {
+		try {
+			/* Create a URL obj from strings */
+			fullUrl
+				= (BASE_URL
+					+ "?name=" + s_name
+					+ "&orderby=" + s_switch
+					+ "&limit=" + MAX_RESULTS).replaceAll(" ", "%20");
 
-            url = new URL(fullUrl);
+			url = new URL(fullUrl);
 
-            /* Debug */
-            System.out.println(fullUrl);
+			/* Debug */
+			System.out.println(fullUrl);
 
-            conn = url.openConnection();
-            // Get the response
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = rd.readLine()) != null) {
-                json.append(line);
-            }
-            rd.close();
-        } catch (MalformedURLException | ConnectException | FileNotFoundException ex) {
-            Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
-            json = new StringBuilder("{ \"data\": \"Unable to retrieve Torrent json data\" }");
-        } finally {
-            if(rd != null) {
-                rd.close();
-            }
+			conn = url.openConnection();
+			// Get the response
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line;
+			while ((line = rd.readLine()) != null) {
+				json.append(line);
+			}
+			rd.close();
+		} catch (MalformedURLException | ConnectException | FileNotFoundException ex) {
+			Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
+			json = new StringBuilder("{ \"data\": \"Unable to retrieve Torrent json data\" }");
+		} finally {
+			if (rd != null) {
+				rd.close();
+			}
 
-            return json.toString();
-        }
+			if (debug) {
+				System.out.println(TermColors.info("json:   " + json));
+			}
 
-    }
+			return json.toString();
+		}
 
-    /**
-     * The formatted search results from ThePirateBay JSON API with colors and formatting if HASCOLORS
-     * 
-     * @author Christopher Lemire {@literal <goodbye300@aim.com>}
-     * @param HASCOLORS True for IRC colors, false otherwise
-     * @return Formatted JSON data optionally with colors
-     */
-    public String getFormattedResult(final boolean HASCOLORS) {
+	}
 
-        PirateBayJsonItem[] results;
-        StringBuilder output = new StringBuilder("");
+	/**
+	 * The formatted search results from ThePirateBay JSON API with colors
+	 * and formatting if HASCOLORS
+	 *
+	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+	 * @param HASCOLORS True for IRC colors, false otherwise
+	 * @return Formatted JSON data optionally with colors
+	 */
+	public String getFormattedResult(final boolean HASCOLORS) {
 
-        try {
+		PirateBayJsonItem[] results;
+		StringBuilder output = new StringBuilder("");
 
-            gson = new GsonBuilder().setPrettyPrinting().create();
-            results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
+		try {
 
-            if(HASCOLORS) {
-                for (PirateBayJsonItem result : results) {
-                    output.append(result.getColorString());
-                }
-            } else {
-                 for (PirateBayJsonItem result : results) {
-                     output.append(result.toString());
-                 }
-            }
-        } catch(IllegalStateException | NullPointerException | JsonSyntaxException ex) {
-          Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
-          output = new StringBuilder("{ \"data\": \"Unable to retrieve Torrent json data\" }");
+			gson = new GsonBuilder().setPrettyPrinting().create();
+			results = gson.fromJson(this.getJson(), PirateBayJsonItem[].class);
 
-        } finally {
+			if (HASCOLORS) {
+				for (PirateBayJsonItem result : results) {
+					output.append(result.getColorString());
+				}
+			} else {
+				for (PirateBayJsonItem result : results) {
+					output.append(result.toString());
+				}
+			}
+		} catch (IllegalStateException | NullPointerException | JsonSyntaxException ex) {
+			Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
+			output = new StringBuilder("{ \"data\": \"Unable to retrieve Torrent json data\" }");
 
-            return output.toString();
-        }
-    }
+		} finally {
 
-    /**
-     * A main method for testing this class
-     * No args, searches matrix reloaded for you sorted by seeds
-     * @param args The search query for thepiratebay.org used by the API
-     */
-    public static void main(String[] args) {
+			return output.toString();
+		}
+	}
 
-        if(args.length == 0) {
-            System.out.println(new PirateBay("-s matrix reloaded").getFormattedResult(false));
-        } else {
-            System.out.println(new PirateBay(Arrays.toString(args)).getFormattedResult(false));
-        }
+	/**
+	 * A main method for testing this class No args, searches matrix
+	 * reloaded for you sorted by seeds
+	 *
+	 * @param args The search query for thepiratebay.org used by the API
+	 */
+	public static void main(String[] args) {
 
-    } // EOF main
+		if (args.length == 0) {
+			System.out.println(new PirateBay(new Config(), "-s matrix reloaded").getFormattedResult(false));
+		} else {
+			System.out.println(new PirateBay(new Config(), Arrays.toString(args)).getFormattedResult(false));
+		}
 
-    /**
-     * Strings and ints representing JSON data
-     *
-     * @author Christopher Lemire {@literal <goodbye300@aim.com>}
-     */
-    public class PirateBayJsonItem {
+	} // EOF main
 
-        /**
-         * Either XML or JSON, but since this is a JSON class, it will always be the JSON type here
-         */
-        public String type;
+	/**
+	 * Strings and ints representing JSON data
+	 *
+	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+	 */
+	public class PirateBayJsonItem {
 
-        /**
-         * The name of this torrent
-         */
-        public String name;
+		/**
+		 * Either XML or JSON, but since this is a JSON class, it will
+		 * always be the JSON type here
+		 */
+		public String type;
 
-        /**
-         * The full URL to the torrent
-         */
-        public String url;
+		/**
+		 * The name of this torrent
+		 */
+		public String name;
 
-        /**
-         * A shortened version of the URL
-         */
-        public String tinyurl;
+		/**
+		 * The full URL to the torrent
+		 */
+		public String url;
 
-        /**
-         * The user who uploaded this torrent
-         */
-        public String Uploaded;
+		/**
+		 * A shortened version of the URL
+		 */
+		public String tinyurl;
 
-        /**
-         * How much space this torrent takes up
-         */
-        public String Size;
+		/**
+		 * The user who uploaded this torrent
+		 */
+		public String Uploaded;
 
-        /**
-         * The date the torrent was UpLoaded
-         */
-        public String ULed;
+		/**
+		 * How much space this torrent takes up
+		 */
+		public String Size;
 
-        /**
-         * The number of seeds for this torrent
-         */
-        public String seeders;
+		/**
+		 * The date the torrent was UpLoaded
+		 */
+		public String ULed;
 
-        /**
-         * The number of leeches for this torrent
-         */
-        public String leechers;
+		/**
+		 * The number of seeds for this torrent
+		 */
+		public String seeders;
 
-        /**
-         * A colored for IRC String representation of LeetJsonItem
-         *
-         * @author Christopher Lemire {@literal <goodbye300@aim.com>}
-         * @return Colored for IRC String representing LeetJsonItem
-         */
-        public String getColorString() {
-            final String RESULT =
-              MircColors.BOLD + name + " " +
-              MircColors.GREEN + "<" + tinyurl + ">" +
-              MircColors.NORMAL + MircColors.BOLD + " (" + Size + 
-              MircColors.GREEN + " S:" + seeders +
-              MircColors.CYAN + " L:" + leechers + 
-              MircColors.NORMAL + MircColors.BOLD + ")\n";
-             
-            return RESULT;
-        }
+		/**
+		 * The number of leeches for this torrent
+		 */
+		public String leechers;
 
-        /**
-         * A String representation of LeetJsonItem
-         *
-         * @author Christopher Lemire {@literal <goodbye300@aim.com>}
-         * @return A summary without colors and formatting of LeetJsonItem
-         */
-        @Override
-        public String toString() {
-            final String RESULT = name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
-            return RESULT;
-        }
-    }
+		/**
+		 * A colored for IRC String representation of LeetJsonItem
+		 *
+		 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+		 * @return Colored for IRC String representing LeetJsonItem
+		 */
+		public String getColorString() {
+			final String RESULT
+				= MircColors.BOLD + name + " "
+				+ MircColors.GREEN + "<" + tinyurl + ">"
+				+ MircColors.NORMAL + MircColors.BOLD + " (" + Size
+				+ MircColors.GREEN + " S:" + seeders
+				+ MircColors.CYAN + " L:" + leechers
+				+ MircColors.NORMAL + MircColors.BOLD + ")\n";
+
+			return RESULT;
+		}
+
+		/**
+		 * A String representation of LeetJsonItem
+		 *
+		 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
+		 * @return A summary without colors and formatting of
+		 * LeetJsonItem
+		 */
+		@Override
+		public String toString() {
+			final String RESULT = name + " <" + tinyurl + "> (" + Size + " S:" + seeders + " L:" + leechers + ") \n";
+			return RESULT;
+		}
+	}
 }

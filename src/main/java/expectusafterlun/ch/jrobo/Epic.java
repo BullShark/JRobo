@@ -48,18 +48,23 @@ public class Epic {
 	private final String BASE_URL;
 	private final String LOCALE;
 	private final String COUNTRYCODE;
+	private static boolean debug = false;
 
 	/**
 	 * The constructor initializes global variables, LOCALE, COUNTRYCODE, and BASE_URL
 	 * 
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @param debug Whether to output raw json output
 	 */
-	public Epic() {
+	public Epic(boolean debug) {
 
 		/* Miscellaneous */
 		LOCALE = "en-US";
 		COUNTRYCODE = "US";
 		BASE_URL = "https://store-site-backend-static.ak.epicgames.com";
+
+		Epic.debug = debug;
+
 	}
 
 	/**
@@ -95,7 +100,7 @@ public class Epic {
 			json = "{ \"data\": \"Unable to retrieve Epic json data\" }";
 
 		} finally {
-			System.err.println(TermColors.info(json));
+			if(debug) { System.err.println(TermColors.info(json)); }
 			return json;
 
 		}
@@ -145,7 +150,7 @@ public class Epic {
 			System.exit(-1);
 		}
 
-		System.out.println(new Epic().getFormattedEpicSummary(false, 5));
+		System.out.println(new Epic(true).getFormattedEpicSummary(false, 5));
 
 	} // EOF main
 

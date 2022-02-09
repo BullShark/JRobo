@@ -6,6 +6,7 @@
       "BullShark", "drkrieger", "zer0"
     ],
     "command_symbol":".",
+    "debug":"false",
     "network":"irc.libera.chat:6667",
     "proxy_host":"null",
     "proxy_port":"null",

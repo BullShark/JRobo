@@ -47,23 +47,30 @@ public class UrbanDict {
 	private final String WORD;
 	private final int LIMIT;
 	private static final int DEFAULT_LIMIT = 3;
+	private static boolean debug = false;
 
 	/**
 	 * Overloaded constructor that calls the other one with a default value 5 for LIMIT
+	 * @param CONFIG Object representing the configuration for JRobo, used
 	 * @param WORD The WORD used for retrieving the Urban Dictionary definition
 	 */
-	public UrbanDict(final String WORD) {
+	public UrbanDict(final Config CONFIG, final String WORD) {
 		// Default LIMIT is used when no LIMIT is given
-		this(WORD, DEFAULT_LIMIT);
+		this(CONFIG, WORD, DEFAULT_LIMIT);
 	}
 
 	/**
 	 * Initialize UrbanDict with the WORD to define and a LIMIT to the number of results
+	 * @param CONFIG Object representing the configuration for JRobo, used
 	 * @param WORD The WORD used for retrieving the Urban Dictionary definition
 	 * @param LIMIT Limit the results -1 or LIMIT {@literal <= 0} means unlimited results
  	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
-	public UrbanDict(final String WORD, final int LIMIT) {
+	public UrbanDict(final Config CONFIG, final String WORD, final int LIMIT) {
+
+		/* Debugging output */
+		UrbanDict.debug = CONFIG.getDebug();
+
 		this.WORD = WORD;
 		this.LIMIT = (LIMIT <= 0) ? DEFAULT_LIMIT : LIMIT;
 	}
@@ -95,7 +102,7 @@ public class UrbanDict {
 			json = "{ \"data\": \"Unable to retrieve UrbanDict json data\" }";
 
 		} finally {
-			System.out.println(TermColors.info(json));
+			if(debug) { System.out.println(TermColors.info(json)); }
 			return json;
 		}
 	}
@@ -156,7 +163,7 @@ public class UrbanDict {
 			System.err.println("Usage: java UrbanDict <word>");
 			System.exit(-1);
 		}
-		System.out.println(new UrbanDict(args[0]).getFormattedUrbanDef(false));
+		System.out.println(new UrbanDict(new Config(), args[0]).getFormattedUrbanDef(false));
 	} // EOF main
 
 	/**
