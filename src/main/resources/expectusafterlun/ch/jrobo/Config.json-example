@@ -6,7 +6,8 @@
       "BullShark", "drkrieger", "zer0"
     ],
     "command_symbol":".",
-    "network":"irc.ipv6.freenode.net:6667",
+    "debug":"false",
+    "network":"irc.libera.chat:6667",
     "proxy_host":"null",
     "proxy_port":"null",
     "channel":"##blackhats",
