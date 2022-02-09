@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.System.err;
@@ -31,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.io.IOUtils;
 
 /**
  * FileReader is used to supply the Config class with configuration read in from
@@ -119,59 +117,30 @@ public class FileReader {
 		out.println(TermColors.info("System user directory: " + System.getProperty("user.dir")));
 
 		//Thread.dumpStack();
-		//String json = "";
 
-		/*
-		 * Check if the Config file exists at /etc/JRobo/Config.json.
-		 * And if it doesn't exist, then proceed to read it from resources in the jar.
+ 		/*
+		 * The Config.json is bundled in the jar's resource folder.
 		 */
-		if (new File("/etc/JRobo/" + CONFIGFILE).exists()) {
+		System.out.println(TermColors.info("Reading Config from the jar as a resource stream:\t" + CONFIGFILE));
 
-			System.out.println(TermColors.info("Reading Config from:\t/etc/JRobo/" + CONFIGFILE));
+		try ( BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
 
-			try (FileInputStream fis = new FileInputStream("/etc/JRobo/" + CONFIGFILE); ) {
-				String json = IOUtils.toString(fis, "UTF-8");
-
-				System.out.println(TermColors.info("json: " + json));
-
-				Gson gson = new Gson();
-				config = gson.fromJson(json, Config.class);
-
-				ranOnce = true;
-
-			} catch (JsonSyntaxException | NullPointerException | IOException ex) {
-				Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
-				System.exit(1);
-
+			String json = "";
+			while (reader.ready()) {
+				json += reader.readLine();
 			}
 
-		/*
-		 * File /etc/JRobo/Config.json does not exist.
-		 * So we are using the Config.json bundled in the jar's resource folder instead.
-		 */
-		} else {
+			System.out.println(TermColors.info("json: " + json));
 
-			System.out.println(TermColors.info("Reading Config from the jar as a resource stream:\t" + CONFIGFILE));
-			
-			try ( BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(CONFIGFILE)))) {
+			Gson gson = new Gson();
+			config = gson.fromJson(json, Config.class);
 
-				String json = "";
-				while (reader.ready()) {
-					json += reader.readLine();
-				}
+			ranOnce = true;
 
-				System.out.println(TermColors.info("json: " + json));
+		} catch (JsonSyntaxException | NullPointerException | IOException ex) {
+			Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
+			System.exit(1);
 
-				Gson gson = new Gson();
-				config = gson.fromJson(json, Config.class);
-
-				ranOnce = true;
-
-			} catch (JsonSyntaxException | NullPointerException | IOException ex) {
-				Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
-				System.exit(1);
-
-			}
 		}
 
 		// Verifiying important settings for connection
