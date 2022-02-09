@@ -40,6 +40,7 @@ import java.util.Arrays;
 public class Config {
 
 	private String name;
+	private String second_name;
 	private String password;
 	private String[] masters;
 	private char command_symbol;
@@ -67,6 +68,16 @@ public class Config {
 	 */
 	protected String getName() {
 		return name;
+	}
+
+	/**
+	 *
+	 * @return The bot's second name used in case the name can't be used.
+	 * @since 2022-02-09
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 */
+	protected String getSecondName() {
+		return second_name;
 	}
 
 	/**

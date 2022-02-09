@@ -149,6 +149,10 @@ public class JRobo {
 			} else if (received.matches("^:\\S+ KICK " + CONFIG.getChannel() + " " + CONFIG.getName() + " :.*")) {
 				CONN.sendln("JOIN " + CONFIG.getChannel());
 				user = first.substring(1, first.indexOf('!'));
+			} else if (last.equals("Nickname is already in use")) {
+				CONN.sendln("NICK " + CONFIG.getSecondName());
+				CONN.sendln("PASS " + CONFIG.getPass(), true);
+				CONN.sendln("JOIN " + CONFIG.getChannel());
 			} // EOF if-else-if-else...
 		} // EOF while
 
