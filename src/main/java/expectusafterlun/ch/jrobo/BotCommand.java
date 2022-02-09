@@ -567,7 +567,7 @@ public class BotCommand {
 		if (!hasArgs) {
 			helpWrapper(cmd);	
 		} else {
-			CONNECTION.msgChannel(CONFIG.getChannel(), new UrbanDict(cmdArgs).getFormattedUrbanDef(true), true, MircColors.BOLD);
+			CONNECTION.msgChannel(CONFIG.getChannel(), new UrbanDict(CONFIG, cmdArgs).getFormattedUrbanDef(true), true, MircColors.BOLD);
 		}
 	}
 
@@ -600,7 +600,7 @@ public class BotCommand {
 		if (!hasArgs) {
 			helpWrapper(cmd);	
 		} else {
-			CONNECTION.msgChannel(CONFIG.getChannel(), new PirateBay(cmdArgs).getFormattedResult(true));
+			CONNECTION.msgChannel(CONFIG.getChannel(), new PirateBay(CONFIG, cmdArgs).getFormattedResult(true));
 		}
 	}
 

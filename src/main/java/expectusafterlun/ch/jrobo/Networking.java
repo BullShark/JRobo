@@ -90,11 +90,20 @@ public class Networking {
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
 	protected boolean sendln(final String COMMAND) {
+		return sendln(COMMAND, false);
+	}
+
+	protected boolean sendln(final String COMMAND, final boolean CENSOR) {
+
 		try {
 			bwriter.write(COMMAND);
 			bwriter.newLine();
 			bwriter.flush();
-			out.println(TermColors.out(COMMAND));
+			if(CENSOR) {
+				out.println(TermColors.out(COMMAND.replaceAll(".", "*")));
+			} else {
+				out.println(TermColors.out(COMMAND));
+			}
 			return true;
 
 		} catch (IOException ex) {
@@ -483,4 +492,5 @@ public class Networking {
 			this.msgUser(master, MSG);
 		}
 	}
+
 } //EOF class

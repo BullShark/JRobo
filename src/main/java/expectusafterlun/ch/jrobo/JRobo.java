@@ -62,20 +62,17 @@ public class JRobo {
 		BCMD = new BotCommand(this);
 	}
 
-/**
+	/**
 	 * The beginning of JRobo's execution starts here
 	 */
 	private void initiate() {
-		//@todo Use toString() for output that's not colored
 		System.out.print(TermColors.info("Using configuration: \n" + CONFIG.getColorString()));
 
 		System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + "[+++]\t" + " *** INITIATED *** " + TermColors.ANSI_RESET);
 
 		/* Identify to server */
 		CONN.sendln("NICK " + CONFIG.getName());
-		//TODO Censor terminal output without sending asterisks to the server
-//		CONN.sendln("PASS " + CONFIG.getPass().replaceAll(".", "*"));
-		CONN.sendln("PASS " + CONFIG.getPass());
+		CONN.sendln("PASS " + CONFIG.getPass(), true);
 		CONN.sendln("USER JRobo 0 * :Microsoft Exterminator!");
 		/*
 		 * Wait for server message:

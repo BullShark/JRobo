@@ -54,8 +54,6 @@ public class Leet {
 	 *
 	 * For the HTTP Connection
 	 */
-	// @todo Read in the torrent_api_host json item in the Config.json
-	//private static final String BASE_URL = "http://expectusafterlun.ch:5000/1337x";
 	private final String BASE_URL;
 	private final String API_KEY;
 	private String fullUrl;
@@ -75,7 +73,7 @@ public class Leet {
 	 *
 	 * Example:
 	 *
-	 *	curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://152.89.107.76:5000/1337x/matrix/1/Movies
+	 *	curl -H"API_KEY:oTloaqhI5N17SBBD1fHhQlgGaf1Ne8uy" http://expectusafterlun.ch:5000/1337x/matrix/1/Movies;
 	 *
 	 * Valid CATEGORIES (case sensitive):
 	 *
@@ -174,11 +172,6 @@ public class Leet {
  	 		 * "https://expectusafterlun.ch/1337x/{QUERY}/{PAGENUM}/{CATEGORY}/"
 			 *
 			 * Do not URL encode this because the server does that
-			 *
-			 * @todo Something is going wrong with torrent.py CATEGORY is not set.
-			 * .leet James Bond
-			 * ^JRobo^
-			 * { "data": "Unable to retrieve Torrent json data" }
 			 */
 			if (!CATEGORY.equals("")) {
 				fullUrl = String.format(BASE_URL + "/%s/%s/%s/seeders/desc", URLEncoder.encode(QUERY, StandardCharsets.UTF_8.toString()), PAGENUM, CATEGORY);

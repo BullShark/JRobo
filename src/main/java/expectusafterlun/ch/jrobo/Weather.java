@@ -450,7 +450,7 @@ public class Weather {
 			/**
 			 *
 		 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
-			 * TODO Icons can be found here:
+			 * Icons can be found here:
 			 * https://openweathermap.org/weather-conditions
 			 */
 			private class WeatherWeatherJsonItem {
