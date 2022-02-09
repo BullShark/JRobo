@@ -76,7 +76,7 @@ public class UrbanDict {
 	}
 
 	/**
-	 * Retrieves JSON dictionary results from urbandictionary.com
+	 * Retrieves JSON dictionary results from https://urbandictionary.com
 	 * @return JSON weather data
 	 */
 	public String getJson() {
