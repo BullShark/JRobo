@@ -152,6 +152,7 @@ public class JRobo {
 			} else if (last.equals("Nickname is already in use")) {
 				CONN.sendln("NICK " + CONFIG.getSecondName());
 				CONN.sendln("PASS " + CONFIG.getPass(), true);
+				CONN.sendln("USER JRobo 0 * :Microsoft Exterminator!");
 				CONN.sendln("JOIN " + CONFIG.getChannel());
 			} // EOF if-else-if-else...
 		} // EOF while
