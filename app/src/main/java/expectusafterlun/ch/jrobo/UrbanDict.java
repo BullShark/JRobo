@@ -27,7 +27,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -89,7 +89,7 @@ public class UrbanDict {
 			
 		/* Create a URL obj from strings */
 		try ( BufferedReader br = new BufferedReader(new InputStreamReader(
-			new URL(URL).openStream()))) {
+			URI.create(URL).toURL().openStream()))) {
 
 			String line;
 
@@ -103,8 +103,10 @@ public class UrbanDict {
 
 		} finally {
 			if(debug) { System.out.println(TermColors.info(json)); }
-			return json;
+
 		}
+			return json;
+
 	}
 
 	/**
@@ -143,10 +145,11 @@ public class UrbanDict {
 			result = "{ \"list\": \"Unable to retrieve UrbanDict json data\" }";
 
 		} finally {
-
 			System.out.println( TermColors.info(result) );
-			return result;
+
 		}
+			return result;
+
 	}
 
 	/* 
@@ -184,13 +187,6 @@ public class UrbanDict {
 		 * @since 2020-10-03
 		 */
 		private int limit = 0;
-
-		/**
-		 * @return the limit
-		 */
-		private int getLimit() {
-			return limit;
-		}
 
 		/**
 		 * @return size of ArrayList<UrbanJsonItem> list
@@ -271,6 +267,7 @@ public class UrbanDict {
 			/**
 			 * @return the definition
 			 */
+			@SuppressWarnings("unused")
 			private String getDefinition() { return definition; }
 
 			/**
@@ -281,6 +278,7 @@ public class UrbanDict {
 			/**
 			 * @return the thumbs_down
 			 */
+			@SuppressWarnings("unused")
 			private int getThumbsDown() { return thumbs_down; }
 
 			/*

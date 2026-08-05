@@ -56,12 +56,17 @@ public class FileReader {
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @param debug Whether to output raw json output
 	 */
-	public FileReader() {
+	public FileReader(boolean debug) {
 		config = null;
 		FileReader.debug = debug;
 	}
 
-	/**
+	public FileReader() {
+		config = null;
+		FileReader.debug = false;
+    }
+
+    /**
 	 * Opens a resource file inside the package and fills the passed
 	 * ArrayList
 	 *

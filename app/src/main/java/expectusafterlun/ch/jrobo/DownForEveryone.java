@@ -23,6 +23,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
@@ -73,7 +75,8 @@ public class DownForEveryone {
 	protected String isUp(final String TESTURL, final boolean COLORS) {
 		try {
 			/* Create a url obj from strings */
-			url = new URL((BASE_URL.concat(TESTURL)).replace(" ", "%20"));
+			URI uri = new URI((BASE_URL.concat(TESTURL)).replace(" ", "%20"));
+			url = uri.toURL();
 
 			/* Debug */
 			System.out.println(TermColors.info("URL: " + url));
@@ -97,6 +100,8 @@ public class DownForEveryone {
 		} catch (MalformedURLException ex) {
 			Logger.getLogger(DownForEveryone.class.getName()).log(Level.SEVERE, null, ex);
 		} catch (IOException ex) {
+			Logger.getLogger(DownForEveryone.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (URISyntaxException ex) {
 			Logger.getLogger(DownForEveryone.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			try {

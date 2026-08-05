@@ -165,7 +165,7 @@ public class Config {
 	 * @since 2013-08-12
 	 */
 	protected void setChannel(String chan) {
-		base_chan = chan;
+		base_chan = channel;
 		channel = chan;
 	}
 
@@ -207,7 +207,7 @@ public class Config {
 		return torrent_api_key;
 	}
 
-    	/**
+    /**
 	 *
 	 * @return The Torrent API Host
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}

@@ -19,6 +19,7 @@
 
 package expectusafterlun.ch.jrobo;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +58,20 @@ public class JRobo {
 			System.setProperty("http.proxyHost", CONFIG.getProxyHost());
 			System.setProperty("http.proxyPort", CONFIG.getProxyPort());
 		}
-		CONN = new Networking(this);
+
+		try {
+			CONN = new Networking(this);
+		} catch (IOException ex) {
+			Logger.getLogger(JRobo.class.getName()).log(Level.SEVERE, null, ex);
+			throw new RuntimeException(ex);
+		}
+
+		/* Close connections upon Control+C */
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			CONN.closeConnection();
+			System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + "[+++]\t" + " *** TERMINATED *** " + TermColors.ANSI_RESET);
+		}));
+
 		JOKES = new Jokes(this);
 		BCMD = new BotCommand(this);
 	}
@@ -71,26 +85,26 @@ public class JRobo {
 		System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + "[+++]\t" + " *** INITIATED *** " + TermColors.ANSI_RESET);
 
 		/* Identify to server */
-		CONN.sendln("NICK " + CONFIG.getName());
-		CONN.sendln("PASS " + CONFIG.getPass(), true);
-		CONN.sendln("USER JRobo 0 * :Microsoft Exterminator!");
+		CONN.sendLn("NICK " + CONFIG.getName());
+		CONN.sendLn("PASS " + CONFIG.getPass(), true);
+		CONN.sendLn("USER JRobo 0 * :Microsoft Exterminator!");
 		/*
 		 * Wait for server message:
 		 * 001 JRobo :Welcome to the IRC Network
 		 * Before attempting to join a channel
 		 */
-		while ((received = CONN.recieveln()) != null) {
+		while ((received = CONN.receiveLn()) != null) {
 			this.divideTwo();
 
 			if (first.equals("PING")) {
-				CONN.sendln("PONG " + last);
+				CONN.sendLn("PONG " + last);
 			}
 
 			if (first.contains("001")) {
 				break;
 			}
 		}
-		CONN.sendln("JOIN " + CONFIG.getChannel());
+		CONN.sendLn("JOIN " + CONFIG.getChannel());
 
 		/*
    		 * Conditional checks happen in order
@@ -101,14 +115,14 @@ public class JRobo {
    		 * It will result in less conditional checks
    		 * Being made
 		 */
-		while ((received = CONN.recieveln()) != null) {
+		while ((received = CONN.receiveLn()) != null) {
 			this.divideTwo();
 
 			/*
 			 * A PING was received from the IRC server
 			 */
 			if (first.equals("PING")) {
-				CONN.sendln("PONG " + last);
+				CONN.sendLn("PONG " + last);
 			/*
 			 * A message was sent either to the channel
 			 * Or to the bot; Could be a command
@@ -122,8 +136,8 @@ public class JRobo {
 					} else {
 
 						/*
-			                                                       * Match JRobo in any case
-			                                                       * Typed by another user
+                         * Match JRobo in any case
+                         * Typed by another user
 						 */
 						if (last.matches("(?i).*JR[0o]b[0o].*")) {
 							try {
@@ -138,7 +152,7 @@ public class JRobo {
 					Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			/*
-		                   * 1) A user has joined the channel excluding the bot joining
+			 * 1) A user has joined the channel excluding the bot joining
 			 *
 			 * 2) JRobo has been kicked. Join back.
 			 *
@@ -150,19 +164,15 @@ public class JRobo {
 				// Inform masters in PM
 				CONN.msgMasters(user + " joined " + CONFIG.getChannel());
 			} else if (received.matches("^:\\S+ KICK " + CONFIG.getChannel() + " " + CONFIG.getName() + " :.*")) {
-				CONN.sendln("JOIN " + CONFIG.getChannel());
+				CONN.sendLn("JOIN " + CONFIG.getChannel());
 				user = first.substring(1, first.indexOf('!'));
 			} else if (last.equals("Nickname is already in use")) {
-				CONN.sendln("NICK " + CONFIG.getSecondName());
-				CONN.sendln("PASS " + CONFIG.getPass(), true);
-				CONN.sendln("USER JRobo 0 * :Microsoft Exterminator!");
-				CONN.sendln("JOIN " + CONFIG.getChannel());
+				CONN.sendLn("NICK " + CONFIG.getSecondName());
+				CONN.sendLn("PASS " + CONFIG.getPass(), true);
+				CONN.sendLn("USER JRobo 0 * :Microsoft Exterminator!");
+				CONN.sendLn("JOIN " + CONFIG.getChannel());
 			} // EOF if-else-if-else...
 		} // EOF while
-
-		CONN.closeConnection();
-
-		System.out.println(TermColors.ANSI_BLUE_BACKGROUND + TermColors.ANSI_WHITE + "[+++]\t" + " *** TERMINATED *** " + TermColors.ANSI_RESET);
 	}
 
 	/**

@@ -23,11 +23,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.ConnectException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
@@ -47,6 +44,7 @@ public class PirateBay {
 	private URLConnection conn;
 	private BufferedReader rd;
 	private String fullUrl;
+	/*TODO Replace BASE_URL with working torrent API URL */
 	private static final String BASE_URL = "http://odin.root.sx/thepiratebay.php";
 
 	/* Miscellaneous */
@@ -118,7 +116,7 @@ public class PirateBay {
 	 *
 	 * @author Christopher Lemire {@literal <goodbye300@aim.com>}
 	 * @return JSON retrieved from the URL
-	 * @throws java.io.IOException Should never occur with the null check
+	 * @throws IOException Failed to close BufferedReader or failed to open connection to URL
 	 */
 	public String getJson() throws IOException {
 		try {
@@ -129,7 +127,7 @@ public class PirateBay {
 					+ "&orderby=" + s_switch
 					+ "&limit=" + MAX_RESULTS).replaceAll(" ", "%20");
 
-			url = new URL(fullUrl);
+			url = java.net.URI.create(fullUrl).toURL();
 
 			/* Debug */
 			System.out.println(fullUrl);
@@ -142,7 +140,7 @@ public class PirateBay {
 				json.append(line);
 			}
 			rd.close();
-		} catch (MalformedURLException | ConnectException | FileNotFoundException ex) {
+		} catch (IOException ex) {
 			Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
 			json = new StringBuilder("{ \"data\": \"Unable to retrieve Torrent json data\" }");
 		} finally {
@@ -153,10 +151,9 @@ public class PirateBay {
 			if (debug) {
 				System.out.println(TermColors.info("json:   " + json));
 			}
-
-			return json.toString();
 		}
 
+		return json.toString();
 	}
 
 	/**
@@ -186,14 +183,12 @@ public class PirateBay {
 					output.append(result.toString());
 				}
 			}
-		} catch (IllegalStateException | NullPointerException | JsonSyntaxException ex) {
+		} catch (IllegalStateException | NullPointerException | JsonSyntaxException | IOException ex) {
 			Logger.getLogger(PirateBay.class.getName()).log(Level.SEVERE, null, ex);
 			output = new StringBuilder("{ \"data\": \"Unable to retrieve Torrent json data\" }");
-
-		} finally {
-
-			return output.toString();
 		}
+
+		return output.toString();
 	}
 
 	/**

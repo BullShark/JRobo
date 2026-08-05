@@ -1,29 +1,18 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+# Ignore sensitive file
+app/src/main/resources/expectusafterlun/ch/jrobo/Config.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/netbeans
 # Edit at https://www.toptal.com/developers/gitignore?templates=netbeans
 
-### NetBeans ###
-**/nbproject/private/
-**/nbproject/Makefile-*.mk
-**/nbproject/Package-*.bash
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-src/main/java/jrobo/Config.json
 # Ignore this directory
 build/
-# But descend into directories
-!*/
-# Recursively allow files under build
-#!/build/**
-build/libs/JRobo.jar
+
 # Allow this
 !.gitignore
 
-# End of https://www.toptal.com/developers/gitignore/api/netbeans
-/build/classes/java/main/jrobo/expectusafterlun/ch/Weather$WeatherJson$WeatherListJsonItem$WeatherWindJsonItem.class
-/.gradle/checksums/sha1-checksums.bin
-/build/classes/java/main/jrobo/expectusafterlun/ch/Leet.class
-/.gradle/checksums/md5-checksums.bin
-/build/classes/java/main/jrobo/expectusafterlun/ch/Leet$LeetJsonItem.class

@@ -19,17 +19,17 @@
 
 package expectusafterlun.ch.jrobo;
 
+import static java.lang.System.err;
+import static java.lang.System.out;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import static java.lang.System.err;
-import static java.lang.System.out;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,6 +48,7 @@ public class Networking {
 	private final Config CONFIG;
 	private String received = null;
 	private final int MAXCHARS = 450;
+	private boolean debug = false;
 
 	/**
 	 * Networking takes care of the connection, reads from the Configuration file, and handles the MAXCHARS a message can have
@@ -55,30 +56,56 @@ public class Networking {
 	 * @param JROBO Provide Getters for the Configuration
 	 * @see CONFIG The configuration to be read such as which IRC network to join
  	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 * @throws IOException If the socket or I/O streams cannot be created
 	 */
-	public Networking(final JRobo JROBO) {
+	public Networking(final JRobo JROBO) throws IOException {
 		super(); // Gets rid of java.lang.VerifyError
-		this.CONFIG = JROBO.getCONFIG();
+		CONFIG = JROBO.getCONFIG();
+		debug = CONFIG.getDebug();
 		String network = CONFIG.getNetwork();
-		String[] server = network.split(":");
+
+		if (network == null || !network.matches("^.+:\\d+$")) {
+			if (debug) {
+				err.println(TermColors.info("Invalid network format: " + network));
+			}
+			throw new IllegalArgumentException("Invalid network format: " + network);
+		}
+
+		String[] server = network.split(":", 2);
 		String hostname = server[0];
-		int port = Integer.parseInt(server[1]);
-
+		int port;
 		try {
-			sock = new Socket(hostname, port);
+			port = Integer.parseInt(server[1]);
+		} catch (NumberFormatException ex) {
+			if (debug) {
+				err.println(TermColors.info("Invalid port in network: " + network));
+			}
+			throw new IllegalArgumentException("Invalid port: " + server[1], ex);
+		}
 
-			bwriter = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-			breader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+		if (hostname.isEmpty() || port <= 0) {
+			if (debug) {
+				err.println(TermColors.info("Invalid host or port in network: " + network));
+			}
+			throw new IllegalArgumentException("Invalid hostname or port");
+		}
 
-		} catch (UnknownHostException ex) {
-			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
-			err.println("Possible DNS resolution failure");
-			System.exit(-1);
-
+		Socket tempSock = new Socket(hostname, port);
+		try {
+			BufferedWriter tempWriter = new BufferedWriter(new OutputStreamWriter(tempSock.getOutputStream()));
+			BufferedReader tempReader = new BufferedReader(new InputStreamReader(tempSock.getInputStream()));
+			sock = tempSock;
+			bwriter = tempWriter;
+			breader = tempReader;
 		} catch (IOException ex) {
-			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
-			err.println("I/O Error, Check networking");
-			System.exit(-1);
+			try {
+				tempSock.close();
+			} catch (IOException closeEx) {
+				if (debug) {
+					err.println(TermColors.info("Failed to close socket after I/O failure: " + closeEx.getMessage()));
+				}
+			}
+			throw ex;
 		}
 	}
 
@@ -89,18 +116,26 @@ public class Networking {
 	 * @return Successful sending
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
-	protected boolean sendln(final String COMMAND) {
-		return sendln(COMMAND, false);
+	protected boolean sendLn(final String COMMAND) {
+		return sendLn(COMMAND, false);
 	}
 
-	protected boolean sendln(final String COMMAND, final boolean CENSOR) {
+	/**
+	 * For sending in raw IRC protocol
+	 *
+	 * @param COMMAND The raw IRC line to send
+	 * @param CENSOR If true, the command will be censored in the console output
+	 * @return Successful sending
+	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
+	 */
+	protected boolean sendLn(final String COMMAND, final boolean CENSOR) {
 
 		try {
 			bwriter.write(COMMAND);
 			bwriter.newLine();
 			bwriter.flush();
 			if(CENSOR) {
-				out.println(TermColors.out(COMMAND.replaceAll(".", "*")));
+				out.println(TermColors.out(COMMAND.replace('.', '*')));
 			} else {
 				out.println(TermColors.out(COMMAND));
 			}
@@ -117,13 +152,15 @@ public class Networking {
 	/**
 	 * For receiving in raw IRC protocol
 	 *
-	 * @return Successful sending
+	 * @return The received line, or null if the connection is closed or an error occurs
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 */
-	protected String recieveln() {
+	protected String receiveLn() {
 		try {
 			received = breader.readLine();
-			out.println(TermColors.in(received));
+			if (received != null) {
+				out.println(TermColors.in(received));
+			}
 			return received;
 		} catch (IOException ex) {
 			Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,11 +178,11 @@ public class Networking {
 	protected boolean closeConnection() {
 
 		try {
-			System.out.println(TermColors.info("Closing connection!"));
+			out.println(TermColors.info("Closing connection!"));
 
-			if(sock != null) { sock.close(); }
 			if(breader != null) { breader.close(); }
 			if(bwriter != null) { bwriter.close(); }
+			if(sock != null) { sock.close(); }
 			received = "";
 
 			return true;
@@ -158,8 +195,8 @@ public class Networking {
 	}
 
 	/**
-	 * The following function is only used to kick members from a channel. It should probably be modified at some point to pass any desired IRC command.
-	 * TODO MSGARR commit more than one word after " "
+	 * The following function is only used to kick members from a channel.
+	 * It should probably be modified at some point to pass any desired IRC command.
 	 * 
 	 * @param CHAN The channel JRobo is in and the user to be kicked
 	 * @param msg The kick message, reason for kicking
@@ -169,14 +206,18 @@ public class Networking {
 	protected boolean kickFromChannel(final String CHAN, String msg) {
 		boolean success = true;
 		msg = addNewLines(msg);
-		final String[] MSGARR = msg.split("\n");
+		final String[] MSGARR = msg.split("\\n");
 
 		for (String token : MSGARR) {
+			if (token == null || token.isEmpty()) {
+				continue;
+			}
+
 			/*
 		   	 * Meaning if one call to sendln returns false
 			 * This entire function will return false
 			 */
-			if (!sendln("kick " + CHAN + " " + token)) {
+			if (!sendLn("KICK " + CHAN + " " + token)) {
 				success = false;
 			}
 		}
@@ -240,24 +281,27 @@ public class Networking {
 
 		if (COLORLINES) {
 			for (int j = 0; j < MSGARR.length; j++) {
+				if (MSGARR[j] == null || MSGARR[j].isEmpty()) {
+					continue;
+				}
 				/*
 				 * Meaning if one call to sendln returns false
 				 * This entire function will return false
 				 */
 				ch = MSGARR[j].charAt(0);
 				if (j > 0 && !(ch == '\u0003' || ch == '\u000f' || ch == '\u0002' || ch == '\u001f' || ch == '\u0016')) {
-					if (!sendln("PRIVMSG " + CHAN + " :" + CODES + MSGARR[j])) {
+					if (!sendLn("PRIVMSG " + CHAN + " :" + CODES + MSGARR[j])) {
 						success = false;
 					}
 				} else {
-					if (!sendln("PRIVMSG " + CHAN + " :" + MSGARR[j])) {
+					if (!sendLn("PRIVMSG " + CHAN + " :" + MSGARR[j])) {
 						success = false;
 					}
 				}
 
 				// Pause before the next itteration (send) of this loop for DELAY ms
 				try {
-					System.out.println(TermColors.info("Pausing for " + DELAY + " milliseconds"));
+					out.println(TermColors.info("Pausing for " + DELAY + " milliseconds"));
 					Thread.sleep(DELAY);
 
 				} catch(InterruptedException ex) {
@@ -267,17 +311,20 @@ public class Networking {
 			}
 		} else {
 			for (String message : MSGARR) {
+				if (message == null || message.isEmpty()) {
+					continue;
+				}
 				/*
 				 * Meaning if one call to sendln returns false
 				 * This entire function will return false
 				 */
-				if (!sendln("PRIVMSG " + CHAN + " :" + message)) {
+				if (!sendLn("PRIVMSG " + CHAN + " :" + message)) {
 					success = false;
 				}
 
 				// Pause before the next itteration (send) of this loop for DELAY ms
 				try {
-					System.out.println(TermColors.info("Pausing for " + DELAY + " milliseconds"));
+					out.println(TermColors.info("Pausing for " + DELAY + " milliseconds"));
 					Thread.sleep(DELAY);
 
 				} catch(InterruptedException ex) {
@@ -330,7 +377,7 @@ public class Networking {
 			 * Meaning if one call to sendln returns false
 			 * This entire function will return false
 			 */
-			if (!sendln("PRIVMSG " + USER + " :" + msg)) {
+			if (!sendLn("PRIVMSG " + USER + " :" + msg)) {
 				success = false;
 			}
 		}
@@ -351,7 +398,7 @@ public class Networking {
 		final String[] SPLIT = MSG.split("\n");
 
 		for (String msg : SPLIT) {
-			if (!sendln("NOTICE " + CHAN + " :" + msg)) {
+			if (!sendLn("NOTICE " + CHAN + " :" + msg)) {
 				success = false;
 			}
 		}
@@ -369,7 +416,7 @@ public class Networking {
 	protected boolean moveToChannel(final String FROMCHAN, final String TOCHAN) {
 		boolean success = true;
 
-		if (!sendln("PART " + FROMCHAN) || !sendln("JOIN " + TOCHAN)) {
+		if (!sendLn("PART " + FROMCHAN) || !sendLn("JOIN " + TOCHAN)) {
 			success = false;
 		}
 
@@ -392,7 +439,7 @@ public class Networking {
 		final String[] SPLIT = MSG.split("\n");
 
 		for (String msg : SPLIT) {
-			if (!sendln("NOTICE " + USER + " :" + msg)) {
+			if (!sendLn("NOTICE " + USER + " :" + msg)) {
 				success = false;
 			}
 		}
@@ -410,12 +457,15 @@ public class Networking {
 	 */
 	private String addNewLines(final String COMMAND) {
 		final String[] LINES = wrapText(COMMAND, MAXCHARS);
-		String result = "";
-		for (String line : LINES) {
-			result += line + "\n";
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < LINES.length; i++) {
+			result.append(LINES[i]);
+			if (i < LINES.length - 1) {
+				result.append('\n');
+			}
 		}
 
-		return result;
+		return result.toString();
 	}
 
 	/**
@@ -435,48 +485,61 @@ public class Networking {
 			return new String[]{TEXT};
 		}
 
-		if (TEXT.length() <= LEN) {
-			return new String[]{TEXT};
-		}
-
-		char[] chars = TEXT.toCharArray();
-		Vector lines = new Vector();
+		List<String> lines = new ArrayList<>();
 		StringBuilder line = new StringBuilder();
-		StringBuffer word = new StringBuffer();
 
-		for (int i = 0; i < chars.length; i++) {
-			word.append(chars[i]);
+		String[] paragraphs = TEXT.split("\n", -1);
+		for (int p = 0; p < paragraphs.length; p++) {
+			String paragraph = paragraphs[p];
+			if (paragraph.isEmpty()) {
+				lines.add("");
+				continue;
+			}
 
-			if (chars[i] == ' ') {
-				if (line.length() + word.length() > LEN) {
-					lines.add(line.toString());
-					line.delete(0, line.length());
+			String normalizedParagraph = paragraph.replace('\t', ' ');
+			String[] tokens = normalizedParagraph.split(" +");
+			for (int t = 0; t < tokens.length; t++) {
+				String token = tokens[t];
+				if (token.isEmpty()) {
+					continue;
 				}
 
-				line.append(word);
-				word.delete(0, word.length());
-			}
-		}
+				if (line.length() + token.length() + (line.length() > 0 ? 1 : 0) > LEN) {
+					if (token.length() > LEN) {
+						if (line.length() > 0) {
+							lines.add(line.toString());
+							line.setLength(0);
+						}
+						int start = 0;
+						while (start < token.length()) {
+							int end = Math.min(start + LEN, token.length());
+							lines.add(token.substring(start, end));
+							start = end;
+						}
+						continue;
+					}
 
-		if (word.length() > 0) {
-			if (line.length() + word.length() > LEN) {
+					lines.add(line.toString());
+					line.setLength(0);
+				}
+
+				if (line.length() > 0) {
+					line.append(' ');
+				}
+				line.append(token);
+			}
+
+			if (line.length() > 0) {
 				lines.add(line.toString());
-				line.delete(0, line.length());
+				line.setLength(0);
 			}
-			line.append(word);
+
+			if (p < paragraphs.length - 1) {
+				lines.add("");
+			}
 		}
 
-		if (line.length() > 0) {
-			lines.add(line.toString());
-		}
-
-		String[] ret = new String[lines.size()];
-		int c = 0;
-		for (Enumeration e = lines.elements(); e.hasMoreElements(); c++) {
-			ret[c] = ((String) e.nextElement());
-		}
-
-		return ret;
+		return lines.toArray(new String[0]);
 	}
 
 	/**
@@ -485,6 +548,8 @@ public class Networking {
 	 * @param MSG Message to send to all masters
 	 * @author Chris Lemire {@literal <goodbye300@aim.com>}
 	 * @since 2013-03-22
+	 * 
+	 * TODO this method is not being used yet, but it should be used in the future for sending messages to all masters
 	 */
 	protected void msgMasters(final String MSG) {
 		for (String master : CONFIG.getMasters()) {

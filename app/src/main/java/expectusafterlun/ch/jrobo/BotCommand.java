@@ -88,7 +88,7 @@ public class BotCommand {
 	 * @param FULLCMD The full command not split into segments
 	 */
 	protected void bCommander(final String USER, final String FULLCMD) {
-	 //TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
+	//TODO Search for bots on irc and watch their behavior for ideas such as WifiHelper in #aircrack-ng
 		this.user = USER;
 		cmd = getCmd(FULLCMD);
 		cmdArgs = getCmdArgs(FULLCMD);
@@ -122,6 +122,7 @@ public class BotCommand {
 				mumHelper();
 				break;
 			case "next":
+			case "n":
 				nextHelper();
 				break;
 			case "invite-channel":
@@ -146,7 +147,7 @@ public class BotCommand {
 				doNothingHelper();
 				break;
 			case "list":
-			case "l":
+			case "ls":
 			case "help":
 			case "h":
 				listHelper(true);
@@ -277,10 +278,15 @@ public class BotCommand {
 		String first, last;
 		int tries = 8;
 
-		CONNECTION.sendln("NAMES " + CHAN);
+		CONNECTION.sendLn("NAMES " + CHAN);
 		do {
 
-			received = CONNECTION.recieveln();
+			received = CONNECTION.receiveLn();
+			if (received == null) {
+				first = "";
+				last = "";
+				break;
+			}
 			try {
 
 				first = received.split(" :", 2)[0];
@@ -300,7 +306,7 @@ public class BotCommand {
 				}
 			} else if (first.equals("PING")) {
 
-				CONNECTION.sendln("PONG " + last);
+				CONNECTION.sendLn("PONG " + last);
 			}
 			tries--;
 		} while (!first.contains("366") && tries > 0);
@@ -509,7 +515,10 @@ public class BotCommand {
 		String first, last, received;
 		for (int tries = 4;;) {
 
-			received = CONNECTION.recieveln();
+			received = CONNECTION.receiveLn();
+			if (received == null) {
+				break;
+			}
 			try {
 				first = received.split(" :", 2)[0];
 				last = received.split(" :", 2)[1];
@@ -520,7 +529,7 @@ public class BotCommand {
 
 			}
 			if (first.equals("PING")) {
-				CONNECTION.sendln("PONG " + last);
+				CONNECTION.sendLn("PONG " + last);
 
 			} else if (received.equals(":ChanServ!ChanServ@services. MODE " + CONFIG.getChannel() + " +o " + CONFIG.getName())
 				|| tries < 0) {
@@ -545,7 +554,7 @@ public class BotCommand {
 						Logger.getLogger(BotCommand.class.getName()).log(Level.SEVERE, null, ex);
 					}
 
-					CONNECTION.sendln("INVITE " + user + " " + CONFIG.getChannel());
+					CONNECTION.sendLn("INVITE " + user + " " + CONFIG.getChannel());
 				}
 				threadCreated = false;
 
@@ -635,6 +644,8 @@ public class BotCommand {
 		 * args = light
 		 * special characters = no bold, no color
 		 * such as [] <> , ...
+		 * 
+		 * TODO: driveby db bomb pass defuse
 		 */
 		String colorStr = LC.attributesSynopsisLine(LC.colorToken("Available commands: ", MircColors.BOLD)
 			+ LC.colorToken("google|lmgtfy|stfw ", MircColors.GREEN)
@@ -646,7 +657,7 @@ public class BotCommand {
 			+ LC.colorToken("<location, zip, etc.>, ", MircColors.CYAN)
 			+ LC.colorToken("urbandict|ud ", MircColors.GREEN)
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
-			+ LC.colorToken("list|l, ", MircColors.GREEN)
+			+ LC.colorToken("list|ls, ", MircColors.GREEN)
 			+ LC.colorToken("leet|leetx ", MircColors.GREEN)
 			+ LC.colorToken("<catgegory> <search query>, " + MircColors.NORMAL, MircColors.CYAN)
 			+ LC.colorToken(MircColors.BOLD + "(" + MircColors.CYAN + "Avaliable categories are:  Movies, TV, Games, " + MircColors.NORMAL + MircColors.BOLD + MircColors.CYAN + "Music, Apps, Documentaries, Anime, Other, XXX, All" +MircColors.WHITE + "), ", MircColors.WHITE)
@@ -656,11 +667,13 @@ public class BotCommand {
 			+ LC.colorToken("mum|m ", MircColors.GREEN)
 			+ LC.colorToken("[user], ", MircColors.CYAN)
 			+ LC.colorToken(MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "invite-channel|ic ", "")
-			+ LC.colorToken("<channel>, ", MircColors.CYAN)
-			+ LC.colorToken("pirate ", MircColors.GREEN)
+			+ LC.colorToken("<#channel>, ", MircColors.CYAN)
+			+ LC.colorToken("goto|join ", MircColors.GREEN)
+			+ LC.colorToken("<#channel>, ", MircColors.CYAN)
+			+ LC.colorToken("pirate|pi ", MircColors.GREEN)
 			+ LC.colorToken("[-s|-l|-d] ", MircColors.CYAN)
 			+ LC.colorToken("<search query>, ", MircColors.CYAN)
-			+ LC.colorToken("epic, ", MircColors.GREEN)
+			+ LC.colorToken("epic|e, ", MircColors.GREEN)
 			+ LC.colorToken("isup ", MircColors.GREEN)
 			+ LC.colorToken("<url>, ", MircColors.CYAN)
 			+ LC.colorToken(MircColors.NORMAL + MircColors.BOLD + MircColors.GREEN + "version, ", MircColors.GREEN)
@@ -924,7 +937,8 @@ public class BotCommand {
 			CONNECTION.moveToChannel(cmdArgs, CONFIG.getBaseChan());
 			try {
 				Thread.sleep(2500);
-				if (CONNECTION.recieveln().contains("QUIT :Excess Flood")) {
+				String serverLine = CONNECTION.receiveLn();
+				if (serverLine == null || serverLine.contains("QUIT :Excess Flood")) {
 					break;
 				}
 			} catch (InterruptedException ex) { //Find out exactly what exceptions are thrown

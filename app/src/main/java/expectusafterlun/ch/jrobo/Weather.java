@@ -27,7 +27,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.URL;
+import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -95,7 +95,7 @@ public class Weather {
 		String json = "";
 
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(
-			new URL(URL).openStream()))) {
+			URI.create(URL).toURL().openStream()))) {
 
 			String line;
 
@@ -108,10 +108,10 @@ public class Weather {
 			json = "{ \"data\": \"Unable to retrieve Weather json data\" }";
 
 		} finally {
-			if(debug) { System.out.println(TermColors.info(json)); }
-			return json;
-
+			if (debug) { System.out.println(TermColors.info(json)); }
 		}
+
+		return json;
 	}
 
 	/**
@@ -138,11 +138,9 @@ public class Weather {
 			Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 			System.err.println(TermColors.info("Invalid Json: Does not match the Json code or wrong type"));
 			result = "Unable to retrieve the weather";
-
-		} finally {
-			return result;
-
 		}
+
+		return result;
 	}
 
 	/**
@@ -193,9 +191,9 @@ public class Weather {
 				Logger.getLogger(Weather.class.getName()).log(Level.SEVERE, null, ex);
 				System.err.println(TermColors.info("Could not get json for list at index 0"));
 
-			} finally {
-				return result;
 			}
+				return result;
+
 		}
 
 		/**
